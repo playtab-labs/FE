@@ -1,14 +1,20 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import TabNavigator from './TabNavigator';
+import Login from '@/pages/auth/Login';
+import Register from '@/pages/auth/Register';
+import Terms from '@/pages/auth/Terms';
+import TermsDetail from '@/pages/auth/TermsDetail';
 
 const Stack = createNativeStackNavigator();
 
 export default function RootNavigator() {
   return (
     <Stack.Navigator>
-      {/* 탭 메인 화면 */}
+      <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
+      <Stack.Screen name="Register" component={Register} options={{ headerShown: false }} />
+      <Stack.Screen name="Terms" component={Terms} options={{ headerShown: false }} />
+      <Stack.Screen name="TermsDetail" component={TermsDetail} options={{ headerShown: false }} />
       <Stack.Screen name="Tabs" component={TabNavigator} options={{ headerShown: false }} />
-      {/* 보딩/모달 등 전체화면 페이지는 여기에 추가 */}
     </Stack.Navigator>
   );
 }
