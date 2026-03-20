@@ -3,13 +3,13 @@ import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import Layout from '@/components/Layout';
+import TERMS_DATA from '@/mockdatas/TermsDetail.json';
 
-export const TERMS_LIST = [
-  { id: 'service',   label: '이용약관',                     required: true  },
-  { id: 'privacy',   label: '개인정보 수집 및 이용 동의',   required: true  },
-  { id: 'location',  label: '위치 정보 서비스 이용약관',    required: false },
-  { id: 'marketing', label: '맞춤형 정보 수신 동의 약관',   required: false },
-];
+export const TERMS_LIST = TERMS_DATA.map((t) => ({
+  id: t.id,
+  label: t.label,
+  required: t.required,
+}));
 
 export default function Terms() {
   const navigation = useNavigation<any>();
@@ -32,16 +32,18 @@ export default function Terms() {
   };
 
   return (
-    <Layout title="약관동의" showBack>
+    <Layout title="약관동의" showBack> {/* 헤더 부분 */}
 
       <ScrollView showsVerticalScrollIndicator={false}>
         <View className="mx-[17px] mt-6 gap-4">
 
-          <View className="mb-2">
+          {/* 약관 안내 문구 */}
+          <View className="mb-2"> 
             <Text className="text-2xl font-bold text-gray-800">약관에 동의해주세요.</Text>
             <Text className="text-lg text-gray-400 mt-1">PLAYTAP의 서비스를 이용하기 위해 필요해요.</Text>
           </View>
 
+          {/* 약관 전체동의 */}
           <TouchableOpacity
             className={`rounded-2xl h-14 items-center justify-center flex-row gap-2 mt-[87px] ${allAgreed ? 'bg-primary' : 'bg-white border border-primary'}`}
             onPress={toggleAll}
@@ -52,15 +54,11 @@ export default function Terms() {
             <Ionicons name="chevron-forward" size={18} color={allAgreed ? '#fff' : '#CF5363'} />
           </TouchableOpacity>
 
+          {/* 약관 리스트 */}
           <View className="px-4 py-1">
             {TERMS_LIST.map((term, index) => (
               <View key={term.id}>
                 <View className="flex-row items-center py-3">
-                  <Ionicons
-                    name={agreed[term.id] ? 'checkmark-circle' : 'checkmark-circle-outline'}
-                    size={22}
-                    color={agreed[term.id] ? '#CF5363' : '#ccc'}
-                  />
                   <Text className="flex-1 text-sm text-gray-700 ml-2">
                     <Text className="text-primary">{term.required ? '필수 ' : '선택 '}</Text>
                     {term.label}
@@ -68,7 +66,11 @@ export default function Terms() {
                   <TouchableOpacity
                     onPress={() => navigation.navigate('TermsDetail', { termId: term.id, title: term.label })}
                   >
-                    <Ionicons name="chevron-forward" size={18} color="#ccc" />
+                  <Ionicons
+                    name={agreed[term.id] ? 'checkmark-circle' : 'checkmark-circle-outline'}
+                    size={22}
+                    color={agreed[term.id] ? '#CF5363' : '#ccc'}
+                  />
                   </TouchableOpacity>
                 </View>
                 {index < TERMS_LIST.length - 1 && <View className="h-px bg-gray-100" />}

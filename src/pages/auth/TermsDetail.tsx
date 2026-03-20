@@ -3,18 +3,13 @@ import { View, Text, ScrollView, TouchableOpacity, NativeScrollEvent, NativeSynt
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import Layout from '@/components/Layout';
-
-const TERMS_CONTENT: Record<string, string> = {
-  service: `이용약관 내용\n\n(실제 약관 내용을 여기에 입력해주세요.)`,
-  privacy: `개인정보 수집 및 이용 동의 내용\n\n(실제 약관 내용을 여기에 입력해주세요.)`,
-  location: `위치 정보 서비스 이용약관 내용\n\n(실제 약관 내용을 여기에 입력해주세요.)`,
-  marketing: `맞춤형 정보 수신 동의 약관 내용\n\n(실제 약관 내용을 여기에 입력해주세요.)`,
-};
+import TERMS_DATA from '@/mockdatas/TermsDetail.json';
 
 export default function TermsDetail() {
   const navigation = useNavigation<any>();
   const route = useRoute<any>();
-  const { termId, title } = route.params;
+  const { termId } = route.params;
+  const term = TERMS_DATA.find((t) => t.id === termId);
 
   const [reachedBottom, setReachedBottom] = useState(false);
 
@@ -33,8 +28,8 @@ export default function TermsDetail() {
         onScroll={handleScroll}
         scrollEventThrottle={16}
       >
-        <Text className="text-base font-bold text-gray-800 mt-4 mb-3">{title}</Text>
-        <Text className="text-sm text-gray-600 leading-6">{TERMS_CONTENT[termId]}</Text>
+        <Text className="text-base font-bold text-gray-800 mt-4 mb-3">{term?.label}</Text>
+        <Text className="text-sm text-gray-600 leading-6">{term?.content ?? '약관 내용을 준비 중입니다.'}</Text>
         <View className="h-10" />
       </ScrollView>
 
