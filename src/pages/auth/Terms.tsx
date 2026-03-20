@@ -14,6 +14,7 @@ export const TERMS_LIST = TERMS_DATA.map((t) => ({
 export default function Terms() {
   const navigation = useNavigation<any>();
   const route = useRoute<any>();
+  const userType = route.params?.userType ?? 'external';
   const [agreed, setAgreed] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
@@ -86,7 +87,7 @@ export default function Terms() {
         <TouchableOpacity
           className={`rounded-2xl h-14 items-center justify-center ${requiredAgreed ? 'bg-primary' : 'bg-white'}`}
           disabled={!requiredAgreed}
-          onPress={() => navigation.navigate('PersonalInfo')}
+          onPress={() => navigation.navigate('PersonalInfo', { userType })}
         >
           <Text className={`text-xl font-bold ${requiredAgreed ? 'text-white' : 'text-gray-400'}`}>
             계속하기

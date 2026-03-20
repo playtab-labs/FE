@@ -8,6 +8,7 @@ module.exports = {
       colors: {
         primary: '#CF5363',
         'app-bg': '#F5F5F5',
+        'neutral-gray': '#BFBFBF',
         // 추후 디자이너 요구사항에 따라 추가
         // 예시:
         // secondary: '#...',

@@ -4,7 +4,7 @@ import {
   Modal, ScrollView, FlatList,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import Layout from '@/components/Layout';
 
 const NATIONALITIES = [
@@ -20,6 +20,8 @@ const formatBirthday = (digits: string) => {
 
 export default function PersonalInfo() {
   const navigation = useNavigation<any>();
+  const route = useRoute<any>();
+  const userType = route.params?.userType ?? 'external';
   const [name, setName] = useState('');
   const [gender, setGender] = useState<'male' | 'female' | null>(null);
   const [birthdayRaw, setBirthdayRaw] = useState('');
@@ -121,7 +123,7 @@ export default function PersonalInfo() {
         <TouchableOpacity
           className={`rounded-2xl h-14 items-center justify-center ${isValid ? 'bg-primary' : 'bg-gray-200'}`}
           disabled={!isValid}
-          onPress={() => navigation.navigate('SogangVerify')}
+          onPress={() => navigation.navigate('EmailVerify', { userType })}
         >
           <Text className={`text-base font-semibold ${isValid ? 'text-white' : 'text-gray-400'}`}>
             계속하기

@@ -32,7 +32,10 @@ export default function Register() {
           <Text className="text-white text-base font-semibold">서강대생으로 이용</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity className="bg-primary rounded-2xl h-14 items-center justify-center">
+        <TouchableOpacity
+          className="bg-primary rounded-2xl h-14 items-center justify-center"
+          onPress={() => navigation.navigate('Terms', { userType: 'external' })}
+        >
           <Text className="text-white text-base font-semibold">외부인으로 이용</Text>
         </TouchableOpacity>
       </View>
