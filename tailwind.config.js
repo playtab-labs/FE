@@ -25,6 +25,33 @@ module.exports = {
         sb: "600",
         rg: "400",
       },
+      neutral: {
+        // ── Grayscale ────────────────────────────
+        "extra-white": "#FFFFFF",
+        "soft-gray-white": "##F5F5F5",
+        "soft-gray": "##E4E4E4",
+        gray: "##BFBFBF",
+        "dark-gray": "#555555",
+        "gray-black": "#1A1A1A",
+
+        // // ── Sogang ───────────────────────────────
+        // sogang: {
+        //   brown:  "#7B1818",
+        //   black:  "#000000",
+        //   pink:   "#E5196E",
+        //   yellow: "#FFE500",
+        //   sky:    "#6CC5C5",
+        // },
+        primary: {
+          "hot-pink": "#FF0F47",
+          bk: "#070000",
+        },
+        secondary: {
+          salmon: "#FFAD96",
+          "baby-pink": "#F7C1C4",
+          "bubblegum-pink": "#F38B98",
+        },
+      },
     },
   },
   plugins: [],
