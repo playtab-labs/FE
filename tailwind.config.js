@@ -25,7 +25,7 @@ module.exports = {
         sb: "600",
         rg: "400",
       },
-      neutral: {
+      colors: {
         // ── Grayscale ────────────────────────────
         "extra-white": "#FFFFFF",
         "soft-gray-white": "##F5F5F5",

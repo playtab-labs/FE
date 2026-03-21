@@ -1,4 +1,5 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import BottomBar from '@/components/BottomBar';
 
 import ArtistScreen from '@/pages/Artist';
 import PersonalScreen from '@/pages/Personal';
@@ -10,12 +11,12 @@ const Tab = createBottomTabNavigator();
 
 export default function TabNavigator() {
   return (
-    <Tab.Navigator>
-      <Tab.Screen name="Artist" component={ArtistScreen} options={{ title: 'ARTIST', headerShown: false }} />
-      <Tab.Screen name="Personal" component={PersonalScreen} options={{ title: 'PERSONAL', headerShown: false }} />
-      <Tab.Screen name="Home" component={HomeScreen} options={{ title: 'HOME', headerShown: false }} />
-      <Tab.Screen name="Map" component={MapScreen} options={{ title: 'MAP', headerShown: false }} />
-      <Tab.Screen name="More" component={MoreScreen} options={{ title: 'MORE', headerShown: false }} />
+    <Tab.Navigator tabBar={(props) => <BottomBar {...props} />}>
+      <Tab.Screen name="Artist"   component={ArtistScreen}   options={{ headerShown: false }} />
+      <Tab.Screen name="Personal" component={PersonalScreen} options={{ headerShown: false }} />
+      <Tab.Screen name="Home"     component={HomeScreen}     options={{ headerShown: false }} />
+      <Tab.Screen name="Map"      component={MapScreen}      options={{ headerShown: false }} />
+      <Tab.Screen name="More"     component={MoreScreen}     options={{ headerShown: false }} />
     </Tab.Navigator>
   );
 }
