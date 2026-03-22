@@ -14,7 +14,7 @@ const TABS: { key: Tab; label: string }[] = [
 
 const ArtistTabBar = ({ activeTab, onTabChange }: ArtistTabBarProps) => {
   return (
-    <View className="flex-row g-gray-100">
+    <View className="flex-row">
       {TABS.map(({ key, label }) => {
         const isActive = activeTab === key;
         return (
@@ -23,11 +23,13 @@ const ArtistTabBar = ({ activeTab, onTabChange }: ArtistTabBarProps) => {
             onPress={() => onTabChange(key)}
             activeOpacity={0.8}
             className={`flex-1 h-14 items-center justify-center ${
-              isActive ? "bg-secondary-salmon" : "bg-soft-gray-white"
+              isActive
+                ? "bg-secondary-salmon border-b-2 border-text-salmon"
+                : "bg-soft-gray-white"
             }`}
           >
             <Text
-              className={`text-b2-16 font-semibold ${
+              className={`text-b2 font-sb font-semibold ${
                 isActive ? "text-black" : "text-dark-gray"
               }`}
             >
