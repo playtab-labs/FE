@@ -98,7 +98,7 @@ const ArtistFilterBar = ({ type, onFilterChange }: ArtistFilterBarProps) => {
       </TouchableOpacity> */}
 
       {/* 즐겨찾기 필터 버튼 */}
-      <FavoriteButton type="FILTER" />
+      <FavoriteButton type="FILTER" onToggle={() => toggleFav()} />
     </View>
   );
 };

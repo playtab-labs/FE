@@ -7,6 +7,7 @@ export interface Artist {
   imageUri: string;
   category: ArtistCategory;
   day: DayKey;
+  isFavorite: boolean;
 }
 
 export interface DayGroup {
@@ -24,6 +25,7 @@ export const MOCK_ARTISTS: Artist[] = [
       "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=800",
     category: "버스킹",
     day: "DAY1",
+    isFavorite: false,
   },
   {
     id: "d1-b2",
@@ -32,6 +34,7 @@ export const MOCK_ARTISTS: Artist[] = [
       "https://images.unsplash.com/photo-1516280440614-37939bbacd81?w=800",
     category: "버스킹",
     day: "DAY1",
+    isFavorite: false,
   },
   {
     id: "d1-b3",
@@ -40,6 +43,7 @@ export const MOCK_ARTISTS: Artist[] = [
       "https://images.unsplash.com/photo-1501612780327-45045538702b?w=800",
     category: "버스킹",
     day: "DAY1",
+    isFavorite: false,
   },
   {
     id: "d1-dj1",
@@ -48,6 +52,7 @@ export const MOCK_ARTISTS: Artist[] = [
       "https://img.freepik.com/free-vector/cartoon-character-design-illustration-professional-band_1362-117.jpg?semt=ais_hybrid&w=740&q=80",
     category: "DJ",
     day: "DAY1",
+    isFavorite: false,
   },
   {
     id: "d1-c1",
@@ -56,6 +61,7 @@ export const MOCK_ARTISTS: Artist[] = [
       "https://images.unsplash.com/photo-1429962714451-bb934ecdc4ec?w=800",
     category: "동아리",
     day: "DAY1",
+    isFavorite: false,
   },
 
   // DAY 2 - 5/14(목)
@@ -66,6 +72,7 @@ export const MOCK_ARTISTS: Artist[] = [
       "https://i.namu.wiki/i/yS3Ura5kt07Kxz6VnXVD9nmyHhWVHNnqgkzllvJ2qliQigkAVJVrKc9Us-S-40NfhGbquiO8MGkMJn1zE54gFg.webp",
     category: "아티스트",
     day: "DAY2",
+    isFavorite: false,
   },
   {
     id: "d2-a2",
@@ -74,6 +81,7 @@ export const MOCK_ARTISTS: Artist[] = [
       "https://upload.wikimedia.org/wikipedia/commons/f/f8/Dragon_Pony_Round_Festival_2025.png",
     category: "아티스트",
     day: "DAY2",
+    isFavorite: false,
   },
   {
     id: "d2-a3",
@@ -82,6 +90,7 @@ export const MOCK_ARTISTS: Artist[] = [
       "https://images.unsplash.com/photo-1598387993441-a364f854c3e1?w=800",
     category: "아티스트",
     day: "DAY2",
+    isFavorite: false,
   },
   {
     id: "d2-b1",
@@ -90,6 +99,7 @@ export const MOCK_ARTISTS: Artist[] = [
       "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=800",
     category: "버스킹",
     day: "DAY2",
+    isFavorite: false,
   },
   {
     id: "d2-b2",
@@ -98,6 +108,7 @@ export const MOCK_ARTISTS: Artist[] = [
       "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=800",
     category: "버스킹",
     day: "DAY2",
+    isFavorite: false,
   },
   {
     id: "d2-dj1",
@@ -106,6 +117,7 @@ export const MOCK_ARTISTS: Artist[] = [
       "https://img.freepik.com/free-vector/illustration-rock-band_23-2149593909.jpg?semt=ais_hybrid&w=740&q=80",
     category: "DJ",
     day: "DAY2",
+    isFavorite: false,
   },
   {
     id: "d2-c1",
@@ -114,6 +126,7 @@ export const MOCK_ARTISTS: Artist[] = [
       "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=800",
     category: "동아리",
     day: "DAY2",
+    isFavorite: false,
   },
 
   // DAY 3 - 5/15(금)
@@ -124,6 +137,7 @@ export const MOCK_ARTISTS: Artist[] = [
       "https://images.unsplash.com/photo-1506157786151-b8491531f063?w=800",
     category: "아티스트",
     day: "DAY3",
+    isFavorite: false,
   },
   {
     id: "d3-a2",
@@ -132,6 +146,7 @@ export const MOCK_ARTISTS: Artist[] = [
       "https://images.unsplash.com/photo-1519892300165-cb5542fb47c7?w=800",
     category: "아티스트",
     day: "DAY3",
+    isFavorite: false,
   },
   {
     id: "d3-b1",
@@ -140,6 +155,7 @@ export const MOCK_ARTISTS: Artist[] = [
       "https://images.unsplash.com/photo-1516280440614-37939bbacd81?w=800",
     category: "버스킹",
     day: "DAY3",
+    isFavorite: false,
   },
   {
     id: "d3-dj1",
@@ -148,6 +164,7 @@ export const MOCK_ARTISTS: Artist[] = [
       "https://images.unsplash.com/photo-1598387993441-a364f854c3e1?w=800",
     category: "DJ",
     day: "DAY3",
+    isFavorite: false,
   },
   {
     id: "d3-dj2",
@@ -156,6 +173,7 @@ export const MOCK_ARTISTS: Artist[] = [
       "https://images.unsplash.com/photo-1571266028243-e4733b0f0bb0?w=800",
     category: "DJ",
     day: "DAY3",
+    isFavorite: false,
   },
   {
     id: "d3-c1",
@@ -164,6 +182,7 @@ export const MOCK_ARTISTS: Artist[] = [
       "https://images.unsplash.com/photo-1429962714451-bb934ecdc4ec?w=800",
     category: "동아리",
     day: "DAY3",
+    isFavorite: false,
   },
 ];
 
@@ -173,14 +192,15 @@ export const DAY_LABELS: Record<DayKey, string> = {
   DAY3: "DAY 3 - 5/15(금)",
 };
 
-/** category 필터 적용 후 day별로 그루핑 */
+/** category / favOnly 필터 적용 후 day별로 그루핑 */
 export const groupByDay = (
   artists: Artist[],
   category: ArtistCategory | null,
+  favOnly: boolean = false,
 ): DayGroup[] => {
-  const filtered = category
-    ? artists.filter((a) => a.category === category)
-    : artists;
+  const filtered = artists
+    .filter((a) => !category || a.category === category)
+    .filter((a) => !favOnly || a.isFavorite);
 
   return (["DAY1", "DAY2", "DAY3"] as DayKey[]).map((day) => ({
     day,
