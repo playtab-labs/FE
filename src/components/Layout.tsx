@@ -1,23 +1,40 @@
-import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import { Text, TouchableOpacity, View } from "react-native";
+import { Image, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import Svg, { Polyline } from "react-native-svg";
 
 interface LayoutProps {
   title?: string;
   showBack?: boolean;
+  showCamera?: boolean;
+  onCameraPress?: () => void;
   children: React.ReactNode;
+}
+
+function BackIcon() {
+  return (
+    <Svg width="7" height="14" viewBox="0 0 7 14" fill="none">
+      <Polyline
+        points="6,1 1,7 6,13"
+        stroke="#656565"
+        strokeWidth="3"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </Svg>
+  );
 }
 
 export default function Layout({
   title,
   showBack = false,
+  showCamera = true,
+  onCameraPress,
   children,
 }: LayoutProps) {
   const navigation = useNavigation<any>();
 
   return (
-    // SafeAreaView가 StatusBar 영역(iPhone 13 mini 기준 48px)을 자동 처리
     <SafeAreaView className="flex-1 bg-app-bg">
       {/* AppBar: 56px */}
       {title && (
@@ -26,26 +43,41 @@ export default function Layout({
           className="flex-row items-center justify-center"
         >
           {/* 왼쪽: 뒤로가기 */}
-          <View style={{ width: 24 }}>
+          <View style={{ width: 24, alignItems: "center" }}>
             {showBack && (
               <TouchableOpacity onPress={() => navigation.goBack()}>
-                <Ionicons name="chevron-back" size={24} color="#333" />
+                <BackIcon />
               </TouchableOpacity>
             )}
           </View>
 
           {/* 중앙: 타이틀 */}
-          <Text className="flex-1 text-center text-[16px] text-gray-700">
+          <Text
+            className="flex-1 text-center"
+            style={{
+              fontSize: 18,
+              fontWeight: "800",
+              color: "#1A1A1A",
+              lineHeight: 25.2,
+              letterSpacing: -0.18,
+            }}
+          >
             {title}
           </Text>
 
-          {/* 오른쪽: 여백(좌우 대칭용) */}
-          <View style={{ width: 24 }} />
+          {/* 오른쪽: 카메라 아이콘 */}
+          <View style={{ width: 24, alignItems: "center" }}>
+            {showCamera && (
+              <TouchableOpacity onPress={onCameraPress}>
+                <Image source={require("@/assets/pngs/camera.png")} style={{ width: 24, height: 24 }} />
+              </TouchableOpacity>
+            )}
+          </View>
         </View>
       )}
 
       {/* 메인 콘텐츠 */}
-      <View className="flex-1">{children}</View>
+      <View className="flex-1 px-[17px]">{children}</View>
     </SafeAreaView>
   );
 }
