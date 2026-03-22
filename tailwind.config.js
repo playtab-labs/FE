@@ -18,6 +18,11 @@ module.exports = {
         b4: ["12px", { lineHeight: "16.8px" }],
         b5: ["10px", { lineHeight: "14px" }],
       },
+      fontFamily: {
+        'pretendard-rg': ['Pretendard-Regular'],
+        'pretendard-sb': ['Pretendard-SemiBold'],
+        'pretendard-eb': ['Pretendard-ExtraBold'],
+      },
       fontWeight: {
         // Eb = ExtraBold (800), Sb = SemiBold (600), Rg = Regular (400)
         // 기본 Tailwind에 이미 포함되어 있으나 명시적으로 선언

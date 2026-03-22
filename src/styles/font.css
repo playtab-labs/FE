@@ -1,2 +1,24 @@
 /* 폰트 정의 */
 /* 예시: @font-face { font-family: 'MyFont'; src: url('../assets/fonts/MyFont.ttf'); } */
+
+/* Pretendard */
+@font-face {
+  font-family: 'Pretendard';
+  src: url('../assets/fonts/Pretendard-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Pretendard';
+  src: url('../assets/fonts/Pretendard-SemiBold.otf') format('opentype');
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Pretendard';
+  src: url('../assets/fonts/Pretendard-ExtraBold.otf') format('opentype');
+  font-weight: 800;
+  font-style: normal;
+}
