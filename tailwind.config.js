@@ -51,6 +51,9 @@ module.exports = {
           "baby-pink": "#F7C1C4",
           "bubblegum-pink": "#F38B98",
         },
+        text: {
+          salmon: "#FF7654",
+        },
       },
     },
   },
