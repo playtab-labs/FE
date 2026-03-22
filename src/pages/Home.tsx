@@ -1,3 +1,4 @@
+import Layout from "@/components/Layout";
 import { useNavigation } from "@react-navigation/native";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
@@ -5,15 +6,17 @@ export default function Home() {
   const navigation = useNavigation<any>();
 
   return (
-    <View style={styles.container}>
-      <Text>Home 화면 입니다.</Text>
-      <TouchableOpacity
-        style={styles.tempButton}
-        onPress={() => navigation.navigate("Login")}
-      >
-        <Text style={styles.tempButtonText}>임시 - 로그인으로 이동</Text>
-      </TouchableOpacity>
-    </View>
+    <Layout title="HOME">
+      <View style={styles.container}>
+        <Text>Home 화면 입니다.</Text>
+        <TouchableOpacity
+          style={styles.tempButton}
+          onPress={() => navigation.navigate("Login")}
+        >
+          <Text style={styles.tempButtonText}>임시 - 로그인으로 이동</Text>
+        </TouchableOpacity>
+      </View>
+    </Layout>
   );
 }
 

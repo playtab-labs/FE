@@ -24,43 +24,43 @@
 
 export const typo = {
   // ── Heading ──────────────────────────────
-  H1_Eb: "text-h1 font-eb",
-  H1_Sb: "text-h1 font-sb",
-  H1_Rg: "text-h1 font-rg",
+  H1_Eb: "font-pretendard-eb text-h1",
+  H1_Sb: "font-pretendard-sb text-h1",
+  H1_Rg: "font-pretendard-rg text-h1",
 
   // ── Title ────────────────────────────────
-  T1_Eb: "text-t1 font-eb",
-  T1_Sb: "text-t1 font-sb",
-  T1_Rg: "text-t1 font-rg",
+  T1_Eb: "font-pretendard-eb text-t1",
+  T1_Sb: "font-pretendard-sb text-t1",
+  T1_Rg: "font-pretendard-rg text-t1",
 
-  T2_Eb: "text-t2 font-eb",
-  T2_Sb: "text-t2 font-sb",
-  T2_Rg: "text-t2 font-rg",
+  T2_Eb: "font-pretendard-eb text-t2",
+  T2_Sb: "font-pretendard-sb text-t2",
+  T2_Rg: "font-pretendard-rg text-t2",
 
-  T3_Eb: "text-t3 font-eb",
-  T3_Sb: "text-t3 font-sb",
-  T3_Rg: "text-t3 font-rg",
+  T3_Eb: "font-pretendard-eb text-t3",
+  T3_Sb: "font-pretendard-sb text-t3",
+  T3_Rg: "font-pretendard-rg text-t3",
 
   // ── Body ─────────────────────────────────
-  B1_Eb: "text-b1 font-eb",
-  B1_Sb: "text-b1 font-sb",
-  B1_Rg: "text-b1 font-rg",
+  B1_Eb: "font-pretendard-eb text-b1",
+  B1_Sb: "font-pretendard-sb text-b1",
+  B1_Rg: "font-pretendard-rg text-b1",
 
-  B2_Eb: "text-b2 font-eb",
-  B2_Sb: "text-b2 font-sb",
-  B2_Rg: "text-b2 font-rg",
+  B2_Eb: "font-pretendard-eb text-b2",
+  B2_Sb: "font-pretendard-sb text-b2",
+  B2_Rg: "font-pretendard-rg text-b2",
 
-  B3_Eb: "text-b3 font-eb",
-  B3_Sb: "text-b3 font-sb",
-  B3_Rg: "text-b3 font-rg",
+  B3_Eb: "font-pretendard-eb text-b3",
+  B3_Sb: "font-pretendard-sb text-b3",
+  B3_Rg: "font-pretendard-rg text-b3",
 
-  B4_Eb: "text-b4 font-eb",
-  B4_Sb: "text-b4 font-sb",
-  B4_Rg: "text-b4 font-rg",
+  B4_Eb: "font-pretendard-eb text-b4",
+  B4_Sb: "font-pretendard-sb text-b4",
+  B4_Rg: "font-pretendard-rg text-b4",
 
-  B5_Eb: "text-b5 font-eb",
-  B5_Sb: "text-b5 font-sb",
-  B5_Rg: "text-b5 font-rg",
+  B5_Eb: "font-pretendard-eb text-b5",
+  B5_Sb: "font-pretendard-sb text-b5",
+  B5_Rg: "font-pretendard-rg text-b5",
 } as const;
 
 export type TypoKey = keyof typeof typo;
