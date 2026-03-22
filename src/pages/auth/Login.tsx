@@ -1,9 +1,9 @@
-import { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, Image } from "react-native";
-import { useNavigation } from "@react-navigation/native";
 import Layout from "@/components/Layout";
+import { EyeOffIcon, EyeOnIcon } from "@/components/icons/EyeIcon";
 import RadioIcon from "@/components/icons/RadioIcon";
-import { EyeOnIcon, EyeOffIcon } from "@/components/icons/EyeIcon";
+import { useNavigation } from "@react-navigation/native";
+import { useState } from "react";
+import { Image, Text, TextInput, TouchableOpacity, View } from "react-native";
 
 export default function Login() {
   const navigation = useNavigation<any>();
@@ -18,7 +18,7 @@ export default function Login() {
       {/* 로고 */}
       <View className="items-center mt-[36px]">
         <Image
-          source={require("@/assets/logo.png")}
+          source={require("@/assets/pngs/logo.png")}
           style={{ width: 277, height: 173 }}
           resizeMode="contain"
         />

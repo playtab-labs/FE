@@ -17,7 +17,7 @@ export default function Register() {
       {/* 로고 */}
       <View className="items-center mt-[125px]">
         <Image
-          source={require('@/assets/logo.png')}
+          source={require('@/assets/pngs/logo.png')}
           style={{ width: 277, height: 173 }}
           resizeMode="contain"
         />

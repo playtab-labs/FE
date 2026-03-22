@@ -16,7 +16,7 @@ export default function SignUpComplete() {
 
         <View className="flex-1 mx-[17px] mt-[153px] items-center justify-center gap-4">
           <Image
-            source={require('@/assets/logo.png')}
+            source={require('@/assets/pngs/logo.png')}
             style={{ width: 277, height: 173 }}
             resizeMode="contain"
           />
