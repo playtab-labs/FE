@@ -25,6 +25,7 @@ const ArtistCard = ({
         <FavoriteButton
           initialFavorited={initialFavorited}
           onToggle={onFavoriteToggle}
+          type="SET"
         />
       </View>
     </ImageBackground>
