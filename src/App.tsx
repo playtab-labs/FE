@@ -3,8 +3,10 @@ import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 import 'react-native-reanimated';
 import { useFonts } from 'expo-font';
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
-import RootNavigator from '@/navigation/RootNavigator';
+
+import RootNavigator from "@/navigation/RootNavigator";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -16,9 +18,11 @@ export default function App() {
   if (!fontsLoaded) return null;
 
   return (
-    <NavigationContainer>
-      <RootNavigator />
-      <StatusBar style="auto" />
-    </NavigationContainer>
+    <SafeAreaProvider>
+      <NavigationContainer>
+        <RootNavigator />
+        <StatusBar style="auto" />
+      </NavigationContainer>
+    </SafeAreaProvider>
   );
 }

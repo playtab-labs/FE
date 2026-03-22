@@ -1,6 +1,6 @@
 import { ImageBackground, Text, View } from "react-native";
 import { typo } from "@/styles/typography";
-import FavoriteButton from "@/components/Artist/FavoriteButton";
+import FavoriteButton from "@/components/artist/FavoriteButton";
 
 interface ArtistCardProps {
   name: string;
@@ -25,6 +25,7 @@ const ArtistCard = ({
         <FavoriteButton
           initialFavorited={initialFavorited}
           onToggle={onFavoriteToggle}
+          type="SET"
         />
       </View>
     </ImageBackground>

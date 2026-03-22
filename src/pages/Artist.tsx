@@ -1,24 +1,21 @@
-import ArtistCard from "@/components/Artist/ArtistCard";
-import { View, Text } from "react-native";
+import { useState } from "react";
+import { View } from "react-native";
+import Layout from "@/components/Layout";
+import ArtistTabBar from "@/components/artist/ArtistTabBar";
+import Lineup from "@/components/artist/Lineup";
+import TimeTable from "@/components/artist/TimeTable";
+
+type Tab = "lineup" | "timetable";
 
 export default function Artist() {
+  const [activeTab, setActiveTab] = useState<Tab>("lineup");
+
   return (
-    <View className="items-center mt-12">
-      <Text>Artist</Text>
-      <View className="p-4 gap-4">
-        <ArtistCard
-          name="드래곤포니"
-          imageUri="https://upload.wikimedia.org/wikipedia/commons/f/f8/Dragon_Pony_Round_Festival_2025.png"
-        />
-        <ArtistCard
-          name="드래곤포니"
-          imageUri="https://upload.wikimedia.org/wikipedia/commons/f/f8/Dragon_Pony_Round_Festival_2025.png"
-        />
-        <ArtistCard
-          name="드래곤포니"
-          imageUri="https://upload.wikimedia.org/wikipedia/commons/f/f8/Dragon_Pony_Round_Festival_2025.png"
-        />
+    <Layout title="ARTIST" showBack={true}>
+      <ArtistTabBar activeTab={activeTab} onTabChange={setActiveTab} />
+      <View className="flex-1">
+        {activeTab === "lineup" ? <Lineup /> : <TimeTable />}
       </View>
-    </View>
+    </Layout>
   );
 }
