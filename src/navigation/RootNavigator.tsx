@@ -6,7 +6,6 @@ import SetPassword from "@/pages/auth/SetPassword";
 import SignUpComplete from "@/pages/auth/SignUpComplete";
 import Terms from "@/pages/auth/Terms";
 import TermsDetail from "@/pages/auth/TermsDetail";
-import Test from "@/pages/Test";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import TabNavigator from "./TabNavigator";
 
@@ -58,11 +57,6 @@ export default function RootNavigator() {
       <Stack.Screen
         name="Tabs"
         component={TabNavigator}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="Test"
-        component={Test}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

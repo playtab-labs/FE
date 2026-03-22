@@ -13,12 +13,6 @@ export default function Home() {
       >
         <Text style={styles.tempButtonText}>임시 - 로그인으로 이동</Text>
       </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.tempButton}
-        onPress={() => navigation.navigate("Test")}
-      >
-        <Text style={styles.tempButtonText}>임시 - Test 화면으로 이동</Text>
-      </TouchableOpacity>
     </View>
   );
 }
