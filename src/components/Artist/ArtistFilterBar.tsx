@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
-import Svg, { Path } from "react-native-svg";
 import FavoriteButton from "./FavoriteButton";
 
 type Category =
@@ -17,7 +16,7 @@ const TIMETABLE_CATEGORIES: Category[] = ["Day 1", "Day 2", "Day 3"];
 
 interface ArtistFilterBarProps {
   onFilterChange?: (
-    categories: Category[],
+    category: Category | null,
     auto: boolean,
     favOnly: boolean,
   ) => void;
@@ -25,12 +24,12 @@ interface ArtistFilterBarProps {
 }
 
 const ArtistFilterBar = ({ type, onFilterChange }: ArtistFilterBarProps) => {
-  const [selected, setSelected] = useState<Category[]>([]);
+  const [selected, setSelected] = useState<Category | null>(null);
   const [auto, setAuto] = useState(false);
   const [favOnly, setFavOnly] = useState(false);
 
   const notify = (
-    nextSelected: Category[],
+    nextSelected: Category | null,
     nextAuto: boolean,
     nextFavOnly: boolean,
   ) => {
@@ -38,9 +37,7 @@ const ArtistFilterBar = ({ type, onFilterChange }: ArtistFilterBarProps) => {
   };
 
   const toggleCategory = (cat: Category) => {
-    const next = selected.includes(cat)
-      ? selected.filter((c) => c !== cat)
-      : [...selected, cat];
+    const next = selected === cat ? null : cat;
     setSelected(next);
     notify(next, auto, favOnly);
   };
@@ -68,7 +65,7 @@ const ArtistFilterBar = ({ type, onFilterChange }: ArtistFilterBarProps) => {
       >
         {(type === "Lineup" ? LINEUP_CATEGORIES : TIMETABLE_CATEGORIES).map(
           (cat) => {
-            const isActive = selected.includes(cat);
+            const isActive = selected === cat;
             return (
               <TouchableOpacity
                 key={cat}
