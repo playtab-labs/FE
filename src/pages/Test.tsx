@@ -1,4 +1,4 @@
-import TermsModal from "@/components/common/TermsModal";
+import NationalityModal from "@/components/common/NationalityModal";
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { View } from "react-native";
@@ -11,13 +11,37 @@ const Test = () => {
 
   return (
     <View className="flex-1 items-center justify-center gap-4">
-      <TermsModal
+      <NationalityModal
         visible={visible}
-        title={term.label}
-        required={term.required}
-        content={term.content}
-        onAgree={() => {}}
+        nationalities={[
+          "대한민국",
+          "가나",
+          "나이지리아",
+          "덴마크",
+          "미국",
+          "일본",
+          "중국",
+          "대한민국",
+          "가나",
+          "나이지리아",
+          "덴마크",
+          "미국",
+          "일본",
+          "중국",
+          "대한민국",
+          "가나",
+          "나이지리아",
+          "덴마크",
+          "미국",
+          "일본",
+          "중국",
+        ]}
+        selected={"대한민국"}
         onClose={() => setVisible(false)}
+        onSelect={(nation) => {
+          console.log("선택된 국가:", nation);
+          setVisible(false);
+        }}
       />
       <Button label="홈 이동" onPress={() => navigation.navigate("Tabs")} />
     </View>
