@@ -1,25 +1,24 @@
-import { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Image } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import Layout from '@/components/Layout';
-import RadioIcon from '@/components/icons/RadioIcon';
-import { EyeOnIcon, EyeOffIcon } from '@/components/icons/EyeIcon';
+import { useState } from "react";
+import { View, Text, TextInput, TouchableOpacity, Image } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import Layout from "@/components/Layout";
+import RadioIcon from "@/components/icons/RadioIcon";
+import { EyeOnIcon, EyeOffIcon } from "@/components/icons/EyeIcon";
 
 export default function Login() {
   const navigation = useNavigation<any>();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [keepLogin, setKeepLogin] = useState(true);
   const [rememberID, setRememberID] = useState(false);
 
   return (
     <Layout title="로그인">
-
       {/* 로고 */}
       <View className="items-center mt-[36px]">
         <Image
-          source={require('@/assets/logo.png')}
+          source={require("@/assets/logo.png")}
           style={{ width: 277, height: 173 }}
           resizeMode="contain"
         />
@@ -27,7 +26,6 @@ export default function Login() {
 
       {/* 입력 폼 */}
       <View className="mx-[17px] mt-[29px] gap-4">
-
         {/* 이메일 */}
         <TextInput
           className="bg-white rounded-lg border border-gray-300 px-4 py-4 text-sm text-gray-800"
@@ -73,7 +71,6 @@ export default function Login() {
             <Text className="text-[13px] text-gray-600">ID 기억하기</Text>
           </TouchableOpacity>
         </View>
-
       </View>
 
       {/* 로그인 버튼 */}
@@ -83,23 +80,24 @@ export default function Login() {
 
       {/* 회원가입 / 비밀번호 찾기 */}
       <View className="flex-row justify-center items-center mt-4 gap-[13px]">
-        <TouchableOpacity onPress={() => navigation.navigate('Register')}>
+        <TouchableOpacity onPress={() => navigation.navigate("Register")}>
           <Text className="text-[13px] text-gray-500 underline">회원가입</Text>
         </TouchableOpacity>
         <Text className="text-[13px] text-gray-400">|</Text>
         <TouchableOpacity>
-          <Text className="text-[13px] text-gray-500 underline">비밀번호 찾기</Text>
+          <Text className="text-[13px] text-gray-500 underline">
+            비밀번호 찾기
+          </Text>
         </TouchableOpacity>
       </View>
 
       {/* 임시 버튼 */}
       <TouchableOpacity
         className="mx-[17px] mt-3 h-11 border border-gray-300 rounded-lg items-center justify-center"
-        onPress={() => navigation.navigate('Tabs')}
+        onPress={() => navigation.navigate("Tabs")}
       >
         <Text className="text-sm text-gray-400">임시 - 홈으로 이동</Text>
       </TouchableOpacity>
-
     </Layout>
   );
 }
