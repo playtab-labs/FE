@@ -1,9 +1,11 @@
-import { View } from "react-native";
+import { View, Text } from "react-native";
+import ArtistFilterBar from "./ArtistFilterBar";
 import ArtistList from "./ArtistList";
 
 const Lineup = () => {
   return (
-    <View className="flex-1">
+    <View>
+      <ArtistFilterBar type="Lineup" />
       <ArtistList />
     </View>
   );
