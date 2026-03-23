@@ -3,13 +3,15 @@ import BingoCell from '@/components/stamptour/BingoCell';
 import BingoCount from '@/components/stamptour/BingoCount';
 import HowToParticipate from '@/components/stamptour/HowToParticipate';
 import ProductInfo from '@/components/stamptour/ProductInfo';
-import { typo } from '@/styles/typography';
-import { Text, View } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
+import { Image, View } from 'react-native';
+import stamp2 from '@/assets/pngs/stamp2.png';
+import BingoTitle from '@/assets/svgs/bingotitle.svg';
 
 const BINGO_CELLS = [
-  { title: '미션 1', description: '설명' },
-  { title: '미션 2', description: '설명' },
-  { title: '미션 3', description: '설명' },
+  { title: '#정문 게이트', description: '오디세이에 입장하세요!' },
+  { title: '#메인무대', description: '무대를 관람하세요' },
+  { title: '#푸드존', description: '축제에는 간식이 빠질 수 없죠' },
   { title: '미션 4', description: '설명' },
   { title: '미션 5', description: '설명' },
   { title: '미션 6', description: '설명' },
@@ -18,37 +20,21 @@ const BINGO_CELLS = [
   { title: '미션 9', description: '설명' },
 ];
 
-const STROKE_OFFSETS = [
-  [-4, -4], [-4, 0], [-4, 4],
-  [0, -4],           [0, 4],
-  [4, -4],  [4, 0],  [4, 4],
-];
-
-function StrokeText({ children }: { children: string }) {
-  return (
-    <View>
-      {STROKE_OFFSETS.map(([dx, dy], i) => (
-        <Text
-          key={i}
-          className={typo.T1_Eb}
-          style={{ position: 'absolute', color: '#FFA38C', top: dy, left: dx, textAlign: 'center' }}
-        >
-          {children}
-        </Text>
-      ))}
-      <Text className={typo.T1_Eb} style={{ color: '#1A1A1A', textAlign: 'center' }}>
-        {children}
-      </Text>
-    </View>
-  );
-}
 
 export default function StampTour() {
   return (
-    <Layout title="스탬프 투어" showBack scrollable showBottomBar>
+    <LinearGradient
+      colors={['rgba(255, 94, 55, 0.20)', 'rgba(255, 255, 255, 0.20)']}
+      style={{ flex: 1, backgroundColor: '#FFF' }}
+    >
+      <Image
+        source={stamp2}
+        style={{ position: 'absolute', top: 0, right: 0, width: 310, height: 310 }}
+        resizeMode="cover"
+      />
+    <Layout title="스탬프 투어" showBack scrollable showBottomBar bgTransparent>
       <View style={{ marginTop: 16, alignItems: 'center' }}>
-        <StrokeText>SOGANG ODYSSEY</StrokeText>
-        <StrokeText>CAMPUS MISSION BINGO</StrokeText>
+        <BingoTitle />
       </View>
 
       <View style={{ marginTop: 32, gap: 8 }}>
@@ -77,6 +63,8 @@ export default function StampTour() {
       <View style={{ alignItems: 'center' }}>
         <ProductInfo />
       </View>
+      <View style={{ height: 150 }} />
     </Layout>
+    </LinearGradient>
   );
 }

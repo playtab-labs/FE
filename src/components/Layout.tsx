@@ -12,6 +12,7 @@ interface LayoutProps {
   fullBleedHeader?: React.ReactNode;
   scrollable?: boolean;
   showBottomBar?: boolean;
+  bgTransparent?: boolean; // 외부에서 배경(그라디언트 등)을 직접 제어할 때 true로 설정
   children: React.ReactNode;
 }
 
@@ -37,12 +38,14 @@ export default function Layout({
   fullBleedHeader,
   scrollable = false,
   showBottomBar = false,
+  bgTransparent = false,
   children,
 }: LayoutProps) {
   const navigation = useNavigation<any>();
 
   return (
-    <SafeAreaView className="flex-1 bg-app-bg">
+    // bgTransparent=true면 배경 투명, 아니면 기본 앱 배경색
+    <SafeAreaView className={`flex-1 ${bgTransparent ? 'bg-transparent' : 'bg-app-bg'}`}>
       {/* AppBar: 56px */}
       {title && (
         <View
