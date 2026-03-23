@@ -1,0 +1,22 @@
+import { Image, ImageSourcePropType, Text, TouchableOpacity } from "react-native";
+
+interface TabListProps {
+  icon: ImageSourcePropType;
+  label: string;
+  rightElement?: React.ReactNode;
+  onPress?: () => void;
+}
+
+export default function TabList({ icon, label, rightElement, onPress }: TabListProps) {
+  return (
+    <TouchableOpacity
+      onPress={onPress}
+      activeOpacity={0.7}
+      className="flex-row items-center gap-[10px] px-[10px] py-4 self-stretch border-b border-b-[rgba(191,191,191,0.30)]"
+    >
+      <Image source={icon} style={{ width: 24, height: 24 }} resizeMode="contain" />
+      <Text className="flex-1 text-b3 font-sb text-gray-black">{label}</Text>
+      {rightElement}
+    </TouchableOpacity>
+  );
+}
