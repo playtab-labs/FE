@@ -1,12 +1,18 @@
 import Layout from "@/components/Layout";
 import { useNavigation } from "@react-navigation/native";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 export default function Home() {
   const navigation = useNavigation<any>();
 
   return (
-    <Layout title="HOME">
+    <Layout showBack={true} title={
+        <Image
+          source={require("@/assets/pngs/soganglogo.png")}
+          style={{ width: 135, height: 38, aspectRatio: 135 / 38 }}
+          resizeMode="contain"
+        />
+      }>
       <View style={styles.container}>
         <Text>Home 화면 입니다.</Text>
         <TouchableOpacity

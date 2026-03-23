@@ -4,7 +4,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Svg, { Polyline } from "react-native-svg";
 
 interface LayoutProps {
-  title?: string;
+  title?: React.ReactNode; //이미지도 받을 수 있게 수정
   showBack?: boolean;
   showCamera?: boolean;
   onCameraPress?: () => void;
@@ -52,18 +52,22 @@ export default function Layout({
           </View>
 
           {/* 중앙: 타이틀 */}
-          <Text
-            className="flex-1 text-center"
-            style={{
-              fontSize: 18,
-              fontWeight: "800",
-              color: "#1A1A1A",
-              lineHeight: 25.2,
-              letterSpacing: -0.18,
-            }}
-          >
-            {title}
-          </Text>
+          {typeof title === "string" ? (
+            <Text
+              className="flex-1 text-center"
+              style={{
+                fontSize: 18,
+                fontWeight: "800",
+                color: "#1A1A1A",
+                lineHeight: 25.2,
+                letterSpacing: -0.18,
+              }}
+            >
+              {title}
+            </Text>
+          ) : (
+            <View className="flex-1 items-center justify-center">{title}</View>
+          )}
 
           {/* 오른쪽: 카메라 아이콘 */}
           <View style={{ width: 24, alignItems: "center" }}>
