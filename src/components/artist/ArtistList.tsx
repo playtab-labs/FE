@@ -24,12 +24,10 @@ const ArtistList = ({
   }));
 
   return (
-    <ScrollView contentContainerClassName="p-4 gap-8">
+    <ScrollView contentContainerClassName="px-5 py-6 gap-8">
       {dayGroups.map(({ day, label, artists }) => (
-        <View key={day} className="gap-3">
-          <Text className={`${typo.T3_Eb} text-black text-t3 font-eb`}>
-            {label}
-          </Text>
+        <View key={day} className="gap-6">
+          <Text className={`${typo.T3_Eb} text-black`}>{label}</Text>
 
           {artists.length === 0 ? (
             <View className="py-8 items-center">
@@ -39,7 +37,7 @@ const ArtistList = ({
               </Text>
             </View>
           ) : (
-            <View className="gap-6">
+            <View className="gap-4">
               {artists.map((artist) => (
                 <ArtistCard
                   key={artist.id}
@@ -52,7 +50,7 @@ const ArtistList = ({
             </View>
           )}
 
-          <View className="h-[1px] bg-gray my-8" />
+          <View className="h-[1px] bg-gray my-6" />
         </View>
       ))}
     </ScrollView>

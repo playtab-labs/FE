@@ -20,8 +20,8 @@ const ArtistCard = ({
       source={{ uri: imageUri }}
       className="w-full aspect-[16/7] rounded-2xl overflow-hidden justify-end"
     >
-      <View className="flex-row items-end justify-between px-4 pb-4">
-        <Text className={`${typo.H1_Eb} text-white`}>{name}</Text>
+      <View className="flex-row items-end justify-between p-4">
+        <Text className={`${typo.B3_Eb} text-white`}>{name}</Text>
         <FavoriteButton
           initialFavorited={initialFavorited}
           onToggle={onFavoriteToggle}
