@@ -22,7 +22,7 @@ export default function BingoCount({ bingoCount, remainingCells }: BingoCountPro
         <Text className={typo.B3_Sb} style={{ color: '#FF7654' }}>
           {remainingCells}칸
         </Text>
-        {' '}남았어요🙌
+        {' '}남았어요 🙌
       </Text>
     </View>
   );

@@ -2,12 +2,14 @@ import Layout from "@/components/Layout";
 import AdBanner from "@/components/home/AdBanner";
 import MDBanner from "@/components/home/MDBanner";
 import StampTourBanner from "@/components/home/StampTourBanner";
+import { useNavigation } from "@react-navigation/native";
 import { Image, ScrollView, useWindowDimensions, View } from "react-native";
 
 const AD_BANNERS = [1, 2, 3, 4, 5]; //광고 수
 
 export default function Home() {
   const { width } = useWindowDimensions();
+  const navigation = useNavigation<any>();
   return (
     <Layout
       scrollable
@@ -27,7 +29,7 @@ export default function Home() {
       }
     >
       <View style={{ marginTop: 16, flexDirection: "row", gap: 16 }}>
-        <StampTourBanner />
+        <StampTourBanner onPress={() => navigation.navigate('StampTour')} />
         <MDBanner />
       </View>
       <ScrollView

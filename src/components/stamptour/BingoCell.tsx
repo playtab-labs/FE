@@ -18,6 +18,7 @@ export default function BingoCell({ title, description }: BingoCellProps) {
         justifyContent: 'center',
         alignItems: 'center',
         gap: 12,
+        aspectRatio: 1,
         borderRadius: 8,
         backgroundColor: '#FFFFFF',
       }}

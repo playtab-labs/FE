@@ -10,9 +10,10 @@ const STEPS = [
 
 export default function HowToParticipate() {
   return (
-    <View style={{ margin: 16 }}>
+    <View style={{ marginTop: 16, width: '100%' }}>
       <View
         style={{
+          width: '100%',
           padding: 16,
           borderRadius: 8,
           backgroundColor: '#FFFFFF',
