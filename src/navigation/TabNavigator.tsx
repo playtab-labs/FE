@@ -1,11 +1,11 @@
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import BottomBar from "@/components/BottomBar";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import ArtistScreen from "@/pages/Artist";
-import PersonalScreen from "@/pages/Personal";
 import HomeScreen from "@/pages/Home";
 import MapScreen from "@/pages/Map";
-import MoreScreen from "@/pages/More";
+import MoreScreen from "@/pages/more/More";
+import PersonalScreen from "@/pages/Personal";
 
 const Tab = createBottomTabNavigator();
 
