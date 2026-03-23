@@ -2,6 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Svg, { Polyline } from "react-native-svg";
+import BottomBar from "@/components/BottomBar";
 
 interface LayoutProps {
   title?: React.ReactNode; //이미지도 받을 수 있게 수정
@@ -10,6 +11,7 @@ interface LayoutProps {
   onCameraPress?: () => void;
   fullBleedHeader?: React.ReactNode;
   scrollable?: boolean;
+  showBottomBar?: boolean;
   children: React.ReactNode;
 }
 
@@ -34,6 +36,7 @@ export default function Layout({
   onCameraPress,
   fullBleedHeader,
   scrollable = false,
+  showBottomBar = false,
   children,
 }: LayoutProps) {
   const navigation = useNavigation<any>();
@@ -100,6 +103,16 @@ export default function Layout({
           {/* 메인 콘텐츠 */}
           <View className="flex-1 px-[17px]">{children}</View>
         </>
+      )}
+      {showBottomBar && (
+        // state.index: -1로 설정해서 StampTour에서는 어떤 탭도 활성화(빨간색)되지 않음
+        // 탭 버튼을 누르면 해당 탭으로 정상 이동
+        <BottomBar
+          state={{ index: -1, routes: [] } as any}
+          navigation={navigation}
+          descriptors={{} as any}
+          insets={{ top: 0, right: 0, bottom: 0, left: 0 }}
+        />
       )}
     </SafeAreaView>
   );

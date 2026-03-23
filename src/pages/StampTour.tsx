@@ -45,7 +45,7 @@ function StrokeText({ children }: { children: string }) {
 
 export default function StampTour() {
   return (
-    <Layout title="스탬프 투어" showBack scrollable>
+    <Layout title="스탬프 투어" showBack scrollable showBottomBar>
       <View style={{ marginTop: 16, alignItems: 'center' }}>
         <StrokeText>SOGANG ODYSSEY</StrokeText>
         <StrokeText>CAMPUS MISSION BINGO</StrokeText>
