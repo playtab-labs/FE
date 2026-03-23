@@ -55,7 +55,7 @@ const ArtistFilterBar = ({ type, onFilterChange }: ArtistFilterBarProps) => {
   };
 
   return (
-    <View className="flex-row items-center px-4 py-2 gap-2 border-b border-soft-gray">
+    <View className="flex-row items-center px-4 py-2 gap-2 border-b border-gray">
       {/* 카테고리 칩 */}
       <ScrollView
         horizontal

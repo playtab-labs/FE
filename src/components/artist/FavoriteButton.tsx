@@ -34,10 +34,8 @@ const FavoriteButton = ({
     <TouchableOpacity
       onPress={handlePress}
       activeOpacity={0.8}
-      className={`w-8 aspect-square rounded-full items-center justify-center ${
-        isFilter && favorited
-          ? "bg-text-salmon border border-soft-gray"
-          : "bg-soft-gray-white"
+      className={`w-[26px] aspect-square rounded-full items-center justify-center border border-soft-gray  ${
+        isFilter && favorited ? "bg-text-salmon" : "bg-soft-gray-white"
       }`}
     >
       <Svg width={12} height={12} viewBox="0 0 12 12" fill="none">
