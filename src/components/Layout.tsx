@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import { Image, Text, TouchableOpacity, View } from "react-native";
+import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Svg, { Polyline } from "react-native-svg";
 
@@ -8,6 +8,8 @@ interface LayoutProps {
   showBack?: boolean;
   showCamera?: boolean;
   onCameraPress?: () => void;
+  fullBleedHeader?: React.ReactNode;
+  scrollable?: boolean;
   children: React.ReactNode;
 }
 
@@ -30,6 +32,8 @@ export default function Layout({
   showBack = false,
   showCamera = true,
   onCameraPress,
+  fullBleedHeader,
+  scrollable = false,
   children,
 }: LayoutProps) {
   const navigation = useNavigation<any>();
@@ -80,8 +84,23 @@ export default function Layout({
         </View>
       )}
 
-      {/* 메인 콘텐츠 */}
-      <View className="flex-1 px-[17px]">{children}</View>
+      {scrollable ? (
+        <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
+          {/* full-bleed 콘텐츠 (패딩 없음) */}
+          {fullBleedHeader}
+
+          {/* 메인 콘텐츠 */}
+          <View className="px-[17px]">{children}</View>
+        </ScrollView>
+      ) : (
+        <>
+          {/* full-bleed 콘텐츠 (패딩 없음) */}
+          {fullBleedHeader}
+
+          {/* 메인 콘텐츠 */}
+          <View className="flex-1 px-[17px]">{children}</View>
+        </>
+      )}
     </SafeAreaView>
   );
 }
