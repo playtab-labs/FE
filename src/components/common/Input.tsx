@@ -1,4 +1,11 @@
-import { Text, TextInput, TextInputProps, View } from "react-native";
+import { ReactNode } from "react";
+import {
+  Text,
+  TextInput,
+  TextInputProps,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 type InputSize = "default" | "with-button";
 
@@ -7,6 +14,9 @@ interface InputProps extends TextInputProps {
   size?: InputSize;
   label?: string;
   description?: string;
+  rightIcon?: ReactNode;
+  onRightIconPress?: () => void;
+  error?: boolean;
 }
 
 export default function Input({
@@ -14,6 +24,9 @@ export default function Input({
   size = "default",
   label,
   description,
+  rightIcon,
+  onRightIconPress,
+  error = false,
   ...props
 }: InputProps) {
   const isWithButton = size === "with-button";
@@ -25,30 +38,34 @@ export default function Input({
       {(label || description) && (
         <View className="flex-row justify-between items-center">
           {label && (
-            <Text style={{ fontSize: 14, fontWeight: "600", color: "#656565", lineHeight: 19.6, letterSpacing: -0.14 }}>
+            <Text className="text-b3 font-sb text-[#656565] tracking-[-0.14px]">
               {label}
             </Text>
           )}
           {description && (
-            <Text style={{ fontSize: 12, fontWeight: "400", color: "#656565", lineHeight: 16.8, letterSpacing: -0.12, textAlign: "right" }}>
+            <Text
+              className={`text-b4 font-rg tracking-[-0.12px] text-right ${error ? "text-[#FF7B94]" : "text-[#656565]"}`}
+            >
               {description}
             </Text>
           )}
         </View>
       )}
-      <TextInput
-        className={`flex-row items-center rounded-lg border border-[#F5F5F5] bg-white px-3 ${heightStyle}`}
-        style={{
-          gap: 10,
-          fontSize: 14,
-          fontWeight: "500",
-          lineHeight: 17,
-          color: "#1A1A1A",
-        }}
-        placeholder={placeholder}
-        placeholderTextColor="#E4E4E4"
-        {...props}
-      />
+      <View
+        className={`flex-row items-center rounded-lg border border-soft-gray bg-white px-3 ${heightStyle}`}
+      >
+        <TextInput
+          className={`flex-1 text-b3 tracking-[-0.14px] ${error ? "font-rg text-[#FF7B94]" : "font-medium text-gray-black"}`}
+          placeholder={placeholder}
+          placeholderTextColor="#E4E4E4"
+          {...props}
+        />
+        {rightIcon && (
+          <TouchableOpacity onPress={onRightIconPress} activeOpacity={0.7}>
+            {rightIcon}
+          </TouchableOpacity>
+        )}
+      </View>
     </View>
   );
 }

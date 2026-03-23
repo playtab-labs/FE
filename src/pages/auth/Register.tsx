@@ -1,45 +1,52 @@
-import { View, Text, TouchableOpacity, Image } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import Layout from '@/components/Layout';
+import Button from "@/components/common/Button";
+import Layout from "@/components/Layout";
+import { useNavigation } from "@react-navigation/native";
+import { Image, Text, View } from "react-native";
 
 export default function Register() {
   const navigation = useNavigation<any>();
 
   return (
     <Layout title="회원가입" showBack={true}>
-
-      {/*문구 */}
-      <View className="mt-[19px] gap-4 mx-4">
-        <Text className="text-2xl font-semibold text-gray-800">회원가입을 진행할게요.</Text>
-        <Text className="text-lg text-gray-400 mt-1">서브문구 넣을 거 없나</Text>
+      {/* 문구 */}
+      <View className="mt-[19px] gap-4">
+        <View className="flex-row items-center">
+          <Text className="text-h1 font-eb text-secondary-salmon">
+            회원가입
+          </Text>
+          <Text className="text-h1 font-eb text-gray-black">
+            을 진행할게요.
+          </Text>
+        </View>
+        <Text className="text-b3 font-sb text-dark-gray">
+          서브문구 넣을 거 없나
+        </Text>
       </View>
 
       {/* 로고 */}
       <View className="items-center mt-[125px]">
         <Image
-          source={require('@/assets/pngs/logo.png')}
+          source={require("@/assets/pngs/logo.png")}
           style={{ width: 277, height: 173 }}
           resizeMode="contain"
         />
       </View>
 
       {/* 버튼 */}
-      <View className="mx-4 gap-4 mt-[186px]">
-        <TouchableOpacity
-          className="bg-primary rounded-2xl h-14 items-center justify-center"
-          onPress={() => navigation.navigate('Terms', { userType: 'sogang' })}
-        >
-          <Text className="text-white text-base font-semibold">서강대생으로 이용</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          className="bg-primary rounded-2xl h-14 items-center justify-center"
-          onPress={() => navigation.navigate('Terms', { userType: 'external' })}
-        >
-          <Text className="text-white text-base font-semibold">외부인으로 이용</Text>
-        </TouchableOpacity>
+      <View className="items-center gap-4 mt-[186px]">
+        <Button
+          label="서강대생으로 시작하기"
+          size="long"
+          state="active"
+          onPress={() => navigation.navigate("Terms", { userType: "sogang" })}
+        />
+        <Button
+          label="외부인으로 시작하기"
+          size="long"
+          state="active"
+          onPress={() => navigation.navigate("Terms", { userType: "external" })}
+        />
       </View>
-
     </Layout>
   );
 }
