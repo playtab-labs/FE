@@ -1,9 +1,11 @@
 import Layout from "@/components/Layout";
-import { useNavigation } from "@react-navigation/native";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import AdBanner from "@/components/home/AdBanner";
+import MDBanner from "@/components/home/MDBanner";
+import StampTourBanner from "@/components/home/StampTourBanner";
+import { Image, useWindowDimensions, View } from "react-native";
 
 export default function Home() {
-  const navigation = useNavigation<any>();
+  const { width } = useWindowDimensions();
 
   return (
     <Layout showBack={true} title={
@@ -13,37 +15,19 @@ export default function Home() {
           resizeMode="contain"
         />
       }>
-      <View style={styles.container}>
-        <Text>Home 화면 입니다.</Text>
-        <TouchableOpacity
-          style={styles.tempButton}
-          onPress={() => navigation.navigate("Login")}
-        >
-          <Text style={styles.tempButtonText}>임시 - 로그인으로 이동</Text>
-        </TouchableOpacity>
+      <Image
+        source={require("@/assets/pngs/homeposter.png")}
+        style={{ width, aspectRatio: 122 / 163, marginHorizontal: -17 }}
+        resizeMode="cover"
+      />
+      <View style={{ marginTop: 16, flexDirection: "row", gap: 16 }}>
+        <StampTourBanner />
+        <MDBanner />
+      </View>
+      <View style={{ marginTop: 16 }}>
+        <AdBanner />
       </View>
     </Layout>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  tempButton: {
-    marginTop: 12,
-    height: 44,
-    paddingHorizontal: 16,
-    borderWidth: 1,
-    borderColor: "#aaa",
-    borderRadius: 8,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  tempButtonText: {
-    fontSize: 14,
-    color: "#aaa",
-  },
-});
