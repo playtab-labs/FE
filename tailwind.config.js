@@ -21,12 +21,14 @@ module.exports = {
       fontFamily: {
         'pretendard-rg': ['Pretendard-Regular'],
         'pretendard-sb': ['Pretendard-SemiBold'],
+        'pretendard-bd': ['Pretendard-Bold'],
         'pretendard-eb': ['Pretendard-ExtraBold'],
       },
       fontWeight: {
-        // Eb = ExtraBold (800), Sb = SemiBold (600), Rg = Regular (400)
+        // Eb = ExtraBold (800), Bd = Bold (700), Sb = SemiBold (600), Rg = Regular (400)
         // 기본 Tailwind에 이미 포함되어 있으나 명시적으로 선언
         eb: "800",
+        bd: "700",
         sb: "600",
         rg: "400",
       },

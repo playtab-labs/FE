@@ -1,13 +1,15 @@
 import { useNavigation } from "@react-navigation/native";
-import { Image, Text, TouchableOpacity, View } from "react-native";
+import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Svg, { Polyline } from "react-native-svg";
 
 interface LayoutProps {
-  title?: string;
+  title?: React.ReactNode; //이미지도 받을 수 있게 수정
   showBack?: boolean;
   showCamera?: boolean;
   onCameraPress?: () => void;
+  fullBleedHeader?: React.ReactNode;
+  scrollable?: boolean;
   children: React.ReactNode;
 }
 
@@ -30,6 +32,8 @@ export default function Layout({
   showBack = false,
   showCamera = true,
   onCameraPress,
+  fullBleedHeader,
+  scrollable = false,
   children,
 }: LayoutProps) {
   const navigation = useNavigation<any>();
@@ -52,18 +56,22 @@ export default function Layout({
           </View>
 
           {/* 중앙: 타이틀 */}
-          <Text
-            className="flex-1 text-center"
-            style={{
-              fontSize: 18,
-              fontWeight: "800",
-              color: "#1A1A1A",
-              lineHeight: 25.2,
-              letterSpacing: -0.18,
-            }}
-          >
-            {title}
-          </Text>
+          {typeof title === "string" ? (
+            <Text
+              className="flex-1 text-center"
+              style={{
+                fontSize: 18,
+                fontWeight: "800",
+                color: "#1A1A1A",
+                lineHeight: 25.2,
+                letterSpacing: -0.18,
+              }}
+            >
+              {title}
+            </Text>
+          ) : (
+            <View className="flex-1 items-center justify-center">{title}</View>
+          )}
 
           {/* 오른쪽: 카메라 아이콘 */}
           <View style={{ width: 24, alignItems: "center" }}>
@@ -76,8 +84,23 @@ export default function Layout({
         </View>
       )}
 
-      {/* 메인 콘텐츠 */}
-      <View className="flex-1 px-[17px]">{children}</View>
+      {scrollable ? (
+        <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
+          {/* full-bleed 콘텐츠 (패딩 없음) */}
+          {fullBleedHeader}
+
+          {/* 메인 콘텐츠 */}
+          <View className="px-[17px]">{children}</View>
+        </ScrollView>
+      ) : (
+        <>
+          {/* full-bleed 콘텐츠 (패딩 없음) */}
+          {fullBleedHeader}
+
+          {/* 메인 콘텐츠 */}
+          <View className="flex-1 px-[17px]">{children}</View>
+        </>
+      )}
     </SafeAreaView>
   );
 }
