@@ -10,7 +10,10 @@ const TAB_ITEMS = [
   { label: "개인정보 변경", icon: require("@/assets/pngs/personlity.png") },
   { label: "공지사항", icon: require("@/assets/pngs/ring.png") },
   { label: "언어", icon: require("@/assets/pngs/language.png") },
-  { label: "오프라인 데이터 다운", icon: require("@/assets/pngs/download.png") },
+  {
+    label: "오프라인 데이터 다운",
+    icon: require("@/assets/pngs/download.png"),
+  },
   { label: "FAQ", icon: require("@/assets/pngs/faq.png") },
   { label: "주최 주관 정보", icon: require("@/assets/pngs/host.png") },
   { label: "후원 협찬", icon: require("@/assets/pngs/sponsor.png") },
@@ -20,8 +23,20 @@ const TAB_ITEMS = [
 // day 내림차순 정렬 (3>2>1)
 const TICKETS: React.ComponentProps<typeof Ticket>[] = (
   [
-    { day: 3, status: "available", date: "26.05.14", time: "18:00~22:00", location: "청년광장" },
-    { day: 2, status: "available", date: "26.05.14", time: "18:00~22:00", location: "청년광장" },
+    {
+      day: 3,
+      status: "available",
+      date: "26.05.14",
+      time: "18:00~22:00",
+      location: "청년광장",
+    },
+    {
+      day: 2,
+      status: "expired",
+      date: "26.05.14",
+      time: "18:00~22:00",
+      location: "청년광장",
+    },
   ] as React.ComponentProps<typeof Ticket>[]
 ).sort((a, b) => b.day - a.day);
 
@@ -35,7 +50,12 @@ export default function More() {
       <ScrollView
         showsVerticalScrollIndicator={false}
         style={{ marginHorizontal: -17 }}
-        contentContainerStyle={{ paddingHorizontal: 17, paddingVertical: 16, alignItems: "center", gap: 16 }}
+        contentContainerStyle={{
+          paddingHorizontal: 17,
+          paddingVertical: 16,
+          alignItems: "center",
+          gap: 16,
+        }}
       >
         {/* ID 카드 */}
         <IdCard name="홍길동" email="gildong1234@gmail.com" isSogang />

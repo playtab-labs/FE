@@ -30,7 +30,7 @@ export default function Ticket({
   const isAvailable = status === "available";
   const colors = DAY_COLORS[day];
   const bg = bgColor ?? colors.bg;
-  const badge = badgeColor ?? colors.badge;
+  const badge = isAvailable ? (badgeColor ?? colors.badge) : "#FFFFFF";
 
   return (
     <View
@@ -51,7 +51,9 @@ export default function Ticket({
           className="h-[24px] flex-row items-center justify-center gap-[4px] px-[8px] rounded-[20px]"
           style={{ backgroundColor: badge }}
         >
-          <Text className="text-b5 font-sb text-extra-white">
+          <Text
+            className={`text-b5 font-sb ${isAvailable ? "text-extra-white" : "text-[#BFBFBF]"}`}
+          >
             {isAvailable ? "입장 가능" : "EXPIRED"}
           </Text>
         </View>
