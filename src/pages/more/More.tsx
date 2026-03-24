@@ -109,6 +109,8 @@ export default function More() {
                   ? () => navigation.navigate("FAQ")
                   : item.label === "주최 주관 정보"
                   ? () => navigation.navigate("Host")
+                  : item.label === "후원 협찬"
+                  ? () => navigation.navigate("Sponsor")
                   : undefined
               }
               rightElement={
