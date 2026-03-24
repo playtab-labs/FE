@@ -107,6 +107,8 @@ export default function More() {
                   ? () => navigation.navigate("PersonalChange")
                   : item.label === "FAQ"
                   ? () => navigation.navigate("FAQ")
+                  : item.label === "주최 주관 정보"
+                  ? () => navigation.navigate("Host")
                   : undefined
               }
               rightElement={
