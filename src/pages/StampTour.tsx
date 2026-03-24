@@ -9,15 +9,15 @@ import stamp2 from '@/assets/pngs/stamp2.png';
 import BingoTitle from '@/assets/svgs/bingotitle.svg';
 
 const BINGO_CELLS = [
-  { title: '#정문 게이트', description: '오디세이에 입장하세요!' },
-  { title: '#메인무대', description: '무대를 관람하세요' },
-  { title: '#푸드존', description: '축제에는 간식이 빠질 수 없죠' },
-  { title: '미션 4', description: '설명' },
-  { title: '미션 5', description: '설명' },
-  { title: '미션 6', description: '설명' },
-  { title: '미션 7', description: '설명' },
-  { title: '미션 8', description: '설명' },
-  { title: '미션 9', description: '설명' },
+  { title: '#정문 게이트', description: '오디세이에 입장하세요!', cleared: true },
+  { title: '#푸드존', description: '축제에는 간식이 빠질 수 없죠', cleared:false },
+  { title: '#메인무대', description: '무대를 관람하세요', cleared: true },
+  { title: '미션 4', description: '설명', cleared: false },
+  { title: '미션 5', description: '설명', cleared: false },
+  { title: '미션 6', description: '설명', cleared: false },
+  { title: '미션 7', description: '설명', cleared: false },
+  { title: '미션 8', description: '설명', cleared: false },
+  { title: '미션 9', description: '설명', cleared: false },
 ];
 
 
@@ -29,7 +29,7 @@ export default function StampTour() {
     >
       <Image
         source={stamp2}
-        style={{ position: 'absolute', top: 0, right: 0, width: 310, height: 310 }}
+        style={{ position: 'absolute', top: 0, right: 0, width: 330, height: 310 }}
         resizeMode="cover"
       />
     <Layout title="스탬프 투어" showBack scrollable showBottomBar bgTransparent>
@@ -44,7 +44,7 @@ export default function StampTour() {
               const cell = BINGO_CELLS[row * 3 + col];
               return (
                 <View key={col} style={{ flex: 1 }}>
-                  <BingoCell title={cell.title} description={cell.description} />
+                  <BingoCell title={cell.title} description={cell.description} cleared={cell.cleared} />
                 </View>
               );
             })}

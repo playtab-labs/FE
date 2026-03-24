@@ -1,12 +1,14 @@
-import { View, Text } from 'react-native';
+import { View, Text, Image } from 'react-native';
 import { typo } from '@/styles/typography';
+import stampImg from '@/assets/pngs/stamp1.png';
 
 interface BingoCellProps {
   title: string;
   description: string;
+  cleared?: boolean;
 }
 
-export default function BingoCell({ title, description }: BingoCellProps) {
+export default function BingoCell({ title, description, cleared = false }: BingoCellProps) {
   return (
     <View
       style={{
@@ -20,7 +22,9 @@ export default function BingoCell({ title, description }: BingoCellProps) {
         gap: 12,
         aspectRatio: 1,
         borderRadius: 8,
-        backgroundColor: '#FFFFFF',
+        backgroundColor: cleared ? '#FFA38C' : '#FFFFFF',
+        position: 'relative',
+        overflow: 'visible',
       }}
     >
       <Text
@@ -36,6 +40,20 @@ export default function BingoCell({ title, description }: BingoCellProps) {
       >
         {description}
       </Text>
+
+      {cleared && (
+        <Image
+          source={stampImg}
+          style={{
+            position: 'absolute',
+            width:100,
+            height:100,
+            aspectRatio: 1,
+            transform: [{ rotate: '-25deg' }]
+          }}
+          resizeMode="cover"
+        />
+      )}
     </View>
   );
 }
