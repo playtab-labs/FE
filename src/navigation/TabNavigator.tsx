@@ -7,6 +7,7 @@ import HomeScreen from "@/pages/Home";
 import MapScreen from "@/pages/Map";
 import FAQ from "@/pages/more/FAQ";
 import Host from "@/pages/more/Host";
+import Language from "@/pages/more/Language";
 import Sponsor from "@/pages/more/Sponsor";
 import MoreScreen from "@/pages/more/More";
 import PersonalChange from "@/pages/more/Personal";
@@ -53,6 +54,11 @@ function MoreNavigator() {
       <MoreStack.Screen
         name="Host"
         component={Host}
+        options={{ headerShown: false }}
+      />
+      <MoreStack.Screen
+        name="Language"
+        component={Language}
         options={{ headerShown: false }}
       />
     </MoreStack.Navigator>
