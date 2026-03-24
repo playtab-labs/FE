@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import ArtistScreen from "@/pages/Artist";
 import HomeScreen from "@/pages/Home";
 import MapScreen from "@/pages/Map";
+import FAQ from "@/pages/more/FAQ";
 import MoreScreen from "@/pages/more/More";
 import PersonalChange from "@/pages/more/Personal";
 import PasswordChange from "@/pages/more/Personal/PasswordChange";
@@ -35,6 +36,11 @@ function MoreNavigator() {
       <MoreStack.Screen
         name="ServiceWithdrawal"
         component={ServiceWithdrawal}
+        options={{ headerShown: false }}
+      />
+      <MoreStack.Screen
+        name="FAQ"
+        component={FAQ}
         options={{ headerShown: false }}
       />
     </MoreStack.Navigator>

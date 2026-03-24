@@ -105,6 +105,8 @@ export default function More() {
               onPress={
                 item.label === "개인정보 변경"
                   ? () => navigation.navigate("PersonalChange")
+                  : item.label === "FAQ"
+                  ? () => navigation.navigate("FAQ")
                   : undefined
               }
               rightElement={
