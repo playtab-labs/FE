@@ -1,9 +1,10 @@
-import { View, Text } from 'react-native';
+import Layout from "@/components/Layout";
+import MapLayout from "@/components/map/MapLayout";
 
 export default function Map() {
   return (
-    <View>
-      <Text>Map</Text>
-    </View>
+    <Layout title="MAP">
+      <MapLayout />
+    </Layout>
   );
 }

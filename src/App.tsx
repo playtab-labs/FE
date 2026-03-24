@@ -2,6 +2,7 @@ import "../global.css";
 import { NavigationContainer } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import "react-native-reanimated";
 import { useFonts } from "expo-font";
 
@@ -17,11 +18,13 @@ export default function App() {
   if (!fontsLoaded) return null;
 
   return (
-    <SafeAreaProvider>
-      <NavigationContainer>
-        <RootNavigator />
-        <StatusBar style="auto" />
-      </NavigationContainer>
-    </SafeAreaProvider>
+    <GestureHandlerRootView className="flex-1">
+      <SafeAreaProvider>
+        <NavigationContainer>
+          <RootNavigator />
+          <StatusBar style="auto" />
+        </NavigationContainer>
+      </SafeAreaProvider>
+    </GestureHandlerRootView>
   );
 }
