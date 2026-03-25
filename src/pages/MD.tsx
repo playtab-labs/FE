@@ -6,10 +6,10 @@ import { View } from 'react-native';
 const mdSample = require('@/assets/pngs/mdsample.png');
 
 const MOCK_PRODUCTS = [
-  { id: '1', title: 'Product 1', price: '10,000원' },
-  { id: '2', title: 'Product 2', price: '20,000원' },
-  { id: '3', title: 'Product 3', price: '30,000원' },
-  { id: '4', title: 'Product 4', price: '40,000원' },
+  { id: '1', title: '축구 유니폼', price: '10,000원', sizes: ['S', 'M', 'L','XL'] },
+  { id: '2', title: '축구 유니폼', price: '20,000원', sizes: ['S', 'M', 'L'], soldOut: true },
+  { id: '3', title: '축구 유니폼', price: '30,000원' },
+  { id: '4', title: '축구 유니폼', price: '40,000원' },
 ];
 
 export default function MD() {
@@ -25,6 +25,8 @@ export default function MD() {
               imageSource={mdSample}
               title={product.title}
               price={product.price}
+              sizes={product.sizes}
+              soldOut={product.soldOut}
             />
           </View>
         ))}
