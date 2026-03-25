@@ -13,7 +13,8 @@ export default function ProductInfo() {
       <View
         style={{
           width: '100%',
-          padding: 16,
+          paddingVertical: 16,
+          paddingHorizontal: 25,
           borderRadius: 8,
           backgroundColor: '#FFFFFF',
           gap: 16,
