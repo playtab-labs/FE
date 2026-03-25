@@ -9,6 +9,7 @@ import SignUpComplete from "@/pages/auth/SignUpComplete";
 import Terms from "@/pages/auth/Terms";
 import StampTour from "@/pages/StampTour";
 import MD from "@/pages/MD";
+import MDDetail from "@/pages/MDDetail";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import TabNavigator from "./TabNavigator";
 
@@ -75,6 +76,11 @@ export default function RootNavigator() {
       <Stack.Screen
         name="MD"
         component={MD}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="MDDetail"
+        component={MDDetail}
         options={{ headerShown: false }}
       />
 
