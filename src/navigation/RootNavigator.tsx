@@ -1,4 +1,6 @@
 import EmailVerify from "@/pages/auth/EmailVerify";
+import FindPassword from "@/pages/auth/FindPassword";
+import ResetPassword from "@/pages/auth/ResetPassword";
 import Login from "@/pages/auth/Login";
 import PersonalInfo from "@/pages/auth/PersonalInfo";
 import Register from "@/pages/auth/Register";
@@ -61,10 +63,22 @@ export default function RootNavigator() {
         options={{ headerShown: false }}
       />
       <Stack.Screen
+        name="FindPassword"
+        component={FindPassword}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="ResetPassword"
+        component={ResetPassword}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
         name="MD"
         component={MD}
         options={{ headerShown: false }}
       />
+
+
     </Stack.Navigator>
   );
 }

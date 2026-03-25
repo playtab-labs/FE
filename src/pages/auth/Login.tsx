@@ -79,7 +79,7 @@ export default function Login() {
           </Text>
         </TouchableOpacity>
         <Text className="text-[13px] text-gray-400">|</Text>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate("FindPassword")}>
           <Text className="text-b4 font-sb text-dark-gray underline">
             비밀번호 찾기
           </Text>

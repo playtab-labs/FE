@@ -2,6 +2,7 @@ import Layout from "@/components/Layout";
 import IdCard from "@/components/more/IdCard";
 import TabList from "@/components/more/TabList";
 import Ticket from "@/components/more/Ticket";
+import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import Svg, { Path } from "react-native-svg";
@@ -41,6 +42,7 @@ const TICKETS: React.ComponentProps<typeof Ticket>[] = (
 ).sort((a, b) => b.day - a.day);
 
 export default function More() {
+  const navigation = useNavigation<any>();
   const [expanded, setExpanded] = useState(false);
   const hasMultiple = TICKETS.length > 1;
   const visibleTickets = hasMultiple && !expanded ? [TICKETS[0]] : TICKETS;
@@ -100,6 +102,19 @@ export default function More() {
               key={item.label}
               icon={item.icon}
               label={item.label}
+              onPress={
+                item.label === "개인정보 변경"
+                  ? () => navigation.navigate("PersonalChange")
+                  : item.label === "FAQ"
+                  ? () => navigation.navigate("FAQ")
+                  : item.label === "주최 주관 정보"
+                  ? () => navigation.navigate("Host")
+                  : item.label === "후원 협찬"
+                  ? () => navigation.navigate("Sponsor")
+                  : item.label === "언어"
+                  ? () => navigation.navigate("Language")
+                  : undefined
+              }
               rightElement={
                 item.label === "언어" ? (
                   <Text className="text-b4 font-rg text-[#656565] text-right">
