@@ -17,6 +17,7 @@ interface MapMarkerProps {
   translateY: SharedValue<number>;
   containerWidth: SharedValue<number>;
   containerHeight: SharedValue<number>;
+  onClick: () => void;
 }
 
 const MapMarker = ({
@@ -26,6 +27,7 @@ const MapMarker = ({
   translateY,
   containerWidth,
   containerHeight,
+  onClick,
 }: MapMarkerProps) => {
   const animatedStyle = useAnimatedStyle(() => {
     "worklet";
@@ -42,10 +44,7 @@ const MapMarker = ({
   });
 
   return (
-    <Animated.View
-      className="absolute"
-      style={animatedStyle}
-    >
+    <Animated.View className="absolute" style={animatedStyle}>
       <View
         className={`px-3 py-1 rounded-full items-center justify-center ${MARKER_COLORS[marker.type]}`}
       >
