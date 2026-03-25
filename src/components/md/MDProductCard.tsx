@@ -1,13 +1,15 @@
 import { Image, Text, View } from 'react-native';
 import { typo } from '@/styles/typography';
+import MDSizeBadge from './MDSizeBadge';
 
 interface MDProductCardProps {
   imageUri: string;
   title: string;
   price: string;
+  sizes?: string[];
 }
 
-export default function MDProductCard({ imageUri, title, price }: MDProductCardProps) {
+export default function MDProductCard({ imageUri, title, price, sizes }: MDProductCardProps) {
   return (
     <View
       style={{
@@ -43,14 +45,24 @@ export default function MDProductCard({ imageUri, title, price }: MDProductCardP
           alignSelf: 'stretch',
         }}
       >
-        <Text
-          className={typo.B3_Eb}
-          style={{ color: '#1A1A1A' }}
-          numberOfLines={1}
-          ellipsizeMode="tail"
-        >
-          {title}
-        </Text>
+        <View style={{ flexDirection: 'column', alignItems: 'flex-start', alignSelf: 'stretch' }}>
+          <Text
+            className={typo.B3_Eb}
+            style={{ color: '#1A1A1A' }}
+            numberOfLines={1}
+            ellipsizeMode="tail"
+          >
+            {title}
+          </Text>
+
+          {sizes && sizes.length > 0 && (
+            <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 2, marginTop: 8 }}>
+              {sizes.map((size) => (
+                <MDSizeBadge key={size} size={size} />
+              ))}
+            </View>
+          )}
+        </View>
 
         <Text className={typo.B5_Rg} style={{ color: '#1A1A1A' }}>
           {price}
