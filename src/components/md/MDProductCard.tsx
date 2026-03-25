@@ -1,16 +1,16 @@
-import { Image, Text, View } from 'react-native';
+import { Image, ImageSourcePropType, Text, View } from 'react-native';
 import { typo } from '@/styles/typography';
 import MDSizeBadge from './MDSizeBadge';
 
 interface MDProductCardProps {
-  imageUri: string;
+  imageSource: ImageSourcePropType;
   title: string;
   price: string;
   sizes?: string[];
   soldOut?: boolean;
 }
 
-export default function MDProductCard({ imageUri, title, price, sizes, soldOut = false }: MDProductCardProps) {
+export default function MDProductCard({ imageSource, title, price, sizes, soldOut = false }: MDProductCardProps) {
   return (
     <View
       style={{
@@ -26,9 +26,9 @@ export default function MDProductCard({ imageUri, title, price, sizes, soldOut =
     >
       <View style={{ position: 'relative', alignSelf: 'stretch' }}>
         <Image
-          source={{ uri: imageUri }}
+          source={imageSource}
           style={{
-            width: 164,
+            width: '100%',
             height: 164,
             borderTopLeftRadius: 16,
             borderTopRightRadius: 16,
