@@ -7,9 +7,10 @@ interface MDProductCardProps {
   title: string;
   price: string;
   sizes?: string[];
+  soldOut?: boolean;
 }
 
-export default function MDProductCard({ imageUri, title, price, sizes }: MDProductCardProps) {
+export default function MDProductCard({ imageUri, title, price, sizes, soldOut = false }: MDProductCardProps) {
   return (
     <View
       style={{
@@ -23,17 +24,42 @@ export default function MDProductCard({ imageUri, title, price, sizes }: MDProdu
         overflow: 'hidden',
       }}
     >
-      <Image
-        source={{ uri: imageUri }}
-        style={{
-          width: 164,
-          height: 164,
-          borderTopLeftRadius: 16,
-          borderTopRightRadius: 16,
-          alignSelf: 'stretch',
-        }}
-        resizeMode="cover"
-      />
+      <View style={{ position: 'relative', alignSelf: 'stretch' }}>
+        <Image
+          source={{ uri: imageUri }}
+          style={{
+            width: 164,
+            height: 164,
+            borderTopLeftRadius: 16,
+            borderTopRightRadius: 16,
+            alignSelf: 'stretch',
+          }}
+          resizeMode="cover"
+        />
+        {soldOut && (
+          <View
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              borderTopLeftRadius: 16,
+              borderTopRightRadius: 16,
+              backgroundColor: 'rgba(255, 255, 255, 0.50)',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <Text
+              className={typo.T1_Eb}
+              style={{ color: '#000', letterSpacing: -0.2 }}
+            >
+              Sold out
+            </Text>
+          </View>
+        )}
+      </View>
 
       <View
         style={{
@@ -58,7 +84,7 @@ export default function MDProductCard({ imageUri, title, price, sizes }: MDProdu
           {sizes && sizes.length > 0 && (
             <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 2, marginTop: 8 }}>
               {sizes.map((size) => (
-                <MDSizeBadge key={size} size={size} />
+                <MDSizeBadge key={size} size={size} soldOut={soldOut} />
               ))}
             </View>
           )}
