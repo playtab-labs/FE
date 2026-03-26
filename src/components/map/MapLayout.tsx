@@ -1,20 +1,22 @@
+import { useState } from "react";
 import { View } from "react-native";
 import { useSharedValue } from "react-native-reanimated";
 import ZoomableMap from "./ZoomableMap";
 import MapMarkerLayer from "./MapMarkerLayer";
+import BoothBottomTab from "./BoothBottomTab";
+import type { MarkerData } from "@/data/mockMarkers";
 
 const MapLayout = () => {
-  // 제스처 shared values
   const scale = useSharedValue(1);
   const savedScale = useSharedValue(1);
   const translateX = useSharedValue(0);
   const translateY = useSharedValue(0);
   const savedTranslateX = useSharedValue(0);
   const savedTranslateY = useSharedValue(0);
-
-  // 마커 위치 계산용 컨테이너 크기
   const containerWidth = useSharedValue(0);
   const containerHeight = useSharedValue(0);
+
+  const [selectedMarker, setSelectedMarker] = useState<MarkerData | null>(null);
 
   return (
     <View
@@ -38,7 +40,14 @@ const MapLayout = () => {
         translateY={translateY}
         containerWidth={containerWidth}
         containerHeight={containerHeight}
+        onMarkerClick={setSelectedMarker}
       />
+      {selectedMarker && (
+        <BoothBottomTab
+          marker={selectedMarker}
+          onClose={() => setSelectedMarker(null)}
+        />
+      )}
     </View>
   );
 };
