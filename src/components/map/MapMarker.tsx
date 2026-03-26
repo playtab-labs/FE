@@ -1,13 +1,18 @@
-import { View, Text } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import Animated, { useAnimatedStyle } from "react-native-reanimated";
 import type { SharedValue } from "react-native-reanimated";
 import type { MarkerData } from "@/data/mockMarkers";
 
-const MARKER_COLORS: Record<MarkerData["type"], string> = {
-  stage: "bg-red-500",
-  facility: "bg-purple-400",
-  food: "bg-orange-300",
-  md: "bg-green-400",
+const MARKER_CLASSNAME: Record<MarkerData["type"], string> = {
+  main: "bg-text-salmon min-w-32 text-black px-4 py-2",
+  sub: "bg-secondary-salmon min-w-20 font-white px-4 py-2",
+  facility: "bg-secondary-bubblegum-pink w-10 aspect-square",
+};
+
+const MARKER_TYPO: Record<MarkerData["type"], string> = {
+  main: "text-t2 font-eb text-white",
+  sub: "text-t2 font-eb text-gray-black",
+  facility: "text-t3 font-eb text text-center",
 };
 
 interface MapMarkerProps {
@@ -19,6 +24,8 @@ interface MapMarkerProps {
   containerHeight: SharedValue<number>;
   onClick: () => void;
 }
+
+const FACILITY_VISIBLE_SCALE = 2;
 
 const MapMarker = ({
   marker,
@@ -36,22 +43,41 @@ const MapMarker = ({
     const x = marker.fx * containerWidth.value;
     const y = marker.fy * containerHeight.value;
 
-    // 지도의 scale/translate 변환을 마커 위치에만 적용 (크기는 고정)
     const left = (x - cx) * scale.value + cx + translateX.value;
     const top = (y - cy) * scale.value + cy + translateY.value;
 
-    return { left, top };
+    const opacity =
+      marker.type === "facility"
+        ? scale.value >= FACILITY_VISIBLE_SCALE
+          ? 1
+          : 0
+        : 1;
+
+    return { left, top, opacity };
   });
 
   return (
     <Animated.View className="absolute" style={animatedStyle}>
-      <View
-        className={`px-3 py-1 rounded-full items-center justify-center ${MARKER_COLORS[marker.type]}`}
-      >
-        <Text className="text-white text-xs font-bold">{marker.label}</Text>
-      </View>
+      <TouchableOpacity onPress={onClick} activeOpacity={0.8}>
+        <View
+          className={`rounded-[16px] border-2 border-white items-center justify-center ${MARKER_CLASSNAME[marker.type]}`}
+          style={styles.shadow}
+        >
+          <Text className={`${MARKER_TYPO[marker.type]}`}>{marker.label}</Text>
+        </View>
+      </TouchableOpacity>
     </Animated.View>
   );
 };
+
+const styles = StyleSheet.create({
+  shadow: {
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 4, // Android
+  },
+});
 
 export default MapMarker;
