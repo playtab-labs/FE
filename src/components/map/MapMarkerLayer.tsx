@@ -1,6 +1,6 @@
 import { View } from "react-native";
 import type { SharedValue } from "react-native-reanimated";
-import { MOCK_MARKERS, type MarkerData } from "@/data/mockMarkers";
+import { MOCK_MARKERS } from "@/data/mockMarkers";
 import MapMarker from "./MapMarker";
 
 interface MapMarkerLayerProps {
@@ -9,19 +9,13 @@ interface MapMarkerLayerProps {
   translateY: SharedValue<number>;
   containerWidth: SharedValue<number>;
   containerHeight: SharedValue<number>;
-  onMarkerClick: (marker: MarkerData) => void;
 }
 
-const MapMarkerLayer = ({ onMarkerClick, ...props }: MapMarkerLayerProps) => {
+const MapMarkerLayer = (props: MapMarkerLayerProps) => {
   return (
-    <View className="absolute inset-0">
+    <View className="absolute inset-0" style={{ pointerEvents: "box-none" }}>
       {MOCK_MARKERS.map((marker) => (
-        <MapMarker
-          key={marker.id}
-          marker={marker}
-          onClick={() => onMarkerClick(marker)}
-          {...props}
-        />
+        <MapMarker key={marker.id} marker={marker} {...props} />
       ))}
     </View>
   );
