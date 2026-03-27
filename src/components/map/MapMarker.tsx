@@ -4,14 +4,14 @@ import type { SharedValue } from "react-native-reanimated";
 import type { MarkerData } from "@/data/mockMarkers";
 
 const MARKER_CLASSNAME: Record<MarkerData["type"], string> = {
-  main: "bg-text-salmon min-w-32 text-black px-4 py-2",
-  sub: "bg-secondary-salmon min-w-20 font-white px-4 py-2",
-  facility: "bg-secondary-bubblegum-pink w-10 aspect-square",
+  main: "bg-text-salmon min-w-20 h-10  px-4 rounded-[16px] border-white",
+  sub: "bg-secondary-salmon min-w-14 h-8  px-4 rounded-[16px] border-white",
+  facility: "bg-white w-10 aspect-square rounded-full border-text-salmon",
 };
 
 const MARKER_TYPO: Record<MarkerData["type"], string> = {
-  main: "text-t2 font-eb text-white",
-  sub: "text-t2 font-eb text-gray-black",
+  main: "text-t3 font-eb ",
+  sub: "text-b4 font-eb ",
   facility: "text-t3 font-eb text text-center",
 };
 
@@ -55,10 +55,12 @@ const MapMarker = ({
   });
 
   return (
-    <Animated.View style={[{ position: "absolute", pointerEvents: "none" }, animatedStyle]}>
+    <Animated.View
+      style={[{ position: "absolute", pointerEvents: "none" }, animatedStyle]}
+    >
       <View
         collapsable={false}
-        className={`rounded-[16px] border-2 border-white items-center justify-center ${MARKER_CLASSNAME[marker.type]}`}
+        className={` border-[1px] items-center justify-center text-gray-black ${MARKER_CLASSNAME[marker.type]}`}
         style={[styles.shadow, { pointerEvents: "none" }]}
       >
         <Text className={MARKER_TYPO[marker.type]}>{marker.label}</Text>
