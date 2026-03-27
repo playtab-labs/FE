@@ -35,7 +35,7 @@ export const MOCK_BOOTH_ITEMS: Record<string, BoothItem[]> = {
 export const MOCK_MARKERS: MarkerData[] = [
   { id: "m1", label: "버스킹 무대", type: "main", fx: 0.42, fy: 0.38 },
   { id: "m2", label: "아티스트 무대", type: "main", fx: 0.72, fy: 0.52 },
-  { id: "m3", label: "주점", type: "sub", fx: 0.2, fy: 0.58 },
+  { id: "m3", label: "주점", type: "main", fx: 0.2, fy: 0.58 },
   { id: "m4", label: "MD", type: "sub", fx: 0.28, fy: 0.35 },
   { id: "m5", label: "푸드", type: "sub", fx: 0.58, fy: 0.62 },
   { id: "m6", label: "📷", type: "facility", fx: 0.5, fy: 0.5 },
