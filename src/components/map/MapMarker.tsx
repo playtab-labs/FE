@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import Animated, { useAnimatedStyle } from "react-native-reanimated";
 import type { SharedValue } from "react-native-reanimated";
 import type { MarkerData } from "@/data/mockMarkers";
@@ -22,7 +22,6 @@ interface MapMarkerProps {
   translateY: SharedValue<number>;
   containerWidth: SharedValue<number>;
   containerHeight: SharedValue<number>;
-  onClick: () => void;
 }
 
 const FACILITY_VISIBLE_SCALE = 2;
@@ -34,7 +33,6 @@ const MapMarker = ({
   translateY,
   containerWidth,
   containerHeight,
-  onClick,
 }: MapMarkerProps) => {
   const animatedStyle = useAnimatedStyle(() => {
     "worklet";
@@ -57,15 +55,14 @@ const MapMarker = ({
   });
 
   return (
-    <Animated.View className="absolute" style={animatedStyle}>
-      <TouchableOpacity onPress={onClick} activeOpacity={0.8}>
-        <View
-          className={`rounded-[16px] border-2 border-white items-center justify-center ${MARKER_CLASSNAME[marker.type]}`}
-          style={styles.shadow}
-        >
-          <Text className={`${MARKER_TYPO[marker.type]}`}>{marker.label}</Text>
-        </View>
-      </TouchableOpacity>
+    <Animated.View style={[{ position: "absolute", pointerEvents: "none" }, animatedStyle]}>
+      <View
+        collapsable={false}
+        className={`rounded-[16px] border-2 border-white items-center justify-center ${MARKER_CLASSNAME[marker.type]}`}
+        style={[styles.shadow, { pointerEvents: "none" }]}
+      >
+        <Text className={MARKER_TYPO[marker.type]}>{marker.label}</Text>
+      </View>
     </Animated.View>
   );
 };
@@ -76,7 +73,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.25,
     shadowRadius: 4,
-    elevation: 4, // Android
+    elevation: 4,
   },
 });
 
