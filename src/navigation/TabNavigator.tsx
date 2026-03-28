@@ -13,7 +13,7 @@ import MoreScreen from "@/pages/more/More";
 import PersonalChange from "@/pages/more/Personal";
 import PasswordChange from "@/pages/more/Personal/PasswordChange";
 import ServiceWithdrawal from "@/pages/more/Personal/ServiceWithdrawal";
-import PersonalScreen from "@/pages/Personal";
+import PersonalScreen from "@/pages/Personal/Personal";
 
 const Tab = createBottomTabNavigator();
 const MoreStack = createNativeStackNavigator();
