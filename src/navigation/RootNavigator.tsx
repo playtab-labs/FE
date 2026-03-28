@@ -8,10 +8,13 @@ import SetPassword from "@/pages/auth/SetPassword";
 import SignUpComplete from "@/pages/auth/SignUpComplete";
 import Terms from "@/pages/auth/Terms";
 import StampTour from "@/pages/StampTour";
+import Tag from "@/pages/Personal/Tag";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import TabNavigator from "./TabNavigator";
 
-const Stack = createNativeStackNavigator();
+import type { RootStackParamList } from "./types";
+
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function RootNavigator() {
   return (
@@ -59,6 +62,11 @@ export default function RootNavigator() {
       <Stack.Screen
         name="StampTour"
         component={StampTour}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Tag"
+        component={Tag}
         options={{ headerShown: false }}
       />
       <Stack.Screen

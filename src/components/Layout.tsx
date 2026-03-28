@@ -45,7 +45,9 @@ export default function Layout({
 
   return (
     // bgTransparent=true면 배경 투명, 아니면 기본 앱 배경색
-    <SafeAreaView className={`flex-1 ${bgTransparent ? 'bg-transparent' : 'bg-app-bg'}`}>
+    <SafeAreaView
+      className={`flex-1 ${bgTransparent ? "bg-transparent" : "bg-app-bg"}`}
+    >
       {/* AppBar: 56px */}
       {title && (
         <View
@@ -83,7 +85,10 @@ export default function Layout({
           <View style={{ width: 24, alignItems: "center" }}>
             {showCamera && (
               <TouchableOpacity onPress={onCameraPress}>
-                <Image source={require("@/assets/pngs/camera.png")} style={{ width: 24, height: 24 }} />
+                <Image
+                  source={require("@/assets/pngs/camera.png")}
+                  style={{ width: 24, height: 24 }}
+                />
               </TouchableOpacity>
             )}
           </View>
@@ -96,7 +101,7 @@ export default function Layout({
           {fullBleedHeader}
 
           {/* 메인 콘텐츠 */}
-          <View className="px-[17px]">{children}</View>
+          <View className="px-[17px] h-full">{children}</View>
         </ScrollView>
       ) : (
         <>
@@ -104,7 +109,7 @@ export default function Layout({
           {fullBleedHeader}
 
           {/* 메인 콘텐츠 */}
-          <View className="flex-1 px-[17px]">{children}</View>
+          <View className="flex-1 px-[17px] h-full">{children}</View>
         </>
       )}
       {showBottomBar && (
