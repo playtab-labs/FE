@@ -11,6 +11,7 @@ import Language from "@/pages/more/Language";
 import Sponsor from "@/pages/more/Sponsor";
 import MoreScreen from "@/pages/more/More";
 import PersonalChange from "@/pages/more/Personal";
+import MyInfoChange from "@/pages/more/Personal/MyInfoChange";
 import PasswordChange from "@/pages/more/Personal/PasswordChange";
 import ServiceWithdrawal from "@/pages/more/Personal/ServiceWithdrawal";
 import PersonalScreen from "@/pages/Personal";
@@ -34,6 +35,11 @@ function MoreNavigator() {
       <MoreStack.Screen
         name="PasswordChange"
         component={PasswordChange}
+        options={{ headerShown: false }}
+      />
+      <MoreStack.Screen
+        name="MyInfoChange"
+        component={MyInfoChange}
         options={{ headerShown: false }}
       />
       <MoreStack.Screen

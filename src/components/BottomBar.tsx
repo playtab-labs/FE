@@ -17,6 +17,10 @@ const TAB_ITEMS = [
 export default function BottomBar({ state, navigation }: BottomTabBarProps) {
   const insets = useSafeAreaInsets();
 
+  const activeRoute = state.routes[state.index];
+  const nestedState = activeRoute?.state;
+  if (nestedState && (nestedState.index ?? 0) > 0) return null;
+
   return (
     <View
       style={{
