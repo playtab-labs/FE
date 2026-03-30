@@ -2,8 +2,8 @@ import Layout from "@/components/Layout";
 import Button from "@/components/common/Button";
 import Input from "@/components/common/Input";
 import NationalityModal from "@/components/common/NationalityModal";
-import { useNavigation } from "@react-navigation/native";
-import { useState } from "react";
+import ToastError from "@/components/common/ToastError";
+import { useRef, useState } from "react";
 import {
     Keyboard,
     ScrollView,
@@ -39,13 +39,26 @@ const formatBirthday = (digits: string) => {
 };
 
 export default function MyInfoChange() {
-  const navigation = useNavigation<any>();
-
+  const [saved, setSaved] = useState(ORIGINAL);
   const [name, setName] = useState(ORIGINAL.name);
   const [gender, setGender] = useState<"male" | "female">(ORIGINAL.gender);
   const [birthdayRaw, setBirthdayRaw] = useState(ORIGINAL.birthday);
   const [nationality, setNationality] = useState(ORIGINAL.nationality);
   const [nationalityOpen, setNationalityOpen] = useState(false);
+  const [toast, setToast] = useState<"success" | "error" | null>(null);
+  const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const showToast = (type: "success" | "error") => {
+    setToast(type);
+    if (toastTimer.current) clearTimeout(toastTimer.current);
+    toastTimer.current = setTimeout(() => setToast(null), 2500);
+  };
+
+  const handleSubmit = () => {
+    // TODO: 실제 API 연동 시 성공/실패에 따라 분기
+    setSaved({ name: name.trim(), gender, birthday: birthdayRaw, nationality });
+    showToast("success");
+  };
 
   const handleBirthday = (text: string) => {
     const digits = text.replace(/\D/g, "").slice(0, 8);
@@ -53,10 +66,10 @@ export default function MyInfoChange() {
   };
 
   const isChanged =
-    name.trim() !== ORIGINAL.name ||
-    gender !== ORIGINAL.gender ||
-    birthdayRaw !== ORIGINAL.birthday ||
-    nationality !== ORIGINAL.nationality;
+    name.trim() !== saved.name ||
+    gender !== saved.gender ||
+    birthdayRaw !== saved.birthday ||
+    nationality !== saved.nationality;
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
@@ -150,7 +163,7 @@ export default function MyInfoChange() {
               label="변경 완료"
               size="long"
               state={isChanged ? "active" : "inactive"}
-              onPress={() => navigation.goBack()}
+              onPress={handleSubmit}
             />
           </View>
 
@@ -162,6 +175,19 @@ export default function MyInfoChange() {
             onClose={() => setNationalityOpen(false)}
           />
         </Layout>
+
+        {toast && (
+          <View className="absolute bottom-[120px] left-0 right-0 items-center">
+            <ToastError
+              type="login"
+              message={
+                toast === "success"
+                  ? "성공적으로 변경되었습니다."
+                  : "오류가 발생했습니다. 다시 시도해주세요."
+              }
+            />
+          </View>
+        )}
       </View>
     </TouchableWithoutFeedback>
   );
