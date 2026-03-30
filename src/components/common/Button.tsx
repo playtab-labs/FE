@@ -39,7 +39,11 @@ export default function Button({
         disabled={isDisabled}
         activeOpacity={0.8}
       >
-        <Text className="text-t3 font-eb">{label}</Text>
+        <Text
+          className={`text-t3 font-eb ${isDisabled ? "text-[#BFBFBF]" : ""}`}
+        >
+          {label}
+        </Text>
       </TouchableOpacity>
     );
   }
