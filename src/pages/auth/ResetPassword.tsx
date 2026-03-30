@@ -18,11 +18,14 @@ export default function ResetPassword() {
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const [passwordBlurred, setPasswordBlurred] = useState(false);
+  const [confirmBlurred, setConfirmBlurred] = useState(false);
 
   const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/;
   const isPasswordInvalid =
-    password.length > 0 && !passwordRegex.test(password);
-  const isMismatch = confirm.length > 0 && password !== confirm;
+    passwordBlurred && password.length > 0 && !passwordRegex.test(password);
+  const isMismatch =
+    confirmBlurred && confirm.length > 0 && password !== confirm;
   const isValid = passwordRegex.test(password) && password === confirm;
 
   return (
@@ -32,10 +35,16 @@ export default function ResetPassword() {
           <View className="mt-6 gap-6 items-center">
             <Input
               label="비밀번호 설정"
-              description="영문, 숫자 조합 8글자 이상으로 설정해주세요."
-              placeholder="비밀번호를 입력해주세요."
+              description={
+                isPasswordInvalid
+                  ? "규칙에 맞게 설정해주세요."
+                  : "영문, 숫자 조합 8글자 이상으로 설정해주세요."
+              }
+              placeholder="변경할 비밀번호를 입력해주세요."
               value={password}
               onChangeText={setPassword}
+              onFocus={() => setPasswordBlurred(false)}
+              onBlur={() => setPasswordBlurred(true)}
               autoCapitalize="none"
               error={isPasswordInvalid}
             />
@@ -44,9 +53,11 @@ export default function ResetPassword() {
               description={
                 isMismatch ? "비밀번호가 일치하지 않습니다." : undefined
               }
-              placeholder="비밀번호를 한 번 더 입력해주세요."
+              placeholder="변경할 비밀번호를 한 번 더 입력해주세요."
               value={confirm}
               onChangeText={setConfirm}
+              onFocus={() => setConfirmBlurred(false)}
+              onBlur={() => setConfirmBlurred(true)}
               autoCapitalize="none"
               error={isMismatch}
             />
@@ -75,7 +86,7 @@ export default function ResetPassword() {
                   navigation.navigate("Login");
                 }}
                 activeOpacity={0.7}
-                className="bg-[#D9D9D9] rounded-2xl px-10 py-3"
+                className="bg-secondary-salmon rounded-2xl px-10 py-3"
               >
                 <Text className="text-b2 font-sb text-gray-black">
                   돌아가기
