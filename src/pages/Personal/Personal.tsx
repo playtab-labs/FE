@@ -35,7 +35,7 @@ export default function Personal() {
         </View>
 
         {/* 버튼 */}
-        <View className="mt-auto pb-4 items-center">
+        <View className="mt-auto mb-6 items-center">
           <Button
             label="팔찌 연동 시작하기"
             size="long"
