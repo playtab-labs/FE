@@ -1,19 +1,60 @@
+import { useRef, useState } from "react";
 import { ScrollView, View, Text, TouchableOpacity } from "react-native";
 import Layout from "@/components/Layout";
 import BandCard from "@/components/personal/BandCard";
+import StaffAuthModal from "@/components/personal/StaffAuthModal";
+import ToastError from "@/components/common/ToastError";
 import { useNavigation } from "@react-navigation/native";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import type { RootStackParamList } from "@/navigation/types";
 
-// TODO: API 연동 시 실제 데이터로 교체
-const MOCK_BANDS = [
-  { id: "1", serialNumber: "XXXXXXXXXXX", isExpired: true },
-  { id: "2", serialNumber: "XXXXXXXXXXX", isExpired: false },
-];
+const STAFF_CODE = "0000";
 
 export default function PersonalBand() {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+
+  // 팔찌 목록 — TODO: API 연동 시 실제 데이터로 교체
+  const [bands, setBands] = useState([
+    { id: "1", serialNumber: "XXXXXXXXXXX", isExpired: true },
+    { id: "2", serialNumber: "XXXXXXXXXXX", isExpired: false },
+  ]);
+
+  const [authModalVisible, setAuthModalVisible] = useState(false);
+  const [targetBandId, setTargetBandId] = useState<string | null>(null);
+  const [authError, setAuthError] = useState<string | undefined>(undefined);
+  const [toastVisible, setToastVisible] = useState(false);
+  const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const showToast = () => {
+    setToastVisible(true);
+    if (toastTimer.current) clearTimeout(toastTimer.current);
+    toastTimer.current = setTimeout(() => setToastVisible(false), 2500);
+  };
+
+  const handleClosePress = (bandId: string) => {
+    setTargetBandId(bandId);
+    setAuthError(undefined);
+    setAuthModalVisible(true);
+  };
+
+  const handleAuthConfirm = (code: string) => {
+    if (code === STAFF_CODE) {
+      setBands((prev) => prev.filter((b) => b.id !== targetBandId));
+      setAuthModalVisible(false);
+      setTargetBandId(null);
+      setAuthError(undefined);
+      showToast();
+    } else {
+      setAuthError("인증번호가 일치하지 않습니다.");
+    }
+  };
+
+  const handleModalClose = () => {
+    setAuthModalVisible(false);
+    setTargetBandId(null);
+    setAuthError(undefined);
+  };
 
   return (
     <Layout title="PERSONAL" showBack={false} showBottomBar={true}>
@@ -28,13 +69,11 @@ export default function PersonalBand() {
       >
         <View className="gap-[33px] flex-1">
           {/* 팔찌 카드 리스트 */}
-          {MOCK_BANDS.map((band) => (
+          {bands.map((band) => (
             <BandCard
               key={band.id}
               serialNumber={band.serialNumber}
-              onClose={() => {
-                console.log("닫기 클릭");
-              }}
+              onClose={() => handleClosePress(band.id)}
               isExpired={band.isExpired}
               isLarge
             />
@@ -78,6 +117,20 @@ export default function PersonalBand() {
           </View>
         </View>
       </ScrollView>
+
+      <StaffAuthModal
+        visible={authModalVisible}
+        onClose={handleModalClose}
+        onConfirm={handleAuthConfirm}
+        error={authError}
+      />
+
+      {/* 삭제 완료 토스트 */}
+      {toastVisible && (
+        <View className="absolute bottom-[16px] left-0 right-0 items-center">
+          <ToastError type="email" message="팔찌가 삭제되었습니다." />
+        </View>
+      )}
     </Layout>
   );
 }

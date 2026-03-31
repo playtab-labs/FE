@@ -7,13 +7,16 @@ import CloseIcon from "@/assets/close.svg";
 import { cn } from "@/utils/cn";
 
 // 이미지 원본 비율
-const BAND_ASPECT_RATIO = 954 / 262;         // 기본 이미지
-const LARGE_BAND_ASPECT_RATIO = 1259 / 338;  // Large 이미지
+const BAND_ASPECT_RATIO = 954 / 262; // 기본 이미지
+const LARGE_BAND_ASPECT_RATIO = 1259 / 338; // Large 이미지
 
+const SCREEN_WIDTH = Dimensions.get("window").width;
 const LAYOUT_PADDING = 17; // Layout의 px-[17px]
-const CARD_WIDTH = Dimensions.get("window").width * 1.1;
-const CARD_MARGIN_H =
-  -(CARD_WIDTH - Dimensions.get("window").width) / 2 - LAYOUT_PADDING;
+const CARD_WIDTH = SCREEN_WIDTH * 1.1;
+const CARD_OVERFLOW = (CARD_WIDTH - SCREEN_WIDTH) / 2; // 화면 밖으로 나간 양 (각 side)
+const CARD_MARGIN_H = -(CARD_OVERFLOW + LAYOUT_PADDING);
+// 닫기 버튼: 카드 right 기준이지만 화면 기준 8px로 보이도록 보정
+const CLOSE_RIGHT = CARD_OVERFLOW + 16;
 
 interface BandCardProps {
   serialNumber: string;
@@ -29,8 +32,12 @@ export default function BandCard({
   isLarge = false,
 }: BandCardProps) {
   const imageSource = isLarge
-    ? isExpired ? LargeExpiredBand : LargeBand
-    : isExpired ? ExpiredBand : Band;
+    ? isExpired
+      ? LargeExpiredBand
+      : LargeBand
+    : isExpired
+      ? ExpiredBand
+      : Band;
 
   const aspectRatio = isLarge ? LARGE_BAND_ASPECT_RATIO : BAND_ASPECT_RATIO;
 
@@ -52,7 +59,7 @@ export default function BandCard({
       {/* 닫기 버튼 — 우측 상단 */}
       <TouchableOpacity
         onPress={onClose}
-        style={{ position: "absolute", top: 8, right: 8 }}
+        style={{ position: "absolute", top: 24, right: CLOSE_RIGHT }}
         activeOpacity={0.7}
       >
         <CloseIcon width={18} height={18} />
@@ -60,20 +67,27 @@ export default function BandCard({
 
       {/* 텍스트 — normal flow로 꽉 채운 뒤 중앙 정렬 */}
       <View
-        style={{ flex: 1, justifyContent: "center", alignItems: "center", gap: 4 }}
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+          gap: 4,
+        }}
       >
         {isExpired && (
           <Text
             className={cn(
               "text-b4 font-eb py-1.5 px-2 rounded-[8px] text-extra-white",
-              "bg-gray"
+              "bg-gray",
             )}
           >
             만료됨
           </Text>
         )}
         <Text className="text-b3 font-sb text-gray-black/60">내 일련번호</Text>
-        <Text className="text-b3 font-sb text-gray-black/60">{serialNumber}</Text>
+        <Text className="text-b3 font-sb text-gray-black/60">
+          {serialNumber}
+        </Text>
       </View>
     </View>
   );
