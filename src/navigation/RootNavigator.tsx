@@ -8,8 +8,9 @@ import SetPassword from "@/pages/auth/SetPassword";
 import SignUpComplete from "@/pages/auth/SignUpComplete";
 import Terms from "@/pages/auth/Terms";
 import StampTour from "@/pages/StampTour";
-import Tag from "@/pages/Personal/Tag";
-import Success from "@/pages/Personal/Success";
+import Tag from "@/components/personal/Tag";
+import Success from "@/components/personal/Success";
+import PersonalBand from "@/components/personal/PersonalBand";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import TabNavigator from "./TabNavigator";
 
@@ -73,6 +74,11 @@ export default function RootNavigator() {
       <Stack.Screen
         name="Success"
         component={Success}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="PersonalBand"
+        component={PersonalBand}
         options={{ headerShown: false }}
       />
       <Stack.Screen

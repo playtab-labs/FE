@@ -1,9 +1,23 @@
+import { useEffect } from "react";
 import { View, Text, Image } from "react-native";
 import { Image as ExpoImage } from "expo-image";
 import Layout from "@/components/Layout";
+import { useNavigation } from "@react-navigation/native";
+import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import type { RootStackParamList } from "@/navigation/types";
 import Band from "@/assets/personal/band_default.png";
 
 export default function Success() {
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      navigation.navigate("PersonalBand");
+    }, 3000);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <Layout title="PERSONAL" showBack={true} showBottomBar={true}>
       <View className="flex-1 flex-col">
