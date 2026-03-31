@@ -36,6 +36,13 @@ export default function Tag() {
   }, []);
 
   useEffect(() => {
+    const timer = setTimeout(() => {
+      navigation.navigate("Success");
+    }, 5000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
     // 팔찌 손: 천천히 페이드 인
     bandOpacity.value = withTiming(1, {
       duration: 900,
@@ -79,10 +86,10 @@ export default function Tag() {
   }));
 
   return (
-    <Layout title="PERSONAL" showBack={true}>
+    <Layout title="PERSONAL" showBack={true} showBottomBar={true}>
       <View className="flex-1 flex-col justify-start">
         {/* 문구 */}
-        <View className="mt-2 gap-4 py-4 px-5">
+        <View className="mt-2 gap-4 py-4 px-5" style={{ zIndex: 1 }}>
           <View className="flex-row items-center">
             <Text className="text-h1 font-eb text-gray-black">휴대폰에 </Text>
             <Text className="text-h1 font-eb text-text-salmon">

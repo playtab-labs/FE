@@ -9,6 +9,7 @@ import SignUpComplete from "@/pages/auth/SignUpComplete";
 import Terms from "@/pages/auth/Terms";
 import StampTour from "@/pages/StampTour";
 import Tag from "@/pages/Personal/Tag";
+import Success from "@/pages/Personal/Success";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import TabNavigator from "./TabNavigator";
 
@@ -67,6 +68,11 @@ export default function RootNavigator() {
       <Stack.Screen
         name="Tag"
         component={Tag}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Success"
+        component={Success}
         options={{ headerShown: false }}
       />
       <Stack.Screen

@@ -44,8 +44,6 @@ const ZoomableMap = ({
   const panGesture = Gesture.Pan()
     .activeOffsetX([-10, 10])
     .activeOffsetY([-10, 10])
-    .onBegin(() => console.log("🖐️ PAN 시작"))
-    .onFinalize(() => console.log("🖐️ PAN 종료"))
     .onUpdate((e) => {
       translateX.value = savedTranslateX.value + e.translationX;
       translateY.value = savedTranslateY.value + e.translationY;
