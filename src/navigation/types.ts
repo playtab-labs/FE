@@ -35,5 +35,6 @@ export type RootStackParamList = {
   StampTour: undefined;
   Tag: undefined;
   Success: undefined;
+  PersonalBand: undefined;
   Tabs: NavigatorScreenParams<TabParamList>;
 };
