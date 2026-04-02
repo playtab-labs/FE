@@ -29,7 +29,7 @@ export default function IdCard({ name, email, isSogang = true }: IdCardProps) {
         {/* 카드 — overflow-hidden으로 내부 클리핑 */}
         <View className="w-full h-full rounded-2xl overflow-hidden border border-[rgba(255,255,255,0.40)]">
           <LinearGradient
-            colors={["#F6AEB7", "#FFFFFF"]}
+            colors={["#FFAD96", "#FFFFFF"]}
             start={{ x: 0.5, y: 0 }}
             end={{ x: 0.5, y: 1 }}
             style={{ flex: 1 }}
@@ -86,7 +86,7 @@ export default function IdCard({ name, email, isSogang = true }: IdCardProps) {
 
               {/* 서강대생 인증 뱃지 */}
               {isSogang && (
-                <View className="mt-1 px-3 py-[3px] rounded-full bg-[#FFAAB7]">
+                <View className="mt-1 px-3 py-[3px] rounded-full bg-secondary-salmon">
                   <Text className="text-b5 font-sb text-gray-black">
                     서강대생 인증완료
                   </Text>

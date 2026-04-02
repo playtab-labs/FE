@@ -3,12 +3,17 @@ import IdCard from "@/components/more/IdCard";
 import TabList from "@/components/more/TabList";
 import Ticket from "@/components/more/Ticket";
 import { useNavigation } from "@react-navigation/native";
-import { useState } from "react";
-import { ScrollView, Text, TouchableOpacity, View } from "react-native";
-import Svg, { Path } from "react-native-svg";
+import { useRef, useState } from "react";
+import {
+  Animated,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 const TAB_ITEMS = [
-  { label: "개인정보 변경", icon: require("@/assets/pngs/personlity.png") },
+  { label: "개인정보 변경", icon: require("@/assets/pngs/personality.png") },
   { label: "공지사항", icon: require("@/assets/pngs/ring.png") },
   { label: "언어", icon: require("@/assets/pngs/language.png") },
   {
@@ -39,13 +44,44 @@ const TICKETS: React.ComponentProps<typeof Ticket>[] = (
       location: "청년광장",
     },
   ] as React.ComponentProps<typeof Ticket>[]
-).sort((a, b) => b.day - a.day);
+).sort((a, b) => {
+  const dayA = "day" in a ? a.day : 0;
+  const dayB = "day" in b ? b.day : 0;
+  return dayB - dayA;
+});
+
+const PEEK = 50; // 뒤 티켓이 앞 티켓 아래로 보이는 높이
+const GAP = 8; // 펼쳐졌을 때 두 티켓 사이 간격
 
 export default function More() {
   const navigation = useNavigation<any>();
   const [expanded, setExpanded] = useState(false);
+  const [ticketHeight, setTicketHeight] = useState(0);
+  const animValue = useRef(new Animated.Value(0)).current;
+
+  const toggle = () => {
+    Animated.spring(animValue, {
+      toValue: expanded ? 0 : 1,
+      useNativeDriver: false,
+      tension: 60,
+      friction: 12,
+    }).start();
+    setExpanded((prev) => !prev);
+  };
+
   const hasMultiple = TICKETS.length > 1;
-  const visibleTickets = hasMultiple && !expanded ? [TICKETS[0]] : TICKETS;
+
+  // 앞 티켓 marginTop: PEEK(뒤 티켓 상단만 노출) → 펼쳐지면 아래로
+  const frontMarginTop = animValue.interpolate({
+    inputRange: [0, 1],
+    outputRange: [PEEK, ticketHeight > 0 ? ticketHeight + GAP : PEEK],
+  });
+
+  // 뒤 티켓 opacity: 접혔을 때 흐릿 → 펼쳐지면 선명
+  const backOpacity = animValue.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0.6, 1],
+  });
 
   return (
     <Layout title="MORE" showBack={false} showCamera={false}>
@@ -63,36 +99,47 @@ export default function More() {
         <IdCard name="홍길동" email="gildong1234@gmail.com" isSogang />
 
         {/* 티켓 */}
-        {visibleTickets.map((ticket) => (
-          <Ticket key={ticket.day} {...ticket} />
-        ))}
+        {TICKETS.length === 0 ? null : !hasMultiple ? (
+          <Ticket {...TICKETS[0]} />
+        ) : (
+          <View style={{ width: 329 }}>
+            {/* 뒤 티켓 — absolute, 상단 PEEK만 노출, 흐릿 → 선명 */}
+            <Animated.View
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                right: 0,
+                opacity: backOpacity,
+                borderRadius: 16,
+                borderWidth: 1,
+                borderColor: "rgba(255,255,255,0.4)",
+              }}
+            >
+              <TouchableOpacity onPress={toggle} activeOpacity={0.9}>
+                <Ticket {...TICKETS[1]} />
+              </TouchableOpacity>
+            </Animated.View>
 
-        {/* 펼치기/접기 버튼 */}
-        {hasMultiple && (
-          <TouchableOpacity
-            onPress={() => setExpanded((prev) => !prev)}
-            activeOpacity={0.7}
-            className="items-center justify-center rounded-lg bg-white"
-            style={{
-              width: 326,
-              height: 24,
-              shadowColor: "#000",
-              shadowOffset: { width: 0, height: 0 },
-              shadowOpacity: 0.25,
-              shadowRadius: 16,
-              elevation: 8,
-            }}
-          >
-            <Svg width="16" height="8" viewBox="0 0 16 8" fill="none">
-              <Path
-                d={expanded ? "M1 7L8 1.5L15 7" : "M15 1L8 6.5L1 1"}
-                stroke="#656565"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </Svg>
-          </TouchableOpacity>
+            {/* 앞 티켓 — marginTop으로 자연스럽게 높이 확보, 뒤 티켓을 덮음 */}
+            <Animated.View
+              style={{
+                marginTop: frontMarginTop,
+                shadowColor: "#000",
+                shadowOffset: { width: 0, height: -4 },
+                shadowOpacity: 0.15,
+                shadowRadius: 8,
+                elevation: 8,
+              }}
+              onLayout={(e) => {
+                if (ticketHeight === 0) {
+                  setTicketHeight(e.nativeEvent.layout.height);
+                }
+              }}
+            >
+              <Ticket {...TICKETS[0]} />
+            </Animated.View>
+          </View>
         )}
 
         {/* 탭 리스트 */}
@@ -106,14 +153,14 @@ export default function More() {
                 item.label === "개인정보 변경"
                   ? () => navigation.navigate("PersonalChange")
                   : item.label === "FAQ"
-                  ? () => navigation.navigate("FAQ")
-                  : item.label === "주최 주관 정보"
-                  ? () => navigation.navigate("Host")
-                  : item.label === "후원 협찬"
-                  ? () => navigation.navigate("Sponsor")
-                  : item.label === "언어"
-                  ? () => navigation.navigate("Language")
-                  : undefined
+                    ? () => navigation.navigate("FAQ")
+                    : item.label === "주최 주관 정보"
+                      ? () => navigation.navigate("Host")
+                      : item.label === "후원 협찬"
+                        ? () => navigation.navigate("Sponsor")
+                        : item.label === "언어"
+                          ? () => navigation.navigate("Language")
+                          : undefined
               }
               rightElement={
                 item.label === "언어" ? (
