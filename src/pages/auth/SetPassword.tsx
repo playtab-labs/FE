@@ -11,11 +11,12 @@ export default function SetPassword() {
   const [confirm, setConfirm] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
+  const [passwordTouched, setPasswordTouched] = useState(false);
+  const [confirmTouched, setConfirmTouched] = useState(false);
 
   const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/;
-  const isPasswordInvalid =
-    password.length > 0 && !passwordRegex.test(password);
-  const isMismatch = confirm.length > 0 && password !== confirm;
+  const isPasswordInvalid = passwordTouched && !passwordRegex.test(password);
+  const isMismatch = confirmTouched && password !== confirm;
   const isValid = passwordRegex.test(password) && password === confirm;
 
   return (
@@ -55,6 +56,8 @@ export default function SetPassword() {
                   placeholder="비밀번호를 입력해주세요."
                   value={password}
                   onChangeText={setPassword}
+                  onFocus={() => setPasswordTouched(false)}
+                  onBlur={() => setPasswordTouched(true)}
                   autoCapitalize="none"
                   error={isPasswordInvalid}
                 />
@@ -76,6 +79,8 @@ export default function SetPassword() {
                   placeholder="비밀번호를 한 번 더 입력해주세요."
                   value={confirm}
                   onChangeText={setConfirm}
+                  onFocus={() => setConfirmTouched(false)}
+                  onBlur={() => setConfirmTouched(true)}
                   autoCapitalize="none"
                   error={isMismatch}
                 />
