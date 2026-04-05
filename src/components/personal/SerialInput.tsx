@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { View, Text, TextInput, Image } from "react-native";
+import { View, Text, TextInput, Image, KeyboardAvoidingView, Platform } from "react-native";
 import Layout from "@/components/Layout";
 import Button from "@/components/common/Button";
 import { useNavigation } from "@react-navigation/native";
@@ -20,6 +20,10 @@ export default function SerialInput() {
 
   return (
     <Layout title="팔찌 연동" showBack={true} showBottomBar={true} noPadding>
+      <KeyboardAvoidingView
+        className="flex-1"
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      >
       <View className="flex-1 flex-col">
         {/* 문구 */}
         <View className="py-4 mt-2 gap-4 mx-5">
@@ -87,6 +91,7 @@ export default function SerialInput() {
           </View>
         </View>
       </View>
+      </KeyboardAvoidingView>
     </Layout>
   );
 }
