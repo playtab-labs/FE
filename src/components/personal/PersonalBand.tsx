@@ -57,7 +57,7 @@ export default function PersonalBand() {
   };
 
   return (
-    <Layout title="PERSONAL" showBack={false} showBottomBar={true}>
+    <Layout title="PERSONAL" showBack={false} showBottomBar={true} noPadding>
       <ScrollView
         className="flex-1"
         showsVerticalScrollIndicator={false}
@@ -81,7 +81,7 @@ export default function PersonalBand() {
         </View>
 
         {/* 새 팔찌 추가 버튼 */}
-        <View className="items-center">
+        <View className="items-center px-[17px]">
           <TouchableOpacity
             activeOpacity={0.8}
             onPress={() => navigation.navigate("Tag")}
@@ -97,7 +97,7 @@ export default function PersonalBand() {
         <View style={{ flex: 1 }} />
 
         {/* 안내사항 */}
-        <View className="bg-extra-white px-4 py-6 rounded-[8px]">
+        <View className="bg-extra-white px-4 py-6 rounded-[8px] mx-[17px]">
           <Text className="text-b2 font-bd text-gray-black text-center">
             안내사항
           </Text>

@@ -34,6 +34,7 @@ export type RootStackParamList = {
   ResetPassword: undefined;
   StampTour: undefined;
   Tag: undefined;
+  SerialInput: undefined;
   Success: undefined;
   PersonalBand: undefined;
   Tabs: NavigatorScreenParams<TabParamList>;
