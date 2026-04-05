@@ -19,10 +19,10 @@ module.exports = {
         b5: ["10px", { lineHeight: "14px" }],
       },
       fontFamily: {
-        'pretendard-rg': ['Pretendard-Regular'],
-        'pretendard-sb': ['Pretendard-SemiBold'],
-        'pretendard-bd': ['Pretendard-Bold'],
-        'pretendard-eb': ['Pretendard-ExtraBold'],
+        "pretendard-rg": ["Pretendard-Regular"],
+        "pretendard-sb": ["Pretendard-SemiBold"],
+        "pretendard-bd": ["Pretendard-Bold"],
+        "pretendard-eb": ["Pretendard-ExtraBold"],
       },
       fontWeight: {
         // Eb = ExtraBold (800), Bd = Bold (700), Sb = SemiBold (600), Rg = Regular (400)
@@ -31,6 +31,9 @@ module.exports = {
         bd: "700",
         sb: "600",
         rg: "400",
+      },
+      boxShadow: {
+        allos: "0 0 4px 0 rgba(0, 0, 0, 0.25)",
       },
       colors: {
         // ── Grayscale ────────────────────────────
