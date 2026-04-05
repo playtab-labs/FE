@@ -9,8 +9,13 @@ export default function Artist() {
   const [activeTab, setActiveTab] = useState<"lineup" | "timetable">("lineup");
 
   return (
-    <Layout title="ARTIST" showBack={true}>
-      <TabBar type="artist" activeTab={activeTab} onTabChange={setActiveTab} />
+    <Layout
+      title="ARTIST"
+      showBack={true}
+      fullBleedHeader={
+        <TabBar type="artist" activeTab={activeTab} onTabChange={setActiveTab} />
+      }
+    >
       <View className="flex-1">
         {activeTab === "lineup" ? <Lineup /> : <TimeTable />}
       </View>

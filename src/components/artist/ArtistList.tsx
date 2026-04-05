@@ -24,7 +24,7 @@ const ArtistList = ({
   }));
 
   return (
-    <ScrollView contentContainerClassName="px-5 py-6 gap-8">
+    <ScrollView contentContainerClassName=" py-6 gap-8">
       {dayGroups.map(({ day, label, artists }) => (
         <View key={day} className="gap-6">
           <Text className={`${typo.T3_Eb} text-black`}>{label}</Text>
@@ -32,8 +32,9 @@ const ArtistList = ({
           {artists.length === 0 ? (
             <View className="py-8 items-center">
               <Text className={`${typo.B3_Rg} text-dark-gray`}>
-                📢 {label.split(" - ")[0]}은 {category ?? "아티스트"} 무대가
-                없습니다. 📢
+                {favOnly
+                  ? "해당 날짜에 즐겨찾기한 아티스트가 없습니다."
+                  : `📢    DAY 1은 아티스트 무대가 없습니다.   📢`}
               </Text>
             </View>
           ) : (

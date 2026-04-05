@@ -42,12 +42,6 @@ const ArtistFilterBar = ({ type, onFilterChange }: ArtistFilterBarProps) => {
     notify(next, auto, favOnly);
   };
 
-  const toggleAuto = () => {
-    const next = !auto;
-    setAuto(next);
-    notify(selected, next, favOnly);
-  };
-
   const toggleFav = () => {
     const next = !favOnly;
     setFavOnly(next);
@@ -55,50 +49,38 @@ const ArtistFilterBar = ({ type, onFilterChange }: ArtistFilterBarProps) => {
   };
 
   return (
-    <View className="flex-row items-center px-4 py-2 gap-2 border-b border-gray">
-      {/* 카테고리 칩 */}
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerClassName="flex-row gap-2"
-        className="flex-1"
-      >
-        {(type === "Lineup" ? LINEUP_CATEGORIES : TIMETABLE_CATEGORIES).map(
-          (cat) => {
-            const isActive = selected === cat;
-            return (
-              <TouchableOpacity
-                key={cat}
-                onPress={() => toggleCategory(cat)}
-                activeOpacity={0.8}
-                className={`h-8 w-fit px-3 rounded-full items-center justify-center ${
-                  isActive ? "bg-secondary-salmon" : "bg-white"
-                }`}
-              >
-                <Text className={`text-b3 font-sb text-black`}>{cat}</Text>
-              </TouchableOpacity>
-            );
-          },
-        )}
-      </ScrollView>
-
-      {/* 자동 버튼
-      <TouchableOpacity
-        onPress={toggleAuto}
-        activeOpacity={0.8}
-        className={`h-9 px-3 rounded-full items-center justify-center ${
-          auto ? "bg-blue-500" : "bg-white"
-        }`}
-      >
-        <Text
-          className={`text-b3 font-sb ${auto ? "text-white" : "text-dark-gray"}`}
+    <View className="mx-[-17px]">
+      <View className="flex-row items-center py-2 gap-2 px-[17px]">
+        {/* 카테고리 칩 */}
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerClassName="flex-row gap-2"
+          className="flex-1"
         >
-          자동
-        </Text>
-      </TouchableOpacity> */}
+          {(type === "Lineup" ? LINEUP_CATEGORIES : TIMETABLE_CATEGORIES).map(
+            (cat) => {
+              const isActive = selected === cat;
+              return (
+                <TouchableOpacity
+                  key={cat}
+                  onPress={() => toggleCategory(cat)}
+                  activeOpacity={0.8}
+                  className={`h-8 w-fit px-3 rounded-full items-center justify-center ${
+                    isActive ? "bg-secondary-salmon" : "bg-white"
+                  }`}
+                >
+                  <Text className={`text-b3 font-sb text-black`}>{cat}</Text>
+                </TouchableOpacity>
+              );
+            },
+          )}
+        </ScrollView>
 
-      {/* 즐겨찾기 필터 버튼 */}
-      <FavoriteButton type="FILTER" onToggle={() => toggleFav()} />
+        {/* 즐겨찾기 필터 버튼 */}
+        <FavoriteButton type="FILTER" onToggle={() => toggleFav()} />
+      </View>
+      <View className="h-[1px] bg-gray" />
     </View>
   );
 };
