@@ -37,8 +37,9 @@ export default function Sponsor() {
           paddingBottom: 32,
           gap: 16,
         }}
+        className="px-4"
       >
-        <View className="gap-2 mb-[50px]">
+        <View className="gap-2 mb-10">
           <Text className="text-h1 font-eb text-gray-black">
             후원 및 협찬사
           </Text>

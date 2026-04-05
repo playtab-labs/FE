@@ -1,5 +1,6 @@
 import Layout from "@/components/Layout";
 import Button from "@/components/common/Button";
+import ConfirmModal from "@/components/common/ConfirmModal";
 import Input from "@/components/common/Input";
 import NationalityModal from "@/components/common/NationalityModal";
 import { useNavigation, useRoute } from "@react-navigation/native";
@@ -33,6 +34,7 @@ export default function PersonalInfo() {
   const [birthdayRaw, setBirthdayRaw] = useState("");
   const [nationality, setNationality] = useState("");
   const [nationalityOpen, setNationalityOpen] = useState(false);
+  const [showNameConfirm, setShowNameConfirm] = useState(false);
 
   const handleBirthday = (text: string) => {
     const digits = text.replace(/\D/g, "").slice(0, 8);
@@ -144,9 +146,23 @@ export default function PersonalInfo() {
           label="계속하기"
           size="long"
           state={isValid ? "active" : "inactive"}
-          onPress={() => navigation.navigate("EmailVerify", { userType })}
+          onPress={() => setShowNameConfirm(true)}
         />
       </View>
+
+      <ConfirmModal
+        visible={showNameConfirm}
+        title={`성함이 '${name}'이 맞나요?`}
+        warning="이름은 변경할 수 없습니다."
+        description={`설정한 이름이 실명과 다를 시\n서비스 이용에 제한이 있을 수 있습니다.`}
+        confirmLabel="네, 맞아요"
+        cancelLabel="아니에요"
+        onConfirm={() => {
+          setShowNameConfirm(false);
+          navigation.navigate("EmailVerify", { userType });
+        }}
+        onCancel={() => setShowNameConfirm(false)}
+      />
 
       <NationalityModal
         visible={nationalityOpen}

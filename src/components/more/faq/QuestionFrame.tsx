@@ -19,32 +19,40 @@ export default function QuestionFrame({
       <TouchableOpacity
         onPress={() => setExpanded((prev) => !prev)}
         activeOpacity={0.7}
-        className="w-full rounded-2xl bg-[#D9D9D9] px-4 py-[14px]"
+        className="flex-row justify-between items-center self-stretch rounded-2xl bg-[#FFCEC0] p-4"
         style={{ zIndex: 1, elevation: 2 }}
       >
-        <View className="flex-row items-center justify-between gap-3">
-          <Text className="flex-1 text-b3 font-sb text-gray-black">
-            Q. {question}
+        <View className="flex-row gap-3 items-center">
+          <Text className="bg-secondary-salmon text-b3 font-sb text-extra-white w-6 h-6 rounded-full text-center leading-6">
+            Q
           </Text>
-          <Svg width="16" height="8" viewBox="0 0 16 8" fill="none">
-            <Path
-              d={expanded ? "M1 7L8 1.5L15 7" : "M15 1L8 6.5L1 1"}
-              stroke="#656565"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </Svg>
+          <Text className="text-b3 font-sb text-gray-black">{question}</Text>
         </View>
+        <Svg width="16" height="8" viewBox="0 0 16 8" fill="none">
+          <Path
+            d={expanded ? "M1 7L8 1.5L15 7" : "M15 1L8 6.5L1 1"}
+            stroke="#656565"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </Svg>
       </TouchableOpacity>
 
       {/* 답변 판 - Q 카드 뒤에서 올라오는 흰 배경 */}
       {expanded && (
         <View
-          className="bg-extra-white rounded-2xl px-5 pb-4"
+          className="bg-extra-white rounded-2xl p-4"
           style={{ marginTop: -28, paddingTop: 44 }}
         >
-          <Text className="text-b4 font-rg text-[#000000]">A. {answer}</Text>
+          <View className="flex-row gap-3 items-start">
+            <Text className="bg-secondary-salmon text-b3 font-sb text-extra-white w-6 h-6 rounded-full text-center leading-6">
+              A
+            </Text>
+            <Text className="flex-1 text-b4 font-rg text-[#000000]">
+              {answer}
+            </Text>
+          </View>
         </View>
       )}
     </View>
