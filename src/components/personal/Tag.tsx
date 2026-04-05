@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, TouchableOpacity } from "react-native";
+import { useIsFocused } from "@react-navigation/native";
 import { Image as ExpoImage } from "expo-image";
 import Animated, {
   useSharedValue,
@@ -22,6 +23,7 @@ export default function Tag() {
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   const [isPlaying, setIsPlaying] = useState(false);
+  const isFocused = useIsFocused();
 
   // hand_with_band 페이드 인
   const bandOpacity = useSharedValue(0);
@@ -37,10 +39,10 @@ export default function Tag() {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      navigation.navigate("Success");
+      if (isFocused) navigation.navigate("Success");
     }, 5000);
     return () => clearTimeout(timer);
-  }, []);
+  }, [isFocused]);
 
   useEffect(() => {
     // 팔찌 손: 천천히 페이드 인
@@ -148,6 +150,15 @@ export default function Tag() {
           </View>
         </View>
       </View>
+
+      <TouchableOpacity
+        onPress={() => navigation.navigate("SerialInput")}
+        activeOpacity={0.7}
+      >
+        <Text className="text-b4 font-bd items-center text-center justify-center mb-6 font-rg text-dark-gray underline">
+          태그 인식에 문제가 있나요?
+        </Text>
+      </TouchableOpacity>
     </Layout>
   );
 }

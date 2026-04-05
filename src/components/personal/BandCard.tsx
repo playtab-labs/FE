@@ -1,4 +1,6 @@
 import { View, Text, Image, TouchableOpacity, Dimensions } from "react-native";
+
+const SCREEN_WIDTH = Dimensions.get("window").width;
 import Band from "@/assets/personal/band_default.png";
 import ExpiredBand from "@/assets/personal/band_expired.png";
 import LargeBand from "@/assets/personal/band_default_large.png";
@@ -6,17 +8,8 @@ import LargeExpiredBand from "@/assets/personal/band_expired_large.png";
 import CloseIcon from "@/assets/close.svg";
 import { cn } from "@/utils/cn";
 
-// 이미지 원본 비율
-const BAND_ASPECT_RATIO = 954 / 262; // 기본 이미지
-const LARGE_BAND_ASPECT_RATIO = 1259 / 338; // Large 이미지
-
-const SCREEN_WIDTH = Dimensions.get("window").width;
-const LAYOUT_PADDING = 17; // Layout의 px-[17px]
-const CARD_WIDTH = SCREEN_WIDTH * 1.1;
-const CARD_OVERFLOW = (CARD_WIDTH - SCREEN_WIDTH) / 2; // 화면 밖으로 나간 양 (각 side)
-const CARD_MARGIN_H = -(CARD_OVERFLOW + LAYOUT_PADDING);
-// 닫기 버튼: 카드 right 기준이지만 화면 기준 8px로 보이도록 보정
-const CLOSE_RIGHT = CARD_OVERFLOW + 16;
+const BAND_ASPECT_RATIO = 954 / 262;
+const LARGE_BAND_ASPECT_RATIO = 1259 / 338;
 
 interface BandCardProps {
   serialNumber: string;
@@ -42,30 +35,27 @@ export default function BandCard({
   const aspectRatio = isLarge ? LARGE_BAND_ASPECT_RATIO : BAND_ASPECT_RATIO;
 
   return (
-    <View
-      style={{
-        width: CARD_WIDTH,
-        marginHorizontal: CARD_MARGIN_H,
-        aspectRatio,
-      }}
-    >
-      {/* 팔찌 이미지 — 컨테이너를 꽉 채움 */}
+    <View style={isLarge
+      ? { width: SCREEN_WIDTH * 1.06, alignSelf: "center", aspectRatio }
+      : { width: "100%", aspectRatio }
+    }>
+      {/* 팔찌 이미지 */}
       <Image
         source={imageSource}
         style={{ position: "absolute", width: "100%", height: "100%" }}
         resizeMode="stretch"
       />
 
-      {/* 닫기 버튼 — 우측 상단 */}
+      {/* 닫기 버튼 */}
       <TouchableOpacity
         onPress={onClose}
-        style={{ position: "absolute", top: 24, right: CLOSE_RIGHT }}
+        style={{ position: "absolute", top: 24, right: 16 }}
         activeOpacity={0.7}
       >
         <CloseIcon width={18} height={18} />
       </TouchableOpacity>
 
-      {/* 텍스트 — normal flow로 꽉 채운 뒤 중앙 정렬 */}
+      {/* 텍스트 */}
       <View
         style={{
           flex: 1,
