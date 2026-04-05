@@ -8,12 +8,13 @@ import MapScreen from "@/pages/Map";
 import FAQ from "@/pages/more/FAQ";
 import Host from "@/pages/more/Host";
 import Language from "@/pages/more/Language";
-import Sponsor from "@/pages/more/Sponsor";
 import MoreScreen from "@/pages/more/More";
 import PersonalChange from "@/pages/more/Personal";
 import MyInfoChange from "@/pages/more/Personal/MyInfoChange";
 import PasswordChange from "@/pages/more/Personal/PasswordChange";
-import ServiceWithdrawal from "@/pages/more/Personal/ServiceWithdrawal";
+import ServiceWithdrawal from "@/pages/more/Personal/withdraw/ServiceWithdrawal";
+import WithdrawConfirm from "@/pages/more/Personal/withdraw/WithdrawConfirm";
+import Sponsor from "@/pages/more/Sponsor";
 import PersonalScreen from "@/pages/Personal";
 
 const Tab = createBottomTabNavigator();
@@ -45,6 +46,11 @@ function MoreNavigator() {
       <MoreStack.Screen
         name="ServiceWithdrawal"
         component={ServiceWithdrawal}
+        options={{ headerShown: false }}
+      />
+      <MoreStack.Screen
+        name="WithdrawConfirm"
+        component={WithdrawConfirm}
         options={{ headerShown: false }}
       />
       <MoreStack.Screen

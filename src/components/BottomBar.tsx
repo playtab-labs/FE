@@ -17,7 +17,7 @@ const TAB_ITEMS = [
 export default function BottomBar({ state, navigation }: BottomTabBarProps) {
   const insets = useSafeAreaInsets();
 
-  const PERSONAL_ROUTES = ["PersonalChange", "MyInfoChange", "PasswordChange", "ServiceWithdrawal"];
+  const PERSONAL_ROUTES = ["PersonalChange", "MyInfoChange", "PasswordChange", "ServiceWithdrawal", "WithdrawConfirm"];
   const activeRoute = state.routes[state.index];
   const nestedState = activeRoute?.state;
   const activeNestedRoute = nestedState?.routes?.[nestedState.index ?? 0];
