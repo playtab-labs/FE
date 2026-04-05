@@ -28,8 +28,8 @@ export default function HostLinker({ name, logo, url }: HostLinkerProps) {
         flexDirection: "row",
         alignItems: "center",
         borderRadius: 16,
-        backgroundColor: "#D9D9D9",
       }}
+      className="bg-secondary-salmon/60"
     >
       <Image
         source={logo}
