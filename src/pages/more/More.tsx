@@ -1,3 +1,10 @@
+import FaqIcon from "@/assets/svgs/faq.svg";
+import HostIcon from "@/assets/svgs/host.svg";
+import LanguageIcon from "@/assets/svgs/language.svg";
+import ProfileIcon from "@/assets/svgs/profile.svg";
+import RingIcon from "@/assets/svgs/ring.svg";
+import SponsorIcon from "@/assets/svgs/sponsor.svg";
+import TermIcon from "@/assets/svgs/term.svg";
 import Layout from "@/components/Layout";
 import IdCard from "@/components/more/IdCard";
 import TabList from "@/components/more/TabList";
@@ -9,21 +16,17 @@ import {
   ScrollView,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from "react-native";
 
 const TAB_ITEMS = [
-  { label: "개인정보 변경", icon: require("@/assets/pngs/personality.png") },
-  { label: "공지사항", icon: require("@/assets/pngs/ring.png") },
-  { label: "언어", icon: require("@/assets/pngs/language.png") },
-  {
-    label: "오프라인 데이터 다운",
-    icon: require("@/assets/pngs/download.png"),
-  },
-  { label: "FAQ", icon: require("@/assets/pngs/faq.png") },
-  { label: "주최 주관 정보", icon: require("@/assets/pngs/host.png") },
-  { label: "후원 협찬", icon: require("@/assets/pngs/sponsor.png") },
-  { label: "이용약관", icon: require("@/assets/pngs/term.png") },
+  { label: "개인정보 변경", icon: <ProfileIcon width={24} height={24} /> },
+  { label: "공지사항", icon: <RingIcon width={24} height={24} /> },
+  { label: "언어", icon: <LanguageIcon width={24} height={24} /> },
+  { label: "FAQ", icon: <FaqIcon width={24} height={24} /> },
+  { label: "주최 주관 정보", icon: <HostIcon width={24} height={24} /> },
+  { label: "후원 협찬", icon: <SponsorIcon width={24} height={24} /> },
+  { label: "이용약관", icon: <TermIcon width={24} height={24} /> },
 ];
 
 // day 내림차순 정렬 (3>2>1)

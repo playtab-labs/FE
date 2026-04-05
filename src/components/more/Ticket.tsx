@@ -16,7 +16,7 @@ type TicketProps =
 
 const GRADIENT_COLORS: Record<number, readonly [string, string]> = {
   2: ["#8A42FF", "rgba(138,66,255,0)"],
-  3: ["#FF5C00", "rgba(255,92,0,0)"],
+  3: ["#0067E9", "rgba(0,103,233,0.40)"],
 };
 
 const BASE_COLORS: Record<number, string> = {
