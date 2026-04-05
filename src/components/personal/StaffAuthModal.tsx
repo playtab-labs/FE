@@ -42,6 +42,7 @@ export default function StaffAuthModal({
   const handleConfirm = () => {
     Keyboard.dismiss();
     onConfirm(code);
+    setCode("");
   };
 
   const handleClose = () => {
