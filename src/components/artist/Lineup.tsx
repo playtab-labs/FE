@@ -23,7 +23,7 @@ const Lineup = () => {
     <View className="flex-1">
       <ArtistFilterBar
         type="Lineup"
-        onFilterChange={(cat, _, fav) => { 
+        onFilterChange={(cat, _, fav) => {
           setCategory(cat as ArtistCategory | null);
           setFavOnly(fav);
         }}
