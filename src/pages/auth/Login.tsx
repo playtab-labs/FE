@@ -1,19 +1,23 @@
+import { authApi } from "@/api/auth";
 import Button from "@/components/common/Button";
 import Input from "@/components/common/Input";
 import { EyeOffIcon, EyeOnIcon } from "@/components/icons/EyeIcon";
 import RadioIcon from "@/components/icons/RadioIcon";
 import Layout from "@/components/Layout";
+import { useAuthStore } from "@/stores/authStore";
 import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 
 export default function Login() {
   const navigation = useNavigation<any>();
+  const setTokens = useAuthStore((s) => s.setTokens);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [keepLogin, setKeepLogin] = useState(true);
   const [rememberID, setRememberID] = useState(false);
+  const [error, setError] = useState("");
 
   return (
     <Layout title="로그인" showBack={true}>
@@ -68,7 +72,26 @@ export default function Login() {
 
       {/* 로그인 버튼 */}
       <View className="items-center mt-[85px]">
-        <Button label="로그인" size="long" state="active" />
+        {error ? (
+          <Text className="text-b4 text-red-500 mb-2">{error}</Text>
+        ) : null}
+        <Button
+          label="로그인"
+          size="long"
+          state="active"
+          onPress={async () => {
+            try {
+              setError("");
+              const res = await authApi.loginEmail(email, password);
+              try {
+                await setTokens(res.data.accessToken, res.data.refreshToken);
+              } catch {}
+              navigation.reset({ index: 0, routes: [{ name: "Tabs" }] });
+            } catch {
+              setError("이메일 또는 비밀번호가 올바르지 않습니다.");
+            }
+          }}
+        />
       </View>
 
       {/* 회원가입 / 비밀번호 찾기 */}
