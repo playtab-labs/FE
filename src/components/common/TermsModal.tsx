@@ -9,11 +9,18 @@ import {
 } from "react-native";
 import Svg, { Polyline } from "react-native-svg";
 
+interface TermsItem {
+  title: string;
+  required?: boolean;
+  content: string;
+}
+
 interface TermsModalProps {
   visible: boolean;
   title: string;
   required?: boolean;
-  content: string;
+  content?: string;
+  items?: TermsItem[]; // 전체동의용: 여러 약관을 한 모달에
   onAgree: () => void;
   onClose: () => void;
 }
@@ -37,10 +44,12 @@ export default function TermsModal({
   title,
   required = true,
   content,
+  items,
   onAgree,
   onClose,
 }: TermsModalProps) {
   const [agreed, setAgreed] = useState(false);
+  const isMulti = !!items && items.length > 0;
 
   const handleAgree = () => {
     setAgreed(true);
@@ -100,16 +109,18 @@ export default function TermsModal({
                   marginBottom: 16,
                 }}
               >
-                <Text
-                  style={{
-                    fontSize: 12,
-                    fontWeight: "600",
-                    color: required ? "#FFA38C" : "#656565",
-                    lineHeight: 17,
-                  }}
-                >
-                  {required ? "필수" : "선택"}
-                </Text>
+                {!isMulti && (
+                  <Text
+                    style={{
+                      fontSize: 12,
+                      fontWeight: "600",
+                      color: required ? "#FFA38C" : "#656565",
+                      lineHeight: 17,
+                    }}
+                  >
+                    {required ? "필수" : "선택"}
+                  </Text>
+                )}
                 <Text
                   style={{
                     fontSize: 14,
@@ -122,17 +133,76 @@ export default function TermsModal({
                 </Text>
               </View>
 
-              <Text
-                style={{
-                  fontSize: 12,
-                  fontWeight: "400",
-                  color: "#656565",
-                  lineHeight: 18,
-                  letterSpacing: -0.12,
-                }}
-              >
-                {content}
-              </Text>
+              {/* 단일 약관 내용 */}
+              {!isMulti && (
+                <Text
+                  style={{
+                    fontSize: 12,
+                    fontWeight: "400",
+                    color: "#656565",
+                    lineHeight: 18,
+                    letterSpacing: -0.12,
+                  }}
+                >
+                  {content}
+                </Text>
+              )}
+
+              {/* 다중 약관 내용 (전체동의용) */}
+              {isMulti &&
+                items!.map((item, index) => (
+                  <View key={index}>
+                    {index > 0 && (
+                      <View
+                        style={{
+                          borderTopWidth: 1,
+                          borderTopColor: "#E4E4E4",
+                          marginVertical: 16,
+                        }}
+                      />
+                    )}
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        alignItems: "baseline",
+                        gap: 4,
+                        marginBottom: 8,
+                      }}
+                    >
+                      <Text
+                        style={{
+                          fontSize: 12,
+                          fontWeight: "600",
+                          color: item.required ? "#FFA38C" : "#656565",
+                          lineHeight: 17,
+                        }}
+                      >
+                        {item.required ? "필수" : "선택"}
+                      </Text>
+                      <Text
+                        style={{
+                          fontSize: 13,
+                          fontWeight: "600",
+                          color: "#1A1A1A",
+                          lineHeight: 17,
+                        }}
+                      >
+                        {item.title}
+                      </Text>
+                    </View>
+                    <Text
+                      style={{
+                        fontSize: 12,
+                        fontWeight: "400",
+                        color: "#656565",
+                        lineHeight: 18,
+                        letterSpacing: -0.12,
+                      }}
+                    >
+                      {item.content}
+                    </Text>
+                  </View>
+                ))}
 
               {/* 구분선 + 동의 버튼 (스크롤 맨 아래) */}
               <View
@@ -156,7 +226,7 @@ export default function TermsModal({
                       letterSpacing: -0.14,
                     }}
                   >
-                    해당 약관에 동의합니다.
+                    {isMulti ? "약관 전체 동의합니다." : "해당 약관에 동의합니다."}
                   </Text>
                   <CheckIcon agreed={agreed} />
                 </TouchableOpacity>

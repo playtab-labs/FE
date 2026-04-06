@@ -1,6 +1,7 @@
 import Layout from "@/components/Layout";
 import { useNavigation } from "@react-navigation/native";
 import { useEffect, useRef, useState } from "react";
+import ConfirmModal from "@/components/common/ConfirmModal";
 import {
   Animated,
   Easing,
@@ -199,43 +200,16 @@ export default function Language() {
       </View>
 
       {/* 확인 모달 */}
-      <Modal
+      <ConfirmModal
         visible={showConfirm}
-        transparent
-        animationType="fade"
-        onRequestClose={() => setShowConfirm(false)}
-      >
-        <View className="flex-1 items-center justify-center bg-black/40">
-          <View className="bg-white rounded-2xl items-center w-[85%] px-8 py-9 gap-2">
-            <Text className="text-b3 font-sb text-gray-black text-center">
-              {strings.confirm}
-            </Text>
-            <Text className="text-b4 font-rg text-dark-gray text-center mb-3">
-              {strings.sub}
-            </Text>
-            <View className="flex-row gap-4 mt-3">
-              <TouchableOpacity
-                onPress={handleConfirm}
-                activeOpacity={0.8}
-                className="flex-1 items-center justify-center rounded-xl py-3 bg-[#FF7654]"
-              >
-                <Text className="text-b3 font-sb text-white">
-                  {strings.change}
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => setShowConfirm(false)}
-                activeOpacity={0.8}
-                className="flex-1 items-center justify-center rounded-xl py-3 bg-[#D9D9D9]"
-              >
-                <Text className="text-b3 font-sb text-gray-black">
-                  {strings.back}
-                </Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-      </Modal>
+        title={strings.confirm}
+        description={strings.sub}
+        confirmLabel={strings.change}
+        cancelLabel={strings.back}
+        confirmColor="#FF7654"
+        onConfirm={handleConfirm}
+        onCancel={() => setShowConfirm(false)}
+      />
 
       {/* 변경 중 모달 */}
       <Modal visible={showLoading} transparent animationType="fade">

@@ -4,7 +4,7 @@ import TermsModal from "@/components/common/TermsModal";
 import TERMS_DATA from "@/mockdatas/TermsDetail.json";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { useState } from "react";
-import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import Svg, { Polyline } from "react-native-svg";
 
 export const TERMS_LIST = TERMS_DATA.map((t) => ({
@@ -22,6 +22,7 @@ export default function Terms() {
   const [activeTerm, setActiveTerm] = useState<(typeof TERMS_LIST)[0] | null>(
     null,
   );
+  const [showAllModal, setShowAllModal] = useState(false);
 
   const allAgreed = TERMS_LIST.every((t) => agreed[t.id]);
   const requiredAgreed = TERMS_LIST.filter((t) => t.required).every(
@@ -30,7 +31,7 @@ export default function Terms() {
 
   const toggleAll = () => {
     if (allAgreed) setAgreed({});
-    else setAgreed(Object.fromEntries(TERMS_LIST.map((t) => [t.id, true])));
+    else setShowAllModal(true);
   };
 
   return (
@@ -168,15 +169,30 @@ export default function Terms() {
 
       {/* 계속하기 버튼 */}
       <View className="items-center py-4">
-        <Button
-          label="계속하기"
-          size="long"
-          state={requiredAgreed ? "active" : "inactive"}
-          onPress={() => navigation.navigate("PersonalInfo", { userType })}
-        />
+        <View style={{ position: "relative" }}>
+          <Button
+            label="계속하기"
+            size="long"
+            state={requiredAgreed ? "active" : "inactive"}
+            onPress={() => navigation.navigate("PersonalInfo", { userType })}
+          />
+          {userType === "sogang" && (
+            <Image
+              source={require("@/assets/pngs/Alos.png")}
+              style={{
+                position: "absolute",
+                width: 98,
+                height: 127,
+                right: 6,
+                top: -121,
+              }}
+              resizeMode="contain"
+            />
+          )}
+        </View>
       </View>
 
-      {/* 약관 상세 모달 */}
+      {/* 개별 약관 모달 */}
       {activeTerm && (
         <TermsModal
           visible={!!activeTerm}
@@ -189,6 +205,21 @@ export default function Terms() {
           onClose={() => setActiveTerm(null)}
         />
       )}
+
+      {/* 전체동의 모달 */}
+      <TermsModal
+        visible={showAllModal}
+        title="약관 전체 동의"
+        items={TERMS_LIST.map((t) => ({
+          title: t.label,
+          required: t.required,
+          content: t.content,
+        }))}
+        onAgree={() =>
+          setAgreed(Object.fromEntries(TERMS_LIST.map((t) => [t.id, true])))
+        }
+        onClose={() => setShowAllModal(false)}
+      />
     </Layout>
   );
 }
