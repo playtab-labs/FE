@@ -50,7 +50,11 @@ export default function Layout({
     // bgTransparent=true면 배경 투명, 아니면 기본 앱 배경색
     <SafeAreaView
       className={`flex-1 ${bgTransparent ? "bg-transparent" : "bg-app-bg"}`}
-      edges={["top", "left", "right"]}
+      edges={
+        showBottomBar
+          ? ["top", "left", "right"]
+          : ["top", "bottom", "left", "right"]
+      }
     >
       {/* AppBar: 56px */}
       {title && (

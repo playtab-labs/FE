@@ -12,10 +12,12 @@ import MoreScreen from "@/pages/more/More";
 import PersonalChange from "@/pages/more/Personal";
 import MyInfoChange from "@/pages/more/Personal/MyInfoChange";
 import PasswordChange from "@/pages/more/Personal/PasswordChange";
+
 import ServiceWithdrawal from "@/pages/more/Personal/withdraw/ServiceWithdrawal";
 import WithdrawConfirm from "@/pages/more/Personal/withdraw/WithdrawConfirm";
 import Sponsor from "@/pages/more/Sponsor";
 import PersonalScreen from "@/pages/Personal";
+
 
 const Tab = createBottomTabNavigator();
 const MoreStack = createNativeStackNavigator();
