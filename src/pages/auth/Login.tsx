@@ -6,12 +6,12 @@ import RadioIcon from "@/components/icons/RadioIcon";
 import Layout from "@/components/Layout";
 import { useAuthStore } from "@/stores/authStore";
 import { useNavigation } from "@react-navigation/native";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 
 export default function Login() {
   const navigation = useNavigation<any>();
-  const setTokens = useAuthStore((s) => s.setTokens);
+  const { setTokens, saveEmail, loadEmail, clearEmail } = useAuthStore();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -19,8 +19,17 @@ export default function Login() {
   const [rememberID, setRememberID] = useState(false);
   const [error, setError] = useState("");
 
+  useEffect(() => {
+    loadEmail().then((saved) => {
+      if (saved) {
+        setEmail(saved);
+        setRememberID(true);
+      }
+    });
+  }, []);
+
   return (
-    <Layout title="로그인" showBack={true}>
+    <Layout title="로그인" showBack={false} showCamera={false}>
       {/* 로고 */}
       <View className="items-center mt-[36px]">
         <Image
@@ -31,7 +40,7 @@ export default function Login() {
       </View>
 
       {/* 입력 폼 */}
-      <View className="mt-[29px] gap-4 items-center">
+      <View className="mt-[51px] gap-4 items-center">
         <Input
           placeholder="이메일을 입력해주세요."
           value={email}
@@ -83,8 +92,17 @@ export default function Login() {
             try {
               setError("");
               const res = await authApi.loginEmail(email, password);
+              if (rememberID) {
+                await saveEmail(email);
+              } else {
+                await clearEmail();
+              }
               try {
-                await setTokens(res.data.accessToken, res.data.refreshToken);
+                await setTokens(
+                  res.data.accessToken,
+                  res.data.refreshToken,
+                  keepLogin,
+                );
               } catch {}
               navigation.reset({ index: 0, routes: [{ name: "Tabs" }] });
             } catch {

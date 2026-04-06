@@ -8,14 +8,26 @@ import SetPassword from "@/pages/auth/SetPassword";
 import SignUpComplete from "@/pages/auth/SignUpComplete";
 import Terms from "@/pages/auth/Terms";
 import StampTour from "@/pages/StampTour";
+import { useAuthStore } from "@/stores/authStore";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { useEffect, useState } from "react";
+import { View } from "react-native";
 import TabNavigator from "./TabNavigator";
 
 const Stack = createNativeStackNavigator();
 
 export default function RootNavigator() {
+  const { loadTokens, accessToken } = useAuthStore();
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    loadTokens().finally(() => setLoading(false));
+  }, []);
+
+  if (loading) return <View style={{ flex: 1 }} />;
+
   return (
-    <Stack.Navigator>
+    <Stack.Navigator initialRouteName={accessToken ? "Tabs" : "Login"}>
       <Stack.Screen
         name="Login"
         component={Login}

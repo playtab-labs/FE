@@ -9,6 +9,8 @@ import Layout from "@/components/Layout";
 import IdCard from "@/components/more/IdCard";
 import TabList from "@/components/more/TabList";
 import Ticket from "@/components/more/Ticket";
+import { authApi } from "@/api/auth";
+import { useAuthStore } from "@/stores/authStore";
 import { useNavigation } from "@react-navigation/native";
 import { useRef, useState } from "react";
 import {
@@ -58,6 +60,7 @@ const GAP = 8; // 펼쳐졌을 때 두 티켓 사이 간격
 
 export default function More() {
   const navigation = useNavigation<any>();
+  const { clearTokens, refreshToken } = useAuthStore();
   const [expanded, setExpanded] = useState(false);
   const [ticketHeight, setTicketHeight] = useState(0);
   const animValue = useRef(new Animated.Value(0)).current;
@@ -175,6 +178,20 @@ export default function More() {
             />
           ))}
         </View>
+
+        {/* 임시 로그아웃 버튼 */}
+        <TouchableOpacity
+          onPress={async () => {
+            try {
+              if (refreshToken) await authApi.logout(refreshToken);
+            } catch {}
+            await clearTokens();
+            navigation.reset({ index: 0, routes: [{ name: "Login" }] });
+          }}
+          className="w-[329px] h-11 border border-gray-300 rounded-lg items-center justify-center"
+        >
+          <Text className="text-sm text-gray-400">임시 - 로그아웃</Text>
+        </TouchableOpacity>
       </ScrollView>
     </Layout>
   );
