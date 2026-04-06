@@ -34,12 +34,26 @@ export default function Register() {
 
       {/* 버튼 */}
       <View className="items-center gap-4 mt-[186px]">
-        <Button
-          label="서강대생으로 시작하기"
-          size="long"
-          state="active"
-          onPress={() => navigation.navigate("Terms", { userType: "sogang" })}
-        />
+        <View style={{ position: "relative" }}>
+          {/* 오리 — 버튼보다 먼저 렌더링되어 버튼 뒤에 위치 */}
+          <Image
+            source={require("@/assets/pngs/Alos.png")}
+            style={{
+              position: "absolute",
+              width: 50,
+              height: 65,
+              left: 13,
+              top: -52,
+            }}
+            resizeMode="contain"
+          />
+          <Button
+            label="서강대생으로 시작하기"
+            size="long"
+            state="active"
+            onPress={() => navigation.navigate("Terms", { userType: "sogang" })}
+          />
+        </View>
         <Button
           label="외부인으로 시작하기"
           size="long"

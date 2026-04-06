@@ -13,6 +13,7 @@ interface LayoutProps {
   scrollable?: boolean;
   showBottomBar?: boolean;
   bgTransparent?: boolean; // 외부에서 배경(그라디언트 등)을 직접 제어할 때 true로 설정
+  noPadding?: boolean; // 좌우 패딩 없이 full-bleed 콘텐츠
   children: React.ReactNode;
 }
 
@@ -39,6 +40,7 @@ export default function Layout({
   scrollable = false,
   showBottomBar = false,
   bgTransparent = false,
+  noPadding = false,
   children,
 }: LayoutProps) {
   const navigation = useNavigation<any>();
@@ -102,7 +104,7 @@ export default function Layout({
           {fullBleedHeader}
 
           {/* 메인 콘텐츠 */}
-          <View className="px-5">{children}</View>
+          <View className={noPadding ? "" : "px-[17px]"}>{children}</View>
         </ScrollView>
       ) : (
         <>
@@ -110,15 +112,23 @@ export default function Layout({
           {fullBleedHeader}
 
           {/* 메인 콘텐츠 */}
-          <View className="flex-1 px-5">{children}</View>
+          <View className={`flex-1 ${noPadding ? "" : "px-[17px]"}`}>
+            {children}
+          </View>
         </>
       )}
       {showBottomBar && (
-        // state.index: -1로 설정해서 StampTour에서는 어떤 탭도 활성화(빨간색)되지 않음
-        // 탭 버튼을 누르면 해당 탭으로 정상 이동
+        // state.index: -1로 설정해서 어떤 탭도 활성화(빨간색)되지 않음
+        // Root stack 화면에서 탭 버튼을 누르면 Tabs > 해당 탭으로 이동
         <BottomBar
           state={{ index: -1, routes: [] } as any}
-          navigation={navigation}
+          navigation={
+            {
+              ...navigation,
+              navigate: (name: string) =>
+                navigation.navigate("Tabs", { screen: name }),
+            } as any
+          }
           descriptors={{} as any}
           insets={{ top: 0, right: 0, bottom: 0, left: 0 }}
         />

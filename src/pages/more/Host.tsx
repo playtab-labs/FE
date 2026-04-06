@@ -37,8 +37,9 @@ export default function Host() {
           paddingBottom: 32,
           gap: 16,
         }}
+        className="px-4"
       >
-        <View className="gap-2 mb-[70px]">
+        <View className="gap-2 mb-10">
           <Text className="text-h1 font-eb text-gray-black">
             주최 및 주관 정보
           </Text>

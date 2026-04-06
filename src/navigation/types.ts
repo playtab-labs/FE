@@ -1,2 +1,44 @@
-export type RootStackParamList = Record<string, undefined>;
-export type TabParamList = Record<string, undefined>;
+import type { NavigatorScreenParams } from "@react-navigation/native";
+
+// More 스택 내부 화면
+export type MoreStackParamList = {
+  MoreMain: undefined;
+  PersonalChange: undefined;
+  PasswordChange: undefined;
+  ServiceWithdrawal: undefined;
+  FAQ: undefined;
+  Sponsor: undefined;
+  Host: undefined;
+  Language: undefined;
+};
+
+// 하단 탭 화면
+export type TabParamList = {
+  Artist: undefined;
+  Personal: undefined;
+  Home: undefined;
+  Map: undefined;
+  More: NavigatorScreenParams<MoreStackParamList>;
+};
+
+// 루트 스택 화면
+export type RootStackParamList = {
+  Login: undefined;
+  Register: undefined;
+  Terms: { userType: string };
+  PersonalInfo: undefined;
+  EmailVerify: undefined;
+  SetPassword: undefined;
+  SignUpComplete: undefined;
+  FindPassword: undefined;
+  ResetPassword: undefined;
+  StampTour: undefined;
+  Tag: undefined;
+  SerialInput: undefined;
+  Success: undefined;
+  PersonalBand: undefined;
+  Tabs: NavigatorScreenParams<TabParamList>;
+  MDDetail: { title: string };
+  [key: string]: undefined | object;
+};
+// export type TabParamList = Record<string, undefined>;
