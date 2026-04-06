@@ -1,13 +1,18 @@
+import { authApi } from "@/api/auth";
 import Layout from "@/components/Layout";
 import Button from "@/components/common/Button";
 import Input from "@/components/common/Input";
+import { useSignupStore } from "@/stores/signupStore";
 import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
 import { Keyboard, Text, TouchableWithoutFeedback, View } from "react-native";
 
 export default function SetPassword() {
   const navigation = useNavigation<any>();
-  const [password, setPassword] = useState("");
+  const { name, gender, birthDate, nationality, email, consents } = useSignupStore();
+  const setPassword = useSignupStore((s) => s.setPassword);
+  const reset = useSignupStore((s) => s.reset);
+  const [password, setPasswordInput] = useState("");
   const [confirm, setConfirm] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
@@ -55,7 +60,7 @@ export default function SetPassword() {
                 <Input
                   placeholder="비밀번호를 입력해주세요."
                   value={password}
-                  onChangeText={setPassword}
+                  onChangeText={setPasswordInput}
                   onFocus={() => setPasswordTouched(false)}
                   onBlur={() => setPasswordTouched(true)}
                   autoCapitalize="none"
@@ -93,7 +98,26 @@ export default function SetPassword() {
               label="계속하기"
               size="long"
               state={isValid ? "active" : "inactive"}
-              onPress={() => navigation.navigate("SignUpComplete")}
+              onPress={async () => {
+                try {
+                  setPassword(password);
+                  const payload = {
+                    email,
+                    password,
+                    name,
+                    gender: gender!,
+                    phoneNumber: null as any,
+                    birthDate,
+                    nationality,
+                    consents,
+                  };
+                  await authApi.signup(payload);
+                  reset();
+                  navigation.navigate("SignUpComplete");
+                } catch (e: any) {
+
+                }
+              }}
             />
           </View>
         </Layout>

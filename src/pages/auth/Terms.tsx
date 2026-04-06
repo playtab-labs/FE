@@ -2,6 +2,7 @@ import Layout from "@/components/Layout";
 import Button from "@/components/common/Button";
 import TermsModal from "@/components/common/TermsModal";
 import TERMS_DATA from "@/mockdatas/TermsDetail.json";
+import { useSignupStore } from "@/stores/signupStore";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { useState } from "react";
 import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
@@ -10,6 +11,7 @@ import Svg, { Polyline } from "react-native-svg";
 export const TERMS_LIST = TERMS_DATA.map((t) => ({
   id: t.id,
   label: t.label,
+  type: t.type as "PRIVACY" | "SERVICE" | "MARKETING",
   required: t.required,
   content: t.content,
 }));
@@ -18,6 +20,7 @@ export default function Terms() {
   const navigation = useNavigation<any>();
   const route = useRoute<any>();
   const userType = route.params?.userType ?? "external";
+  const setConsents = useSignupStore((s) => s.setConsents);
   const [agreed, setAgreed] = useState<Record<number, boolean>>({});
   const [activeTerm, setActiveTerm] = useState<(typeof TERMS_LIST)[0] | null>(
     null,
@@ -174,7 +177,16 @@ export default function Terms() {
             label="계속하기"
             size="long"
             state={requiredAgreed ? "active" : "inactive"}
-            onPress={() => navigation.navigate("PersonalInfo", { userType })}
+            onPress={() => {
+              setConsents(
+                TERMS_LIST.map((t) => ({
+                  termsVersion: "1.0",
+                  type: t.type as "PRIVACY" | "SERVICE" | "MARKETING",
+                  agreed: agreed[t.id] ?? false,
+                }))
+              );
+              navigation.navigate("PersonalInfo", { userType });
+            }}
           />
           {userType === "sogang" && (
             <Image

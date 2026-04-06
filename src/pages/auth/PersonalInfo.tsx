@@ -3,6 +3,7 @@ import Button from "@/components/common/Button";
 import ConfirmModal from "@/components/common/ConfirmModal";
 import Input from "@/components/common/Input";
 import NationalityModal from "@/components/common/NationalityModal";
+import { useSignupStore } from "@/stores/signupStore";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { useState } from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
@@ -25,10 +26,16 @@ const formatBirthday = (digits: string) => {
   return `${digits.slice(0, 4)}.${digits.slice(4, 6)}.${digits.slice(6)}`;
 };
 
+const formatBirthdayForApi = (digits: string) => {
+  if (digits.length < 8) return digits;
+  return `${digits.slice(0, 4)}-${digits.slice(4, 6)}-${digits.slice(6)}`;
+};
+
 export default function PersonalInfo() {
   const navigation = useNavigation<any>();
   const route = useRoute<any>();
   const userType = route.params?.userType ?? "external";
+  const setPersonalInfo = useSignupStore((s) => s.setPersonalInfo);
   const [name, setName] = useState("");
   const [gender, setGender] = useState<"male" | "female" | null>(null);
   const [birthdayRaw, setBirthdayRaw] = useState("");
@@ -158,6 +165,13 @@ export default function PersonalInfo() {
         confirmLabel="네, 맞아요"
         cancelLabel="아니에요"
         onConfirm={() => {
+          setPersonalInfo({
+            name,
+            gender: gender === "male" ? "MALE" : "FEMALE",
+            phoneNumber: "",
+            birthDate: formatBirthdayForApi(birthdayRaw),
+            nationality,
+          });
           setShowNameConfirm(false);
           navigation.navigate("EmailVerify", { userType });
         }}
