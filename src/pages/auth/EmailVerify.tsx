@@ -1,17 +1,19 @@
+import { authApi } from "@/api/auth";
 import Layout from "@/components/Layout";
 import Button from "@/components/common/Button";
 import Input from "@/components/common/Input";
+import { useSignupStore } from "@/stores/signupStore";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { useEffect, useRef, useState } from "react";
 import { ScrollView, Text, TextInput, View } from "react-native";
 
 const SOGANG_DOMAIN = "@sogang.ac.kr";
-const MOCK_CODE = "123456";
 
 export default function EmailVerify() {
   const navigation = useNavigation<any>();
   const route = useRoute<any>();
   const isSogang = route.params?.userType === "sogang";
+  const setEmail = useSignupStore((s) => s.setEmail);
 
   const [emailPrefix, setEmailPrefix] = useState("");
   const [sent, setSent] = useState(false);
@@ -21,6 +23,8 @@ export default function EmailVerify() {
   const [timeLeft, setTimeLeft] = useState(180);
 
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  const email = isSogang ? `${emailPrefix}${SOGANG_DOMAIN}` : emailPrefix;
 
   const canSend = isSogang
     ? emailPrefix.trim().length > 0
@@ -56,24 +60,33 @@ export default function EmailVerify() {
   );
 
   const formatTime = (s: number) =>
-    `${Math.floor(s / 60)
-      .toString()
-      .padStart(2, "0")}:${(s % 60).toString().padStart(2, "0")}`;
+    `${Math.floor(s / 60).toString().padStart(2, "0")}:${(s % 60).toString().padStart(2, "0")}`;
 
-  const handleSend = () => {
-    setSent(true);
-    setCode("");
-    setVerified(false);
-    setError("");
-    startTimer();
+  const handleSend = async () => {
+    try {
+      await authApi.sendEmailVerification(email);
+      setSent(true);
+      setCode("");
+      setVerified(false);
+      setError("");
+      startTimer();
+    } catch {
+      setError("인증번호 발송에 실패했습니다.");
+    }
   };
 
-  const handleVerify = () => {
-    if (code === MOCK_CODE) {
-      setVerified(true);
-      setError("");
-      if (timerRef.current) clearInterval(timerRef.current);
-    } else {
+  const handleVerify = async () => {
+    try {
+      const res = await authApi.verifyEmail(email, code);
+      if (res.data.verified) {
+        setEmail(email);
+        setVerified(true);
+        setError("");
+        if (timerRef.current) clearInterval(timerRef.current);
+      } else {
+        setError("인증번호가 일치하지 않습니다.");
+      }
+    } catch {
       setError("인증번호가 일치하지 않습니다.");
     }
   };

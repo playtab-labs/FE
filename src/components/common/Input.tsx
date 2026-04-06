@@ -44,7 +44,7 @@ export default function Input({
           )}
           {description && (
             <Text
-              className={`text-b4 font-rg tracking-[-0.12px] text-right ${error ? "text-[#FF7B94]" : "text-[#656565]"}`}
+              className={`text-b4 font-rg tracking-[-0.12px] text-right ${error ? "text-secondary-bubblegum-pink" : "text-[#656565]"}`}
             >
               {description}
             </Text>
@@ -55,7 +55,7 @@ export default function Input({
         className={`flex-row items-center rounded-lg border border-soft-gray bg-white px-3 ${heightStyle}`}
       >
         <TextInput
-          className={`flex-1 text-b3 tracking-[-0.14px] ${error ? "font-rg text-[#FF7B94]" : "font-medium text-gray-black"}`}
+          className={`flex-1 text-b3 tracking-[-0.14px] ${error ? "font-rg text-secondary-bubblegum-pink" : "font-medium text-gray-black"}`}
           placeholder={placeholder}
           placeholderTextColor="#E4E4E4"
           {...props}

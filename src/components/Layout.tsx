@@ -1,5 +1,6 @@
+import CameraIcon from "@/assets/svgs/camera.svg";
 import { useNavigation } from "@react-navigation/native";
-import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Svg, { Polyline } from "react-native-svg";
 import BottomBar from "@/components/BottomBar";
@@ -92,10 +93,7 @@ export default function Layout({
           <View style={{ width: 24, alignItems: "center" }}>
             {showCamera && (
               <TouchableOpacity onPress={onCameraPress}>
-                <Image
-                  source={require("@/assets/pngs/camera.png")}
-                  style={{ width: 24, height: 24 }}
-                />
+                <CameraIcon width={24} height={24} />
               </TouchableOpacity>
             )}
           </View>
