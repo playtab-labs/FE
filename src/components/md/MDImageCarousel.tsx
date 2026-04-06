@@ -42,8 +42,8 @@ export default function MDImageCarousel({ images, soldOut = false }: MDImageCaro
             alignItems: 'center',
           }}
         >
-          <Text className={typo.T1_Eb} style={{ color: '#000', letterSpacing: -0.2 }}>
-            Sold out
+          <Text className={typo.H1_Eb} style={{ color: '#000', letterSpacing: -0.2 }}>
+            SOLD OUT
           </Text>
         </View>
       )}
