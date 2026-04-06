@@ -1,20 +1,19 @@
-import { useState, useEffect } from "react";
-import { View, Text, Image, TouchableOpacity } from "react-native";
-import { useIsFocused } from "@react-navigation/native";
+import Layout from "@/components/Layout";
+import type { RootStackParamList } from "@/navigation/types";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
+import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Image as ExpoImage } from "expo-image";
+import { useEffect, useState } from "react";
+import { Image, Text, TouchableOpacity, View } from "react-native";
 import Animated, {
-  useSharedValue,
+  Easing,
   useAnimatedStyle,
-  withTiming,
+  useSharedValue,
+  withDelay,
   withRepeat,
   withSequence,
-  withDelay,
-  Easing,
+  withTiming,
 } from "react-native-reanimated";
-import Layout from "@/components/Layout";
-import { useNavigation } from "@react-navigation/native";
-import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import type { RootStackParamList } from "@/navigation/types";
 
 const AnimatedImage = Animated.createAnimatedComponent(Image);
 
@@ -88,7 +87,7 @@ export default function Tag() {
   }));
 
   return (
-    <Layout title="PERSONAL" showBack={true} showBottomBar={true}>
+    <Layout title="PERSONAL" showBack={true} showBottomBar={false}>
       <View className="flex-1 flex-col justify-start">
         {/* 문구 */}
         <View className="mt-2 gap-4 py-4 px-5" style={{ zIndex: 1 }}>

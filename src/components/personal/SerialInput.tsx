@@ -19,7 +19,7 @@ export default function SerialInput() {
   };
 
   return (
-    <Layout title="팔찌 연동" showBack={true} showBottomBar={true} noPadding>
+    <Layout title="팔찌 연동" showBack={true} showBottomBar={true} activeTab="Personal" noPadding>
       <KeyboardAvoidingView
         className="flex-1"
         behavior={Platform.OS === "ios" ? "padding" : "height"}

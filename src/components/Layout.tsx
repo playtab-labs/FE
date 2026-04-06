@@ -5,6 +5,8 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Svg, { Polyline } from "react-native-svg";
 import BottomBar from "@/components/BottomBar";
 
+const TAB_NAMES = ["Artist", "Personal", "Home", "Map", "More"];
+
 interface LayoutProps {
   title?: React.ReactNode; //이미지도 받을 수 있게 수정
   showBack?: boolean;
@@ -13,6 +15,7 @@ interface LayoutProps {
   fullBleedHeader?: React.ReactNode;
   scrollable?: boolean;
   showBottomBar?: boolean;
+  activeTab?: "Artist" | "Personal" | "Home" | "Map" | "More"; // 하단 바 활성 탭
   bgTransparent?: boolean; // 외부에서 배경(그라디언트 등)을 직접 제어할 때 true로 설정
   noPadding?: boolean; // 좌우 패딩 없이 full-bleed 콘텐츠
   children: React.ReactNode;
@@ -40,11 +43,13 @@ export default function Layout({
   fullBleedHeader,
   scrollable = false,
   showBottomBar = false,
+  activeTab,
   bgTransparent = false,
   noPadding = false,
   children,
 }: LayoutProps) {
   const navigation = useNavigation<any>();
+  const activeTabIndex = activeTab ? TAB_NAMES.indexOf(activeTab) : -1;
 
   return (
     // bgTransparent=true면 배경 투명, 아니면 기본 앱 배경색
@@ -123,7 +128,7 @@ export default function Layout({
         // state.index: -1로 설정해서 어떤 탭도 활성화(빨간색)되지 않음
         // Root stack 화면에서 탭 버튼을 누르면 Tabs > 해당 탭으로 이동
         <BottomBar
-          state={{ index: -1, routes: [] } as any}
+          state={{ index: activeTabIndex, routes: [] } as any}
           navigation={
             {
               ...navigation,
