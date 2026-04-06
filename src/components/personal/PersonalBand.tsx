@@ -1,12 +1,12 @@
-import { useRef, useState } from "react";
-import { ScrollView, View, Text, TouchableOpacity } from "react-native";
+import ToastError from "@/components/common/ToastError";
 import Layout from "@/components/Layout";
 import BandCard from "@/components/personal/BandCard";
 import StaffAuthModal from "@/components/personal/StaffAuthModal";
-import ToastError from "@/components/common/ToastError";
+import type { RootStackParamList } from "@/navigation/types";
 import { useNavigation } from "@react-navigation/native";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import type { RootStackParamList } from "@/navigation/types";
+import { useRef, useState } from "react";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 
 const STAFF_CODE = "0000";
 
@@ -57,7 +57,13 @@ export default function PersonalBand() {
   };
 
   return (
-    <Layout title="PERSONAL" showBack={false} showBottomBar={true} noPadding>
+    <Layout
+      title="PERSONAL"
+      showBack={false}
+      showBottomBar={true}
+      activeTab="Personal"
+      noPadding
+    >
       <ScrollView
         className="flex-1"
         showsVerticalScrollIndicator={false}

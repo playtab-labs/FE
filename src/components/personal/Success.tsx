@@ -1,11 +1,11 @@
-import { useEffect } from "react";
-import { View, Text, Image } from "react-native";
-import { Image as ExpoImage } from "expo-image";
+import Band from "@/assets/personal/band_default.png";
 import Layout from "@/components/Layout";
+import type { RootStackParamList } from "@/navigation/types";
 import { useNavigation } from "@react-navigation/native";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import type { RootStackParamList } from "@/navigation/types";
-import Band from "@/assets/personal/band_default.png";
+import { Image as ExpoImage } from "expo-image";
+import { useEffect } from "react";
+import { Image, Text, View } from "react-native";
 
 export default function Success() {
   const navigation =
@@ -19,7 +19,7 @@ export default function Success() {
   }, []);
 
   return (
-    <Layout title="PERSONAL" showBack={true} showBottomBar={true}>
+    <Layout title="PERSONAL" showBack={true} showBottomBar={false}>
       <View className="flex-1 flex-col">
         {/* 문구 */}
         <View className="py-4 mt-2 gap-4 px-5">

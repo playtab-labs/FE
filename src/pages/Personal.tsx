@@ -1,9 +1,9 @@
-import { View, Text, Image } from "react-native";
 import Layout from "@/components/Layout";
 import Button from "@/components/common/Button";
+import type { RootStackParamList } from "@/navigation/types";
 import { useNavigation } from "@react-navigation/native";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import type { RootStackParamList } from "@/navigation/types";
+import { Image, Text, View } from "react-native";
 
 export default function Personal() {
   const navigation =
