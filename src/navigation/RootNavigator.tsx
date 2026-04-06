@@ -81,7 +81,7 @@ export default function RootNavigator() {
       <Stack.Screen
         name="MDDetail"
         component={MDDetail}
-        options={{ headerShown: false }}
+        options={{ headerShown: false, contentStyle: { borderRadius: 0 } }}
       />
 
 
