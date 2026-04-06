@@ -79,7 +79,7 @@ function MoreNavigator() {
 
 export default function TabNavigator() {
   return (
-    <Tab.Navigator tabBar={(props) => <BottomBar {...props} />}>
+    <Tab.Navigator tabBar={(props) => <BottomBar {...props} />} initialRouteName="Home">
       <Tab.Screen
         name="Artist"
         component={ArtistScreen}
