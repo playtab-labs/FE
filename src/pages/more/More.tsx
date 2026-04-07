@@ -158,7 +158,9 @@ export default function More() {
               onPress={
                 item.label === "개인정보 변경"
                   ? () => navigation.navigate("PersonalChange")
-                  : item.label === "FAQ"
+                  : item.label === "공지사항"
+                    ? () => navigation.navigate("Notice")
+                    : item.label === "FAQ"
                     ? () => navigation.navigate("FAQ")
                     : item.label === "주최 주관 정보"
                       ? () => navigation.navigate("Host")
