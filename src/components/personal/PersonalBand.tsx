@@ -32,12 +32,6 @@ export default function PersonalBand() {
     toastTimer.current = setTimeout(() => setToastVisible(false), 2500);
   };
 
-  const handleClosePress = (bandId: string) => {
-    setTargetBandId(bandId);
-    setAuthError(undefined);
-    setAuthModalVisible(true);
-  };
-
   const handleAuthConfirm = (code: string) => {
     if (code === STAFF_CODE) {
       setBands((prev) => prev.filter((b) => b.id !== targetBandId));
@@ -79,7 +73,6 @@ export default function PersonalBand() {
             <BandCard
               key={band.id}
               serialNumber={band.serialNumber}
-              onClose={() => handleClosePress(band.id)}
               isExpired={band.isExpired}
               isLarge
             />
