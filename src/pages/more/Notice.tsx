@@ -1,15 +1,20 @@
 import Layout from "@/components/Layout";
 import NoticeCard from "@/components/more/notice/NoticeCard";
 import { BadgeType } from "@/components/more/notice/NoticeBadge";
+import NoticeExample from "@/assets/svgs/noticeexample.svg";
 import { ScrollView } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { SvgProps } from "react-native-svg";
 
-const NOTICE_ITEMS: { title: string; date: string; content: string; badge?: BadgeType }[] = [
+export const NOTICE_ITEMS: { title: string; date: string; content: string; badge?: BadgeType; image?: string | React.FC<SvgProps> }[] = [
   {
     title: "[안내] 플레이탭 2026 공지사항 제목",
     date: "2026.04.01",
     content:
       "공지사항 내용이 들어가는 자리입니다. 자세한 내용은 본문을 확인해 주세요.. 자세한 내용은 본문을 확인해 주세요. 자세한 내용은 본문을 확인해 주세요",
     badge: "NEW",
+    image: NoticeExample,
   },
   {
     title: "[안내] 플레이탭 2026 공지사항 제목",
@@ -39,6 +44,8 @@ const NOTICE_ITEMS: { title: string; date: string; content: string; badge?: Badg
 ];
 
 export default function Notice() {
+  const navigation = useNavigation<NativeStackNavigationProp<any>>();
+
   return (
     <Layout title="공지사항" showBack showCamera={false}>
       <ScrollView
@@ -51,7 +58,6 @@ export default function Notice() {
           gap: 16,
         }}
       >
-
         {NOTICE_ITEMS.map((item, index) => (
           <NoticeCard
             key={index}
@@ -59,6 +65,9 @@ export default function Notice() {
             date={item.date}
             content={item.content}
             badge={item.badge}
+            onPress={() =>
+              navigation.navigate("NoticeDetail", { index })
+            }
           />
         ))}
       </ScrollView>

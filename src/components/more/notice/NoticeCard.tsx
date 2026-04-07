@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { typo } from '@/styles/typography';
 import NoticeBadge, { BadgeType } from './NoticeBadge';
 
@@ -7,11 +7,12 @@ interface NoticeCardProps {
   date: string;
   content: string;
   badge?: BadgeType;
+  onPress?: () => void;
 }
 
-export default function NoticeCard({ title, date, content, badge }: NoticeCardProps) {
+export default function NoticeCard({ title, date, content, badge, onPress }: NoticeCardProps) {
   return (
-    <View style={styles.container}>
+    <TouchableOpacity style={styles.container} onPress={onPress} activeOpacity={0.7}>
       <View style={styles.titleRow}>
         <Text className={typo.T3_Sb} style={styles.title} numberOfLines={1}>
           {title}
@@ -24,7 +25,7 @@ export default function NoticeCard({ title, date, content, badge }: NoticeCardPr
       <Text className={typo.B4_Rg} style={styles.content} numberOfLines={2}>
         {content}
       </Text>
-    </View>
+    </TouchableOpacity>
   );
 }
 
