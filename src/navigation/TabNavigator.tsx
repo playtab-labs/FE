@@ -15,6 +15,8 @@ import PasswordChange from "@/pages/more/Personal/PasswordChange";
 
 import ServiceWithdrawal from "@/pages/more/Personal/withdraw/ServiceWithdrawal";
 import WithdrawConfirm from "@/pages/more/Personal/withdraw/WithdrawConfirm";
+import Notice from "@/pages/more/Notice";
+import NoticeDetail from "@/pages/more/NoticeDetail";
 import Sponsor from "@/pages/more/Sponsor";
 import PersonalScreen from "@/pages/Personal";
 
@@ -53,6 +55,16 @@ function MoreNavigator() {
       <MoreStack.Screen
         name="WithdrawConfirm"
         component={WithdrawConfirm}
+        options={{ headerShown: false }}
+      />
+      <MoreStack.Screen
+        name="Notice"
+        component={Notice}
+        options={{ headerShown: false }}
+      />
+      <MoreStack.Screen
+        name="NoticeDetail"
+        component={NoticeDetail}
         options={{ headerShown: false }}
       />
       <MoreStack.Screen
