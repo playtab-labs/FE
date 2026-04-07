@@ -7,15 +7,32 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Image, View } from 'react-native';
 import stamp2 from '@/assets/pngs/stamp2.png';
 import BingoTitle from '@/assets/svgs/bingotitle.svg';
+import StampComplete1 from '@/assets/svgs/stamp-complete1.svg';
+import StampComplete2 from '@/assets/svgs/stamp-complete2.svg';
+import React from 'react';
+import { SvgProps } from 'react-native-svg';
+
+// 셀 번호(1~9)에 해당하는 스탬프 SVG. 완료 SVG가 없는 셀은 null로 유지.
+const STAMP_SVGS: (React.ComponentType<SvgProps> | null)[] = [
+  StampComplete1, // 1번 셀
+  StampComplete2, // 2번 셀
+  null,           // 3번 셀
+  null,           // 4번 셀
+  null,           // 5번 셀
+  null,           // 6번 셀
+  null,           // 7번 셀
+  null,           // 8번 셀
+  null,           // 9번 셀
+];
 
 const BINGO_CELLS = [
   { title: '#정문 게이트', description: '오디세이에 입장하세요!', cleared: true },
-  { title: '#푸드존', description: '축제에는 간식이 빠질 수 없죠', cleared:false },
-  { title: '#메인무대', description: '무대를 관람하세요', cleared: true },
-  { title: '미션 4', description: '설명', cleared: false },
-  { title: '미션 5', description: '설명', cleared: false },
-  { title: '미션 6', description: '설명', cleared: false },
-  { title: '미션 7', description: '설명', cleared: false },
+  { title: '#메인무대', description: '무대를 관람하세요!', cleared: true },
+  { title: '#푸드존', description: '축제에는 간식이 빠질 수 없죠', cleared: false },
+  { title: '#청년광장', description: '청년광장을 둘러보세요', cleared: false },
+  { title: '#MD 부스', description: '오디세이의 굿즈를 둘러보세요!', cleared: false },
+  { title: '#플리마켓', description: '학생들이 참여한 플리마켓을 구경하세요!', cleared: false },
+  { title: '#동아리존', description: '설명', cleared: false },
   { title: '미션 8', description: '설명', cleared: false },
   { title: '미션 9', description: '설명', cleared: false },
 ];
@@ -41,10 +58,15 @@ export default function StampTour() {
         {[0, 1, 2].map((row) => (
           <View key={row} style={{ flexDirection: 'row', gap: 8 }}>
             {[0, 1, 2].map((col) => {
-              const cell = BINGO_CELLS[row * 3 + col];
+              const index = row * 3 + col;
+              const cell = BINGO_CELLS[index];
               return (
                 <View key={col} style={{ flex: 1 }}>
-                  <BingoCell title={cell.title} description={cell.description} cleared={cell.cleared} />
+                  <BingoCell
+                    title={cell.title}
+                    description={cell.description}
+                    StampSvg={cell.cleared ? STAMP_SVGS[index] : null}
+                  />
                 </View>
               );
             })}

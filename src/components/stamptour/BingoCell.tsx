@@ -1,14 +1,15 @@
-import { View, Text, Image } from 'react-native';
+import { View, Text } from 'react-native';
 import { typo } from '@/styles/typography';
-import stampImg from '@/assets/pngs/stamp1.png';
+import React from 'react';
+import { SvgProps } from 'react-native-svg';
 
 interface BingoCellProps {
   title: string;
   description: string;
-  cleared?: boolean;
+  StampSvg?: React.ComponentType<SvgProps> | null;
 }
 
-export default function BingoCell({ title, description, cleared = false }: BingoCellProps) {
+export default function BingoCell({ title, description, StampSvg }: BingoCellProps) {
   return (
     <View
       style={{
@@ -22,9 +23,9 @@ export default function BingoCell({ title, description, cleared = false }: Bingo
         gap: 12,
         aspectRatio: 1,
         borderRadius: 8,
-        backgroundColor: cleared ? '#FFA38C' : '#FFFFFF',
+        backgroundColor: '#FFFFFF',
         position: 'relative',
-        overflow: 'visible',
+        overflow: 'hidden',
       }}
     >
       <Text
@@ -41,18 +42,10 @@ export default function BingoCell({ title, description, cleared = false }: Bingo
         {description}
       </Text>
 
-      {cleared && (
-        <Image
-          source={stampImg}
-          style={{
-            position: 'absolute',
-            width:100,
-            height:100,
-            aspectRatio: 1,
-            transform: [{ rotate: '-25deg' }]
-          }}
-          resizeMode="cover"
-        />
+      {StampSvg && (
+        <View style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}>
+          <StampSvg width="100%" height="100%" />
+        </View>
       )}
     </View>
   );
