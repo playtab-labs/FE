@@ -13,6 +13,7 @@ import SignUpComplete from "@/pages/auth/SignUpComplete";
 import Terms from "@/pages/auth/Terms";
 import MD from "@/pages/MD";
 import MDDetail from "@/pages/MDDetail";
+import QrScan from "@/pages/QrScan";
 import StampTour from "@/pages/StampTour";
 import { useAuthStore } from "@/stores/authStore";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -30,7 +31,7 @@ export default function RootNavigator() {
 
   useEffect(() => {
     loadTokens().finally(() => setLoading(false));
-  }, []);
+  }, [loadTokens]);
 
   if (loading) return <View style={{ flex: 1 }} />;
 
@@ -79,6 +80,11 @@ export default function RootNavigator() {
       <Stack.Screen
         name="StampTour"
         component={StampTour}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="QrScan"
+        component={QrScan}
         options={{ headerShown: false }}
       />
       <Stack.Screen
