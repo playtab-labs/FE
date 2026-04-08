@@ -38,7 +38,7 @@ function BackIcon() {
 export default function Layout({
   title,
   showBack = false,
-  showCamera = true,
+  showCamera = false,
   onCameraPress,
   fullBleedHeader,
   scrollable = false,

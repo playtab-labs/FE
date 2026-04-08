@@ -32,7 +32,7 @@ export default function StampTour() {
         style={{ position: 'absolute', top: 0, right: 0, width: 330, height: 310 }}
         resizeMode="cover"
       />
-    <Layout title="스탬프 투어" showBack scrollable showBottomBar bgTransparent>
+    <Layout title="스탬프 투어" showBack showCamera scrollable showBottomBar bgTransparent>
       <View style={{ marginTop: 16, alignItems: 'center' }}>
         <BingoTitle />
       </View>
