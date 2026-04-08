@@ -6,9 +6,9 @@ import ProductInfo from '@/components/stamptour/ProductInfo';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Image, View } from 'react-native';
 import stamp2 from '@/assets/pngs/stamp2.png';
-import BingoTitle from '@/assets/svgs/bingotitle.svg';
-import StampComplete1 from '@/assets/svgs/stamp-complete1.svg';
-import StampComplete2 from '@/assets/svgs/stamp-complete2.svg';
+import BingoTitle from '@/assets/svgs/stamptour/bingotitle.svg';
+import StampComplete1 from '@/assets/svgs/stamptour/stamp-complete1.svg';
+import StampComplete2 from '@/assets/svgs/stamptour/stamp-complete2.svg';
 import React from 'react';
 import { SvgProps } from 'react-native-svg';
 
@@ -75,7 +75,7 @@ export default function StampTour() {
       </View>
 
       <View style={{ marginTop: 16, alignItems: 'center' }}>
-        <BingoCount bingoCount={0} remainingCells={9} />
+        <BingoCount bingoCount={0} remainingCells={BINGO_CELLS.filter(cell => !cell.cleared).length} />
       </View>
 
       <View style={{ marginTop: 16, alignItems: 'center' }}>
