@@ -33,6 +33,7 @@ export type RootStackParamList = {
   FindPassword: undefined;
   ResetPassword: undefined;
   StampTour: undefined;
+  QrScan: undefined;
   Tag: undefined;
   SerialInput: undefined;
   Success: undefined;

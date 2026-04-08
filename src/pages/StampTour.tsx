@@ -3,6 +3,7 @@ import BingoCell from '@/components/stamptour/BingoCell';
 import BingoCount from '@/components/stamptour/BingoCount';
 import HowToParticipate from '@/components/stamptour/HowToParticipate';
 import ProductInfo from '@/components/stamptour/ProductInfo';
+import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Image, View } from 'react-native';
 import stamp2 from '@/assets/pngs/stamp2.png';
@@ -22,6 +23,8 @@ const BINGO_CELLS = [
 
 
 export default function StampTour() {
+  const navigation = useNavigation<any>();
+
   return (
     <LinearGradient
       colors={['rgba(255, 94, 55, 0.20)', 'rgba(255, 255, 255, 0.20)']}
@@ -32,7 +35,7 @@ export default function StampTour() {
         style={{ position: 'absolute', top: 0, right: 0, width: 330, height: 310 }}
         resizeMode="cover"
       />
-    <Layout title="스탬프 투어" showBack showCamera scrollable showBottomBar bgTransparent>
+    <Layout title="스탬프 투어" showBack showCamera onCameraPress={() => navigation.navigate('QrScan')} scrollable showBottomBar bgTransparent>
       <View style={{ marginTop: 16, alignItems: 'center' }}>
         <BingoTitle />
       </View>
