@@ -31,7 +31,7 @@ export default function RootNavigator() {
 
   useEffect(() => {
     loadTokens().finally(() => setLoading(false));
-  }, []);
+  }, [loadTokens]);
 
   if (loading) return <View style={{ flex: 1 }} />;
 
