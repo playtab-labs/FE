@@ -33,12 +33,13 @@ export type RootStackParamList = {
   FindPassword: undefined;
   ResetPassword: undefined;
   StampTour: undefined;
+  QrScan: undefined;
   Tag: undefined;
   SerialInput: undefined;
   Success: undefined;
   PersonalBand: undefined;
   Tabs: NavigatorScreenParams<TabParamList>;
-};
+  MD: undefined;
   MDDetail: { title: string };
   [key: string]: undefined | object;
 };
