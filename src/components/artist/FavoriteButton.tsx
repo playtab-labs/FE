@@ -22,20 +22,14 @@ const FavoriteButton = ({
   };
 
   const isFilter = type === "FILTER";
-  const iconColor = isFilter
-    ? favorited
-      ? "#fff"
-      : "#BFBFBF"
-    : favorited
-      ? "#FF7654"
-      : "#BFBFBF";
+  const iconColor = favorited ? "#ffff" : "#BFBFBF";
 
   return (
     <TouchableOpacity
       onPress={handlePress}
       activeOpacity={0.8}
       className={`w-[26px] aspect-square rounded-full items-center justify-center border border-soft-gray  ${
-        isFilter && favorited ? "bg-text-salmon" : "bg-soft-gray-white"
+        favorited ? "bg-text-salmon" : "bg-soft-gray-white"
       }`}
     >
       <Svg width={12} height={12} viewBox="0 0 12 12" fill="none">

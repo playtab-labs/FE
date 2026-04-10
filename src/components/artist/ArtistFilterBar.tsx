@@ -15,37 +15,28 @@ const LINEUP_CATEGORIES: Category[] = ["아티스트", "버스킹", "DJ", "동�
 const TIMETABLE_CATEGORIES: Category[] = ["Day 1", "Day 2", "Day 3"];
 
 interface ArtistFilterBarProps {
-  onFilterChange?: (
-    category: Category | null,
-    auto: boolean,
-    favOnly: boolean,
-  ) => void;
+  onFilterChange?: (category: Category | null, favOnly: boolean) => void;
   type: "Lineup" | "TimeTable";
 }
 
 const ArtistFilterBar = ({ type, onFilterChange }: ArtistFilterBarProps) => {
   const [selected, setSelected] = useState<Category | null>(null);
-  const [auto, setAuto] = useState(false);
   const [favOnly, setFavOnly] = useState(false);
 
-  const notify = (
-    nextSelected: Category | null,
-    nextAuto: boolean,
-    nextFavOnly: boolean,
-  ) => {
-    onFilterChange?.(nextSelected, nextAuto, nextFavOnly);
+  const notify = (nextSelected: Category | null, nextFavOnly: boolean) => {
+    onFilterChange?.(nextSelected, nextFavOnly);
   };
 
   const toggleCategory = (cat: Category) => {
     const next = selected === cat ? null : cat;
     setSelected(next);
-    notify(next, auto, favOnly);
+    notify(next, favOnly);
   };
 
   const toggleFav = () => {
     const next = !favOnly;
     setFavOnly(next);
-    notify(selected, auto, next);
+    notify(selected, next);
   };
 
   return (
@@ -78,9 +69,9 @@ const ArtistFilterBar = ({ type, onFilterChange }: ArtistFilterBarProps) => {
         </ScrollView>
 
         {/* 즐겨찾기 필터 버튼 */}
-        <FavoriteButton type="FILTER" onToggle={() => toggleFav()} />
+        <FavoriteButton onToggle={() => toggleFav()} type="FILTER" />
       </View>
-      <View className="h-[1px] bg-gray" />
+      <View className="h-[1px] bg-soft-gray" />
     </View>
   );
 };
