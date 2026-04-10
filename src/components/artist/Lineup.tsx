@@ -1,6 +1,6 @@
+import { ArtistCategory, MOCK_ARTISTS } from "@/data/mockArtists";
 import { useState } from "react";
 import { View } from "react-native";
-import { ArtistCategory, MOCK_ARTISTS } from "@/data/mockArtists";
 import ArtistFilterBar from "./ArtistFilterBar";
 import ArtistList from "./ArtistList";
 
@@ -23,7 +23,7 @@ const Lineup = () => {
     <View className="flex-1">
       <ArtistFilterBar
         type="Lineup"
-        onFilterChange={(cat, _, fav) => {
+        onFilterChange={(cat, fav) => {
           setCategory(cat as ArtistCategory | null);
           setFavOnly(fav);
         }}

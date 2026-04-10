@@ -1,6 +1,6 @@
-import { ImageBackground, Text, View } from "react-native";
-import { typo } from "@/styles/typography";
 import FavoriteButton from "@/components/artist/FavoriteButton";
+import { typo } from "@/styles/typography";
+import { ImageBackground, Text, View } from "react-native";
 
 interface ArtistCardProps {
   name: string;

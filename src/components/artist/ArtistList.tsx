@@ -1,6 +1,7 @@
-import { ScrollView, Text, View } from "react-native";
-import { typo } from "@/styles/typography";
+import NoFavIcon from "@/assets/artist_nofav.svg";
 import { ArtistCategory, groupByDay, MOCK_ARTISTS } from "@/data/mockArtists";
+import { typo } from "@/styles/typography";
+import { ScrollView, Text, View } from "react-native";
 import ArtistCard from "./ArtistCard";
 
 interface ArtistListProps {
@@ -23,9 +24,22 @@ const ArtistList = ({
       : group.artists,
   }));
 
+  // 즐겨찾기 필터 ON + 전체 즐겨찾기 0개 → 빈 화면
+  const hasNoFav = favOnly && dayGroups.every((g) => g.artists.length === 0);
+  if (hasNoFav) {
+    return (
+      <View className="flex-1 items-center justify-center gap-6">
+        <NoFavIcon width={100} height={110} />
+        <Text className={`${typo.B3_Rg} text-dark-gray`}>
+          즐겨찾기한 아티스트가 없습니다.
+        </Text>
+      </View>
+    );
+  }
+
   return (
     <ScrollView contentContainerClassName=" py-6 gap-8">
-      {dayGroups.map(({ day, label, artists }) => (
+      {dayGroups.map(({ day, label, artists }, index) => (
         <View key={day} className="gap-6">
           <Text className={`${typo.T3_Eb} text-black`}>{label}</Text>
 
@@ -51,7 +65,7 @@ const ArtistList = ({
             </View>
           )}
 
-          <View className="h-[1px] bg-gray my-6" />
+          {index < dayGroups.length - 1 && <View className="h-[1px] bg-gray my-6" />}
         </View>
       ))}
     </ScrollView>
