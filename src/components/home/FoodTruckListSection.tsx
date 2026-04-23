@@ -27,6 +27,7 @@ export default function FoodTruckListSection({ items, onMorePress, onItemPress }
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
+        style={styles.scroll}
         contentContainerStyle={styles.list}
       >
         {items.map((item) => (
@@ -55,8 +56,12 @@ const styles = StyleSheet.create({
     color: '#1A1A1A',
     letterSpacing: -0.16,
   },
+  scroll: {
+    marginHorizontal: -17,
+  },
   list: {
     flexDirection: 'row',
     gap: 8,
+    paddingHorizontal: 17,
   },
 });
