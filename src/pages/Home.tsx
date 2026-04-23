@@ -1,5 +1,6 @@
 import Layout from "@/components/Layout";
 import AdBanner from "@/components/home/AdBanner";
+import DrinkBoothListSection from "@/components/home/DrinkBoothListSection";
 import HomeNoticeSection from "@/components/home/HomeNoticeSection";
 import MDBanner from "@/components/home/MDBanner";
 import StampTourBanner from "@/components/home/StampTourBanner";
@@ -12,6 +13,15 @@ const SAMPLE_NOTICES = [
   { id: 1, title: '2025 서강대학교 축제 공지사항입니다.', date: '25.04.23', badge: 'NEW' as const },
   { id: 2, title: '스탬프 투어 운영 안내', date: '25.04.22' },
   { id: 3, title: 'MD 굿즈 판매 관련 안내사항', date: '25.04.21', badge: '필독' as const },
+];
+
+const SAMPLE_DRINK_BOOTHS = [
+  { id: 1, name: '국어국문학과' },
+  { id: 2, name: '영어영문학과' },
+  { id: 3, name: '사학과' },
+  { id: 4, name: '철학과' },
+  { id: 5, name: '경제학과' },
+  { id: 6, name: '경영학과' },
 ];
 
 export default function Home() {
@@ -53,6 +63,11 @@ export default function Home() {
         <HomeNoticeSection
           items={SAMPLE_NOTICES}
           onMorePress={() => navigation.navigate('More', { screen: 'Notice' })}
+        />
+      </View>
+      <View style={{ marginTop: 24 }}>
+        <DrinkBoothListSection
+          items={SAMPLE_DRINK_BOOTHS}
         />
       </View>
     </Layout>
