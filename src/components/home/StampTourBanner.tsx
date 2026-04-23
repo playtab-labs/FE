@@ -1,40 +1,62 @@
-import { TouchableOpacity, Text, StyleSheet } from 'react-native';
-import { StampTourIcon } from '@/components/icons/StampTourIcon';
+import { TouchableOpacity, Text, StyleSheet, View } from 'react-native';
+import MainStampIcon from '@/assets/svgs/main-stamp.svg';
 import { typo } from '@/styles/typography';
 
 interface StampTourBannerProps {
   onPress?: () => void;
+  progress?: number;
 }
 
-export default function StampTourBanner({ onPress }: StampTourBannerProps) {
+export default function StampTourBanner({ onPress, progress = 0 }: StampTourBannerProps) {
   return (
     <TouchableOpacity style={styles.container} onPress={onPress} activeOpacity={0.8}>
-      <StampTourIcon />
-      <Text className={typo.T3_Eb} style={styles.label}>
-        스탬프 투어
-      </Text>
+      <View style={styles.left}>
+        <MainStampIcon width={24} height={24} />
+        <Text className={typo.T3_Eb} style={styles.label}>
+          스탬프 투어
+        </Text>
+      </View>
+      <View style={styles.right}>
+        <Text className={typo.B4_Sb} style={styles.progressLabel}>
+          현재 진척도
+        </Text>
+        <Text className={typo.B4_Eb} style={styles.progressValue}>
+          {progress}%
+        </Text>
+      </View>
     </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    height: 104,
+    height: 48,
+    paddingHorizontal: 16,
     paddingVertical: 12,
-    justifyContent: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
-    gap: 10,
-    borderRadius: 16,
+    alignSelf: 'stretch',
+    borderRadius: 8,
     backgroundColor: '#FFF',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.25,
-    shadowRadius: 8,
-    elevation: 4,
+  },
+  left: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
   },
   label: {
     color: '#1A1A1A',
-    textAlign: 'center',
+  },
+  right: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+  },
+  progressLabel: {
+    color: '#656565',
+  },
+  progressValue: {
+    color: '#FF5E37',
   },
 });
