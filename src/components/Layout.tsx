@@ -61,9 +61,7 @@ export default function Layout({
 
   // statusBarBg가 지정된 경우, iOS에서 상태바 영역(top inset)을 별도 SafeAreaView로 분리하여 색상 적용
   const topEdges: ("top" | "bottom" | "left" | "right")[] = (statusBarBg || fullBleedTop) ? [] : ["top"];
-  const mainEdges: ("top" | "bottom" | "left" | "right")[] = showBottomBar
-    ? [...topEdges, "left", "right"]
-    : [...topEdges, "bottom", "left", "right"];
+  const mainEdges: ("top" | "bottom" | "left" | "right")[] = [...topEdges, "left", "right"];
 
   return (
     // bgTransparent=true면 배경 투명, 아니면 기본 앱 배경색
