@@ -5,7 +5,7 @@ import StampTourBanner from "@/components/home/StampTourBanner";
 import { useNavigation } from "@react-navigation/native";
 import { Image, ScrollView, useWindowDimensions, View } from "react-native";
 
-const AD_BANNERS = [1, 2, 3, 4, 5]; //광고 수
+const AD_BANNERS = [1, 2, 3, 4, 5];
 
 export default function Home() {
   const { width } = useWindowDimensions();
@@ -30,12 +30,12 @@ export default function Home() {
     >
       <View style={{ marginTop: 16, flexDirection: "column", gap: 16 }}>
         <StampTourBanner onPress={() => navigation.navigate('StampTour')} />
-        <MDBanner onPress={() => navigation.navigate('MD')}/>
+        <MDBanner onPress={() => navigation.navigate('MD')} />
       </View>
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
-        style={{ marginTop: 16, marginHorizontal: -17 }}
+        style={{ marginTop: 24, marginHorizontal: -17 }}
         contentContainerStyle={{ paddingHorizontal: 17, gap: 16 }}
       >
         {AD_BANNERS.map((id) => (
