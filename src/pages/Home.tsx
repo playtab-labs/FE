@@ -28,7 +28,7 @@ export default function Home() {
         />
       }
     >
-      <View style={{ marginTop: 16, flexDirection: "row", gap: 16 }}>
+      <View style={{ marginTop: 16, flexDirection: "column", gap: 16 }}>
         <StampTourBanner onPress={() => navigation.navigate('StampTour')} />
         <MDBanner onPress={() => navigation.navigate('MD')}/>
       </View>
