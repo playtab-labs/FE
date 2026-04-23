@@ -21,6 +21,7 @@ interface LayoutProps {
   headerBg?: string; // topbar 배경색
   statusBarBg?: string; // statusbar 배경색
   statusBarStyle?: "light-content" | "dark-content"; // statusbar 텍스트/아이콘 색상
+  fullBleedTop?: boolean; // fullBleedHeader를 status bar 아래부터 시작하게 함
   children: React.ReactNode;
 }
 
@@ -52,13 +53,14 @@ export default function Layout({
   headerBg,
   statusBarBg,
   statusBarStyle = "dark-content",
+  fullBleedTop = false,
   children,
 }: LayoutProps) {
   const navigation = useNavigation<any>();
   const activeTabIndex = activeTab ? TAB_NAMES.indexOf(activeTab) : -1;
 
   // statusBarBg가 지정된 경우, iOS에서 상태바 영역(top inset)을 별도 SafeAreaView로 분리하여 색상 적용
-  const topEdges: ("top" | "bottom" | "left" | "right")[] = statusBarBg ? [] : ["top"];
+  const topEdges: ("top" | "bottom" | "left" | "right")[] = (statusBarBg || fullBleedTop) ? [] : ["top"];
   const mainEdges: ("top" | "bottom" | "left" | "right")[] = showBottomBar
     ? [...topEdges, "left", "right"]
     : [...topEdges, "bottom", "left", "right"];
@@ -69,7 +71,7 @@ export default function Layout({
       <StatusBar
         backgroundColor={statusBarBg}
         barStyle={statusBarStyle}
-        translucent={false}
+        translucent={fullBleedTop}
       />
       {statusBarBg && (
         <SafeAreaView style={{ backgroundColor: statusBarBg }} edges={["top"]} />

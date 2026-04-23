@@ -3,10 +3,11 @@ import AdBanner from "@/components/home/AdBanner";
 import DrinkBoothListSection from "@/components/home/DrinkBoothListSection";
 import FoodTruckListSection from "@/components/home/FoodTruckListSection";
 import HomeNoticeSection from "@/components/home/HomeNoticeSection";
+import HomePoster from "@/components/home/HomePoster";
 import MDBanner from "@/components/home/MDBanner";
 import StampTourBanner from "@/components/home/StampTourBanner";
 import { useNavigation } from "@react-navigation/native";
-import { Image, ScrollView, useWindowDimensions, View } from "react-native";
+import { ScrollView, View } from "react-native";
 
 const AD_BANNERS = [1, 2, 3, 4, 5];
 
@@ -33,27 +34,15 @@ const SAMPLE_FOOD_TRUCKS = [
 ];
 
 export default function Home() {
-  const { width } = useWindowDimensions();
   const navigation = useNavigation<any>();
   return (
     <Layout
       scrollable
-      title={
-        <Image
-          source={require("@/assets/pngs/soganglogo.png")}
-          style={{ width: 135, height: 38, aspectRatio: 135 / 38 }}
-          resizeMode="contain"
-        />
-      }
-      fullBleedHeader={
-        <Image
-          source={require("@/assets/pngs/homeposter.png")}
-          style={{ width, aspectRatio: 122 / 163, alignSelf: "center" }}
-          resizeMode="cover"
-        />
-      }
+      fullBleedTop
+      statusBarStyle="light-content"
+      fullBleedHeader={<HomePoster />}
     >
-      <View style={{ marginTop: 16, flexDirection: "column", gap: 16 }}>
+      <View style={{ marginTop: 24, flexDirection: "column", gap: 16 }}>
         <StampTourBanner onPress={() => navigation.navigate('StampTour')} />
         <MDBanner onPress={() => navigation.navigate('MD')} />
       </View>
