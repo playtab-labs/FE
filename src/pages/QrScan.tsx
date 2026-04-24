@@ -2,17 +2,22 @@ import Layout from "@/components/Layout";
 import QRCamera from "@/components/stamptour/QRCamera";
 import QRInformCard from "@/components/stamptour/QRInformCard";
 import QRScanToast from "@/components/stamptour/QRScanToast";
+import { useNavigation } from "@react-navigation/native";
 import { useEffect, useRef, useState } from "react";
 import { View } from "react-native";
 
 export default function QrScan() {
+  const navigation = useNavigation<any>();
   const [showToast, setShowToast] = useState(false);
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const handleScanned = (_data: string) => {
+  const handleScanned = (data: string) => {
     setShowToast(true);
     if (toastTimer.current) clearTimeout(toastTimer.current);
-    toastTimer.current = setTimeout(() => setShowToast(false), 2000);
+    toastTimer.current = setTimeout(() => {
+      setShowToast(false);
+      navigation.navigate('StampTour', { newStampTitle: data });
+    }, 2000);
   };
 
   useEffect(() => {

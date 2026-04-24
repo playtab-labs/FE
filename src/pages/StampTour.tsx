@@ -3,9 +3,11 @@ import BingoCell from '@/components/stamptour/BingoCell';
 import BingoCount from '@/components/stamptour/BingoCount';
 import HowToParticipate from '@/components/stamptour/HowToParticipate';
 import ProductInfo from '@/components/stamptour/ProductInfo';
+import StampToast from '@/components/stamptour/StampToast';
 import TipInfo from '@/components/stamptour/TipInfo'
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
+import React, { useEffect, useRef, useState } from 'react';
 import { Image, View } from 'react-native';
 import stamp2 from '@/assets/pngs/stamp2.png';
 import BingoTitle from '@/assets/svgs/stamptour/bingotitle.svg';
@@ -15,7 +17,6 @@ import StampComplete3 from '@/assets/svgs/stamptour/stamp-complete3.svg';
 import StampComplete5 from '@/assets/svgs/stamptour/stamp-complete5.svg';
 import StampComplete6 from '@/assets/svgs/stamptour/stamp-complete6.svg';
 import StampComplete9 from '@/assets/svgs/stamptour/stamp-complete9.svg';
-import React from 'react';
 import { SvgProps } from 'react-native-svg';
 
 // 셀 번호(1~9)에 해당하는 스탬프 SVG. 완료 SVG가 없는 셀은 null로 유지.
@@ -46,6 +47,22 @@ const BINGO_CELLS = [
 
 export default function StampTour() {
   const navigation = useNavigation<any>();
+  const route = useRoute<any>();
+  const [stampToast, setStampToast] = useState<{ title: string; isBingo: boolean } | null>(null);
+  const stampToastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    const title = route.params?.newStampTitle;
+    if (!title) return;
+    const clearedCount = BINGO_CELLS.filter(c => c.cleared).length;
+    const isBingo = clearedCount + 1 >= 6;
+    setStampToast({ title, isBingo });
+    if (stampToastTimer.current) clearTimeout(stampToastTimer.current);
+    stampToastTimer.current = setTimeout(() => setStampToast(null), 3000);
+    return () => {
+      if (stampToastTimer.current) clearTimeout(stampToastTimer.current);
+    };
+  }, [route.params?.newStampTitle]);
 
   return (
     <LinearGradient
@@ -92,6 +109,19 @@ export default function StampTour() {
       <TipInfo />
       <View style={{ height: 80 }} />
     </Layout>
+      {stampToast && (
+        <View
+          style={{
+            position: 'absolute',
+            bottom: 100,
+            left: 0,
+            right: 0,
+            alignItems: 'center',
+          }}
+        >
+          <StampToast title={stampToast.title} isBingo={stampToast.isBingo} />
+        </View>
+      )}
     </LinearGradient>
   );
 }
