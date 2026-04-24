@@ -82,7 +82,7 @@ export default function StampTour() {
       </View>
 
       <View style={{ marginTop: 16, alignItems: 'center' }}>
-        <BingoCount bingoCount={0} remainingCells={BINGO_CELLS.filter(cell => !cell.cleared).length} />
+        <BingoCount bingoCount={BINGO_CELLS.filter(cell => cell.cleared).length} remainingCells={9 - BINGO_CELLS.filter(cell => cell.cleared).length} />
       </View>
 
       <HowToParticipate />
