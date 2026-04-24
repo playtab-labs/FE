@@ -1,0 +1,230 @@
+{
+  "login": {
+    "title": "登录",
+    "emailPlaceholder": "请输入邮箱",
+    "passwordPlaceholder": "请输入密码",
+    "keepLogin": "保持登录状态",
+    "rememberID": "记住账号",
+    "register": "注册",
+    "findPassword": "找回密码",
+    "loginFailed": "登录失败，请稍后再试",
+    "userNotFound": "未找到该用户",
+    "userInfoMismatch": "用户信息不匹配",
+    "enterLoginInfo": "请输入登录信息"
+  },
+  "register": {
+    "title": "注册",
+    "sogangUser": "以西江大学学生身份使用",
+    "externalUser": "以外部用户身份使用"
+  },
+  "terms": {
+    "title": "同意条款",
+    "subtitle": "请同意相关条款",
+    "description": "为使用PLAYTAP服务，需要您的同意",
+    "all": "全部",
+    "required": "必填",
+    "optional": "选填",
+    "agreeAll": "同意全部条款",
+    "agreeService": "同意使用条款",
+    "agreePrivacy": "同意收集及使用个人信息",
+    "agreeLocation": "位置服务使用条款",
+    "agreeMarketing": "同意接收广告信息",
+    "continue": "继续",
+    "agree": "我已阅读并同意上述条款"
+  },
+  "personalInfo": {
+    "title": "姓名及其他信息",
+    "subtitle": "请输入姓名及其他信息",
+    "description": "请填写您的基本信息",
+    "name": "姓名",
+    "namePlaceholder": "请输入真实姓名",
+    "nameEmpty": "请输入姓名",
+    "gender": "性别",
+    "male": "男",
+    "female": "女",
+    "birthday": "出生日期",
+    "birthdayPlaceholder": "请输入8位数字（YYYYMMDD）",
+    "nationality": "国籍",
+    "nationalityDesc": "如为双重国籍，请选择其中一个",
+    "other": "其他",
+    "continue": "继续"
+  },
+  "emailVerify": {
+    "title": "邮箱验证",
+    "subtitle": "请验证您的西江大学邮箱",
+    "description": "邮箱后续无法修改，请谨慎填写",
+    "email": "邮箱",
+    "send": "发送验证码",
+    "resend": "重新发送",
+    "codePlaceholder": "邮箱验证码",
+    "verify": "验证",
+    "verified": "验证成功",
+    "codeMismatch": "验证码不正确",
+    "continue": "继续",
+    "sendComplete": "发送完成",
+    "verifyComplete": "验证完成"
+  },
+  "setPassword": {
+    "title": "输入密码",
+    "subtitle": "请输入密码",
+    "description": "请设置8位以上字母与数字组合的密码",
+    "password": "密码",
+    "passwordPlaceholder": "请设置密码",
+    "confirmPassword": "确认密码",
+    "confirmPlaceholder": "请再次输入密码",
+    "formatError": "请按照要求设置",
+    "mismatch": "两次输入的密码不一致"
+  },
+  "signUpComplete": {
+    "title": "注册完成",
+    "subtitle": "注册完成",
+    "description": "您已成功完成注册",
+    "message": "和PLAYTAP一起体验ODYSSEY吧",
+    "start": "开始使用"
+  },
+  "findPassword": {
+    "title": "找回密码",
+    "email": "邮箱",
+    "send": "发送验证码",
+    "codePlaceholder": "邮箱验证码",
+    "verify": "验证",
+    "name": "姓名",
+    "changePassword": "修改密码"
+  },
+  "tabs": {
+    "stampTour": "集章活动",
+    "md": "周边商品",
+    "home": "首页",
+    "map": "地图",
+    "more": "更多",
+    "artist": "艺人",
+    "personal": "我的"
+  },
+  "home": {
+    "notice": "公告",
+    "bingo1": "当前完成1个宾果",
+    "bingoLeft": "距离全部完成还剩5格",
+    "allBingo": "当前已完成全部宾果",
+    "allBingoDesc": "已填满所有宾果格",
+    "mdStampComplete": "已完成#周边展位印章",
+    "howToParticipate": "参与方式",
+    "getStampBoard": "领取印章卡",
+    "fillStamps": "完成印章收集",
+    "submit6": "完成6格以上后提交",
+    "goodsBooth": "周边展位位置",
+    "boothMonWed": "（周一-周三）青年广场",
+    "boothThu": "（周四）运动场入口",
+    "prizes": "奖品说明",
+    "prize1": "美式咖啡券（30名）",
+    "prize2": "10万韩元住宿券（2名）"
+  },
+  "stampTour": {
+    "scanTitle": "扫描二维码",
+    "scanDesc": "请将二维码对准屏幕中央进行扫描",
+    "scanNotice": "如有问题，请联系现场工作人员",
+    "otherNotice": "其他说明",
+    "scanComplete": "识别完成"
+  },
+  "more": {
+    "personalInfo": "修改个人信息",
+    "notice": "公告",
+    "language": "语言",
+    "offlineData": "离线数据下载",
+    "update": "更新",
+    "host": "主办方信息",
+    "sponsor": "赞助信息",
+    "terms": "使用条款",
+    "available": "可入场",
+    "expired": "已过期",
+    "more": "更多"
+  },
+  "personal": {
+    "title": "修改个人信息",
+    "name": "姓名",
+    "gender": "性别",
+    "birthday": "出生日期",
+    "nationality": "国籍",
+    "email": "邮箱",
+    "emailReadOnly": "邮箱无法修改",
+    "password": "密码",
+    "withdraw": "注销账号",
+    "nameChangeNotice": "姓名仅在改名后可进行修改",
+    "nameChangeGuide": "请将改名证明材料发送至 playtap@xxx.com，我们将在n个工作日内为您处理"
+  },
+  "passwordChange": {
+    "currentPassword": "当前密码",
+    "currentMismatch": "密码不正确",
+    "newPassword": "新密码",
+    "confirmNew": "确认新密码",
+    "changeComplete": "密码修改完成",
+    "changeSuccess": "密码已成功修改",
+    "backToLogin": "返回登录"
+  },
+  "withdraw": {
+    "title": "注销账号",
+    "confirm": "确认要注销账号吗？",
+    "warning1": "预订记录及个人信息将立即删除且无法恢复",
+    "warning2": "无法查询购买记录及进行退款",
+    "withdraw": "确认注销"
+  },
+  "language": {
+    "changeTitle": "是否更改语言？",
+    "changeNotice": "此操作可能需要几秒钟",
+    "changing": "正在更改语言",
+    "returning": "正在返回首页"
+  },
+  "faq": {
+    "title": "常见问题"
+  },
+  "host": {
+    "title": "主办信息",
+    "websiteNotice": "点击后将跳转至网站",
+    "sogang": "西江大学",
+    "sogangCouncil": "西江大学学生会\"向海\""
+  },
+  "sponsor": {
+    "title": "赞助与合作",
+    "subtitle": "赞助商",
+    "description": "大同祭合作伙伴"
+  },
+  "nationality": {
+    "argentina": "阿根廷",
+    "uae": "阿联酋",
+    "australia": "澳大利亚",
+    "brazil": "巴西",
+    "germany": "德国",
+    "france": "法国",
+    "philippines": "菲律宾",
+    "korea": "韩国",
+    "netherlands": "荷兰",
+    "italy": "意大利",
+    "india": "印度",
+    "indonesia": "印度尼西亚",
+    "japan": "日本",
+    "malaysia": "马来西亚",
+    "mexico": "墨西哥",
+    "mongolia": "蒙古",
+    "usa": "美国",
+    "southAfrica": "南非",
+    "saudiArabia": "沙特阿拉伯",
+    "spain": "西班牙",
+    "thailand": "泰国",
+    "turkey": "土耳其",
+    "singapore": "新加坡",
+    "uk": "英国",
+    "vietnam": "越南",
+    "china": "中国",
+    "other": "其他"
+  },
+  "md": {
+    "title": "周边商品",
+    "items": {
+      "soccerUniform": "足球球衣",
+      "alosDoll": "Aloys玩偶",
+      "baseballType1": "棒球服 Type 1",
+      "bandana": "头巾",
+      "carabiner": "登山扣",
+      "sogangSticker": "西江大对话框贴纸"
+    }
+  }
+}
