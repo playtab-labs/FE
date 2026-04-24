@@ -123,7 +123,7 @@ export default function Layout({
       )}
 
       {scrollable ? (
-        <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
+        <ScrollView className="flex-1" showsVerticalScrollIndicator={false} contentInsetAdjustmentBehavior="never">
           {/* full-bleed 콘텐츠 (패딩 없음) */}
           {fullBleedHeader}
 
