@@ -2,8 +2,8 @@ import { View, Text } from 'react-native';
 import { typo } from '@/styles/typography';
 
 const ITEMS = [
-  '9개 미션 중 6개 이상 달성 시 전원 000 증정!',
-  '9개 미션 중 6개 이상 달성 시 에어팟 추첨 자동 응모',
+  '하루에 모두 돌 필요 없이, 축제 기간 동안 자유롭게 참여 가능',
+  '인기 부스는 대기 시간이 있을 수 있으니 미리 방문 추천!'
 ];
 
 export default function ProductInfo() {
@@ -19,7 +19,7 @@ export default function ProductInfo() {
         }}
       >
         <Text className={`${typo.T3_Eb} text-gray-black`}>
-          경품 안내
+          💡 TIP
         </Text>
 
         <View>

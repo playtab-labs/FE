@@ -9,42 +9,48 @@ interface BingoCellProps {
   StampSvg?: React.ComponentType<SvgProps> | null;
 }
 
+function splitEmoji(text: string): { emoji: string; rest: string } {
+  const match = text.match(/^([\p{Emoji_Presentation}\p{Extended_Pictographic}]+)\s*(.*)/su);
+  return match ? { emoji: match[1], rest: match[2] } : { emoji: '', rest: text };
+}
+
 export default function BingoCell({ title, description, StampSvg }: BingoCellProps) {
+  const { emoji, rest } = splitEmoji(title);
   return (
     <View
       style={{
         display: 'flex',
-        paddingTop: 26,
-        paddingBottom: 16,
-        paddingHorizontal: 16,
+        flex: 1,
+        alignSelf: 'stretch',
+        aspectRatio: 1,
+        paddingVertical: 16,
+        paddingHorizontal: 4,
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        gap: 12,
-        aspectRatio: 1,
+        gap: 4,
         borderRadius: 8,
         backgroundColor: '#FFFFFF',
         position: 'relative',
-        overflow: 'hidden',
       }}
     >
       <Text
         className={typo.B3_Eb}
-        style={{ color: '#1A1A1A', textAlign: 'center', alignSelf: 'stretch' }}
+        style={{ color: '#1A1A1A', textAlign: 'center', lineHeight: 18.2, letterSpacing: -0.14 }}
       >
-        {title}
+        {emoji ? `${emoji}\n${rest}` : rest}
       </Text>
 
       <Text
-        className={typo.B4_Rg}
-        style={{ color: '#656565', textAlign: 'center' }}
+        className={typo.B5_Rg}
+        style={{ color: '#656565', textAlign: 'center', lineHeight: 13, letterSpacing: -0.1, opacity: 0.4 }}
       >
         {description}
       </Text>
 
       {StampSvg && (
-        <View style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}>
-          <StampSvg width="100%" height="100%" />
+        <View style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, overflow: 'hidden', borderRadius: 8 }}>
+          <StampSvg width="101%" height="101%"  />
         </View>
       )}
     </View>

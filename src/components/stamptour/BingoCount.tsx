@@ -8,17 +8,16 @@ interface BingoCountProps {
 
 export default function BingoCount({ bingoCount, remainingCells }: BingoCountProps) {
   return (
-    <View style={{ paddingTop: 16, paddingBottom: 16, alignItems: 'center', gap: 16 }}>
+    <View style={{ paddingTop: 16, paddingBottom: 16, alignItems: 'center', gap: 10 }}>
       <Text className={typo.T1_Eb} style={{ color: '#1A1A1A', textAlign: 'center' }}>
-        현재{' '}
         <Text className={typo.T1_Eb} style={{ color: '#FF7654' }}>
-          {bingoCount}빙고
+          {bingoCount}개의 {''}
         </Text>
-        예요!
+          미션을 완료했어요! 
       </Text>
 
       <Text className={typo.B3_Sb} style={{ color: '#656565', textAlign: 'center' }}>
-        올빙고까지{' '}
+        경품 수령 및 자동 응모까지{' '}
         <Text className={typo.B3_Sb} style={{ color: '#FF7654' }}>
           {remainingCells}칸
         </Text>
