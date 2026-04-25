@@ -64,7 +64,7 @@ export default function MD() {
           <TouchableOpacity
             key={item.id}
             style={{ width: '50%', paddingHorizontal: 8, marginBottom: 16 }}
-            onPress={() => navigation.navigate('MDDetail', { title: item.name, soldOut: item.isSoldOut })}
+            onPress={() => navigation.navigate('MDDetail', { id: item.id, title: item.name, soldOut: item.isSoldOut })}
           >
             <MDProductCard
               imageSource={{ uri: item.thumbnailImageUrl }}
