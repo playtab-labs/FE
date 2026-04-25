@@ -17,7 +17,7 @@ export default function TabList({
     <TouchableOpacity
       onPress={onPress}
       activeOpacity={0.7}
-      className="flex-row items-center gap-[10px] px-[10px] py-4 self-stretch border-b border-soft-gray-white"
+      className="flex-row items-center gap-[10px] px-[10px] py-4 self-stretch border-b border-soft-gray"
     >
       {icon}
       <Text className="flex-1 text-b3 font-sb text-gray-black">{label}</Text>
