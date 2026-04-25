@@ -1,3 +1,4 @@
+import KbBankIcon from "@/assets/svgs/KbBank.svg";
 import Layout from "@/components/Layout";
 import HostLinker from "@/components/more/host/HostLinker";
 import { ScrollView, Text, View } from "react-native";
@@ -10,7 +11,7 @@ const SPONSOR_ITEMS = [
   },
   {
     name: "KB국민은행",
-    logo: require("@/assets/pngs/kbbank.png"),
+    logo: KbBankIcon,
     url: "https://www.kbstar.com",
   },
   {

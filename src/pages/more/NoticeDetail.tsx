@@ -1,11 +1,11 @@
-import Layout from '@/components/Layout';
-import NoticeDetailHeader from '@/components/more/notice/NoticeDetailHeader';
-import NoticeDetailBody from '@/components/more/notice/NoticeDetailBody';
-import NoticeNavItem from '@/components/more/notice/NoticeNavItem';
-import { View, StyleSheet } from 'react-native';
-import { useRoute, RouteProp, useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { NOTICE_ITEMS } from './Notice';
+import Layout from "@/components/Layout";
+import NoticeDetailBody from "@/components/more/notice/NoticeDetailBody";
+import NoticeDetailHeader from "@/components/more/notice/NoticeDetailHeader";
+import NoticeNavItem from "@/components/more/notice/NoticeNavItem";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { StyleSheet, View } from "react-native";
+import { NOTICE_ITEMS } from "./Notice";
 
 type NoticeDetailParams = {
   NoticeDetail: {
@@ -14,7 +14,7 @@ type NoticeDetailParams = {
 };
 
 export default function NoticeDetail() {
-  const route = useRoute<RouteProp<NoticeDetailParams, 'NoticeDetail'>>();
+  const route = useRoute<RouteProp<NoticeDetailParams, "NoticeDetail">>();
   const navigation = useNavigation<NativeStackNavigationProp<any>>();
   const { index } = route.params;
 
@@ -25,7 +25,11 @@ export default function NoticeDetail() {
   return (
     <Layout title="공지사항" showBack showCamera={false}>
       <View style={styles.container}>
-        <NoticeDetailHeader title={item.title} date={item.date} badge={item.badge} />
+        <NoticeDetailHeader
+          title={item.title}
+          date={item.date}
+          badge={item.badge}
+        />
         <View style={styles.dividerWrap}>
           <View style={styles.divider} />
         </View>
@@ -36,7 +40,9 @@ export default function NoticeDetail() {
               type="prev"
               title={prev.title}
               date={prev.date}
-              onPress={() => navigation.replace('NoticeDetail', { index: index - 1 })}
+              onPress={() =>
+                navigation.replace("NoticeDetail", { index: index - 1 })
+              }
             />
           )}
           <View style={styles.navDivider} />
@@ -45,7 +51,9 @@ export default function NoticeDetail() {
               type="next"
               title={next.title}
               date={next.date}
-              onPress={() => navigation.replace('NoticeDetail', { index: index + 1 })}
+              onPress={() =>
+                navigation.replace("NoticeDetail", { index: index + 1 })
+              }
             />
           )}
         </View>
@@ -57,7 +65,7 @@ export default function NoticeDetail() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 5,
+    paddingHorizontal: 11,
     paddingVertical: 5,
   },
   dividerWrap: {
@@ -66,14 +74,14 @@ const styles = StyleSheet.create({
   },
   divider: {
     height: 1,
-    alignSelf: 'stretch',
-    backgroundColor: '#BFBFBF',
+    alignSelf: "stretch",
+    backgroundColor: "#BFBFBF",
   },
   navContainer: {
-    marginTop: 'auto',
+    marginTop: "auto",
   },
   navDivider: {
     height: 1,
-    backgroundColor: '#BFBFBF',
+    backgroundColor: "#BFBFBF",
   },
 });
