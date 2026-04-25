@@ -5,14 +5,19 @@ import {
   Text,
   TouchableOpacity,
 } from "react-native";
+import { SvgProps } from "react-native-svg";
+
+type LogoProp = ImageSourcePropType | React.FC<SvgProps>;
 
 interface HostLinkerProps {
   name: string;
-  logo: ImageSourcePropType;
+  logo: LogoProp;
   url: string;
 }
 
 export default function HostLinker({ name, logo, url }: HostLinkerProps) {
+  const isSvgComponent = typeof logo === "function";
+
   return (
     <TouchableOpacity
       onPress={() => Linking.openURL(url)}
@@ -31,11 +36,18 @@ export default function HostLinker({ name, logo, url }: HostLinkerProps) {
       }}
       className="bg-secondary-salmon/60"
     >
-      <Image
-        source={logo}
-        style={{ width: 40, height: 40, borderRadius: 8 }}
-        resizeMode="contain"
-      />
+      {isSvgComponent ? (
+        (() => {
+          const Logo = logo as React.FC<SvgProps>;
+          return <Logo width={40} height={40} />;
+        })()
+      ) : (
+        <Image
+          source={logo as ImageSourcePropType}
+          style={{ width: 40, height: 40, borderRadius: 8 }}
+          resizeMode="contain"
+        />
+      )}
       <Text className="text-b3 font-sb text-gray-black">{name}</Text>
     </TouchableOpacity>
   );
