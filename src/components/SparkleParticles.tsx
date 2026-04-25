@@ -1,8 +1,7 @@
 import { memo, useEffect, useRef } from "react";
 import { Animated, Dimensions, Easing, StyleSheet, View } from "react-native";
 
-const PARTICLE_COUNT = 60;
-const PARTICLE_COLOR = "#F19D82";
+const PARTICLE_COUNT = 20;
 const GLOW_COLOR = "#ED7071";
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("screen");
@@ -23,7 +22,7 @@ const Particle = memo(function Particle({
 }: Omit<ParticleConfig, "id">) {
   const opacity = useRef(new Animated.Value(0)).current;
   const translateY = useRef(new Animated.Value(0)).current;
-  const scale = useRef(new Animated.Value(0.1)).current;
+  const scale = useRef(new Animated.Value(0.4)).current;
 
   useEffect(() => {
     let mounted = true;
@@ -68,7 +67,7 @@ const Particle = memo(function Particle({
             useNativeDriver: true,
           }),
           Animated.timing(scale, {
-            toValue: 0.1,
+            toValue: 0.4,
             duration: duration * 0.3,
             useNativeDriver: true,
             easing: Easing.in(Easing.quad),
@@ -80,7 +79,7 @@ const Particle = memo(function Particle({
       if (!mounted) return;
       opacity.setValue(0);
       translateY.setValue(0);
-      scale.setValue(0.1);
+      scale.setValue(0.4);
 
       const anim = first
         ? Animated.sequence([Animated.delay(delay), makeAnim()])
@@ -95,20 +94,23 @@ const Particle = memo(function Particle({
     return () => {
       mounted = false;
     };
-  }, []);
+  });
 
   return (
     <Animated.View
       style={[
-        styles.glow,
+        styles.particle,
         {
-          left: left - 6,
-          top: top - 6,
+          left: left - 12,
+          top: top - 12,
           opacity,
           transform: [{ translateY }, { scale }],
         },
       ]}
     >
+      <View style={styles.ringGlow} />
+      <View style={styles.ring} />
+      <View style={styles.glow} />
       <View style={styles.core} />
     </Animated.View>
   );
@@ -142,23 +144,57 @@ export default function SparkleParticles() {
 }
 
 const styles = StyleSheet.create({
+  particle: {
+    position: "absolute",
+    width: 24,
+    height: 24,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  ringGlow: {
+    position: "absolute",
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    backgroundColor: "rgba(237, 112, 113, 0.04)",
+    shadowColor: GLOW_COLOR,
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.3,
+    shadowRadius: 10,
+  },
+
+  ring: {
+    position: "absolute",
+    width: 17,
+    height: 17,
+    borderRadius: 8.5,
+    borderWidth: 0.5,
+    borderColor: "rgba(237, 112, 113, 0.15)",
+    backgroundColor: "transparent",
+  },
+
   glow: {
     position: "absolute",
     width: 14,
     height: 14,
     borderRadius: 7,
     backgroundColor: "rgba(237, 112, 113, 0.15)",
-    alignItems: "center",
-    justifyContent: "center",
     shadowColor: GLOW_COLOR,
     shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.9,
+    shadowOpacity: 0.5,
     shadowRadius: 8,
   },
+
   core: {
-    width: 3,
-    height: 3,
-    borderRadius: 1.5,
-    backgroundColor: PARTICLE_COLOR,
+    position: "absolute",
+    width: 5,
+    height: 5,
+    borderRadius: 2.5,
+    backgroundColor: GLOW_COLOR,
+    shadowColor: GLOW_COLOR,
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.8,
+    shadowRadius: 4,
   },
 });
