@@ -71,9 +71,7 @@ export default function PasswordChange() {
                 {/* 이메일 + 번호발송 */}
                 <View className="w-[342px] gap-[6px]">
                   <View className="flex-row justify-between items-center">
-                    <Text className="text-b3 font-sb text-dark-gray">
-                      이메일
-                    </Text>
+                    <Text className="text-b3 font-sb text-dark-gray">이메일</Text>
                     {emailError ? (
                       <Text className="text-b4 font-rg text-secondary-bubblegum-pink">
                         해당하는 사용자가 없습니다.

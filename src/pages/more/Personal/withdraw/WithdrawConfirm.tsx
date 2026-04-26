@@ -1,7 +1,11 @@
 import Layout from "@/components/Layout";
+import { useAuthStore } from "@/stores/authStore";
+import { gql } from "@apollo/client";
+import { useMutation } from "@apollo/client/react";
 import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
 import {
+  ActivityIndicator,
   KeyboardAvoidingView,
   Modal,
   Platform,
@@ -11,6 +15,14 @@ import {
   View,
 } from "react-native";
 import Svg, { Circle, Line, Path } from "react-native-svg";
+
+const WITHDRAW_MY_ACCOUNT = gql`
+  mutation WithdrawMyAccount($input: WithdrawMyAccountInput!) {
+    withdrawMyAccount(input: $input) {
+      success
+    }
+  }
+`;
 
 const NOTICES = [
   "예매한 티켓을 사용할 수 없어요.",
@@ -46,10 +58,28 @@ function EyeIcon({ visible }: { visible: boolean }) {
 
 export default function WithdrawConfirm() {
   const navigation = useNavigation();
+  const { refreshToken, clearTokens } = useAuthStore();
+  const [withdrawMyAccount, { loading }] = useMutation<{
+    withdrawMyAccount: { success: boolean };
+  }>(WITHDRAW_MY_ACCOUNT);
+
   const [password, setPassword] = useState("");
   const [verified, setVerified] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showModal, setShowModal] = useState(false);
+
+  const handleWithdraw = async () => {
+    try {
+      const token = refreshToken ?? (await import("expo-secure-store").then((m) => m.getItemAsync("refreshToken")));
+      if (!token) return;
+      const res = await withdrawMyAccount({ variables: { input: { refreshToken: token } } });
+      if (res.data?.withdrawMyAccount.success) {
+        setShowModal(true);
+      }
+    } catch {
+      // 탈퇴 실패 — 추후 에러 처리
+    }
+  };
 
   return (
     <KeyboardAvoidingView
@@ -139,7 +169,7 @@ export default function WithdrawConfirm() {
             </View>
 
             {/* 하단 버튼 */}
-            <View className="flex-row gap-3 mt-2">
+            <View className="flex-row gap-3 mt-2 mb-10">
               <TouchableOpacity
                 onPress={() => navigation.goBack()}
                 activeOpacity={0.8}
@@ -151,16 +181,20 @@ export default function WithdrawConfirm() {
               </TouchableOpacity>
 
               <TouchableOpacity
-                disabled={!verified}
+                disabled={!verified || loading}
                 activeOpacity={0.8}
-                onPress={() => setShowModal(true)}
-                className={`flex-1 h-14 items-center justify-center rounded-2xl ${verified ? "bg-[#FFA38C]" : "bg-[#BFBFBF]"}`}
+                onPress={handleWithdraw}
+                className={`flex-1 h-14 items-center justify-center rounded-2xl ${verified && !loading ? "bg-[#FFA38C]" : "bg-[#BFBFBF]"}`}
               >
-                <Text
-                  className={`text-t3 font-eb ${verified ? "text-gray-black" : "text-white"}`}
-                >
-                  회원탈퇴
-                </Text>
+                {loading ? (
+                  <ActivityIndicator color="#fff" />
+                ) : (
+                  <Text
+                    className={`text-t3 font-eb ${verified ? "text-gray-black" : "text-white"}`}
+                  >
+                    회원탈퇴
+                  </Text>
+                )}
               </TouchableOpacity>
             </View>
           </View>
@@ -175,12 +209,13 @@ export default function WithdrawConfirm() {
             </Text>
             <TouchableOpacity
               activeOpacity={0.8}
-              onPress={() =>
+              onPress={async () => {
+                await clearTokens();
                 (navigation as any).reset({
                   index: 0,
-                  routes: [{ name: "Home" }],
-                })
-              }
+                  routes: [{ name: "Login" }],
+                });
+              }}
               className="bg-[#FFA38C] rounded-xl px-3 py-3"
             >
               <Text className="text-b3 font-sb text-gray-black">

@@ -20,6 +20,7 @@ export default function EmailVerify() {
   const [code, setCode] = useState("");
   const [verified, setVerified] = useState(false);
   const [error, setError] = useState("");
+  const [emailError, setEmailError] = useState("");
   const [timeLeft, setTimeLeft] = useState(180);
 
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -65,6 +66,7 @@ export default function EmailVerify() {
       .padStart(2, "0")}:${(s % 60).toString().padStart(2, "0")}`;
 
   const handleSend = async () => {
+    setEmailError("");
     try {
       await authApi.sendEmailVerification(email);
       setSent(true);
@@ -72,8 +74,12 @@ export default function EmailVerify() {
       setVerified(false);
       setError("");
       startTimer();
-    } catch {
-      setError("인증번호 발송에 실패했습니다.");
+    } catch (e: any) {
+      if (e?.response?.status === 409) {
+        setEmailError("이미 가입된 이메일입니다.");
+      } else {
+        setError("인증번호 발송에 실패했습니다.");
+      }
     }
   };
 
@@ -131,7 +137,14 @@ export default function EmailVerify() {
           <View className="flex-col mt-[66px] gap-6">
             {/* 이메일 입력 */}
             <View className="w-[342px] gap-[6px]">
-              <Text className="text-b3 font-sb text-dark-gray">이메일</Text>
+              <View className="flex-row justify-between items-center">
+                <Text className="text-b3 font-sb text-dark-gray">이메일</Text>
+                {emailError ? (
+                  <Text className="text-b4 font-rg text-secondary-bubblegum-pink">
+                    {emailError}
+                  </Text>
+                ) : null}
+              </View>
               <View className="flex-row gap-2 items-center">
                 {isSogang ? (
                   <View
@@ -142,7 +155,7 @@ export default function EmailVerify() {
                       className="flex-1 text-b3 font-md text-gray-black"
                       placeholderTextColor="#E4E4E4"
                       value={emailPrefix}
-                      onChangeText={setEmailPrefix}
+                      onChangeText={(t) => { setEmailPrefix(t); setEmailError(""); }}
                       autoCapitalize="none"
                       keyboardType="email-address"
                       editable={!verified}
@@ -156,7 +169,7 @@ export default function EmailVerify() {
                     size="with-button"
                     placeholder="이메일을 입력해주세요."
                     value={emailPrefix}
-                    onChangeText={setEmailPrefix}
+                    onChangeText={(t) => { setEmailPrefix(t); setEmailError(""); }}
                     autoCapitalize="none"
                     keyboardType="email-address"
                     editable={!verified}
