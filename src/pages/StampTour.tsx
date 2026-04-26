@@ -38,13 +38,13 @@ const STAMP_SVGS: (React.ComponentType<SvgProps> | null)[] = [
 const BINGO_CELLS = [
   { title: '📸알로스와\n사진 찍기', description: '5/13(수)-15(금) 중\n알바탑 앞', cleared: true },
   { title: '🖼포토부스\n이용하기', description: '5/13(수)-15(금) 중\n포토부스 내부', cleared: true },
-  { title: '🏕총학생회\n부스 방문', description: '5/14(목)\n체육관 내', cleared: false },
+  { title: '🏕총학생회\n부스 방문', description: '5/14(목)\n체육관 내', cleared: true },
   { title: '🎪재학생 부스\n체험하기 (1)', description: '5/13(수)\n각 재학생 부스', cleared: true },
   { title: '🎤버스킹\n즐기기', description: '5/13(수)\n청년광장 내\n총학생회 부스', cleared: true },
   { title: '🛍총학생회 굿즈\n부스 방문', description: '※ 구매 없이 참여 가능\n5/13(수)－15(금) 중\n대운동장 앞 굿즈 테이블', cleared: true },
-  { title: '🎪재학생 부스\n체험하기 (2)', description: '5/13(수)\n각 재학생 부스', cleared: false },
-  { title: '🎁프로모션 부스\n체험하기', description: '5/13(수)－15(금) 중\n청년광장 및 야외 농구장\n프로모션 부스', cleared: false },
-  { title: '🍻주점 방문하기', description: '5/13(수)\n대운동장 내\n각 단과대 주점', cleared: false },
+  { title: '🎪재학생 부스\n체험하기 (2)', description: '5/13(수)\n각 재학생 부스', cleared: true},
+  { title: '🎁프로모션 부스\n체험하기', description: '5/13(수)－15(금) 중\n청년광장 및 야외 농구장\n프로모션 부스', cleared: true },
+  { title: '🍻주점 방문하기', description: '5/13(수)\n대운동장 내\n각 단과대 주점', cleared: true },
 ];
 
 
@@ -102,7 +102,7 @@ export default function StampTour() {
       </View>
 
       <View style={{ marginTop: 16, alignItems: 'center' }}>
-        <BingoCount bingoCount={BINGO_CELLS.filter(cell => cell.cleared).length} remainingCells={9 - BINGO_CELLS.filter(cell => cell.cleared).length} />
+        <BingoCount bingoCount={BINGO_CELLS.filter(cell => cell.cleared).length} remainingCells={6 - BINGO_CELLS.filter(cell => cell.cleared).length} />
       </View>
 
       <HowToParticipate />
