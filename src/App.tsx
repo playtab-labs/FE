@@ -5,7 +5,6 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import "react-native-reanimated";
 import { useFonts } from "expo-font";
-
 import RootNavigator from "@/navigation/RootNavigator";
 
 export default function App() {
