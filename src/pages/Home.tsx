@@ -1,4 +1,5 @@
 import client from "@/api/client";
+import { getMyStamps } from "@/api/stamp";
 import Layout from "@/components/Layout";
 import AdBanner from "@/components/home/AdBanner";
 import DrinkBoothListSection from "@/components/home/DrinkBoothListSection";
@@ -39,6 +40,7 @@ const SAMPLE_FOOD_TRUCKS = [
 export default function Home() {
   const navigation = useNavigation<any>();
   const [me, setMe] = useState<{ email: string } | null>(null);
+  const [stampProgress, setStampProgress] = useState(0);
 
   useEffect(() => {
     const fetchMe = async () => {
@@ -55,7 +57,14 @@ export default function Home() {
     fetchMe();
   }, []);
 
+  useEffect(() => {
+    getMyStamps()
+      .then(({ visitedCount }) => setStampProgress(Math.round((visitedCount / 9) * 100)))
+      .catch(() => {});
+  }, []);
+
   const isSogang = me?.email?.endsWith("@sogang.ac.kr") ?? false;
+
 
   return (
     <Layout
@@ -68,6 +77,7 @@ export default function Home() {
         <StampTourBanner
           onPress={() => navigation.navigate('StampTour')}
           disabled={!isSogang}
+          progress={stampProgress}
         />
         <MDBanner onPress={() => navigation.navigate('MD')} />
       </View>
