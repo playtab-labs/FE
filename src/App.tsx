@@ -1,3 +1,5 @@
+import apolloClient from "@/api/apolloClient";
+import RootNavigator from "@/navigation/RootNavigator";
 import { ApolloProvider } from "@apollo/client/react";
 import { NavigationContainer } from "@react-navigation/native";
 import { useFonts } from "expo-font";
@@ -6,7 +8,6 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import "react-native-reanimated";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import "../global.css";
-import RootNavigator from "@/navigation/RootNavigator";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -17,14 +18,16 @@ export default function App() {
 
   if (!fontsLoaded) return null;
 
- return (
-    <GestureHandlerRootView className="flex-1">
-      <SafeAreaProvider>
-        <NavigationContainer>
-          <RootNavigator />
-          <StatusBar style="auto" />
-        </NavigationContainer>
-      </SafeAreaProvider>
-    </GestureHandlerRootView>
+  return (
+    <ApolloProvider client={apolloClient}>
+      <GestureHandlerRootView className="flex-1">
+        <SafeAreaProvider>
+          <NavigationContainer>
+            <RootNavigator />
+            <StatusBar style="auto" />
+          </NavigationContainer>
+        </SafeAreaProvider>
+      </GestureHandlerRootView>
+    </ApolloProvider>
   );
 }
