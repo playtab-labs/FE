@@ -181,7 +181,9 @@ export default function More() {
                         ? () => navigation.navigate("Sponsor")
                         : item.label === "언어"
                           ? () => navigation.navigate("Language")
-                          : undefined
+                          : item.label === "이용약관"
+                            ? () => navigation.navigate("Terms")
+                            : undefined
               }
               rightElement={
                 item.label === "언어" ? (
