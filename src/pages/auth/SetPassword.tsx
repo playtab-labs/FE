@@ -9,7 +9,8 @@ import { Keyboard, Text, TouchableWithoutFeedback, View } from "react-native";
 
 export default function SetPassword() {
   const navigation = useNavigation<any>();
-  const { name, gender, birthDate, nationality, email, consents } = useSignupStore();
+  const { name, gender, birthDate, nationality, email, consents } =
+    useSignupStore();
   const setPassword = useSignupStore((s) => s.setPassword);
   const reset = useSignupStore((s) => s.reset);
   const [password, setPasswordInput] = useState("");
@@ -28,11 +29,11 @@ export default function SetPassword() {
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <View style={{ flex: 1 }}>
         <Layout title="비밀번호 설정" showBack>
-          <View className="mt-6 gap-6 items-center">
+          <View className="mt-6 gap-6 items-center px-2">
             {/* 안내 문구 */}
             <View className="w-[342px] mb-2">
               <View className="flex-row items-center flex-wrap">
-                <Text className="text-h1 font-eb text-secondary-salmon">
+                <Text className="text-h1 font-eb text-text-salmon">
                   비밀번호
                 </Text>
                 <Text className="text-h1 font-eb text-gray-black">
@@ -52,7 +53,7 @@ export default function SetPassword() {
                     비밀번호
                   </Text>
                   {isPasswordInvalid && (
-                    <Text className="text-b4 text-red-500">
+                    <Text className="text-b4 text-secondary-bubblegum-pink">
                       규칙에 맞춰 설정해주세요.
                     </Text>
                   )}
@@ -75,7 +76,7 @@ export default function SetPassword() {
                     비밀번호 확인
                   </Text>
                   {isMismatch && (
-                    <Text className="text-b4 text-red-500">
+                    <Text className="text-b4 text-secondary-bubblegum-pink">
                       비밀번호가 일치하지 않습니다.
                     </Text>
                   )}
@@ -93,7 +94,7 @@ export default function SetPassword() {
             </View>
           </View>
 
-          <View className="items-center py-4 mt-auto">
+          <View className="items-center py-4 mt-auto mb-10">
             <Button
               label="계속하기"
               size="long"
@@ -114,9 +115,7 @@ export default function SetPassword() {
                   await authApi.signup(payload);
                   reset();
                   navigation.navigate("SignUpComplete");
-                } catch (e: any) {
-
-                }
+                } catch (e: any) {}
               }}
             />
           </View>

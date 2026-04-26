@@ -48,10 +48,29 @@ export default function PersonalInfo() {
     setBirthdayRaw(digits);
   };
 
+  const isBirthdayInvalid = (() => {
+    if (birthdayRaw.length < 8) return false;
+    const year = parseInt(birthdayRaw.slice(0, 4), 10);
+    const month = parseInt(birthdayRaw.slice(4, 6), 10);
+    const day = parseInt(birthdayRaw.slice(6, 8), 10);
+    if (year < 1990) return true;
+    if (month < 1 || month > 12) return true;
+    if (day < 1 || day > 31) return true;
+    const date = new Date(year, month - 1, day);
+    if (
+      date.getFullYear() !== year ||
+      date.getMonth() + 1 !== month ||
+      date.getDate() !== day
+    )
+      return true;
+    return false;
+  })();
+
   const isValid =
     name.trim().length > 0 &&
     gender !== null &&
     birthdayRaw.length === 8 &&
+    !isBirthdayInvalid &&
     nationality !== "";
 
   return (
@@ -60,15 +79,13 @@ export default function PersonalInfo() {
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="handled"
       >
-        <View>
+        <View className="px-2">
           {/* 안내 문구 */}
           <View className="mt-[19px] gap-4">
             <View className="flex-row items-center">
-              <Text className="text-h1 font-eb text-secondary-salmon">
-                이름
-              </Text>
+              <Text className="text-h1 font-eb text-text-salmon">이름</Text>
               <Text className="text-h1 font-eb text-gray-black">과 </Text>
-              <Text className="text-h1 font-eb text-secondary-salmon">
+              <Text className="text-h1 font-eb text-text-salmon">
                 기타 정보
               </Text>
               <Text className="text-h1 font-eb text-gray-black">
@@ -112,6 +129,10 @@ export default function PersonalInfo() {
             {/* 생일 */}
             <Input
               label="생일"
+              description={
+                isBirthdayInvalid ? "날짜를 다시 확인해주세요." : undefined
+              }
+              error={isBirthdayInvalid}
               placeholder="8자리 숫자로 입력해주세요."
               value={formatBirthday(birthdayRaw)}
               onChangeText={handleBirthday}
@@ -123,18 +144,22 @@ export default function PersonalInfo() {
             <View className="w-[342px] gap-[6px]">
               <View className="flex-row justify-between items-center">
                 <Text className="text-b3 font-sb text-dark-gray">국적</Text>
-                <Text className="text-b4 font-rg text-dark-gray">이중국적인 경우 하나만 선택해주세요.</Text>
+                <Text className="text-b4 font-rg text-dark-gray">
+                  이중국적인 경우 하나만 선택해주세요.
+                </Text>
               </View>
               <TouchableOpacity
                 onPress={() => setNationalityOpen(true)}
                 className="flex-row items-center justify-between rounded-lg border border-[#E4E4E4] bg-extra-white px-3 py-4"
               >
-                <Text className={`text-b3 font-md ${nationality ? "text-gray-black" : "text-[#E4E4E4]"}`}>
+                <Text
+                  className={`text-b3 font-md ${nationality ? "text-gray-black" : "text-[#E4E4E4]"}`}
+                >
                   {nationality || "선택해주세요."}
                 </Text>
-                <Svg width="6" height="10" viewBox="0 0 6 10" fill="none">
+                <Svg width="10" height="6" viewBox="0 0 10 6" fill="none">
                   <Polyline
-                    points="1,1 5,5 1,9"
+                    points="1,1 5,5 9,1"
                     stroke="#BFBFBF"
                     strokeWidth="2"
                     strokeLinecap="round"
@@ -148,7 +173,7 @@ export default function PersonalInfo() {
       </ScrollView>
 
       {/* 계속하기 버튼 */}
-      <View className="items-center py-4">
+      <View className="items-center py-4 pb-10">
         <Button
           label="계속하기"
           size="long"
