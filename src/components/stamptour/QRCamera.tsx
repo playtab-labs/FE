@@ -1,14 +1,22 @@
 import { CameraView, useCameraPermissions } from "expo-camera";
-import { useEffect, useRef } from "react";
+import { forwardRef, useEffect, useImperativeHandle, useRef } from "react";
 import { Alert, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 interface QRCameraProps {
   onScanned?: (data: string) => void;
 }
 
-export default function QRCamera({ onScanned }: QRCameraProps) {
+export interface QRCameraHandle {
+  reset: () => void;
+}
+
+const QRCamera = forwardRef<QRCameraHandle, QRCameraProps>(function QRCamera({ onScanned }, ref) {
   const [permission, requestPermission] = useCameraPermissions();
   const scanned = useRef(false);
+
+  useImperativeHandle(ref, () => ({
+    reset: () => { scanned.current = false; },
+  }));
 
   useEffect(() => {
     if (permission && !permission.granted) {
@@ -60,7 +68,9 @@ export default function QRCamera({ onScanned }: QRCameraProps) {
       onBarcodeScanned={handleBarCodeScanned}
     />
   );
-}
+});
+
+export default QRCamera;
 
 const styles = StyleSheet.create({
   center: {
