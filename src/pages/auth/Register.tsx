@@ -26,7 +26,7 @@ export default function Register() {
         {/* 로고 */}
         <View className="items-center mt-[125px]">
           <Image
-            source={require("@/assets/pngs/logo.png")}
+            source={require("@/assets/pngs/odysseyLogo_noempty.png")}
             style={{ width: 277, height: 173 }}
             resizeMode="contain"
           />

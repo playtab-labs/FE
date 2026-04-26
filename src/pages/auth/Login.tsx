@@ -41,7 +41,7 @@ export default function Login() {
       {/* 로고 */}
       <View className="items-center mt-[36px]">
         <Image
-          source={require("@/assets/pngs/logo.png")}
+          source={require("@/assets/pngs/odysseyLogo_noempty.png")}
           style={{ width: 277, height: 173 }}
           resizeMode="contain"
         />
