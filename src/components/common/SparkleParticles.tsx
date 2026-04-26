@@ -94,7 +94,7 @@ const Particle = memo(function Particle({
     return () => {
       mounted = false;
     };
-  });
+  }, [delay, duration, opacity, scale, translateY]);
 
   return (
     <Animated.View
@@ -116,17 +116,22 @@ const Particle = memo(function Particle({
   );
 });
 
-const generateParticles = (): ParticleConfig[] =>
+const generateParticles = (w: number, h: number): ParticleConfig[] =>
   Array.from({ length: PARTICLE_COUNT }, (_, id) => ({
     id,
-    left: Math.random() * SCREEN_WIDTH,
-    top: Math.random() * SCREEN_HEIGHT,
+    left: Math.random() * w,
+    top: Math.random() * h,
     duration: (Math.random() * 2 + 3) * 1000,
     delay: Math.random() * 5000,
   }));
 
-export default function SparkleParticles() {
-  const particles = useRef(generateParticles()).current;
+interface SparkleParticlesProps {
+  width?: number;
+  height?: number;
+}
+
+export default function SparkleParticles({ width = SCREEN_WIDTH, height = SCREEN_HEIGHT }: SparkleParticlesProps) {
+  const particles = useRef(generateParticles(width, height)).current;
 
   return (
     <>
