@@ -1,13 +1,17 @@
 import SparkleParticles from "@/components/SparkleParticles";
+import GotoLogo from "@/assets/svgs/goto.svg";
 import KbLogo from "@/assets/svgs/kblogo.svg";
 import { typo } from "@/styles/typography";
 import { useNavigation } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
-import { useEffect } from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { useEffect, useState } from "react";
+import { Dimensions, Image, StyleSheet, Text, View } from "react-native";
+
+const { width: SW, height: SH } = Dimensions.get("window");
 
 export default function LoadingScreen() {
   const navigation = useNavigation<any>();
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -21,24 +25,27 @@ export default function LoadingScreen() {
       <StatusBar hidden />
       <Image
         source={require("@/assets/pngs/loadingposter.png")}
-        style={styles.poster}
+        style={[styles.poster, { opacity: imageLoaded ? 1 : 0 }]}
         resizeMode="cover"
+        onLoad={() => setImageLoaded(true)}
       />
-      <SparkleParticles />
-      <View style={styles.bottomRow}>
-        <Image
-          source={require("@/assets/pngs/goto.png")}
-          style={styles.gotoLogo}
-          resizeMode="contain"
-        />
-        <Text
-          className={typo.T3_Eb}
-          style={styles.playtapText}
-        >
-          PLAYTAP
-        </Text>
-        <KbLogo width={96} height={18} />
-      </View>
+      {imageLoaded && (
+        <View style={styles.particleLayer}>
+          <SparkleParticles />
+        </View>
+      )}
+      {imageLoaded && (
+        <View style={styles.bottomRow}>
+          <GotoLogo width={61} height={61} />
+          <Text
+            className={typo.T3_Eb}
+            style={styles.playtapText}
+          >
+            PLAYTAP
+          </Text>
+          <KbLogo width={96} height={18} />
+        </View>
+      )}
     </View>
   );
 }
@@ -49,12 +56,21 @@ const styles = StyleSheet.create({
     backgroundColor: "#000",
     alignItems: "center",
     justifyContent: "center",
+  },
+  particleLayer: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
     overflow: "hidden",
   },
   poster: {
+    position: "absolute",
     width: 375,
     height: 812,
-    marginTop: -60,
+    top: (SH - 812) / 2 - 60,
+    left: (SW - 375) / 2,
   },
   bottomRow: {
     position: "absolute",
@@ -62,9 +78,7 @@ const styles = StyleSheet.create({
     left: 60,
     flexDirection: "row",
     alignItems: "center",
-  },
-  gotoLogo: {
-    height: 18,
+    zIndex: 100,
   },
   playtapText: {
     color: "#FFF",
