@@ -40,4 +40,5 @@ export const MOCK_MARKERS: MarkerData[] = [
   { id: "m5", label: "푸드", type: "sub", fx: 0.58, fy: 0.62 },
   { id: "m6", label: "📷", type: "facility", fx: 0.5, fy: 0.5 },
   { id: "m7", label: "🚬", type: "facility", fx: 0.46, fy: 0.48 },
+  {id: 'm8', label: "🎈", type: "facility",  fx: 0.58, fy: 0.28}
 ];
