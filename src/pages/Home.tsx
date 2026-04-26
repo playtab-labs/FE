@@ -1,3 +1,4 @@
+import { getMyStamps } from "@/api/stamp";
 import Layout from "@/components/Layout";
 import AdBanner from "@/components/home/AdBanner";
 import DrinkBoothListSection from "@/components/home/DrinkBoothListSection";
@@ -7,6 +8,7 @@ import HomePoster from "@/components/home/HomePoster";
 import MDBanner from "@/components/home/MDBanner";
 import StampTourBanner from "@/components/home/StampTourBanner";
 import { useNavigation } from "@react-navigation/native";
+import { useEffect, useState } from "react";
 import { ScrollView, View } from "react-native";
 
 const AD_BANNERS = [1, 2, 3, 4, 5];
@@ -35,6 +37,14 @@ const SAMPLE_FOOD_TRUCKS = [
 
 export default function Home() {
   const navigation = useNavigation<any>();
+  const [stampProgress, setStampProgress] = useState(0);
+
+  useEffect(() => {
+    getMyStamps()
+      .then(({ visitedCount }) => setStampProgress(Math.round((visitedCount / 9) * 100)))
+      .catch(() => {});
+  }, []);
+
   return (
     <Layout
       scrollable
@@ -43,7 +53,7 @@ export default function Home() {
       fullBleedHeader={<HomePoster />}
     >
       <View style={{ marginTop: 24, flexDirection: "column", gap: 16 }}>
-        <StampTourBanner onPress={() => navigation.navigate('StampTour')} />
+        <StampTourBanner onPress={() => navigation.navigate('StampTour')} progress={stampProgress} />
         <MDBanner onPress={() => navigation.navigate('MD')} />
       </View>
       <ScrollView
