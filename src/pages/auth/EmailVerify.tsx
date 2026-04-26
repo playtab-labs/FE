@@ -60,7 +60,9 @@ export default function EmailVerify() {
   );
 
   const formatTime = (s: number) =>
-    `${Math.floor(s / 60).toString().padStart(2, "0")}:${(s % 60).toString().padStart(2, "0")}`;
+    `${Math.floor(s / 60)
+      .toString()
+      .padStart(2, "0")}:${(s % 60).toString().padStart(2, "0")}`;
 
   const handleSend = async () => {
     try {
@@ -97,13 +99,13 @@ export default function EmailVerify() {
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="handled"
       >
-        <View className="mt-6 gap-6 items-center">
+        <View className="mt-6 gap-6 items-center px-2">
           {/* 안내 문구 */}
           <View className="w-[342px] mb-2">
             <View className="flex-row items-center flex-wrap">
               {isSogang ? (
                 <>
-                  <Text className="text-h1 font-eb text-secondary-salmon">
+                  <Text className="text-h1 font-eb text-text-salmon">
                     서강대학교 이메일 인증
                   </Text>
                   <Text className="text-h1 font-eb text-gray-black">
@@ -112,7 +114,7 @@ export default function EmailVerify() {
                 </>
               ) : (
                 <>
-                  <Text className="text-h1 font-eb text-secondary-salmon">
+                  <Text className="text-h1 font-eb text-text-salmon">
                     이메일 인증
                   </Text>
                   <Text className="text-h1 font-eb text-gray-black">
@@ -210,7 +212,7 @@ export default function EmailVerify() {
       </ScrollView>
 
       {/* 계속하기 */}
-      <View className="items-center py-4">
+      <View className="items-center py-4 pb-10">
         <Button
           label="계속하기"
           size="long"
