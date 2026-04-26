@@ -2,6 +2,7 @@ import { MOCK_MARKERS } from "@/data/mockMarkers";
 import { View } from "react-native";
 import type { SharedValue } from "react-native-reanimated";
 import MapMarker from "./MapMarker";
+import UserLocationMarker from "./UserLocationMarker";
 
 interface MapMarkerLayerProps {
   scale: SharedValue<number>;
@@ -18,6 +19,7 @@ const MapMarkerLayer = (props: MapMarkerLayerProps) => {
       {MOCK_MARKERS.map((marker) => (
         <MapMarker key={marker.id} marker={marker} {...props} />
       ))}
+      <UserLocationMarker {...props} />
     </View>
   );
 };
