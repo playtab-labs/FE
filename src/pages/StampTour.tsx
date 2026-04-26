@@ -70,10 +70,13 @@ export default function StampTour() {
   useEffect(() => {
     const title = route.params?.newStampTitle;
     if (!title) return;
-    const isBingo = visitedCount + 1 >= 6;
-    setStampToast({ title, isBingo });
-    if (stampToastTimer.current) clearTimeout(stampToastTimer.current);
-    stampToastTimer.current = setTimeout(() => setStampToast(null), 3000);
+    getMyStamps().then((data) => {
+      setStamps(data);
+      const isBingo = data.visitedCount >= 6;
+      setStampToast({ title, isBingo });
+      if (stampToastTimer.current) clearTimeout(stampToastTimer.current);
+      stampToastTimer.current = setTimeout(() => setStampToast(null), 3000);
+    }).catch(() => {});
     return () => {
       if (stampToastTimer.current) clearTimeout(stampToastTimer.current);
     };
