@@ -1,3 +1,4 @@
+import client from "@/api/client";
 import Layout from "@/components/Layout";
 import AdBanner from "@/components/home/AdBanner";
 import DrinkBoothListSection from "@/components/home/DrinkBoothListSection";
@@ -7,6 +8,8 @@ import HomePoster from "@/components/home/HomePoster";
 import MDBanner from "@/components/home/MDBanner";
 import StampTourBanner from "@/components/home/StampTourBanner";
 import { useNavigation } from "@react-navigation/native";
+import * as SecureStore from "expo-secure-store";
+import { useEffect, useState } from "react";
 import { ScrollView, View } from "react-native";
 
 const AD_BANNERS = [1, 2, 3, 4, 5];
@@ -35,6 +38,25 @@ const SAMPLE_FOOD_TRUCKS = [
 
 export default function Home() {
   const navigation = useNavigation<any>();
+  const [me, setMe] = useState<{ email: string } | null>(null);
+
+  useEffect(() => {
+    const fetchMe = async () => {
+      try {
+        const token = await SecureStore.getItemAsync("accessToken").catch(() => null);
+        const res = await client.post(
+          "/graphql",
+          { query: `query { me { email } }` },
+          { headers: token ? { Authorization: `Bearer ${token}` } : {} },
+        );
+        setMe(res.data?.data?.me ?? null);
+      } catch {}
+    };
+    fetchMe();
+  }, []);
+
+  const isSogang = me?.email?.endsWith("@sogang.ac.kr") ?? false;
+
   return (
     <Layout
       scrollable
@@ -43,7 +65,10 @@ export default function Home() {
       fullBleedHeader={<HomePoster />}
     >
       <View style={{ marginTop: 24, flexDirection: "column", gap: 16 }}>
-        <StampTourBanner onPress={() => navigation.navigate('StampTour')} />
+        <StampTourBanner
+          onPress={() => navigation.navigate('StampTour')}
+          disabled={!isSogang}
+        />
         <MDBanner onPress={() => navigation.navigate('MD')} />
       </View>
       <ScrollView
@@ -75,4 +100,3 @@ export default function Home() {
     </Layout>
   );
 }
-
