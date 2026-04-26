@@ -1,4 +1,4 @@
-import SparkleParticles from "@/components/SparkleParticles";
+import SparkleParticles from "@/components/common/SparkleParticles";
 import GotoLogo from "@/assets/svgs/goto.svg";
 import KbLogo from "@/assets/svgs/kblogo.svg";
 import { typo } from "@/styles/typography";
