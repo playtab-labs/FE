@@ -1,19 +1,20 @@
+import AlosIcon from "@/assets/svgs/ALOS.svg";
 import Layout from "@/components/Layout";
 import Button from "@/components/common/Button";
+import { useSignupStore } from "@/stores/signupStore";
 import { useNavigation } from "@react-navigation/native";
 import { Image, Text, View } from "react-native";
 
 export default function SignUpComplete() {
   const navigation = useNavigation<any>();
+  const userType = useSignupStore((s) => s.userType);
 
   return (
     <Layout title="회원가입 완료" showBack>
       {/* 안내 문구 */}
       <View className="mt-[19px] gap-4">
         <View className="flex-row items-center flex-wrap">
-          <Text className="text-h1 font-eb text-secondary-salmon">
-            회원가입
-          </Text>
+          <Text className="text-h1 font-eb text-text-salmon">회원가입</Text>
           <Text className="text-h1 font-eb text-gray-black">
             이 완료되었어요.
           </Text>
@@ -33,15 +34,24 @@ export default function SignUpComplete() {
       </View>
 
       {/* 버튼 */}
-      <View className="items-center py-4 mt-auto">
-        <Button
-          label="계속하기"
-          size="long"
-          state="active"
-          onPress={() =>
-            navigation.reset({ index: 0, routes: [{ name: "Tabs" }] })
-          }
-        />
+      <View className="items-center py-4 mt-auto pb-10">
+        <View style={{ position: "relative" }}>
+          <Button
+            label="계속하기"
+            size="long"
+            state="active"
+            onPress={() =>
+              navigation.reset({ index: 0, routes: [{ name: "Tabs" }] })
+            }
+          />
+          {userType === "sogang" && (
+            <AlosIcon
+              width={98}
+              height={127}
+              style={{ position: "absolute", right: 6, top: -121 }}
+            />
+          )}
+        </View>
       </View>
     </Layout>
   );

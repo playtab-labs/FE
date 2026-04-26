@@ -47,7 +47,7 @@ export default function FAQ() {
         <View className="gap-4 mb-[58px]">
           <View className="flex-row items-center gap-2">
             <Text className="text-h1 font-eb text-gray-black">자주 묻는</Text>
-            <Text className="text-h1 font-eb text-secondary-salmon">질문</Text>
+            <Text className="text-h1 font-eb text-text-salmon">질문</Text>
           </View>
           <Text className="text-b3 font-sb text-dark-gray">
             궁금한 내용을 눌러 답변을 확인해보세요.

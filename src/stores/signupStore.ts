@@ -9,6 +9,8 @@ interface Consent {
   agreed: boolean;
 }
 
+type UserType = "sogang" | "external";
+
 interface SignupState {
   // 개인정보
   name: string;
@@ -26,6 +28,9 @@ interface SignupState {
   // 약관
   consents: Consent[];
 
+  // 사용자 유형
+  userType: UserType;
+
   // actions
   setPersonalInfo: (data: {
     name: string;
@@ -37,6 +42,7 @@ interface SignupState {
   setEmail: (email: string) => void;
   setPassword: (password: string) => void;
   setConsents: (consents: Consent[]) => void;
+  setUserType: (userType: UserType) => void;
   reset: () => void;
 }
 
@@ -49,6 +55,7 @@ const initialState = {
   email: "",
   password: "",
   consents: [],
+  userType: "external" as UserType,
 };
 
 export const useSignupStore = create<SignupState>((set) => ({
@@ -61,6 +68,8 @@ export const useSignupStore = create<SignupState>((set) => ({
   setPassword: (password) => set({ password }),
 
   setConsents: (consents) => set({ consents }),
+
+  setUserType: (userType) => set({ userType }),
 
   reset: () => set(initialState),
 }));
