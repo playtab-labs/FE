@@ -1,6 +1,7 @@
 import Layout from "@/components/Layout";
+import { getMyWristbands, linkWristband } from "@/api/personal";
 import type { RootStackParamList } from "@/navigation/types";
-import { useIsFocused, useNavigation } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Image as ExpoImage } from "expo-image";
 import { useEffect, useState } from "react";
@@ -15,6 +16,17 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 
+let NfcManager: any = null;
+let NfcTech: any = null;
+try {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const nfc = require("react-native-nfc-manager");
+  NfcManager = nfc.default;
+  NfcTech = nfc.NfcTech;
+} catch {
+  // Expo Go 환경 — NFC 네이티브 모듈 없음
+}
+
 const AnimatedImage = Animated.createAnimatedComponent(Image);
 
 export default function Tag() {
@@ -22,7 +34,6 @@ export default function Tag() {
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   const [isPlaying, setIsPlaying] = useState(false);
-  const isFocused = useIsFocused();
 
   // hand_with_band 페이드 인
   const bandOpacity = useSharedValue(0);
@@ -32,16 +43,46 @@ export default function Tag() {
   const phoneTranslateY = useSharedValue(0);
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsPlaying(true));
-    return () => clearTimeout(timer);
+    setIsPlaying(true);
   }, []);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      if (isFocused) navigation.navigate("Success");
-    }, 5000);
-    return () => clearTimeout(timer);
-  }, [isFocused]);
+    let cancelled = false;
+
+    const startNfc = async () => {
+      if (!NfcManager) return;
+      try {
+        await NfcManager.start();
+        await NfcManager.requestTechnology(NfcTech.NfcA);
+        const tag = await NfcManager.getTag();
+        if (!tag?.id || cancelled) return;
+
+        const detectedRfid = tag.id.toUpperCase();
+
+        // 기존 팔찌 조회
+        const res = await getMyWristbands();
+        const existing: { rfid: string }[] = res.data?.myWristbands ?? [];
+        const alreadyLinked = existing.some((w) => w.rfid === detectedRfid);
+
+        // 다른 팔찌일 때만 등록
+        if (!alreadyLinked) {
+          await linkWristband(detectedRfid);
+        }
+
+        if (!cancelled) navigation.navigate("Success");
+      } catch (e) {
+        // NFC 미지원 기기이거나 취소된 경우 무시
+      } finally {
+        NfcManager?.cancelTechnologyRequest();
+      }
+    };
+
+    startNfc();
+    return () => {
+      cancelled = true;
+      NfcManager?.cancelTechnologyRequest();
+    };
+  }, []);
 
   useEffect(() => {
     // 팔찌 손: 천천히 페이드 인

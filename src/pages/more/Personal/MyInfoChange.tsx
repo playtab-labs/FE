@@ -3,16 +3,40 @@ import Button from "@/components/common/Button";
 import Input from "@/components/common/Input";
 import NationalityModal from "@/components/common/NationalityModal";
 import ToastError from "@/components/common/ToastError";
-import { useRef, useState } from "react";
+import { gql } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client/react";
+import { useEffect, useRef, useState } from "react";
 import {
-    Keyboard,
-    ScrollView,
-    Text,
-    TouchableOpacity,
-    TouchableWithoutFeedback,
-    View,
+  Keyboard,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  View,
 } from "react-native";
 import Svg, { Polyline } from "react-native-svg";
+
+const GET_ME = gql`
+  query GetMe {
+    me {
+      name
+      gender
+      birthDate
+      nationality
+    }
+  }
+`;
+
+const UPDATE_MY_PROFILE = gql`
+  mutation UpdateMyProfile($input: UpdateMyProfileInput!) {
+    updateMyProfile(input: $input) {
+      name
+      gender
+      birthDate
+      nationality
+    }
+  }
+`;
 
 const NATIONALITIES = [
   "대한민국",
@@ -25,13 +49,6 @@ const NATIONALITIES = [
   "세르비아",
 ];
 
-const ORIGINAL = {
-  name: "홍길동",
-  gender: "male" as "male" | "female",
-  birthday: "20001130",
-  nationality: "대한민국",
-};
-
 const formatBirthday = (digits: string) => {
   if (digits.length <= 4) return digits;
   if (digits.length <= 6) return `${digits.slice(0, 4)}.${digits.slice(4)}`;
@@ -39,14 +56,46 @@ const formatBirthday = (digits: string) => {
 };
 
 export default function MyInfoChange() {
-  const [saved, setSaved] = useState(ORIGINAL);
-  const [name, setName] = useState(ORIGINAL.name);
-  const [gender, setGender] = useState<"male" | "female">(ORIGINAL.gender);
-  const [birthdayRaw, setBirthdayRaw] = useState(ORIGINAL.birthday);
-  const [nationality, setNationality] = useState(ORIGINAL.nationality);
+  const { data } = useQuery<{
+    me: {
+      name: string;
+      gender: string;
+      birthDate: string;
+      nationality: string;
+    };
+  }>(GET_ME);
+
+  const [saved, setSaved] = useState({
+    name: "",
+    gender: "male" as "male" | "female",
+    birthday: "",
+    nationality: "",
+  });
+  const [name, setName] = useState("");
+  const [gender, setGender] = useState<"male" | "female">("male");
+  const [birthdayRaw, setBirthdayRaw] = useState("");
+  const [nationality, setNationality] = useState("");
+
+  useEffect(() => {
+    if (data?.me) {
+      const b = data.me.birthDate?.replace(/-/g, "") ?? "";
+      const g = (data.me.gender?.toLowerCase() ?? "male") as "male" | "female";
+      setSaved({
+        name: data.me.name,
+        gender: g,
+        birthday: b,
+        nationality: data.me.nationality,
+      });
+      setName(data.me.name);
+      setGender(g);
+      setBirthdayRaw(b);
+      setNationality(data.me.nationality);
+    }
+  }, [data]);
   const [nationalityOpen, setNationalityOpen] = useState(false);
   const [toast, setToast] = useState<"success" | "error" | null>(null);
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [updateMyProfile] = useMutation(UPDATE_MY_PROFILE);
 
   const showToast = (type: "success" | "error") => {
     setToast(type);
@@ -54,10 +103,35 @@ export default function MyInfoChange() {
     toastTimer.current = setTimeout(() => setToast(null), 2500);
   };
 
-  const handleSubmit = () => {
-    // TODO: 실제 API 연동 시 성공/실패에 따라 분기
-    setSaved({ name: name.trim(), gender, birthday: birthdayRaw, nationality });
-    showToast("success");
+  const handleSubmit = async () => {
+    try {
+      await updateMyProfile({
+        variables: {
+          input: {
+            name: name.trim(),
+            gender: gender === "male" ? "MALE" : "FEMALE",
+            birthDate: `${birthdayRaw.slice(0, 4)}-${birthdayRaw.slice(4, 6)}-${birthdayRaw.slice(6, 8)}`,
+            nationality,
+            phoneNumber: "",
+          },
+        },
+        refetchQueries: ["GetMe"],
+        awaitRefetchQueries: true,
+      });
+      setSaved({
+        name: name.trim(),
+        gender,
+        birthday: birthdayRaw,
+        nationality,
+      });
+      showToast("success");
+    } catch (e: any) {
+      console.log(
+        "mutation error:",
+        JSON.stringify(e?.graphQLErrors ?? e?.networkError ?? e?.message ?? e),
+      );
+      showToast("error");
+    }
   };
 
   const handleBirthday = (text: string) => {
@@ -158,7 +232,7 @@ export default function MyInfoChange() {
             </View>
           </ScrollView>
 
-          <View className="items-center py-4">
+          <View className="items-center mb-10">
             <Button
               label="변경 완료"
               size="long"

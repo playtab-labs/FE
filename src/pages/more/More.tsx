@@ -9,10 +9,21 @@ import Layout from "@/components/Layout";
 import IdCard from "@/components/more/IdCard";
 import TabList from "@/components/more/TabList";
 import Ticket from "@/components/more/Ticket";
+import { gql } from "@apollo/client";
+import { useQuery } from "@apollo/client/react";
 import { authApi } from "@/api/auth";
 import { useAuthStore } from "@/stores/authStore";
 import { useNavigation } from "@react-navigation/native";
 import { useRef, useState } from "react";
+
+const GET_ME = gql`
+  query GetMe {
+    me {
+      name
+      email
+    }
+  }
+`;
 import {
   Animated,
   ScrollView,
@@ -61,6 +72,8 @@ const GAP = 8; // 펼쳐졌을 때 두 티켓 사이 간격
 export default function More() {
   const navigation = useNavigation<any>();
   const { clearTokens, refreshToken } = useAuthStore();
+  const { data } = useQuery<{ me: { name: string; email: string } }>(GET_ME);
+  const isSogang = data?.me?.email?.endsWith("@sogang.ac.kr") ?? false;
   const [expanded, setExpanded] = useState(false);
   const [ticketHeight, setTicketHeight] = useState(0);
   const animValue = useRef(new Animated.Value(0)).current;
@@ -102,7 +115,7 @@ export default function More() {
         }}
       >
         {/* ID 카드 */}
-        <IdCard name="홍길동" email="gildong1234@gmail.com" isSogang />
+        <IdCard name={data?.me?.name ?? "-"} email={data?.me?.email ?? "-"} isSogang={isSogang} />
 
         {/* 티켓 */}
         {TICKETS.length === 0 ? null : !hasMultiple ? (
@@ -168,7 +181,9 @@ export default function More() {
                         ? () => navigation.navigate("Sponsor")
                         : item.label === "언어"
                           ? () => navigation.navigate("Language")
-                          : undefined
+                          : item.label === "이용약관"
+                            ? () => navigation.navigate("Terms")
+                            : undefined
               }
               rightElement={
                 item.label === "언어" ? (
