@@ -1,53 +1,76 @@
-import client from "./client";
 import * as SecureStore from "expo-secure-store";
+import client from "./client";
 
 export interface Performer {
   id: string;
-  name: { ko: string };
-  description: { ko: string };
+  name: { ko: string };  // JSON 타입
   imageUrl: string;
   isActive: boolean;
   isFavorited: boolean;
-  stageNames: { ko: string }[];
+  stageNames: { ko: string }[];  // JSON 타입
 }
 
-export interface Schedule {
-  id: string;
+export interface ArtistSchedule {
+  scheduleId: string;
+  startAt: string;
+  endAt: string;
+  status: string;
   performer: Performer;
-  festivalDay: { dayNumber: number };
-  stageName: { ko: string };
 }
+
+export interface StageSchedule {
+  stage: {
+    id: string;
+    name: { ko: string };
+    locationDesc: { ko: string };
+    displayOrder: number;
+  };
+  artists: ArtistSchedule[];
+}
+
+const getToken = async () => {
+  try {
+    return await SecureStore.getItemAsync("accessToken");
+  } catch {
+    return null;
+  }
+};
 
 const graphql = async (query: string, variables?: Record<string, unknown>) => {
-  // const token = await SecureStore.getItemAsync("accessToken");
-  const token = 'eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJ1c2VyLXNlcnZpY2UiLCJzdWIiOiIwM2FmOWI4ZS1kNWNiLTQ4ZmEtOWM1Yy0xOWEyNjY4YjQwMDMiLCJyb2xlIjoiVVNFUiIsImlhdCI6MTc3NzA5NDAxOCwiZXhwIjoxNzc3MDk3NjE4fQ.ygrRWyGEqPzKjfxsAlodGyQpGiuMWINZiixIN6rtRw3qw3haiZV9XefNCibVa51XsvGysreBYmPagV_5B1XCyw'
+  const token = await getToken();
   const res = await client.post(
     "/graphql",
     { query, variables },
-    {
-      headers: token ? { Authorization: `Bearer ${token}` } : {},
-    }
+    { headers: token ? { Authorization: `Bearer ${token}` } : {} }
   );
   return res.data;
 };
 
-export const getSchedulesByDay = (dayNumber: number) =>
+export const getSchedulesByDay = (dayId: string) =>
   graphql(
-    `query GetSchedulesByDay($dayNumber: Int!) {
-      schedulesByDay(dayNumber: $dayNumber) {
-        id
-        performer {
+    `query GetSchedulesByDay($dayId: ID!) {
+      schedulesByDay(dayId: $dayId) {
+        stage {
           id
-          name { ko }
-          imageUrl
-          isFavorited
-          stageNames { ko }
+          name
+          displayOrder
         }
-        festivalDay { dayNumber }
-        stageName { ko }
+        artists {
+          scheduleId
+          startAt
+          endAt
+          status
+          performer {
+            id
+            name
+            imageUrl
+            isFavorited
+            stageNames
+          }
+        }
       }
     }`,
-    { dayNumber }
+    { dayId }
   );
 
 export const addFavorite = (performerId: string) =>
@@ -65,5 +88,3 @@ export const removeFavorite = (performerId: string) =>
     }`,
     { performerId }
   );
-
-
