@@ -1,23 +1,62 @@
+import { SPOT_NAMES, visitStamp } from "@/api/stamp";
 import Layout from "@/components/Layout";
 import QRCamera from "@/components/stamptour/QRCamera";
 import QRInformCard from "@/components/stamptour/QRInformCard";
 import QRScanToast from "@/components/stamptour/QRScanToast";
 import { useNavigation } from "@react-navigation/native";
+import * as Location from "expo-location";
 import { useEffect, useRef, useState } from "react";
-import { View } from "react-native";
+import { Alert, View } from "react-native";
 
 export default function QrScan() {
   const navigation = useNavigation<any>();
   const [showToast, setShowToast] = useState(false);
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const handleScanned = (data: string) => {
+  const handleScanned = async (data: string) => {
+const raw = data.startsWith('https://') ? data.slice('https://'.length) : data;
+    const spotId = parseInt(raw, 10);
+    if (isNaN(spotId) || spotId < 1 || spotId > 9) {
+      Alert.alert('인식 실패', '올바르지 않은 QR코드입니다.', [
+        { text: '확인', onPress: () => navigation.navigate('StampTour') },
+      ]);
+      return;
+    }
+
     setShowToast(true);
-    if (toastTimer.current) clearTimeout(toastTimer.current);
-    toastTimer.current = setTimeout(() => {
+
+    try {
+      const { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        setShowToast(false);
+        Alert.alert('위치 권한 필요', '스탬프 인증을 위해 위치 권한이 필요합니다.', [
+          { text: '확인', onPress: () => navigation.navigate('StampTour') },
+        ]);
+        return;
+      }
+
+      const location = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.High });
+      const { latitude, longitude } = location.coords;
+
+      const result = await visitStamp(spotId, latitude, longitude);
+      if (result.success) {
+        if (toastTimer.current) clearTimeout(toastTimer.current);
+        toastTimer.current = setTimeout(() => {
+          setShowToast(false);
+          navigation.navigate('StampTour', { newStampTitle: SPOT_NAMES[spotId - 1] });
+        }, 2000);
+      } else {
+        setShowToast(false);
+        Alert.alert('인증 실패', '해당 스팟 근처에서만 인증할 수 있습니다.', [
+          { text: '확인', onPress: () => navigation.navigate('StampTour') },
+        ]);
+      }
+    } catch {
       setShowToast(false);
-      navigation.navigate('StampTour', { newStampTitle: data });
-    }, 2000);
+      Alert.alert('인증 실패', '스탬프 인증에 실패했습니다.\n다시 시도해주세요.', [
+        { text: '확인', onPress: () => navigation.navigate('StampTour') },
+      ]);
+    }
   };
 
   useEffect(() => {
