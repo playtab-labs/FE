@@ -1,3 +1,5 @@
+import { authApi } from "@/api/auth";
+import client from "@/api/client";
 import FaqIcon from "@/assets/svgs/faq.svg";
 import HostIcon from "@/assets/svgs/host.svg";
 import LanguageIcon from "@/assets/svgs/language.svg";
@@ -9,27 +11,16 @@ import Layout from "@/components/Layout";
 import IdCard from "@/components/more/IdCard";
 import TabList from "@/components/more/TabList";
 import Ticket from "@/components/more/Ticket";
-import { gql } from "@apollo/client";
-import { useQuery } from "@apollo/client/react";
-import { authApi } from "@/api/auth";
 import { useAuthStore } from "@/stores/authStore";
 import { useNavigation } from "@react-navigation/native";
-import { useRef, useState } from "react";
-
-const GET_ME = gql`
-  query GetMe {
-    me {
-      name
-      email
-    }
-  }
-`;
+import * as SecureStore from "expo-secure-store";
+import { useEffect, useRef, useState } from "react";
 import {
   Animated,
   ScrollView,
   Text,
   TouchableOpacity,
-  View
+  View,
 } from "react-native";
 
 const TAB_ITEMS = [
@@ -72,8 +63,26 @@ const GAP = 8; // 펼쳐졌을 때 두 티켓 사이 간격
 export default function More() {
   const navigation = useNavigation<any>();
   const { clearTokens, refreshToken } = useAuthStore();
-  const { data } = useQuery<{ me: { name: string; email: string } }>(GET_ME);
-  const isSogang = data?.me?.email?.endsWith("@sogang.ac.kr") ?? false;
+  const [me, setMe] = useState<{ name: string; email: string } | null>(null);
+
+  useEffect(() => {
+    const fetchMe = async () => {
+      try {
+        const token = await SecureStore.getItemAsync("accessToken").catch(
+          () => null,
+        );
+        const res = await client.post(
+          "/graphql",
+          { query: `query { me { name email } }` },
+          { headers: token ? { Authorization: `Bearer ${token}` } : {} },
+        );
+        setMe(res.data?.data?.me ?? null);
+      } catch {}
+    };
+    fetchMe();
+  }, []);
+
+  const isSogang = me?.email?.endsWith("@sogang.ac.kr") ?? false;
   const [expanded, setExpanded] = useState(false);
   const [ticketHeight, setTicketHeight] = useState(0);
   const animValue = useRef(new Animated.Value(0)).current;
@@ -115,7 +124,11 @@ export default function More() {
         }}
       >
         {/* ID 카드 */}
-        <IdCard name={data?.me?.name ?? "-"} email={data?.me?.email ?? "-"} isSogang={isSogang} />
+        <IdCard
+          name={me?.name ?? "-"}
+          email={me?.email ?? "-"}
+          isSogang={isSogang}
+        />
 
         {/* 티켓 */}
         {TICKETS.length === 0 ? null : !hasMultiple ? (
@@ -174,16 +187,16 @@ export default function More() {
                   : item.label === "공지사항"
                     ? () => navigation.navigate("Notice")
                     : item.label === "FAQ"
-                    ? () => navigation.navigate("FAQ")
-                    : item.label === "주최 주관 정보"
-                      ? () => navigation.navigate("Host")
-                      : item.label === "후원 협찬"
-                        ? () => navigation.navigate("Sponsor")
-                        : item.label === "언어"
-                          ? () => navigation.navigate("Language")
-                          : item.label === "이용약관"
-                            ? () => navigation.navigate("Terms")
-                            : undefined
+                      ? () => navigation.navigate("FAQ")
+                      : item.label === "주최 주관 정보"
+                        ? () => navigation.navigate("Host")
+                        : item.label === "후원 협찬"
+                          ? () => navigation.navigate("Sponsor")
+                          : item.label === "언어"
+                            ? () => navigation.navigate("Language")
+                            : item.label === "이용약관"
+                              ? () => navigation.navigate("Terms")
+                              : undefined
               }
               rightElement={
                 item.label === "언어" ? (
