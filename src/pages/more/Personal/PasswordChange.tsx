@@ -1,8 +1,11 @@
 import Layout from "@/components/Layout";
 import Button from "@/components/common/Button";
 import Input from "@/components/common/Input";
+import ToastError from "@/components/common/ToastError";
+import { gql } from "@apollo/client";
+import { useMutation } from "@apollo/client/react";
 import { useNavigation } from "@react-navigation/native";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import {
   Keyboard,
   Modal,
@@ -11,47 +14,67 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native";
+import Svg, { Circle, Line, Path } from "react-native-svg";
 
-const MOCK_CODE = "1234";
+const CHANGE_MY_PASSWORD = gql`
+  mutation ChangeMyPassword($input: ChangeMyPasswordInput!) {
+    changeMyPassword(input: $input) {
+      success
+    }
+  }
+`;
+
+function EyeIcon({ visible }: { visible: boolean }) {
+  return (
+    <Svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+      <Path
+        d="M1 10C1 10 4 4 10 4C16 4 19 10 19 10C19 10 16 16 10 16C4 16 1 10 1 10Z"
+        stroke="#BFBFBF"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <Circle cx="10" cy="10" r="2.5" stroke="#BFBFBF" strokeWidth="1.5" />
+      {!visible && (
+        <Line
+          x1="3"
+          y1="3"
+          x2="17"
+          y2="17"
+          stroke="#BFBFBF"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+        />
+      )}
+    </Svg>
+  );
+}
 
 export default function PasswordChange() {
   const navigation = useNavigation<any>();
+  const [changeMyPassword, { loading }] = useMutation<{
+    changeMyPassword: { success: boolean };
+  }>(CHANGE_MY_PASSWORD);
 
-  // Phase 1: 이메일 인증
-  const [email, setEmail] = useState("");
-  const [emailError, setEmailError] = useState(false);
-  const [codeSent, setCodeSent] = useState(false);
-  const [code, setCode] = useState("");
-  const [codeVerified, setCodeVerified] = useState(false);
-  const [codeError, setCodeError] = useState(false);
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [showCurrent, setShowCurrent] = useState(false);
 
-  // Phase 2: 비밀번호 변경
-  const [phase, setPhase] = useState<1 | 2>(1);
   const [password, setPassword] = useState("");
-  const [confirm, setConfirm] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [passwordBlurred, setPasswordBlurred] = useState(false);
+
+  const [confirm, setConfirm] = useState("");
+  const [showConfirm, setShowConfirm] = useState(false);
   const [confirmBlurred, setConfirmBlurred] = useState(false);
+
   const [showModal, setShowModal] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
+  const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const handleSendCode = () => {
-    if (!email.includes("@")) {
-      setEmailError(true);
-      return;
-    }
-    setEmailError(false);
-    setCodeSent(true);
-    setCode("");
-    setCodeVerified(false);
-    setCodeError(false);
-  };
-
-  const handleVerifyCode = () => {
-    if (code === MOCK_CODE) {
-      setCodeVerified(true);
-      setCodeError(false);
-    } else {
-      setCodeError(true);
-    }
+  const showToast = (msg: string) => {
+    setToastMessage(msg);
+    if (toastTimer.current) clearTimeout(toastTimer.current);
+    toastTimer.current = setTimeout(() => setToastMessage(""), 2500);
   };
 
   const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/;
@@ -59,153 +82,110 @@ export default function PasswordChange() {
     passwordBlurred && password.length > 0 && !passwordRegex.test(password);
   const isMismatch =
     confirmBlurred && confirm.length > 0 && password !== confirm;
-  const isPasswordValid = passwordRegex.test(password) && password === confirm;
+  const isValid =
+    currentPassword.length > 0 &&
+    passwordRegex.test(password) &&
+    password === confirm;
+
+  const handleSubmit = async () => {
+    if (password === currentPassword) {
+      showToast("현재 비밀번호와 동일합니다.");
+      return;
+    }
+    try {
+      const res = await changeMyPassword({
+        variables: {
+          input: { currentPassword, newPassword: password },
+        },
+      });
+      if (res.data?.changeMyPassword.success) {
+        setShowModal(true);
+      } else {
+        showToast("현재 비밀번호가 올바르지 않습니다.");
+      }
+    } catch (e: any) {
+      const classification = e?.errors?.[0]?.extensions?.classification;
+      if (classification === "UNAUTHORIZED") {
+        showToast("현재 비밀번호가 올바르지 않습니다.");
+      } else {
+        showToast("비밀번호 변경에 실패했습니다. 잠시 후 다시 시도해주세요.");
+      }
+    }
+  };
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <View className="flex-1">
         <Layout title="비밀번호 변경" showBack showCamera={false}>
-          {phase === 1 ? (
-            <>
-              <View className="mt-6 gap-6 items-center">
-                {/* 이메일 + 번호발송 */}
-                <View className="w-[342px] gap-[6px]">
-                  <View className="flex-row justify-between items-center">
-                    <Text className="text-b3 font-sb text-dark-gray">이메일</Text>
-                    {emailError ? (
-                      <Text className="text-b4 font-rg text-secondary-bubblegum-pink">
-                        해당하는 사용자가 없습니다.
-                      </Text>
-                    ) : codeSent ? (
-                      <Text className="text-b4 font-rg text-[#656565]">
-                        발송되었습니다.
-                      </Text>
-                    ) : null}
-                  </View>
-                  <View className="flex-row gap-2 items-center">
-                    <Input
-                      size="with-button"
-                      placeholder="이메일을 입력해주세요."
-                      value={email}
-                      onChangeText={setEmail}
-                      keyboardType="email-address"
-                      autoCapitalize="none"
-                      editable={!codeVerified}
-                      error={emailError}
-                    />
-                    <Button
-                      label={codeSent ? "번호 재발송" : "번호발송"}
-                      size="short"
-                      state={
-                        email.length === 0
-                          ? "inactive"
-                          : codeSent
-                            ? "reactivated"
-                            : "active"
-                      }
-                      onPress={handleSendCode}
-                    />
-                  </View>
-                </View>
+          <View className="mt-6 gap-6 items-center">
+            <Input
+              label="현재 비밀번호"
+              placeholder="현재 비밀번호를 입력해주세요."
+              value={currentPassword}
+              onChangeText={setCurrentPassword}
+              autoCapitalize="none"
+              secureTextEntry={!showCurrent}
+              rightIcon={
+                currentPassword.length > 0 ? (
+                  <EyeIcon visible={showCurrent} />
+                ) : undefined
+              }
+              onRightIconPress={() => setShowCurrent((v) => !v)}
+            />
 
-                {/* 이메일 인증번호 + 인증하기 */}
-                <View className="w-[342px] gap-[6px]">
-                  <View className="flex-row justify-between items-center">
-                    <Text className="text-b3 font-sb text-dark-gray">
-                      이메일 인증번호
-                    </Text>
-                    {codeError ? (
-                      <Text className="text-b4 font-rg text-secondary-bubblegum-pink">
-                        인증번호가 일치하지 않습니다.
-                      </Text>
-                    ) : codeSent ? (
-                      <Text className="text-b4 font-rg text-[#656565]">
-                        {codeVerified
-                          ? "인증되었습니다."
-                          : "인증번호는 3분간 유효합니다."}
-                      </Text>
-                    ) : null}
-                  </View>
-                  <View className="flex-row gap-2 items-center">
-                    <Input
-                      size="with-button"
-                      placeholder="인증번호를 입력해주세요."
-                      value={code}
-                      onChangeText={(t) => {
-                        setCode(t);
-                        setCodeError(false);
-                      }}
-                      keyboardType="number-pad"
-                      editable={codeSent && !codeVerified}
-                    />
-                    <Button
-                      label={codeVerified ? "인증완료" : "인증하기"}
-                      size="short"
-                      state={
-                        codeVerified
-                          ? "inactive"
-                          : code.length > 0
-                            ? "active"
-                            : "inactive"
-                      }
-                      onPress={handleVerifyCode}
-                    />
-                  </View>
-                </View>
-              </View>
+            <Input
+              label="새 비밀번호"
+              description={
+                isPasswordInvalid
+                  ? "규칙에 맞게 설정해주세요."
+                  : "영문, 숫자 조합 8글자 이상으로 설정해주세요."
+              }
+              placeholder="새 비밀번호를 입력해주세요."
+              value={password}
+              onChangeText={setPassword}
+              onFocus={() => setPasswordBlurred(false)}
+              onBlur={() => setPasswordBlurred(true)}
+              autoCapitalize="none"
+              secureTextEntry={!showPassword}
+              error={isPasswordInvalid}
+              rightIcon={
+                password.length > 0 ? (
+                  <EyeIcon visible={showPassword} />
+                ) : undefined
+              }
+              onRightIconPress={() => setShowPassword((v) => !v)}
+            />
 
-              <View className="items-center mt-auto mb-[40px]">
-                <Button
-                  label="비밀번호 변경하기"
-                  size="long"
-                  state={codeVerified ? "active" : "inactive"}
-                  onPress={() => setPhase(2)}
-                />
-              </View>
-            </>
-          ) : (
-            <>
-              <View className="mt-6 gap-6 items-center">
-                <Input
-                  label="비밀번호 설정"
-                  description={
-                    isPasswordInvalid
-                      ? "규칙에 맞게 설정해주세요."
-                      : "영문, 숫자 조합 8글자 이상으로 설정해주세요."
-                  }
-                  placeholder="변경할 비밀번호를 입력해주세요."
-                  value={password}
-                  onChangeText={setPassword}
-                  onFocus={() => setPasswordBlurred(false)}
-                  onBlur={() => setPasswordBlurred(true)}
-                  autoCapitalize="none"
-                  error={isPasswordInvalid}
-                />
-                <Input
-                  label="비밀번호 확인"
-                  description={
-                    isMismatch ? "비밀번호가 일치하지 않습니다." : undefined
-                  }
-                  placeholder="변경할 비밀번호를 한 번 더 입력해주세요."
-                  value={confirm}
-                  onChangeText={setConfirm}
-                  onFocus={() => setConfirmBlurred(false)}
-                  onBlur={() => setConfirmBlurred(true)}
-                  autoCapitalize="none"
-                  error={isMismatch}
-                />
-              </View>
+            <Input
+              label="새 비밀번호 확인"
+              description={
+                isMismatch ? "비밀번호가 일치하지 않습니다." : undefined
+              }
+              placeholder="새 비밀번호를 한 번 더 입력해주세요."
+              value={confirm}
+              onChangeText={setConfirm}
+              onFocus={() => setConfirmBlurred(false)}
+              onBlur={() => setConfirmBlurred(true)}
+              autoCapitalize="none"
+              secureTextEntry={!showConfirm}
+              error={isMismatch}
+              rightIcon={
+                confirm.length > 0 ? (
+                  <EyeIcon visible={showConfirm} />
+                ) : undefined
+              }
+              onRightIconPress={() => setShowConfirm((v) => !v)}
+            />
+          </View>
 
-              <View className="items-center mt-auto mb-[40px]">
-                <Button
-                  label="비밀번호 변경완료"
-                  size="long"
-                  state={isPasswordValid ? "active" : "inactive"}
-                  onPress={() => setShowModal(true)}
-                />
-              </View>
-            </>
-          )}
+          <View className="items-center mt-auto mb-[40px]">
+            <Button
+              label="비밀번호 변경완료"
+              size="long"
+              state={isValid && !loading ? "active" : "inactive"}
+              onPress={handleSubmit}
+            />
+          </View>
         </Layout>
 
         {/* 완료 모달 */}
@@ -218,7 +198,7 @@ export default function PasswordChange() {
               <TouchableOpacity
                 onPress={() => {
                   setShowModal(false);
-                  navigation.navigate("PersonalChange");
+                  navigation.goBack();
                 }}
                 activeOpacity={0.7}
                 className="bg-secondary-salmon rounded-2xl px-10 py-3"
@@ -230,6 +210,12 @@ export default function PasswordChange() {
             </View>
           </View>
         </Modal>
+
+        {toastMessage ? (
+          <View className="absolute bottom-32 left-0 right-0 items-center">
+            <ToastError type="password" message={toastMessage} />
+          </View>
+        ) : null}
       </View>
     </TouchableWithoutFeedback>
   );
