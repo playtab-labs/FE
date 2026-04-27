@@ -19,7 +19,7 @@ export default function Register() {
             </Text>
           </View>
           <Text className="text-b3 font-sb text-dark-gray">
-            서브문구 넣을 거 없나
+            만나서 반가워요!
           </Text>
         </View>
 
