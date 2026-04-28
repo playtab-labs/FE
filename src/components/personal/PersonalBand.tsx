@@ -80,7 +80,7 @@ export default function PersonalBand() {
         </View>
 
         {/* 새 팔찌 추가 버튼 */}
-        <View className="items-center px-[17px]">
+        <View className="items-center px-5">
           <TouchableOpacity
             activeOpacity={0.8}
             onPress={() => navigation.navigate("Tag")}
