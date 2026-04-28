@@ -11,6 +11,7 @@ import ResetPassword from "@/pages/auth/ResetPassword";
 import SetPassword from "@/pages/auth/SetPassword";
 import SignUpComplete from "@/pages/auth/SignUpComplete";
 import Terms from "@/pages/auth/Terms";
+import LoadingScreen from "@/pages/LoadingScreen";
 import MD from "@/pages/MD";
 import MDDetail from "@/pages/MDDetail";
 import QrScan from "@/pages/QrScan";
@@ -106,6 +107,11 @@ export default function RootNavigator() {
         name="PersonalBand"
         component={PersonalBand}
         options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="LoadingScreen"
+        component={LoadingScreen}
+        options={{ headerShown: false, animation: "fade" }}
       />
       <Stack.Screen
         name="FindPassword"

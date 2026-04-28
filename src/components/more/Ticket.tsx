@@ -85,7 +85,7 @@ export default function Ticket(props: TicketProps) {
               bottom: 0,
             }}
           />
-          {CIRCLES.map((c, i) => (
+          {CIRCLES.slice(0, 2).map((c, i) => (
             <View
               key={i}
               style={{

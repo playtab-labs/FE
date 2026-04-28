@@ -1,10 +1,10 @@
-import { gql } from "@apollo/client";
-import { useMutation, useQuery } from "@apollo/client/react";
 import Layout from "@/components/Layout";
 import Button from "@/components/common/Button";
 import Input from "@/components/common/Input";
 import NationalityModal from "@/components/common/NationalityModal";
 import ToastError from "@/components/common/ToastError";
+import { gql } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client/react";
 import { useEffect, useRef, useState } from "react";
 import {
   Keyboard,
@@ -56,9 +56,21 @@ const formatBirthday = (digits: string) => {
 };
 
 export default function MyInfoChange() {
-  const { data } = useQuery<{ me: { name: string; gender: string; birthDate: string; nationality: string } }>(GET_ME);
+  const { data } = useQuery<{
+    me: {
+      name: string;
+      gender: string;
+      birthDate: string;
+      nationality: string;
+    };
+  }>(GET_ME);
 
-  const [saved, setSaved] = useState({ name: "", gender: "male" as "male" | "female", birthday: "", nationality: "" });
+  const [saved, setSaved] = useState({
+    name: "",
+    gender: "male" as "male" | "female",
+    birthday: "",
+    nationality: "",
+  });
   const [name, setName] = useState("");
   const [gender, setGender] = useState<"male" | "female">("male");
   const [birthdayRaw, setBirthdayRaw] = useState("");
@@ -68,7 +80,12 @@ export default function MyInfoChange() {
     if (data?.me) {
       const b = data.me.birthDate?.replace(/-/g, "") ?? "";
       const g = (data.me.gender?.toLowerCase() ?? "male") as "male" | "female";
-      setSaved({ name: data.me.name, gender: g, birthday: b, nationality: data.me.nationality });
+      setSaved({
+        name: data.me.name,
+        gender: g,
+        birthday: b,
+        nationality: data.me.nationality,
+      });
       setName(data.me.name);
       setGender(g);
       setBirthdayRaw(b);
@@ -101,10 +118,18 @@ export default function MyInfoChange() {
         refetchQueries: ["GetMe"],
         awaitRefetchQueries: true,
       });
-      setSaved({ name: name.trim(), gender, birthday: birthdayRaw, nationality });
+      setSaved({
+        name: name.trim(),
+        gender,
+        birthday: birthdayRaw,
+        nationality,
+      });
       showToast("success");
     } catch (e: any) {
-      console.log("mutation error:", JSON.stringify(e?.graphQLErrors ?? e?.networkError ?? e?.message ?? e));
+      console.log(
+        "mutation error:",
+        JSON.stringify(e?.graphQLErrors ?? e?.networkError ?? e?.message ?? e),
+      );
       showToast("error");
     }
   };
@@ -207,7 +232,7 @@ export default function MyInfoChange() {
             </View>
           </ScrollView>
 
-          <View className="items-center py-4">
+          <View className="items-center mb-10">
             <Button
               label="변경 완료"
               size="long"
