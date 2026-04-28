@@ -7,6 +7,7 @@ import HomeNoticeSection from "@/components/home/HomeNoticeSection";
 import HomePoster from "@/components/home/HomePoster";
 import MDBanner from "@/components/home/MDBanner";
 import StampTourBanner from "@/components/home/StampTourBanner";
+import { NOTICE_ITEMS } from "@/pages/more/Notice";
 import { useAuthStore } from "@/stores/authStore";
 import { useNavigation } from "@react-navigation/native";
 import { useEffect, useState } from "react";
@@ -14,11 +15,12 @@ import { ScrollView, View } from "react-native";
 
 const AD_BANNERS = [1, 2, 3, 4, 5];
 
-const SAMPLE_NOTICES = [
-  { id: 1, title: '2025 서강대학교 축제 공지사항입니다.', date: '25.04.23', badge: 'NEW' as const },
-  { id: 2, title: '스탬프 투어 운영 안내', date: '25.04.22' },
-  { id: 3, title: 'MD 굿즈 판매 관련 안내사항', date: '25.04.21', badge: '필독' as const },
-];
+const HOME_NOTICES = NOTICE_ITEMS.slice(0, 3).map((item, index) => ({
+  id: index,
+  title: item.title,
+  date: item.date,
+  badge: item.badge,
+}));
 
 const SAMPLE_DRINK_BOOTHS = [
   { id: 1, name: '국어국문학과' },
@@ -80,7 +82,7 @@ export default function Home() {
       </ScrollView>
       <View style={{ marginTop: 24 }}>
         <HomeNoticeSection
-          items={SAMPLE_NOTICES}
+          items={HOME_NOTICES}
           onMorePress={() => navigation.navigate('More', { screen: 'Notice' })}
         />
       </View>

@@ -57,7 +57,7 @@ export default function Notice() {
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
-          paddingTop: 24,
+          paddingTop: 20,
           paddingBottom: 32,
           gap: 8,
         }}
