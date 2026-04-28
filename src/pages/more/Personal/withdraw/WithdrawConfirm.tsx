@@ -122,7 +122,7 @@ export default function WithdrawConfirm() {
       <Layout title="회원 탈퇴" showBack showCamera={false}>
         <View className="flex-1">
           {/* 안내 문구 */}
-          <View className="py-4 px-[12px] gap-4">
+          <View className="py-4 gap-4">
             <Text className="text-h1 font-eb text-gray-black">
               탈퇴 전 다시 한 번{" "}
               <Text className="text-[#FF7654]">확인해주세요!</Text>
@@ -133,7 +133,7 @@ export default function WithdrawConfirm() {
           </View>
 
           {/* 유의사항 카드 */}
-          <View className="mx-[12px] mt-20 mb-4 rounded-2xl bg-white p-4 gap-3">
+          <View className="mt-20 mb-4 rounded-2xl bg-white p-4 gap-3">
             <Text className="text-t3 font-eb text-dark-gray">
               탈퇴 시 유의사항
             </Text>
@@ -150,7 +150,7 @@ export default function WithdrawConfirm() {
           </View>
 
           {/* 비밀번호 인증 */}
-          <View className="px-[12px] mt-auto gap-2 pb-4">
+          <View className="mt-auto gap-2 pb-4">
             <View className="flex-row justify-between items-center">
               <Text className="text-b3 font-sb text-gray-black">비밀번호</Text>
               {verified ? (

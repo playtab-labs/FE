@@ -56,11 +56,10 @@ export default function Notice() {
     <Layout title="공지사항" showBack showCamera={false}>
       <ScrollView
         showsVerticalScrollIndicator={false}
-        className="px-3"
         contentContainerStyle={{
           paddingTop: 24,
           paddingBottom: 32,
-          gap: 16,
+          gap: 8,
         }}
       >
         {NOTICE_ITEMS.map((item, index) => (

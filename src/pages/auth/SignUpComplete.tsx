@@ -1,13 +1,16 @@
+import { authApi } from "@/api/auth";
 import AlosIcon from "@/assets/svgs/ALOS.svg";
 import Layout from "@/components/Layout";
 import Button from "@/components/common/Button";
+import { useAuthStore } from "@/stores/authStore";
 import { useSignupStore } from "@/stores/signupStore";
 import { useNavigation } from "@react-navigation/native";
 import { Image, Text, View } from "react-native";
 
 export default function SignUpComplete() {
   const navigation = useNavigation<any>();
-  const userType = useSignupStore((s) => s.userType);
+  const { email, password, userType, reset } = useSignupStore();
+  const { setTokens } = useAuthStore();
 
   return (
     <Layout title="회원가입 완료" showBack>
@@ -34,15 +37,20 @@ export default function SignUpComplete() {
       </View>
 
       {/* 버튼 */}
-      <View className="items-center py-4 mt-auto pb-10">
-        <View style={{ position: "relative" }}>
+      <View className="py-4 mt-auto pb-10">
+        <View style={{ position: "relative" }} className="w-full">
           <Button
             label="계속하기"
             size="long"
             state="active"
-            onPress={() =>
-              navigation.reset({ index: 0, routes: [{ name: "Tabs" }] })
-            }
+            onPress={async () => {
+              try {
+                const loginRes = await authApi.loginEmail(email, password);
+                await setTokens(loginRes.data.accessToken, loginRes.data.refreshToken, true);
+              } catch {}
+              reset();
+              navigation.reset({ index: 0, routes: [{ name: "Tabs" }] });
+            }}
           />
           {userType === "sogang" && (
             <AlosIcon

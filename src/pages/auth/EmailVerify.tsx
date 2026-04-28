@@ -105,9 +105,9 @@ export default function EmailVerify() {
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="handled"
       >
-        <View className="mt-6 gap-6 items-center px-2">
+        <View className="mt-6 gap-6">
           {/* 안내 문구 */}
-          <View className="w-[342px] mb-2">
+          <View className="w-full mb-2">
             <View className="flex-row items-center flex-wrap">
               {isSogang ? (
                 <>
@@ -136,7 +136,7 @@ export default function EmailVerify() {
 
           <View className="flex-col mt-[66px] gap-6">
             {/* 이메일 입력 */}
-            <View className="w-[342px] gap-[6px]">
+            <View className="w-full gap-[6px]">
               <View className="flex-row justify-between items-center">
                 <Text className="text-b3 font-sb text-dark-gray">이메일</Text>
                 {emailError ? (
@@ -185,7 +185,7 @@ export default function EmailVerify() {
             </View>
 
             {/* 인증번호 입력 */}
-            <View className="w-[342px] gap-[6px]">
+            <View className="w-full gap-[6px]">
               <View className="flex-row items-center justify-between">
                 <Text className="text-b3 font-sb text-dark-gray">인증번호</Text>
                 {verified ? (
@@ -225,7 +225,7 @@ export default function EmailVerify() {
       </ScrollView>
 
       {/* 계속하기 */}
-      <View className="items-center py-4 pb-10">
+      <View className="py-4 pb-10">
         <Button
           label="계속하기"
           size="long"

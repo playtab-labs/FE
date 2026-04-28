@@ -48,7 +48,7 @@ export default function Login() {
       </View>
 
       {/* 입력 폼 */}
-      <View className="mt-[51px] gap-4 items-center">
+      <View className="mt-[51px] gap-4">
         <Input
           placeholder="이메일을 입력해주세요."
           value={email}
@@ -68,7 +68,7 @@ export default function Login() {
         />
 
         {/* 라디오 버튼 */}
-        <View className="w-[342px] flex-row gap-5">
+        <View className="flex-row gap-5">
           <TouchableOpacity
             className="flex-row items-center gap-1.5"
             onPress={() => setKeepLogin(!keepLogin)}
@@ -82,13 +82,13 @@ export default function Login() {
             onPress={() => setRememberID(!rememberID)}
           >
             <RadioIcon active={rememberID} />
-            <Text className="text-[13px] text-gray-600">ID 기억하기</Text>
+            <Text className="text-[13px] text-gray-600">이메일 기억하기</Text>
           </TouchableOpacity>
         </View>
       </View>
 
       {/* 로그인 버튼 */}
-      <View className="items-center mt-[85px]">
+      <View className="mt-[85px]">
         <Button
           label="로그인"
           size="long"
@@ -112,7 +112,10 @@ export default function Login() {
                   keepLogin,
                 );
               } catch {}
-              navigation.reset({ index: 0, routes: [{ name: "LoadingScreen" }] });
+              navigation.reset({
+                index: 0,
+                routes: [{ name: "LoadingScreen" }],
+              });
             } catch (e: any) {
               const status = e?.response?.status;
               if (status === 404) {
@@ -144,7 +147,7 @@ export default function Login() {
 
       {/* 임시 버튼 */}
       <TouchableOpacity
-        className="mx-[17px] mt-3 h-11 border border-gray-300 rounded-lg items-center justify-center"
+        className="mt-3 h-11 border border-gray-300 rounded-lg items-center justify-center"
         onPress={() => navigation.navigate("Tabs")}
       >
         <Text className="text-sm text-gray-400">임시 - 홈으로 이동</Text>
