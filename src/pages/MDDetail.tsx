@@ -5,7 +5,7 @@ import { typo } from '@/styles/typography';
 import { gql } from '@apollo/client';
 import { useQuery } from '@apollo/client/react';
 import { RouteProp, useRoute } from '@react-navigation/native';
-import { Text, View } from 'react-native';
+import { Image, Text, View } from 'react-native';
 
 const GET_MD_ITEM_DETAIL = gql`
   query MdItemDetail($mdItemId: String!) {
@@ -59,9 +59,9 @@ export default function MDDetail() {
       scrollable
       fullBleedHeader={<MDImageCarousel images={images} soldOut={detail?.isSoldOut ?? soldOut} />}
     >
-      <View style={{ paddingTop: 20, paddingHorizontal: 20 }}>
+      <View style={{ paddingTop: 20, paddingHorizontal: 20, alignItems: 'center' }}>
         {/* 뱃지 행 */}
-        <View style={{ flexDirection: 'row', gap: 8 }}>
+        <View style={{ flexDirection: 'row', gap: 8, width: '100%' }}>
           <MDSaleTypeBadge type="preorder" />
           <MDSaleTypeBadge type="onsite" />
         </View>
@@ -69,7 +69,7 @@ export default function MDDetail() {
         {/* 제품 이름 */}
         <Text
           className={typo.T2_Eb}
-          style={{ color: '#1A1A1A', letterSpacing: -0.18, marginTop: 16 }}
+          style={{ color: '#1A1A1A', letterSpacing: -0.18, marginTop: 16, width: '100%' }}
         >
           {detail?.name ?? title}
         </Text>
@@ -81,6 +81,7 @@ export default function MDDetail() {
             justifyContent: 'space-between',
             alignItems: 'center',
             marginTop: 8,
+            width: '100%',
           }}
         >
           <Text className={typo.B3_Rg} style={{ color: '#1A1A1A', letterSpacing: -0.14 }}>
@@ -91,17 +92,28 @@ export default function MDDetail() {
         {/* 구분선 */}
         <View
           style={{
-            width: 335,
             height: 1,
             backgroundColor: '#E4E4E4',
             marginTop: 24,
+            width: '100%',
           }}
         />
+
+        {/* 제품 상세 사진 */}
+        {detail?.detailImageUrl && (
+          <View style={{ alignItems: 'center', marginTop: 24 }}>
+            <Image
+              source={{ uri: detail.detailImageUrl }}
+              style={{ height: 418.75, alignSelf: 'stretch', aspectRatio: 4 / 5 }}
+              resizeMode="contain"
+            />
+          </View>
+        )}
 
         {/* 상세설명 */}
         <Text
           className={typo.B2_Sb}
-          style={{ color: '#656565', letterSpacing: -0.16, marginTop: 24 }}
+          style={{ color: '#656565', letterSpacing: -0.16, marginTop: 24, width: '100%' }}
         >
           상세설명
         </Text>
@@ -109,7 +121,7 @@ export default function MDDetail() {
         {/* 본문 내용 */}
         <Text
           className={typo.B4_Rg}
-          style={{ color: '#1A1A1A', letterSpacing: -0.12, marginTop: 24 }}
+          style={{ color: '#1A1A1A', letterSpacing: -0.12, marginTop: 24, marginBottom: 100, width: '100%' }}
         >
           {detail?.detailDescription ?? ''}
         </Text>

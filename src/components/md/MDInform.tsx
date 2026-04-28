@@ -2,9 +2,9 @@ import { View, Text } from 'react-native';
 import { typo } from '@/styles/typography';
 
 const ITEMS = [
-  '▪사전수령 안내사항',
-  '▪현장구매 안내사항',
-  '▪기타 안내사항'
+  '- 사전수령 안내사항',
+  '- 현장구매 안내사항',
+  '- 기타 안내사항'
 ];
 
 export default function ProductInfo() {
