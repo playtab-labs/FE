@@ -1,3 +1,5 @@
+import { authApi } from "@/api/auth";
+import client from "@/api/client";
 import FaqIcon from "@/assets/svgs/faq.svg";
 import HostIcon from "@/assets/svgs/host.svg";
 import LanguageIcon from "@/assets/svgs/language.svg";
@@ -9,27 +11,18 @@ import Layout from "@/components/Layout";
 import IdCard from "@/components/more/IdCard";
 import TabList from "@/components/more/TabList";
 import Ticket from "@/components/more/Ticket";
+import { useAuthStore } from "@/stores/authStore";
 import { gql } from "@apollo/client";
 import { useQuery } from "@apollo/client/react";
-import { authApi } from "@/api/auth";
-import { useAuthStore } from "@/stores/authStore";
 import { useNavigation } from "@react-navigation/native";
-import { useRef, useState } from "react";
-
-const GET_ME = gql`
-  query GetMe {
-    me {
-      name
-      email
-    }
-  }
-`;
+import * as SecureStore from "expo-secure-store";
+import { useEffect, useRef, useState } from "react";
 import {
   Animated,
   ScrollView,
   Text,
   TouchableOpacity,
-  View
+  View,
 } from "react-native";
 
 const TAB_ITEMS = [
@@ -69,11 +62,44 @@ const TICKETS: React.ComponentProps<typeof Ticket>[] = (
 const PEEK = 50; // 뒤 티켓이 앞 티켓 아래로 보이는 높이
 const GAP = 8; // 펼쳐졌을 때 두 티켓 사이 간격
 
+const MY_WRISTBANDS = gql`
+  query MyWristbands {
+    myWristbands {
+      rfid
+      activeDate
+      linkedAt
+    }
+  }
+`;
+
 export default function More() {
   const navigation = useNavigation<any>();
-  const { clearTokens, refreshToken } = useAuthStore();
-  const { data } = useQuery<{ me: { name: string; email: string } }>(GET_ME);
-  const isSogang = data?.me?.email?.endsWith("@sogang.ac.kr") ?? false;
+  const { clearTokens, refreshToken, accessToken } = useAuthStore();
+  const { data: wristbandData, refetch: refetchWristbands } = useQuery<{
+    myWristbands: { rfid: string; activeDate: string; linkedAt: string }[];
+  }>(MY_WRISTBANDS);
+  const [me, setMe] = useState<{ name: string; email: string } | null>(null);
+
+  useEffect(() => {
+    if (!accessToken) return;
+    const fetchMe = async () => {
+      try {
+        const token = await SecureStore.getItemAsync("accessToken").catch(
+          () => null,
+        );
+        const res = await client.post(
+          "/graphql",
+          { query: `query { me { name email } }` },
+          { headers: token ? { Authorization: `Bearer ${token}` } : {} },
+        );
+        setMe(res.data?.data?.me ?? null);
+      } catch {}
+    };
+    fetchMe();
+    refetchWristbands();
+  }, [accessToken]);
+
+  const isSogang = me?.email?.endsWith("@sogang.ac.kr") ?? false;
   const [expanded, setExpanded] = useState(false);
   const [ticketHeight, setTicketHeight] = useState(0);
   const animValue = useRef(new Animated.Value(0)).current;
@@ -103,25 +129,29 @@ export default function More() {
   });
 
   return (
-    <Layout title="MORE" showBack={false} showCamera={false}>
+    <Layout title="MORE" showBack={false} showCamera={false} noPadding>
       <ScrollView
         showsVerticalScrollIndicator={false}
-        style={{ marginHorizontal: -17 }}
         contentContainerStyle={{
-          paddingHorizontal: 17,
+          paddingHorizontal: 20,
           paddingVertical: 16,
-          alignItems: "center",
           gap: 16,
         }}
       >
         {/* ID 카드 */}
-        <IdCard name={data?.me?.name ?? "-"} email={data?.me?.email ?? "-"} isSogang={isSogang} />
+        <IdCard
+          name={me?.name ?? "-"}
+          email={me?.email ?? "-"}
+          isSogang={isSogang}
+        />
 
         {/* 티켓 */}
-        {TICKETS.length === 0 ? null : !hasMultiple ? (
+        {!wristbandData || wristbandData.myWristbands.length === 0 ? (
+          <Ticket noticket />
+        ) : !hasMultiple ? (
           <Ticket {...TICKETS[0]} />
         ) : (
-          <View style={{ width: 329 }}>
+          <View style={{ width: "100%" }}>
             {/* 뒤 티켓 — absolute, 상단 PEEK만 노출, 흐릿 → 선명 */}
             <Animated.View
               style={{
@@ -162,7 +192,7 @@ export default function More() {
         )}
 
         {/* 탭 리스트 */}
-        <View className="w-[329px]">
+        <View className="w-full">
           {TAB_ITEMS.map((item) => (
             <TabList
               key={item.label}
@@ -174,16 +204,16 @@ export default function More() {
                   : item.label === "공지사항"
                     ? () => navigation.navigate("Notice")
                     : item.label === "FAQ"
-                    ? () => navigation.navigate("FAQ")
-                    : item.label === "주최 주관 정보"
-                      ? () => navigation.navigate("Host")
-                      : item.label === "후원 협찬"
-                        ? () => navigation.navigate("Sponsor")
-                        : item.label === "언어"
-                          ? () => navigation.navigate("Language")
-                          : item.label === "이용약관"
-                            ? () => navigation.navigate("Terms")
-                            : undefined
+                      ? () => navigation.navigate("FAQ")
+                      : item.label === "주최 주관 정보"
+                        ? () => navigation.navigate("Host")
+                        : item.label === "후원 협찬"
+                          ? () => navigation.navigate("Sponsor")
+                          : item.label === "언어"
+                            ? () => navigation.navigate("Language")
+                            : item.label === "이용약관"
+                              ? () => navigation.navigate("Terms")
+                              : undefined
               }
               rightElement={
                 item.label === "언어" ? (
@@ -205,7 +235,7 @@ export default function More() {
             await clearTokens();
             navigation.reset({ index: 0, routes: [{ name: "Login" }] });
           }}
-          className="w-[329px] h-11 border border-gray-300 rounded-lg items-center justify-center"
+          className="w-full h-11 border border-gray-300 rounded-lg items-center justify-center"
         >
           <Text className="text-sm text-gray-400">임시 - 로그아웃</Text>
         </TouchableOpacity>

@@ -1,6 +1,6 @@
 import { Text, View } from "react-native";
 
-type ToastType = "email" | "login";
+type ToastType = "email" | "login" | "password";
 
 interface ToastErrorProps {
   type: ToastType;

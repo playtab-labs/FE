@@ -1,3 +1,4 @@
+import AlosIcon from "@/assets/svgs/ALOS.svg";
 import Layout from "@/components/Layout";
 import Button from "@/components/common/Button";
 import TermsModal from "@/components/common/TermsModal";
@@ -5,7 +6,7 @@ import TERMS_DATA from "@/mockdatas/TermsDetail.json";
 import { useSignupStore } from "@/stores/signupStore";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { useState } from "react";
-import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import Svg, { Polyline } from "react-native-svg";
 
 export const TERMS_LIST = TERMS_DATA.map((t) => ({
@@ -21,6 +22,7 @@ export default function Terms() {
   const route = useRoute<any>();
   const userType = route.params?.userType ?? "external";
   const setConsents = useSignupStore((s) => s.setConsents);
+  const setUserType = useSignupStore((s) => s.setUserType);
   const [agreed, setAgreed] = useState<Record<number, boolean>>({});
   const [activeTerm, setActiveTerm] = useState<(typeof TERMS_LIST)[0] | null>(
     null,
@@ -44,7 +46,7 @@ export default function Terms() {
           {/* 약관 안내 문구 */}
           <View className="mt-[19px] gap-4">
             <View className="flex-row items-center">
-              <Text className="text-h1 font-eb text-secondary-salmon">
+              <Text className="text-h1 font-eb text-text-salmon">
                 약관에 동의
               </Text>
               <Text className="text-h1 font-eb text-gray-black">해주세요.</Text>
@@ -84,6 +86,15 @@ export default function Terms() {
               >
                 약관 전체동의
               </Text>
+              <Svg width="6" height="10" viewBox="0 0 6 10" fill="none">
+                <Polyline
+                  points="1,1 5,5 1,9"
+                  stroke="#1A1A1A"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </Svg>
             </View>
             <View
               style={{
@@ -96,7 +107,7 @@ export default function Terms() {
               <Svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                 <Polyline
                   points="2,7 5,10 12,3"
-                  stroke={allAgreed ? "#FFA38C" : "#FFF"}
+                  stroke={allAgreed ? "#1A1A1A" : "#FFF"}
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -124,7 +135,7 @@ export default function Terms() {
                       flex: 1,
                       flexDirection: "row",
                       alignItems: "center",
-                      gap: 4,
+                      gap: 10,
                     }}
                   >
                     <Text
@@ -144,7 +155,7 @@ export default function Terms() {
                     <Svg width="6" height="10" viewBox="0 0 6 10" fill="none">
                       <Polyline
                         points="1,1 5,5 1,9"
-                        stroke="#BFBFBF"
+                        stroke="#656565"
                         strokeWidth="2"
                         strokeLinecap="round"
                         strokeLinejoin="round"
@@ -154,7 +165,7 @@ export default function Terms() {
                   <Svg width="20" height="20" viewBox="0 0 20 20" fill="none">
                     <Polyline
                       points="4,10 8,14 16,6"
-                      stroke={agreed[term.id] ? "#FFA38C" : "#BFBFBF"}
+                      stroke={agreed[term.id] ? "#656565" : "#BFBFBF"}
                       strokeWidth="2.5"
                       strokeLinecap="round"
                       strokeLinejoin="round"
@@ -171,8 +182,8 @@ export default function Terms() {
       </ScrollView>
 
       {/* 계속하기 버튼 */}
-      <View className="items-center py-4">
-        <View style={{ position: "relative" }}>
+      <View className="py-4 pb-10">
+        <View style={{ position: "relative" }} className="w-full">
           <Button
             label="계속하기"
             size="long"
@@ -183,22 +194,17 @@ export default function Terms() {
                   termsVersion: "1.0",
                   type: t.type as "PRIVACY" | "SERVICE" | "MARKETING",
                   agreed: agreed[t.id] ?? false,
-                }))
+                })),
               );
+              setUserType(userType);
               navigation.navigate("PersonalInfo", { userType });
             }}
           />
           {userType === "sogang" && (
-            <Image
-              source={require("@/assets/pngs/Alos.png")}
-              style={{
-                position: "absolute",
-                width: 98,
-                height: 127,
-                right: 6,
-                top: -121,
-              }}
-              resizeMode="contain"
+            <AlosIcon
+              width={98}
+              height={127}
+              style={{ position: "absolute", right: 6, top: -121 }}
             />
           )}
         </View>

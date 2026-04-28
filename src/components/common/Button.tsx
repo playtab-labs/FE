@@ -34,7 +34,7 @@ export default function Button({
       LONG_STATE_STYLE[state === "inactive" ? "inactive" : "active"];
     return (
       <TouchableOpacity
-        className={`flex-row items-center justify-center gap-[10px] rounded-2xl w-[342px] h-14 px-[92px] py-1 ${colorStyle}`}
+        className={`flex-row items-center justify-center gap-[10px] rounded-2xl w-full h-14 py-1 ${colorStyle}`}
         onPress={onPress}
         disabled={isDisabled}
         activeOpacity={0.8}

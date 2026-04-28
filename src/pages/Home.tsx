@@ -1,3 +1,4 @@
+import { getMyStamps } from "@/api/stamp";
 import Layout from "@/components/Layout";
 import AdBanner from "@/components/home/AdBanner";
 import DrinkBoothListSection from "@/components/home/DrinkBoothListSection";
@@ -6,16 +7,20 @@ import HomeNoticeSection from "@/components/home/HomeNoticeSection";
 import HomePoster from "@/components/home/HomePoster";
 import MDBanner from "@/components/home/MDBanner";
 import StampTourBanner from "@/components/home/StampTourBanner";
+import { NOTICE_ITEMS } from "@/pages/more/Notice";
+import { useAuthStore } from "@/stores/authStore";
 import { useNavigation } from "@react-navigation/native";
+import { useEffect, useState } from "react";
 import { ScrollView, View } from "react-native";
 
 const AD_BANNERS = [1, 2, 3, 4, 5];
 
-const SAMPLE_NOTICES = [
-  { id: 1, title: '2025 서강대학교 축제 공지사항입니다.', date: '25.04.23', badge: 'NEW' as const },
-  { id: 2, title: '스탬프 투어 운영 안내', date: '25.04.22' },
-  { id: 3, title: 'MD 굿즈 판매 관련 안내사항', date: '25.04.21', badge: '필독' as const },
-];
+const HOME_NOTICES = NOTICE_ITEMS.slice(0, 3).map((item, index) => ({
+  id: index,
+  title: item.title,
+  date: item.date,
+  badge: item.badge,
+}));
 
 const SAMPLE_DRINK_BOOTHS = [
   { id: 1, name: '국어국문학과' },
@@ -35,6 +40,21 @@ const SAMPLE_FOOD_TRUCKS = [
 
 export default function Home() {
   const navigation = useNavigation<any>();
+  const { loadEmail } = useAuthStore();
+  const [isSogang, setIsSogang] = useState(false);
+  const [stampProgress, setStampProgress] = useState(0);
+
+  useEffect(() => {
+    loadEmail().then((email) => setIsSogang(email?.endsWith("@sogang.ac.kr") ?? false));
+  }, []);
+
+  useEffect(() => {
+    getMyStamps()
+      .then(({ visitedCount }) => setStampProgress(Math.round((visitedCount / 9) * 100)))
+      .catch(() => {});
+  }, []);
+
+
   return (
     <Layout
       scrollable
@@ -43,7 +63,11 @@ export default function Home() {
       fullBleedHeader={<HomePoster />}
     >
       <View style={{ marginTop: 24, flexDirection: "column", gap: 16 }}>
-        <StampTourBanner onPress={() => navigation.navigate('StampTour')} />
+        <StampTourBanner
+          onPress={() => navigation.navigate('StampTour')}
+          disabled={!isSogang}
+          progress={stampProgress}
+        />
         <MDBanner onPress={() => navigation.navigate('MD')} />
       </View>
       <ScrollView
@@ -58,7 +82,7 @@ export default function Home() {
       </ScrollView>
       <View style={{ marginTop: 24 }}>
         <HomeNoticeSection
-          items={SAMPLE_NOTICES}
+          items={HOME_NOTICES}
           onMorePress={() => navigation.navigate('More', { screen: 'Notice' })}
         />
       </View>
@@ -75,4 +99,3 @@ export default function Home() {
     </Layout>
   );
 }
-

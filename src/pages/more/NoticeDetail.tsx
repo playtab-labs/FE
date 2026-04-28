@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    paddingHorizontal: 11,
+    paddingHorizontal: 0,
     paddingVertical: 5,
   },
   dividerWrap: {
@@ -100,6 +100,7 @@ const styles = StyleSheet.create({
   },
   navContainer: {
     marginTop: "auto",
+    marginBottom: 10,
   },
   navDivider: {
     height: 1,

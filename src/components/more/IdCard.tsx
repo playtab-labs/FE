@@ -15,18 +15,18 @@ const BADGE_OVERFLOW = 30;
 
 export default function IdCard({ name, email, isSogang = true }: IdCardProps) {
   return (
-    <View style={{ width: 329, paddingTop: BADGE_OVERFLOW }}>
+    <View style={{ width: "100%", paddingTop: BADGE_OVERFLOW }}>
       {/* 그림자 wrapper */}
       <View
         style={{
-          width: 329,
+          width: "100%",
           height: 162,
           borderRadius: 16,
           shadowColor: "#000",
-          shadowOffset: { width: 0, height: 0 },
-          shadowOpacity: 0.25,
-          shadowRadius: 16,
-          elevation: 8,
+          shadowOffset: { width: 0, height: 4 },
+          shadowOpacity: 0.10,
+          shadowRadius: 12,
+          elevation: 4,
         }}
       >
         {/* 카드 */}
@@ -40,29 +40,27 @@ export default function IdCard({ name, email, isSogang = true }: IdCardProps) {
             <View
               style={{
                 position: "absolute",
-                left: 41,
+                left: "50%",
+                marginLeft: -124,
                 top: -104,
                 width: 248,
                 height: 248,
                 borderRadius: 124,
                 backgroundColor: "#FFF",
-                borderWidth: 1,
-                borderColor: "#FFF",
-                opacity: 0.2,
+                opacity: 0.15,
               }}
             />
             <View
               style={{
                 position: "absolute",
-                left: 107,
+                left: "50%",
+                marginLeft: -58,
                 top: -38,
                 width: 116,
                 height: 116,
                 borderRadius: 58,
                 backgroundColor: "#FFF",
-                borderWidth: 1,
-                borderColor: "#FFF",
-                opacity: 0.2,
+                opacity: 0.15,
               }}
             />
             {isSogang && (
@@ -102,7 +100,7 @@ export default function IdCard({ name, email, isSogang = true }: IdCardProps) {
         style={{
           position: "absolute",
           top: 10,
-          left: (329 - BADGE_SIZE) / 2,
+          alignSelf: "center",
           width: BADGE_SIZE,
           height: BADGE_SIZE,
         }}
