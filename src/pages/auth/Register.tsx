@@ -10,7 +10,7 @@ export default function Register() {
   return (
     <Layout title="회원가입" showBack={true}>
       {/* 문구 */}
-      <View className="px-2">
+      <View>
         <View className="mt-[19px] gap-4">
           <View className="flex-row items-center">
             <Text className="text-h1 font-eb text-text-salmon">회원가입</Text>
@@ -33,8 +33,8 @@ export default function Register() {
         </View>
 
         {/* 버튼 */}
-        <View className="items-center gap-4 mt-[186px]">
-          <View style={{ position: "relative" }}>
+        <View className="gap-4 mt-[186px]">
+          <View style={{ position: "relative" }} className="w-full">
             {/* 오리 — 버튼보다 먼저 렌더링되어 버튼 뒤에 위치 */}
             <AlosIcon
               width={50}

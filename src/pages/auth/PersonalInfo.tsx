@@ -79,7 +79,7 @@ export default function PersonalInfo() {
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="handled"
       >
-        <View className="px-2">
+        <View>
           {/* 안내 문구 */}
           <View className="mt-[19px] gap-4">
             <View className="flex-row items-center">
@@ -108,7 +108,7 @@ export default function PersonalInfo() {
             />
 
             {/* 성별 */}
-            <View className="w-[342px] gap-2">
+            <View className="w-full gap-2">
               <Text className="text-b3 font-sb text-dark-gray">성별</Text>
               <View className="flex-row gap-3">
                 <TouchableOpacity
@@ -141,7 +141,7 @@ export default function PersonalInfo() {
             />
 
             {/* 국적 */}
-            <View className="w-[342px] gap-[6px]">
+            <View className="w-full gap-[6px]">
               <View className="flex-row justify-between items-center">
                 <Text className="text-b3 font-sb text-dark-gray">국적</Text>
                 <Text className="text-b4 font-rg text-dark-gray">
@@ -160,7 +160,7 @@ export default function PersonalInfo() {
                 <Svg width="10" height="6" viewBox="0 0 10 6" fill="none">
                   <Polyline
                     points="1,1 5,5 9,1"
-                    stroke="#BFBFBF"
+                    stroke="#1A1A1A"
                     strokeWidth="2"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -173,7 +173,7 @@ export default function PersonalInfo() {
       </ScrollView>
 
       {/* 계속하기 버튼 */}
-      <View className="items-center py-4 pb-10">
+      <View className="py-4 pb-10">
         <Button
           label="계속하기"
           size="long"

@@ -32,14 +32,11 @@ export default function Host() {
     <Layout title="주최 주관 정보" showBack showCamera={false}>
       <ScrollView
         showsVerticalScrollIndicator={false}
-        style={{ marginHorizontal: -17 }}
         contentContainerStyle={{
-          paddingHorizontal: 17,
           paddingTop: 24,
           paddingBottom: 32,
           gap: 16,
         }}
-        className="px-4"
       >
         <View className="gap-2 mb-10">
           <Text className="text-h1 font-eb text-gray-black">

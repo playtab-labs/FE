@@ -56,7 +56,6 @@ export default function Notice() {
     <Layout title="공지사항" showBack showCamera={false}>
       <ScrollView
         showsVerticalScrollIndicator={false}
-        className="px-3"
         contentContainerStyle={{
           paddingTop: 20,
           paddingBottom: 32,
