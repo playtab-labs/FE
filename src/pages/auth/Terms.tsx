@@ -42,7 +42,7 @@ export default function Terms() {
   return (
     <Layout title="약관동의" showBack>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View className="px-2">
+        <View>
           {/* 약관 안내 문구 */}
           <View className="mt-[19px] gap-4">
             <View className="flex-row items-center">
@@ -86,6 +86,15 @@ export default function Terms() {
               >
                 약관 전체동의
               </Text>
+              <Svg width="6" height="10" viewBox="0 0 6 10" fill="none">
+                <Polyline
+                  points="1,1 5,5 1,9"
+                  stroke="#1A1A1A"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </Svg>
             </View>
             <View
               style={{
@@ -98,7 +107,7 @@ export default function Terms() {
               <Svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                 <Polyline
                   points="2,7 5,10 12,3"
-                  stroke={allAgreed ? "#FFA38C" : "#FFF"}
+                  stroke={allAgreed ? "#1A1A1A" : "#FFF"}
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -126,7 +135,7 @@ export default function Terms() {
                       flex: 1,
                       flexDirection: "row",
                       alignItems: "center",
-                      gap: 4,
+                      gap: 10,
                     }}
                   >
                     <Text
@@ -146,7 +155,7 @@ export default function Terms() {
                     <Svg width="6" height="10" viewBox="0 0 6 10" fill="none">
                       <Polyline
                         points="1,1 5,5 1,9"
-                        stroke="#BFBFBF"
+                        stroke="#656565"
                         strokeWidth="2"
                         strokeLinecap="round"
                         strokeLinejoin="round"
@@ -156,7 +165,7 @@ export default function Terms() {
                   <Svg width="20" height="20" viewBox="0 0 20 20" fill="none">
                     <Polyline
                       points="4,10 8,14 16,6"
-                      stroke={agreed[term.id] ? "#FFA38C" : "#BFBFBF"}
+                      stroke={agreed[term.id] ? "#656565" : "#BFBFBF"}
                       strokeWidth="2.5"
                       strokeLinecap="round"
                       strokeLinejoin="round"
@@ -173,8 +182,8 @@ export default function Terms() {
       </ScrollView>
 
       {/* 계속하기 버튼 */}
-      <View className="items-center py-4 pb-10">
-        <View style={{ position: "relative" }}>
+      <View className="py-4 pb-10">
+        <View style={{ position: "relative" }} className="w-full">
           <Button
             label="계속하기"
             size="long"

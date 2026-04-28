@@ -30,7 +30,7 @@ export default function Input({
   ...props
 }: InputProps) {
   const isWithButton = size === "with-button";
-  const widthStyle = isWithButton ? "w-[230px]" : "w-full";
+  const widthStyle = isWithButton ? "flex-1" : "w-full";
   const heightStyle = isWithButton ? "h-[42px]" : "py-4";
 
   return (

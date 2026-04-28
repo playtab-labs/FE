@@ -74,13 +74,14 @@ const MY_WRISTBANDS = gql`
 
 export default function More() {
   const navigation = useNavigation<any>();
-  const { clearTokens, refreshToken } = useAuthStore();
-  const { data: wristbandData } = useQuery<{
+  const { clearTokens, refreshToken, accessToken } = useAuthStore();
+  const { data: wristbandData, refetch: refetchWristbands } = useQuery<{
     myWristbands: { rfid: string; activeDate: string; linkedAt: string }[];
   }>(MY_WRISTBANDS);
   const [me, setMe] = useState<{ name: string; email: string } | null>(null);
 
   useEffect(() => {
+    if (!accessToken) return;
     const fetchMe = async () => {
       try {
         const token = await SecureStore.getItemAsync("accessToken").catch(
@@ -95,7 +96,8 @@ export default function More() {
       } catch {}
     };
     fetchMe();
-  }, []);
+    refetchWristbands();
+  }, [accessToken]);
 
   const isSogang = me?.email?.endsWith("@sogang.ac.kr") ?? false;
   const [expanded, setExpanded] = useState(false);
