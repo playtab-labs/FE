@@ -1,6 +1,7 @@
 import Layout from '@/components/Layout';
 import MDImageCarousel from '@/components/md/MDImageCarousel';
 import MDSaleTypeBadge from '@/components/md/MDSaleTypeBadge';
+import MDSizeBadge from '@/components/md/MDSizeBadge';
 import { typo } from '@/styles/typography';
 import { gql } from '@apollo/client';
 import { useQuery } from '@apollo/client/react';
@@ -18,9 +19,36 @@ const GET_MD_ITEM_DETAIL = gql`
       isSoldOut
       productDescription
       detailDescription
+      optionGroups {
+        id
+        name
+        displayOrder
+        values {
+          id
+          valueName
+          extraPrice
+          isSoldOut
+          displayOrder
+        }
+      }
     }
   }
 `;
+
+interface OptionValue {
+  id: string;
+  valueName: string;
+  extraPrice: number;
+  isSoldOut: boolean;
+  displayOrder: number;
+}
+
+interface OptionGroup {
+  id: string;
+  name: string;
+  displayOrder: number;
+  values: OptionValue[];
+}
 
 interface MdItemDetail {
   id: string;
@@ -31,6 +59,7 @@ interface MdItemDetail {
   isSoldOut: boolean;
   productDescription: string;
   detailDescription: string;
+  optionGroups: OptionGroup[];
 }
 
 interface MdItemDetailResponse {
@@ -88,6 +117,20 @@ export default function MDDetail() {
             {detail ? `${detail.price.toLocaleString()}원` : ''}
           </Text>
         </View>
+
+        {/* 사이즈 뱃지 */}
+        {detail?.optionGroups.map((group) => (
+          <View key={group.id} style={{ width: '100%', marginTop: 12 }}>
+            <Text className={typo.B5_Rg} style={{ color: '#656565', marginBottom: 8 }}>
+              {group.name}
+            </Text>
+            <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8 }}>
+              {group.values.map((value) => (
+                <MDSizeBadge key={value.id} size={value.valueName} soldOut={value.isSoldOut} />
+              ))}
+            </View>
+          </View>
+        ))}
 
         {/* 구분선 */}
         <View
