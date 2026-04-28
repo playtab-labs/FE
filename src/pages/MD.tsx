@@ -8,20 +8,13 @@ import { TouchableOpacity, View } from 'react-native';
 
 const GET_MD_ITEMS = gql`
   query MdItems {
-    mdItems(locale: null, page: null, size: null) {
+    mdItems {
       items {
         id
         name
         thumbnailImageUrl
         price
         isSoldOut
-      }
-      pageInfo {
-        page
-        size
-        totalElements
-        totalPages
-        hasNext
       }
     }
   }
@@ -38,13 +31,6 @@ interface MdItem {
 interface MdItemsResponse {
   mdItems: {
     items: MdItem[];
-    pageInfo: {
-      page: number;
-      size: number;
-      totalElements: number;
-      totalPages: number;
-      hasNext: boolean;
-    };
   };
 }
 
