@@ -10,7 +10,7 @@ const mdSample = require('@/assets/pngs/mdsample.png');
 const mdSample2 = require('@/assets/pngs/mdsample2.png');
 
 const MOCK_IMAGES = [mdSample, mdSample, mdSample];
-const MOCK_DETAIL_IMAGES = [mdSample, mdSample2];
+const MOCK_DETAIL_IMAGES = [mdSample2];
 
 type MDDetailRouteProp = RouteProp<{ MDDetail: { title: string; soldOut: boolean } }, 'MDDetail'>;
 
@@ -64,15 +64,15 @@ export default function MDDetail() {
         {/* 구분선 */}
         <View
           style={{
-            alignSelf: 'stretch',
             height: 1,
             backgroundColor: '#E4E4E4',
             marginTop: 24,
+            width: '100%',
           }}
         />
 
         {/* 제품 상세 사진 */}
-        <View style={{ alignItems: 'center'}}>
+        <View style={{ alignItems: 'center',marginTop:24}}>
           {MOCK_DETAIL_IMAGES.map((img, index) => (
             <Image
               key={index}
