@@ -3,29 +3,91 @@ import MDImageCarousel from '@/components/md/MDImageCarousel';
 import MDSaleTypeBadge from '@/components/md/MDSaleTypeBadge';
 import MDSizeBadge from '@/components/md/MDSizeBadge';
 import { typo } from '@/styles/typography';
+import { gql } from '@apollo/client';
+import { useQuery } from '@apollo/client/react';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { Image, Text, View } from 'react-native';
 
-const mdSample = require('@/assets/pngs/mdsample.png');
-const mdSample2 = require('@/assets/pngs/mdsample2.png');
+const GET_MD_ITEM_DETAIL = gql`
+  query MdItemDetail($mdItemId: ID!) {
+    mdItemDetail(mdItemId: $mdItemId) {
+      id
+      name
+      thumbnailImageUrl
+      detailImageUrl
+      price
+      isSoldOut
+      productDescription
+      detailDescription
+      optionGroups {
+        id
+        name
+        displayOrder
+        values {
+          id
+          valueName
+          extraPrice
+          isSoldOut
+          displayOrder
+        }
+      }
+    }
+  }
+`;
 
-const MOCK_IMAGES = [mdSample, mdSample, mdSample];
-const MOCK_DETAIL_IMAGES = [mdSample2];
+interface OptionValue {
+  id: string;
+  valueName: string;
+  extraPrice: number;
+  isSoldOut: boolean;
+  displayOrder: number;
+}
 
-type MDDetailRouteProp = RouteProp<{ MDDetail: { title: string; soldOut: boolean } }, 'MDDetail'>;
+interface OptionGroup {
+  id: string;
+  name: string;
+  displayOrder: number;
+  values: OptionValue[];
+}
+
+interface MdItemDetail {
+  id: string;
+  name: string;
+  thumbnailImageUrl: string;
+  detailImageUrl: string;
+  price: number;
+  isSoldOut: boolean;
+  productDescription: string;
+  detailDescription: string;
+  optionGroups: OptionGroup[];
+}
+
+interface MdItemDetailResponse {
+  mdItemDetail: MdItemDetail;
+}
+
+type MDDetailRouteProp = RouteProp<{ MDDetail: { id: string; title: string; soldOut: boolean } }, 'MDDetail'>;
 
 export default function MDDetail() {
   const route = useRoute<MDDetailRouteProp>();
-  const { title, soldOut } = route.params;
+  const { id, title, soldOut } = route.params;
+
+  const { data } = useQuery<MdItemDetailResponse>(GET_MD_ITEM_DETAIL, {
+    variables: { mdItemId: id },
+  });
+
+  const detail = data?.mdItemDetail;
+  const images = detail
+    ? [{ uri: detail.thumbnailImageUrl }, { uri: detail.detailImageUrl }]
+    : [];
 
   return (
     <Layout
-      title={title}
+      title={detail?.name ?? title}
       showBack
       scrollable
-      fullBleedHeader={<MDImageCarousel images={MOCK_IMAGES} soldOut={soldOut} />}
+      fullBleedHeader={<MDImageCarousel images={images} soldOut={detail?.isSoldOut ?? soldOut} />}
     >
-
       <View style={{ paddingTop: 20, paddingHorizontal: 20, alignItems: 'center' }}>
         {/* 뱃지 행 */}
         <View style={{ flexDirection: 'row', gap: 8, width: '100%' }}>
@@ -38,10 +100,10 @@ export default function MDDetail() {
           className={typo.T2_Eb}
           style={{ color: '#1A1A1A', letterSpacing: -0.18, marginTop: 16, width: '100%' }}
         >
-          {title}
+          {detail?.name ?? title}
         </Text>
 
-        {/* 가격 + 사이즈 뱃지 */}
+        {/* 가격 */}
         <View
           style={{
             flexDirection: 'row',
@@ -52,14 +114,23 @@ export default function MDDetail() {
           }}
         >
           <Text className={typo.B3_Rg} style={{ color: '#1A1A1A', letterSpacing: -0.14 }}>
-            {'10,000원'}
+            {detail ? `${detail.price.toLocaleString()}원` : ''}
           </Text>
-          <View style={{ flexDirection: 'row', gap: 4 }}>
-            <MDSizeBadge size="S" />
-            <MDSizeBadge size="M" />
-            <MDSizeBadge size="L" soldOut />
-          </View>
         </View>
+
+        {/* 사이즈 뱃지 */}
+        {detail?.optionGroups.map((group) => (
+          <View key={group.id} style={{ width: '100%', marginTop: 12 }}>
+            <Text className={typo.B5_Rg} style={{ color: '#656565', marginBottom: 8 }}>
+              {group.name}
+            </Text>
+            <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8 }}>
+              {group.values.map((value) => (
+                <MDSizeBadge key={value.id} size={value.valueName} soldOut={value.isSoldOut} />
+              ))}
+            </View>
+          </View>
+        ))}
 
         {/* 구분선 */}
         <View
@@ -72,16 +143,15 @@ export default function MDDetail() {
         />
 
         {/* 제품 상세 사진 */}
-        <View style={{ alignItems: 'center',marginTop:24}}>
-          {MOCK_DETAIL_IMAGES.map((img, index) => (
+        {detail?.detailImageUrl && (
+          <View style={{ alignItems: 'center', marginTop: 24 }}>
             <Image
-              key={index}
-              source={img}
+              source={{ uri: detail.detailImageUrl }}
               style={{ height: 418.75, alignSelf: 'stretch', aspectRatio: 4 / 5 }}
               resizeMode="contain"
             />
-          ))}
-        </View>
+          </View>
+        )}
 
         {/* 상세설명 */}
         <Text
@@ -96,7 +166,7 @@ export default function MDDetail() {
           className={typo.B4_Rg}
           style={{ color: '#1A1A1A', letterSpacing: -0.12, marginTop: 24, marginBottom: 100, width: '100%' }}
         >
-          {'서강대학교 2026 축구 유니폼입니다.'}
+          {detail?.detailDescription ?? ''}
         </Text>
       </View>
     </Layout>
