@@ -31,9 +31,7 @@ export default function Sponsor() {
     <Layout title="후원 및 협찬" showBack showCamera={false}>
       <ScrollView
         showsVerticalScrollIndicator={false}
-        style={{ marginHorizontal: -20 }}
         contentContainerStyle={{
-          paddingHorizontal: 20,
           paddingTop: 24,
           paddingBottom: 32,
           gap: 16,
