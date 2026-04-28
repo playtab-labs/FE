@@ -72,9 +72,11 @@ export default function MDDetail() {
   const route = useRoute<MDDetailRouteProp>();
   const { id, title, soldOut } = route.params;
 
-  const { data } = useQuery<MdItemDetailResponse>(GET_MD_ITEM_DETAIL, {
+  const { data, loading, error } = useQuery<MdItemDetailResponse>(GET_MD_ITEM_DETAIL, {
     variables: { mdItemId: id },
   });
+
+  if (error) console.error('[MDDetail] query error:', error.message);
 
   const detail = data?.mdItemDetail;
   const images = detail
