@@ -9,7 +9,7 @@ import { RouteProp, useRoute } from '@react-navigation/native';
 import { Image, Text, View } from 'react-native';
 
 const GET_MD_ITEM_DETAIL = gql`
-  query MdItemDetail($mdItemId: String!) {
+  query MdItemDetail($mdItemId: ID!) {
     mdItemDetail(mdItemId: $mdItemId) {
       id
       name
