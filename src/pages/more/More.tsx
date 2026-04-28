@@ -127,14 +127,12 @@ export default function More() {
   });
 
   return (
-    <Layout title="MORE" showBack={false} showCamera={false}>
+    <Layout title="MORE" showBack={false} showCamera={false} noPadding>
       <ScrollView
         showsVerticalScrollIndicator={false}
-        style={{ marginHorizontal: -20 }}
         contentContainerStyle={{
           paddingHorizontal: 20,
           paddingVertical: 16,
-          alignItems: "center",
           gap: 16,
         }}
       >
@@ -151,7 +149,7 @@ export default function More() {
         ) : !hasMultiple ? (
           <Ticket {...TICKETS[0]} />
         ) : (
-          <View style={{ width: 329 }}>
+          <View style={{ width: "100%" }}>
             {/* 뒤 티켓 — absolute, 상단 PEEK만 노출, 흐릿 → 선명 */}
             <Animated.View
               style={{
@@ -192,7 +190,7 @@ export default function More() {
         )}
 
         {/* 탭 리스트 */}
-        <View className="w-[329px]">
+        <View className="w-full">
           {TAB_ITEMS.map((item) => (
             <TabList
               key={item.label}
@@ -235,7 +233,7 @@ export default function More() {
             await clearTokens();
             navigation.reset({ index: 0, routes: [{ name: "Login" }] });
           }}
-          className="w-[329px] h-11 border border-gray-300 rounded-lg items-center justify-center"
+          className="w-full h-11 border border-gray-300 rounded-lg items-center justify-center"
         >
           <Text className="text-sm text-gray-400">임시 - 로그아웃</Text>
         </TouchableOpacity>

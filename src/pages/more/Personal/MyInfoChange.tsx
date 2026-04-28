@@ -165,7 +165,7 @@ export default function MyInfoChange() {
               />
 
               {/* 성별 */}
-              <View className="w-[342px] gap-2">
+              <View className="w-full gap-2">
                 <Text className="text-b3 font-sb text-dark-gray">성별</Text>
                 <View className="flex-row gap-3">
                   <TouchableOpacity
@@ -202,7 +202,7 @@ export default function MyInfoChange() {
               />
 
               {/* 국적 */}
-              <View className="w-[342px] gap-[6px]">
+              <View className="w-full gap-[6px]">
                 <View className="flex-row justify-between items-center">
                   <Text className="text-b3 font-sb text-dark-gray">국적</Text>
                   <Text className="text-b4 font-rg text-dark-gray">

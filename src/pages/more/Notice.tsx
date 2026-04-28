@@ -59,7 +59,7 @@ export default function Notice() {
         contentContainerStyle={{
           paddingTop: 24,
           paddingBottom: 32,
-          gap: 16,
+          gap: 8,
         }}
       >
         {NOTICE_ITEMS.map((item, index) => (
