@@ -112,7 +112,7 @@ export default function Login() {
                   keepLogin,
                 );
               } catch {}
-              navigation.reset({ index: 0, routes: [{ name: "Tabs" }] });
+              navigation.reset({ index: 0, routes: [{ name: "LoadingScreen" }] });
             } catch (e: any) {
               const status = e?.response?.status;
               if (status === 404) {

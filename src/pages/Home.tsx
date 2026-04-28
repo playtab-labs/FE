@@ -7,6 +7,7 @@ import HomeNoticeSection from "@/components/home/HomeNoticeSection";
 import HomePoster from "@/components/home/HomePoster";
 import MDBanner from "@/components/home/MDBanner";
 import StampTourBanner from "@/components/home/StampTourBanner";
+import { useAuthStore } from "@/stores/authStore";
 import { useNavigation } from "@react-navigation/native";
 import { useEffect, useState } from "react";
 import { ScrollView, View } from "react-native";
@@ -37,13 +38,20 @@ const SAMPLE_FOOD_TRUCKS = [
 
 export default function Home() {
   const navigation = useNavigation<any>();
+  const { loadEmail } = useAuthStore();
+  const [isSogang, setIsSogang] = useState(false);
   const [stampProgress, setStampProgress] = useState(0);
+
+  useEffect(() => {
+    loadEmail().then((email) => setIsSogang(email?.endsWith("@sogang.ac.kr") ?? false));
+  }, []);
 
   useEffect(() => {
     getMyStamps()
       .then(({ visitedCount }) => setStampProgress(Math.round((visitedCount / 9) * 100)))
       .catch(() => {});
   }, []);
+
 
   return (
     <Layout
@@ -53,7 +61,11 @@ export default function Home() {
       fullBleedHeader={<HomePoster />}
     >
       <View style={{ marginTop: 24, flexDirection: "column", gap: 16 }}>
-        <StampTourBanner onPress={() => navigation.navigate('StampTour')} progress={stampProgress} />
+        <StampTourBanner
+          onPress={() => navigation.navigate('StampTour')}
+          disabled={!isSogang}
+          progress={stampProgress}
+        />
         <MDBanner onPress={() => navigation.navigate('MD')} />
       </View>
       <ScrollView
@@ -85,4 +97,3 @@ export default function Home() {
     </Layout>
   );
 }
-
