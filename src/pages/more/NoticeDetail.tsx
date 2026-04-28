@@ -65,7 +65,7 @@ export default function NoticeDetail() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 11,
+    paddingHorizontal: 0,
     paddingVertical: 5,
   },
   dividerWrap: {

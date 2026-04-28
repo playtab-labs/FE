@@ -35,14 +35,13 @@ export default function FAQ() {
     <Layout title="FAQ" showBack showCamera={false}>
       <ScrollView
         showsVerticalScrollIndicator={false}
-        style={{ marginHorizontal: -17 }}
+        style={{ marginHorizontal: -20 }}
         contentContainerStyle={{
-          paddingHorizontal: 17,
+          paddingHorizontal: 20,
           paddingTop: 24,
           paddingBottom: 32,
           gap: 16,
         }}
-        className="px-4"
       >
         <View className="gap-4 mb-[58px]">
           <View className="flex-row items-center gap-2">

@@ -152,7 +152,7 @@ export default function MyInfoChange() {
           <ScrollView
             showsVerticalScrollIndicator={false}
             keyboardShouldPersistTaps="handled"
-            className="px-2 py-4"
+            className="py-4"
           >
             <View className="flex mt-6 gap-6">
               {/* 이름 */}

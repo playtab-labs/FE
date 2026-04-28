@@ -186,7 +186,7 @@ export default function Language() {
               key={lang}
               onPress={() => handlePress(lang)}
               activeOpacity={0.7}
-              className="flex-row items-center gap-3 px-[17px] py-6 border-b border-b-[rgba(191,191,191,0.30)]"
+              className="flex-row items-center gap-3 py-6 border-b border-b-[rgba(191,191,191,0.30)]"
             >
               <RadioIcon active={isSelected} />
               <Text

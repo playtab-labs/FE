@@ -130,9 +130,9 @@ export default function More() {
     <Layout title="MORE" showBack={false} showCamera={false}>
       <ScrollView
         showsVerticalScrollIndicator={false}
-        style={{ marginHorizontal: -17 }}
+        style={{ marginHorizontal: -20 }}
         contentContainerStyle={{
-          paddingHorizontal: 17,
+          paddingHorizontal: 20,
           paddingVertical: 16,
           alignItems: "center",
           gap: 16,

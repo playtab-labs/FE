@@ -1,4 +1,5 @@
 import CameraIcon from "@/assets/svgs/camera.svg";
+import GoBackIcon from "@/assets/svgs/GoBack.svg";
 import BottomBar from "@/components/BottomBar";
 import { useNavigation } from "@react-navigation/native";
 import {
@@ -9,7 +10,6 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import Svg, { Polyline } from "react-native-svg";
 
 const TAB_NAMES = ["Artist", "Personal", "Home", "Map", "More"];
 
@@ -29,20 +29,6 @@ interface LayoutProps {
   statusBarStyle?: "light-content" | "dark-content"; // statusbar 텍스트/아이콘 색상
   fullBleedTop?: boolean; // fullBleedHeader를 status bar 아래부터 시작하게 함
   children: React.ReactNode;
-}
-
-function BackIcon() {
-  return (
-    <Svg width="7" height="14" viewBox="0 0 7 14" fill="none">
-      <Polyline
-        points="6,1 1,7 6,13"
-        stroke="#656565"
-        strokeWidth="3"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </Svg>
-  );
 }
 
 export default function Layout({
@@ -104,13 +90,13 @@ export default function Layout({
             className="flex-row items-center justify-center"
           >
             {/* 왼쪽: 뒤로가기 */}
-            <View style={{ width: 24, alignItems: "center" }}>
+            <View style={{ width: 24, alignItems: "center", marginLeft: -8 }}>
               {showBack && (
                 <TouchableOpacity
                   onPress={() => navigation.goBack()}
                   hitSlop={{ top: 16, bottom: 16, left: 16, right: 16 }}
                 >
-                  <BackIcon />
+                  <GoBackIcon />
                 </TouchableOpacity>
               )}
             </View>
@@ -156,7 +142,7 @@ export default function Layout({
             {fullBleedHeader}
 
             {/* 메인 콘텐츠 */}
-            <View className={noPadding ? "" : "px-[17px]"}>{children}</View>
+            <View className={noPadding ? "" : "px-5"}>{children}</View>
           </ScrollView>
         ) : (
           <>
@@ -164,7 +150,7 @@ export default function Layout({
             {fullBleedHeader}
 
             {/* 메인 콘텐츠 */}
-            <View className={`flex-1 ${noPadding ? "" : "px-[17px]"}`}>
+            <View className={`flex-1 ${noPadding ? "" : "px-5"}`}>
               {children}
             </View>
           </>
