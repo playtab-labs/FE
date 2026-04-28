@@ -4,11 +4,13 @@ import MDSaleTypeBadge from '@/components/md/MDSaleTypeBadge';
 import MDSizeBadge from '@/components/md/MDSizeBadge';
 import { typo } from '@/styles/typography';
 import { RouteProp, useRoute } from '@react-navigation/native';
-import { Text, View } from 'react-native';
+import { Image, Text, View } from 'react-native';
 
 const mdSample = require('@/assets/pngs/mdsample.png');
+const mdSample2 = require('@/assets/pngs/mdsample2.png');
 
 const MOCK_IMAGES = [mdSample, mdSample, mdSample];
+const MOCK_DETAIL_IMAGES = [mdSample, mdSample2];
 
 type MDDetailRouteProp = RouteProp<{ MDDetail: { title: string; soldOut: boolean } }, 'MDDetail'>;
 
@@ -24,9 +26,9 @@ export default function MDDetail() {
       fullBleedHeader={<MDImageCarousel images={MOCK_IMAGES} soldOut={soldOut} />}
     >
 
-      <View style={{ paddingTop: 20, paddingHorizontal: 20 }}>
+      <View style={{ paddingTop: 20, paddingHorizontal: 20, alignItems: 'center' }}>
         {/* 뱃지 행 */}
-        <View style={{ flexDirection: 'row', gap: 8 }}>
+        <View style={{ flexDirection: 'row', gap: 8, width: '100%' }}>
           <MDSaleTypeBadge type="preorder" />
           <MDSaleTypeBadge type="onsite" />
         </View>
@@ -34,7 +36,7 @@ export default function MDDetail() {
         {/* 제품 이름 */}
         <Text
           className={typo.T2_Eb}
-          style={{ color: '#1A1A1A', letterSpacing: -0.18, marginTop: 16 }}
+          style={{ color: '#1A1A1A', letterSpacing: -0.18, marginTop: 16, width: '100%' }}
         >
           {title}
         </Text>
@@ -46,6 +48,7 @@ export default function MDDetail() {
             justifyContent: 'space-between',
             alignItems: 'center',
             marginTop: 8,
+            width: '100%',
           }}
         >
           <Text className={typo.B3_Rg} style={{ color: '#1A1A1A', letterSpacing: -0.14 }}>
@@ -61,17 +64,29 @@ export default function MDDetail() {
         {/* 구분선 */}
         <View
           style={{
-            width: 335,
+            alignSelf: 'stretch',
             height: 1,
             backgroundColor: '#E4E4E4',
             marginTop: 24,
           }}
         />
 
+        {/* 제품 상세 사진 */}
+        <View style={{ alignItems: 'center'}}>
+          {MOCK_DETAIL_IMAGES.map((img, index) => (
+            <Image
+              key={index}
+              source={img}
+              style={{ height: 418.75, alignSelf: 'stretch', aspectRatio: 4 / 5 }}
+              resizeMode="contain"
+            />
+          ))}
+        </View>
+
         {/* 상세설명 */}
         <Text
           className={typo.B2_Sb}
-          style={{ color: '#656565', letterSpacing: -0.16, marginTop: 24 }}
+          style={{ color: '#656565', letterSpacing: -0.16, marginTop: 24, width: '100%' }}
         >
           상세설명
         </Text>
@@ -79,7 +94,7 @@ export default function MDDetail() {
         {/* 본문 내용 */}
         <Text
           className={typo.B4_Rg}
-          style={{ color: '#1A1A1A', letterSpacing: -0.12, marginTop: 24 }}
+          style={{ color: '#1A1A1A', letterSpacing: -0.12, marginTop: 24, marginBottom: 100, width: '100%' }}
         >
           {'서강대학교 2026 축구 유니폼입니다.'}
         </Text>
