@@ -80,7 +80,7 @@ export default function PersonalChange() {
           </Text>
           <TouchableOpacity
             activeOpacity={0.7}
-            onPress={() => navigation.navigate("ServiceWithdrawal")}
+            onPress={() => navigation.navigate("WithdrawConfirm")}
           >
             <Text className="text-b4 font-rg text-[#BFBFBF] underline">
               회원탈퇴

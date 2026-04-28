@@ -1,7 +1,12 @@
+import { authApi } from "@/api/auth";
 import Layout from "@/components/Layout";
+import { useAuthStore } from "@/stores/authStore";
+import { gql } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client/react";
 import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
 import {
+  ActivityIndicator,
   KeyboardAvoidingView,
   Modal,
   Platform,
@@ -11,6 +16,22 @@ import {
   View,
 } from "react-native";
 import Svg, { Circle, Line, Path } from "react-native-svg";
+
+const GET_MY_EMAIL = gql`
+  query GetMyEmail {
+    me {
+      email
+    }
+  }
+`;
+
+const WITHDRAW_MY_ACCOUNT = gql`
+  mutation WithdrawMyAccount($input: WithdrawMyAccountInput!) {
+    withdrawMyAccount(input: $input) {
+      success
+    }
+  }
+`;
 
 const NOTICES = [
   "예매한 티켓을 사용할 수 없어요.",
@@ -46,10 +67,52 @@ function EyeIcon({ visible }: { visible: boolean }) {
 
 export default function WithdrawConfirm() {
   const navigation = useNavigation();
+  const { refreshToken, clearTokens } = useAuthStore();
+  const { data: meData } = useQuery<{ me: { email: string } }>(GET_MY_EMAIL);
+  const [withdrawMyAccount, { loading: withdrawLoading }] = useMutation<{
+    withdrawMyAccount: { success: boolean };
+  }>(WITHDRAW_MY_ACCOUNT);
+
   const [password, setPassword] = useState("");
   const [verified, setVerified] = useState(false);
+  const [verifyLoading, setVerifyLoading] = useState(false);
+  const [verifyError, setVerifyError] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showModal, setShowModal] = useState(false);
+
+  const handleVerify = async () => {
+    const email = meData?.me?.email;
+    if (!email) return;
+    setVerifyLoading(true);
+    setVerifyError(false);
+    try {
+      await authApi.loginEmail(email, password);
+      setVerified(true);
+    } catch {
+      setVerifyError(true);
+    } finally {
+      setVerifyLoading(false);
+    }
+  };
+
+  const handleWithdraw = async () => {
+    try {
+      const token =
+        refreshToken ??
+        (await import("expo-secure-store").then((m) =>
+          m.getItemAsync("refreshToken"),
+        ));
+      if (!token) return;
+      const res = await withdrawMyAccount({
+        variables: { input: { refreshToken: token } },
+      });
+      if (res.data?.withdrawMyAccount.success) {
+        setShowModal(true);
+      }
+    } catch {
+      // 탈퇴 실패
+    }
+  };
 
   return (
     <KeyboardAvoidingView
@@ -90,16 +153,29 @@ export default function WithdrawConfirm() {
           <View className="px-[12px] mt-auto gap-2 pb-4">
             <View className="flex-row justify-between items-center">
               <Text className="text-b3 font-sb text-gray-black">비밀번호</Text>
-              <Text className="text-b4 font-rg text-dark-gray">
-                마지막으로 본인 인증이 필요해요.
-              </Text>
+              {verified ? (
+                <Text className="text-b4 font-rg text-dark-gray">
+                  인증되었습니다.
+                </Text>
+              ) : verifyError ? (
+                <Text className="text-b4 font-rg text-secondary-bubblegum-pink">
+                  비밀번호가 일치하지 않습니다.
+                </Text>
+              ) : (
+                <Text className="text-b4 font-rg text-dark-gray">
+                  마지막으로 본인 인증이 필요해요.
+                </Text>
+              )}
             </View>
             <View className="flex-row gap-2 items-center">
               {/* 비밀번호 입력 + 눈 아이콘 */}
               <View className="flex-1 h-14 bg-extra-white border border-[#E4E4E4] rounded-xl flex-row items-center px-4">
                 <TextInput
                   value={password}
-                  onChangeText={setPassword}
+                  onChangeText={(t) => {
+                    setPassword(t);
+                    setVerifyError(false);
+                  }}
                   placeholder="비밀번호를 입력해주세요."
                   placeholderTextColor="#BFBFBF"
                   secureTextEntry={!showPassword}
@@ -119,27 +195,31 @@ export default function WithdrawConfirm() {
 
               {/* 인증하기 / 인증완료 버튼 */}
               <TouchableOpacity
-                disabled={!password || verified}
+                disabled={!password || verified || verifyLoading}
                 activeOpacity={0.8}
-                onPress={() => setVerified(true)}
+                onPress={handleVerify}
                 className={`w-[104px] h-[42px] items-center justify-center rounded-xl ${
                   verified
                     ? "bg-[#E4E4E4]"
-                    : password
+                    : password && !verifyLoading
                       ? "bg-[#FFA38C]"
                       : "bg-[#BFBFBF]"
                 }`}
               >
-                <Text
-                  className={`text-b3 font-sb ${verified ? "text-[#BFBFBF]" : "text-white"}`}
-                >
-                  {verified ? "인증완료" : "인증하기"}
-                </Text>
+                {verifyLoading ? (
+                  <ActivityIndicator color="#fff" />
+                ) : (
+                  <Text
+                    className={`text-b3 font-sb ${verified ? "text-[#BFBFBF]" : "text-white"}`}
+                  >
+                    {verified ? "인증완료" : "인증하기"}
+                  </Text>
+                )}
               </TouchableOpacity>
             </View>
 
             {/* 하단 버튼 */}
-            <View className="flex-row gap-3 mt-2">
+            <View className="flex-row gap-3 mt-2 mb-10">
               <TouchableOpacity
                 onPress={() => navigation.goBack()}
                 activeOpacity={0.8}
@@ -151,16 +231,20 @@ export default function WithdrawConfirm() {
               </TouchableOpacity>
 
               <TouchableOpacity
-                disabled={!verified}
+                disabled={!verified || withdrawLoading}
                 activeOpacity={0.8}
-                onPress={() => setShowModal(true)}
-                className={`flex-1 h-14 items-center justify-center rounded-2xl ${verified ? "bg-[#FFA38C]" : "bg-[#BFBFBF]"}`}
+                onPress={handleWithdraw}
+                className={`flex-1 h-14 items-center justify-center rounded-2xl ${verified && !withdrawLoading ? "bg-[#FFA38C]" : "bg-[#BFBFBF]"}`}
               >
-                <Text
-                  className={`text-t3 font-eb ${verified ? "text-gray-black" : "text-white"}`}
-                >
-                  회원탈퇴
-                </Text>
+                {withdrawLoading ? (
+                  <ActivityIndicator color="#fff" />
+                ) : (
+                  <Text
+                    className={`text-t3 font-eb ${verified ? "text-gray-black" : "text-white"}`}
+                  >
+                    회원탈퇴
+                  </Text>
+                )}
               </TouchableOpacity>
             </View>
           </View>
@@ -169,18 +253,19 @@ export default function WithdrawConfirm() {
 
       <Modal visible={showModal} transparent animationType="fade">
         <View className="flex-1 items-center justify-center bg-black/40">
-          <View className="bg-white rounded-2xl items-center w-[320px] px-6 py-6 gap-6">
-            <Text className="text-b2 font-sb text-gray-black">
+          <View className="bg-white rounded-2xl items-center w-[320px] px-6 py-9 gap-6">
+            <Text className="text-b3 font-rg text-gray-black">
               탈퇴되었습니다.
             </Text>
             <TouchableOpacity
               activeOpacity={0.8}
-              onPress={() =>
+              onPress={async () => {
+                await clearTokens();
                 (navigation as any).reset({
                   index: 0,
-                  routes: [{ name: "Home" }],
-                })
-              }
+                  routes: [{ name: "Login" }],
+                });
+              }}
               className="bg-[#FFA38C] rounded-xl px-3 py-3"
             >
               <Text className="text-b3 font-sb text-gray-black">

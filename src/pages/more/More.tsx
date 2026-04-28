@@ -12,6 +12,8 @@ import IdCard from "@/components/more/IdCard";
 import TabList from "@/components/more/TabList";
 import Ticket from "@/components/more/Ticket";
 import { useAuthStore } from "@/stores/authStore";
+import { gql } from "@apollo/client";
+import { useQuery } from "@apollo/client/react";
 import { useNavigation } from "@react-navigation/native";
 import * as SecureStore from "expo-secure-store";
 import { useEffect, useRef, useState } from "react";
@@ -60,9 +62,22 @@ const TICKETS: React.ComponentProps<typeof Ticket>[] = (
 const PEEK = 50; // 뒤 티켓이 앞 티켓 아래로 보이는 높이
 const GAP = 8; // 펼쳐졌을 때 두 티켓 사이 간격
 
+const MY_WRISTBANDS = gql`
+  query MyWristbands {
+    myWristbands {
+      rfid
+      activeDate
+      linkedAt
+    }
+  }
+`;
+
 export default function More() {
   const navigation = useNavigation<any>();
   const { clearTokens, refreshToken } = useAuthStore();
+  const { data: wristbandData } = useQuery<{
+    myWristbands: { rfid: string; activeDate: string; linkedAt: string }[];
+  }>(MY_WRISTBANDS);
   const [me, setMe] = useState<{ name: string; email: string } | null>(null);
 
   useEffect(() => {
@@ -131,7 +146,9 @@ export default function More() {
         />
 
         {/* 티켓 */}
-        {TICKETS.length === 0 ? null : !hasMultiple ? (
+        {!wristbandData || wristbandData.myWristbands.length === 0 ? (
+          <Ticket noticket />
+        ) : !hasMultiple ? (
           <Ticket {...TICKETS[0]} />
         ) : (
           <View style={{ width: 329 }}>

@@ -6,6 +6,30 @@ import { useSignupStore } from "@/stores/signupStore";
 import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
 import { Keyboard, Text, TouchableWithoutFeedback, View } from "react-native";
+import Svg, { Circle, Line, Path } from "react-native-svg";
+
+function EyeIcon({ visible }: { visible: boolean }) {
+  return (
+    <Svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+      <Path
+        d="M1 10C1 10 4 4 10 4C16 4 19 10 19 10C19 10 16 16 10 16C4 16 1 10 1 10Z"
+        stroke="#BFBFBF"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <Circle cx="10" cy="10" r="2.5" stroke="#BFBFBF" strokeWidth="1.5" />
+      {!visible && (
+        <Line
+          x1="3" y1="3" x2="17" y2="17"
+          stroke="#BFBFBF"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+        />
+      )}
+    </Svg>
+  );
+}
 
 export default function SetPassword() {
   const navigation = useNavigation<any>();
@@ -65,7 +89,10 @@ export default function SetPassword() {
                   onFocus={() => setPasswordTouched(false)}
                   onBlur={() => setPasswordTouched(true)}
                   autoCapitalize="none"
+                  secureTextEntry={!showPassword}
                   error={isPasswordInvalid}
+                  rightIcon={password.length > 0 ? <EyeIcon visible={showPassword} /> : undefined}
+                  onRightIconPress={() => setShowPassword((v) => !v)}
                 />
               </View>
 
@@ -88,7 +115,10 @@ export default function SetPassword() {
                   onFocus={() => setConfirmTouched(false)}
                   onBlur={() => setConfirmTouched(true)}
                   autoCapitalize="none"
+                  secureTextEntry={!showConfirm}
                   error={isMismatch}
+                  rightIcon={confirm.length > 0 ? <EyeIcon visible={showConfirm} /> : undefined}
+                  onRightIconPress={() => setShowConfirm((v) => !v)}
                 />
               </View>
             </View>
