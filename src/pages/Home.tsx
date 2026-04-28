@@ -1,4 +1,3 @@
-import client from "@/api/client";
 import { getMyStamps } from "@/api/stamp";
 import Layout from "@/components/Layout";
 import AdBanner from "@/components/home/AdBanner";
@@ -8,8 +7,8 @@ import HomeNoticeSection from "@/components/home/HomeNoticeSection";
 import HomePoster from "@/components/home/HomePoster";
 import MDBanner from "@/components/home/MDBanner";
 import StampTourBanner from "@/components/home/StampTourBanner";
+import { useAuthStore } from "@/stores/authStore";
 import { useNavigation } from "@react-navigation/native";
-import * as SecureStore from "expo-secure-store";
 import { useEffect, useState } from "react";
 import { ScrollView, View } from "react-native";
 
@@ -39,22 +38,12 @@ const SAMPLE_FOOD_TRUCKS = [
 
 export default function Home() {
   const navigation = useNavigation<any>();
-  const [me, setMe] = useState<{ email: string } | null>(null);
+  const { loadEmail } = useAuthStore();
+  const [isSogang, setIsSogang] = useState(false);
   const [stampProgress, setStampProgress] = useState(0);
 
   useEffect(() => {
-    const fetchMe = async () => {
-      try {
-        const token = await SecureStore.getItemAsync("accessToken").catch(() => null);
-        const res = await client.post(
-          "/graphql",
-          { query: `query { me { email } }` },
-          { headers: token ? { Authorization: `Bearer ${token}` } : {} },
-        );
-        setMe(res.data?.data?.me ?? null);
-      } catch {}
-    };
-    fetchMe();
+    loadEmail().then((email) => setIsSogang(email?.endsWith("@sogang.ac.kr") ?? false));
   }, []);
 
   useEffect(() => {
@@ -62,8 +51,6 @@ export default function Home() {
       .then(({ visitedCount }) => setStampProgress(Math.round((visitedCount / 9) * 100)))
       .catch(() => {});
   }, []);
-
-  const isSogang = me?.email?.endsWith("@sogang.ac.kr") ?? false;
 
 
   return (
