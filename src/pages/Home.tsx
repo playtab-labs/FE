@@ -11,9 +11,11 @@ import StampTourBanner from "@/components/home/StampTourBanner";
 import { useAuthStore } from "@/stores/authStore";
 import { useNavigation } from "@react-navigation/native";
 import { useEffect, useState } from "react";
-import { ScrollView, View } from "react-native";
+import { Linking, ScrollView, View } from "react-native";
 
-const AD_BANNERS = [1, 2, 3, 4, 5];
+import adbanner1 from '@/assets/pngs/adbanner1.png';
+
+const AD_BANNERS = [1, 2];
 
 const SAMPLE_DRINK_BOOTHS = [
   { id: 1, name: '국어국문학과' },
@@ -88,7 +90,11 @@ export default function Home() {
         contentContainerStyle={{ paddingHorizontal: 17, gap: 16 }}
       >
         {AD_BANNERS.map((id) => (
-          <AdBanner key={id} />
+          <AdBanner
+            key={id}
+            image={id === 1 ? adbanner1 : undefined}
+            onPress={id === 1 ? () => Linking.openURL('https://obank.kbstar.com/quics?page=C041244&scheme=kbbank&pageid=D001352&urlparam=%EC%9D%B4%EB%B2%A4%ED%8A%B8%EC%9D%BC%EB%A0%A8%EB%B2%88%ED%98%B8:351412') : undefined}
+          />
         ))}
       </ScrollView>
       <View style={{ marginTop: 24 }}>
