@@ -28,8 +28,7 @@ export default function Notice() {
       ) : (
         <ScrollView
           showsVerticalScrollIndicator={false}
-          className="px-3"
-          contentContainerStyle={{ paddingTop: 24, paddingBottom: 32, gap: 16 }}
+          contentContainerStyle={{ paddingTop: 20, paddingBottom: 20, gap: 8 }}
         >
           {notices.map((item) => (
             <NoticeCard

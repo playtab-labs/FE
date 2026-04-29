@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     padding: 16,
     flexDirection: 'column',
     alignItems: 'flex-start',
-    gap: 10,
+    gap: 6,
     alignSelf: 'stretch',
     borderRadius: 8,
     borderWidth: 1,
@@ -62,6 +62,6 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
     color: '#1A1A1A',
     fontWeight: '300',
-    marginTop: 5,
+    marginTop: 7,
   },
 });
