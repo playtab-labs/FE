@@ -17,8 +17,8 @@ export default function NoticeBadge({ type }: NoticeBadgeProps) {
 
 const styles = StyleSheet.create({
   badge: {
-    paddingHorizontal: 6,
-    paddingVertical: 6,
+    paddingHorizontal: 7,
+    paddingVertical: 5,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 20,
