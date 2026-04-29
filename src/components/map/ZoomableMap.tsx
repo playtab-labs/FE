@@ -1,6 +1,6 @@
 import MapDay1 from "@/assets/map_day1svg.svg";
 import MapDay23 from "@/assets/map_day23.svg";
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import type { SharedValue } from "react-native-reanimated";
 import Animated, { runOnJS, useAnimatedStyle } from "react-native-reanimated";
@@ -90,12 +90,12 @@ const ZoomableMap = ({
     <GestureDetector gesture={composed}>
       <View style={{ flex: 1 }}>
         {/* 1. 지도 이미지 */}
-        <Animated.View style={[StyleSheet.absoluteFill, animatedStyle]}>
+        <Animated.View className="absolute inset-0" style={animatedStyle}>
           <MapImage width="100%" height="100%" />
         </Animated.View>
 
         {/* 2. 마커 레이어 */}
-        <View style={[StyleSheet.absoluteFill, { pointerEvents: "box-none" }]}>
+        <View className="absolute inset-0" style={{ pointerEvents: "box-none" }}>
           {children}
         </View>
       </View>

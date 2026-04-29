@@ -1,14 +1,7 @@
 import { getPubs, type Pub } from "@/api/booth";
-import DrinkBoothItem from "@/components/home/DrinkBoothItem";
-import { typo } from "@/styles/typography";
 import { useEffect, useState } from "react";
-import {
-  ActivityIndicator,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import { ActivityIndicator, View } from "react-native";
+import PubItem from "./PubItem";
 
 export default function PubListSection() {
   const [items, setItems] = useState<Pub[]>([]);
@@ -25,34 +18,20 @@ export default function PubListSection() {
   }, []);
 
   return (
-    <View style={styles.section}>
-      <Text className={typo.T3_Eb} style={styles.sectionTitle}>
-        주점
-      </Text>
+    <View className="gap-2">
       {loading ? (
         <ActivityIndicator />
       ) : (
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          style={styles.scroll}
-          contentContainerStyle={styles.list}
-        >
+        <View className="gap-2">
           {items.map((item) => (
-            <DrinkBoothItem
+            <PubItem
               key={item.id}
               name={item.isNameConfirmed ? item.collegeName : "미공개"}
+              thumbnailImageUrl={item.thumbnailImageUrl}
             />
           ))}
-        </ScrollView>
+        </View>
       )}
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  section: { gap: 8 },
-  sectionTitle: { color: "#1A1A1A", letterSpacing: -0.16 },
-  scroll: { marginHorizontal: -17 },
-  list: { flexDirection: "row", gap: 8, paddingHorizontal: 17 },
-});

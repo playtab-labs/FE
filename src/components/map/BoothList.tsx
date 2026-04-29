@@ -1,8 +1,17 @@
+import type { MarkerData } from "@/data/mockMarkers";
 import { ScrollView, View } from "react-native";
 import FoodTruckListSection from "./FoodTruckListSection";
 import PubListSection from "./PubListSection";
 
-const BoothList = () => {
+interface BoothListProps {
+  marker?: MarkerData;
+}
+
+const BoothList = ({ marker }: BoothListProps) => {
+  const label = marker?.label ?? "";
+  const showPub = !marker || label === "주점";
+  const showFoodTruck = !marker || label === "푸드";
+
   return (
     <ScrollView
       className="flex-1"
@@ -10,8 +19,8 @@ const BoothList = () => {
       showsVerticalScrollIndicator={false}
     >
       <View className="gap-8">
-        <FoodTruckListSection />
-        <PubListSection />
+        {showFoodTruck && <FoodTruckListSection />}
+        {showPub && <PubListSection />}
       </View>
     </ScrollView>
   );

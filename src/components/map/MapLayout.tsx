@@ -1,10 +1,9 @@
-import { View } from "react-native";
+import { Image, View } from "react-native";
 import { useSharedValue } from "react-native-reanimated";
 import ZoomableMap from "./ZoomableMap";
 import MapMarkerLayer from "./MapMarkerLayer";
 import { MOCK_MARKERS, type MarkerData } from "@/data/mockMarkers";
 
-const FACILITY_VISIBLE_SCALE = 2;
 
 interface MapLayoutProps {
   onMarkerSelect: (marker: MarkerData) => void;
@@ -28,25 +27,27 @@ const MapLayout = ({ onMarkerSelect }: MapLayoutProps) => {
     const ty = translateY.value;
     const cx = W / 2;
     const cy = H / 2;
+    const PAD = 12;
 
-    console.log(tapX, tapY);
+    const today = new Date();
+    const isDay1 = today.getMonth() === 4 && today.getDate() === 13;
 
     for (const marker of MOCK_MARKERS) {
-      if (marker.type === "facility" && s < FACILITY_VISIBLE_SCALE) continue;
+      if (marker.day1Only && !isDay1) continue;
 
-      const left = (marker.fx * W - cx) * s + cx + tx;
-      const top = (marker.fy * H - cy) * s + cy + ty;
+      const asset = Image.resolveAssetSource(marker.image);
+      const w = asset.width / 2;
+      const h = asset.height / 2;
 
-      // 마커 타입별 근사 크기: main=128x40, sub=80x40, facility=40x40
-      const w = marker.type === "main" ? 128 : marker.type === "sub" ? 80 : 40;
-      const h = 40;
-      const PAD = 8;
+      // 앵커: 이미지 하단 중앙 (MapMarker의 useAnimatedStyle과 동일)
+      const anchorX = (marker.fx * W - cx) * s + cx + tx;
+      const anchorY = (marker.fy * H - cy) * s + cy + ty;
 
       if (
-        tapX >= left - PAD &&
-        tapX <= left + w + PAD &&
-        tapY >= top - PAD &&
-        tapY <= top + h + PAD
+        tapX >= anchorX - w / 2 - PAD &&
+        tapX <= anchorX + w / 2 + PAD &&
+        tapY >= anchorY - h - PAD &&
+        tapY <= anchorY + PAD
       ) {
         onMarkerSelect(marker);
         return;

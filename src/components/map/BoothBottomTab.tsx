@@ -151,7 +151,7 @@ const BoothBottomTab = ({ marker, onClose }: BoothBottomTabProps) => {
 
           {/* 콘텐츠 */}
           <View className="flex-1">
-            {activeTab === "booth" ? <BoothLayout /> : <BoothList />}
+            {activeTab === "booth" ? <BoothLayout /> : <BoothList marker={marker} />}
           </View>
         </View>
       </Animated.View>

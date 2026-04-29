@@ -1,4 +1,14 @@
-import { MOCK_MARKERS } from "@/data/mockMarkers";
+import { MOCK_MARKERS, type MarkerData } from "@/data/mockMarkers";
+
+const TYPE_ORDER: Record<MarkerData["type"], number> = {
+  facility: 0,
+  sub: 1,
+  main: 2,
+};
+
+const SORTED_MARKERS = [...MOCK_MARKERS].sort(
+  (a, b) => TYPE_ORDER[a.type] - TYPE_ORDER[b.type],
+);
 import { View } from "react-native";
 import type { SharedValue } from "react-native-reanimated";
 import MapMarker from "./MapMarker";
@@ -16,7 +26,7 @@ interface MapMarkerLayerProps {
 const MapMarkerLayer = (props: MapMarkerLayerProps) => {
   return (
     <View className="absolute inset-0" style={{ pointerEvents: "box-none" }}>
-      {MOCK_MARKERS.map((marker) => (
+      {SORTED_MARKERS.map((marker) => (
         <MapMarker key={marker.id} marker={marker} {...props} />
       ))}
       <UserLocationMarker {...props} />

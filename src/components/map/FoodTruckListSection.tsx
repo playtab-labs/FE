@@ -1,13 +1,6 @@
 import { getFoodTrucks, type FoodTruck } from "@/api/booth";
-import { typo } from "@/styles/typography";
 import { useEffect, useState } from "react";
-import {
-  ActivityIndicator,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import { ActivityIndicator, View } from "react-native";
 import FoodTruckItem from "./FoodTruckItem";
 
 export default function FoodTruckListSection() {
@@ -25,19 +18,11 @@ export default function FoodTruckListSection() {
   }, []);
 
   return (
-    <View style={styles.section}>
-      <Text className={typo.T3_Eb} style={styles.sectionTitle}>
-        푸드트럭
-      </Text>
+    <View className="gap-2">
       {loading ? (
         <ActivityIndicator />
       ) : (
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          style={styles.scroll}
-          contentContainerStyle={styles.list}
-        >
+        <View className="flex-row flex-wrap gap-4">
           {items.map((item) => (
             <FoodTruckItem
               key={item.id}
@@ -45,15 +30,8 @@ export default function FoodTruckListSection() {
               description={item.shortDescription}
             />
           ))}
-        </ScrollView>
+        </View>
       )}
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  section: { gap: 8 },
-  sectionTitle: { color: "#1A1A1A", letterSpacing: -0.16 },
-  scroll: { marginHorizontal: -17 },
-  list: { flexDirection: "row", gap: 8, paddingHorizontal: 17 },
-});
