@@ -18,7 +18,14 @@
       "reactCompiler": true
     },
     "plugins": [
-      "expo-secure-store"
+      "expo-secure-store",
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "QR코드 스캔을 위해 카메라 접근이 필요합니다."
+        }
+      ],
+      "react-native-nfc-manager"
     ]
   }
 }

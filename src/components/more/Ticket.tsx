@@ -54,8 +54,8 @@ const SHADOW = {
   shadowColor: "#000",
   shadowOffset: { width: 0, height: 0 },
   shadowOpacity: 0.25,
-  shadowRadius: 8,
-  elevation: 8,
+  shadowRadius: 4,
+  elevation: 4,
 } as const;
 
 const CIRCLES = [
@@ -67,7 +67,7 @@ const CIRCLES = [
 export default function Ticket(props: TicketProps) {
   if (props.noticket) {
     return (
-      <View className="w-[329px] rounded-2xl" style={SHADOW}>
+      <View className="w-full rounded-2xl" style={SHADOW}>
         <View className="w-full rounded-2xl overflow-hidden">
           <View
             className="absolute inset-0"
@@ -85,7 +85,7 @@ export default function Ticket(props: TicketProps) {
               bottom: 0,
             }}
           />
-          {CIRCLES.map((c, i) => (
+          {CIRCLES.slice(0, 2).map((c, i) => (
             <View
               key={i}
               style={{
@@ -118,7 +118,7 @@ export default function Ticket(props: TicketProps) {
   const { label, bgClass, textClass } = STATUS_CONFIG[status];
 
   return (
-    <View className="w-[329px] rounded-2xl" style={SHADOW}>
+    <View className="w-full rounded-2xl" style={SHADOW}>
       <View className="w-full rounded-2xl overflow-hidden">
         <View
           className="absolute inset-0"

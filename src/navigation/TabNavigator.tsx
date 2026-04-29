@@ -12,10 +12,15 @@ import MoreScreen from "@/pages/more/More";
 import PersonalChange from "@/pages/more/Personal";
 import MyInfoChange from "@/pages/more/Personal/MyInfoChange";
 import PasswordChange from "@/pages/more/Personal/PasswordChange";
+
 import ServiceWithdrawal from "@/pages/more/Personal/withdraw/ServiceWithdrawal";
 import WithdrawConfirm from "@/pages/more/Personal/withdraw/WithdrawConfirm";
+import Notice from "@/pages/more/Notice";
+import NoticeDetail from "@/pages/more/NoticeDetail";
 import Sponsor from "@/pages/more/Sponsor";
+import TermsPage from "@/pages/more/Terms";
 import PersonalScreen from "@/pages/Personal";
+
 
 const Tab = createBottomTabNavigator();
 const MoreStack = createNativeStackNavigator();
@@ -54,6 +59,16 @@ function MoreNavigator() {
         options={{ headerShown: false }}
       />
       <MoreStack.Screen
+        name="Notice"
+        component={Notice}
+        options={{ headerShown: false }}
+      />
+      <MoreStack.Screen
+        name="NoticeDetail"
+        component={NoticeDetail}
+        options={{ headerShown: false }}
+      />
+      <MoreStack.Screen
         name="FAQ"
         component={FAQ}
         options={{ headerShown: false }}
@@ -61,6 +76,11 @@ function MoreNavigator() {
       <MoreStack.Screen
         name="Sponsor"
         component={Sponsor}
+        options={{ headerShown: false }}
+      />
+      <MoreStack.Screen
+        name="Terms"
+        component={TermsPage}
         options={{ headerShown: false }}
       />
       <MoreStack.Screen
@@ -79,7 +99,7 @@ function MoreNavigator() {
 
 export default function TabNavigator() {
   return (
-    <Tab.Navigator tabBar={(props) => <BottomBar {...props} />}>
+    <Tab.Navigator tabBar={(props) => <BottomBar {...props} />} initialRouteName="Home">
       <Tab.Screen
         name="Artist"
         component={ArtistScreen}

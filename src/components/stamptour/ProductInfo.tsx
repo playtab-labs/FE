@@ -2,8 +2,8 @@ import { View, Text } from 'react-native';
 import { typo } from '@/styles/typography';
 
 const ITEMS = [
-  '▪추첨을 통해 30인에게 그라찌에 아이스아메리카노(M) 쿠폰 증정',
-  '▪추첨을 통해 2인에게 엠티플랜 10만원 상당 숙박권 증정',
+  '9개 미션 중 6개 이상 달성 시 전원 000 증정!',
+  '9개 미션 중 6개 이상 달성 시 에어팟 추첨 자동 응모',
 ];
 
 export default function ProductInfo() {
@@ -15,11 +15,11 @@ export default function ProductInfo() {
           padding: 16,
           borderRadius: 8,
           backgroundColor: '#FFFFFF',
-          gap: 16,
+          gap: 14,
         }}
       >
         <Text className={`${typo.T3_Eb} text-gray-black`}>
-          상품안내
+          경품 안내
         </Text>
 
         <View>

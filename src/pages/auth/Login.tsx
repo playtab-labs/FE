@@ -1,12 +1,13 @@
 import { authApi } from "@/api/auth";
 import Button from "@/components/common/Button";
 import Input from "@/components/common/Input";
+import ToastError from "@/components/common/ToastError";
 import { EyeOffIcon, EyeOnIcon } from "@/components/icons/EyeIcon";
 import RadioIcon from "@/components/icons/RadioIcon";
 import Layout from "@/components/Layout";
 import { useAuthStore } from "@/stores/authStore";
 import { useNavigation } from "@react-navigation/native";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 
 export default function Login() {
@@ -17,7 +18,14 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [keepLogin, setKeepLogin] = useState(true);
   const [rememberID, setRememberID] = useState(false);
-  const [error, setError] = useState("");
+  const [toastMessage, setToastMessage] = useState("");
+  const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const showToast = (message: string) => {
+    setToastMessage(message);
+    if (toastTimer.current) clearTimeout(toastTimer.current);
+    toastTimer.current = setTimeout(() => setToastMessage(""), 2500);
+  };
 
   useEffect(() => {
     loadEmail().then((saved) => {
@@ -33,14 +41,14 @@ export default function Login() {
       {/* 로고 */}
       <View className="items-center mt-[36px]">
         <Image
-          source={require("@/assets/pngs/logo.png")}
+          source={require("@/assets/pngs/odysseyLogo_noempty.png")}
           style={{ width: 277, height: 173 }}
           resizeMode="contain"
         />
       </View>
 
       {/* 입력 폼 */}
-      <View className="mt-[51px] gap-4 items-center">
+      <View className="mt-[51px] gap-4">
         <Input
           placeholder="이메일을 입력해주세요."
           value={email}
@@ -60,7 +68,7 @@ export default function Login() {
         />
 
         {/* 라디오 버튼 */}
-        <View className="w-[342px] flex-row gap-5">
+        <View className="flex-row gap-5">
           <TouchableOpacity
             className="flex-row items-center gap-1.5"
             onPress={() => setKeepLogin(!keepLogin)}
@@ -74,23 +82,23 @@ export default function Login() {
             onPress={() => setRememberID(!rememberID)}
           >
             <RadioIcon active={rememberID} />
-            <Text className="text-[13px] text-gray-600">ID 기억하기</Text>
+            <Text className="text-[13px] text-gray-600">이메일 기억하기</Text>
           </TouchableOpacity>
         </View>
       </View>
 
       {/* 로그인 버튼 */}
-      <View className="items-center mt-[85px]">
-        {error ? (
-          <Text className="text-b4 text-red-500 mb-2">{error}</Text>
-        ) : null}
+      <View className="mt-[85px]">
         <Button
           label="로그인"
           size="long"
           state="active"
           onPress={async () => {
+            if (!email || !password) {
+              showToast("로그인 정보를 입력하여 주세요.");
+              return;
+            }
             try {
-              setError("");
               const res = await authApi.loginEmail(email, password);
               if (rememberID) {
                 await saveEmail(email);
@@ -104,9 +112,19 @@ export default function Login() {
                   keepLogin,
                 );
               } catch {}
-              navigation.reset({ index: 0, routes: [{ name: "Tabs" }] });
-            } catch {
-              setError("이메일 또는 비밀번호가 올바르지 않습니다.");
+              navigation.reset({
+                index: 0,
+                routes: [{ name: "LoadingScreen" }],
+              });
+            } catch (e: any) {
+              const status = e?.response?.status;
+              if (status === 404) {
+                showToast("해당하는 사용자가 없습니다.");
+              } else if (status >= 500) {
+                showToast("로그인에 실패했습니다. 잠시 후 시도해주세요.");
+              } else {
+                showToast("사용자 정보가 일치하지 않습니다.");
+              }
             }
           }}
         />
@@ -129,11 +147,18 @@ export default function Login() {
 
       {/* 임시 버튼 */}
       <TouchableOpacity
-        className="mx-[17px] mt-3 h-11 border border-gray-300 rounded-lg items-center justify-center"
+        className="mt-3 h-11 border border-gray-300 rounded-lg items-center justify-center"
         onPress={() => navigation.navigate("Tabs")}
       >
         <Text className="text-sm text-gray-400">임시 - 홈으로 이동</Text>
       </TouchableOpacity>
+
+      {/* 에러 토스트 */}
+      {toastMessage ? (
+        <View className="absolute bottom-12 left-0 right-0 items-center">
+          <ToastError type="login" message={toastMessage} />
+        </View>
+      ) : null}
     </Layout>
   );
 }

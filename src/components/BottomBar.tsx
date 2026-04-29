@@ -2,8 +2,9 @@ import ArtistIcon from "@/assets/svgs/artist.svg";
 import MapIcon from "@/assets/svgs/map.svg";
 import MoreIcon from "@/assets/svgs/more.svg";
 import PersonalIcon from "@/assets/svgs/personal.svg";
+import NavAllosIcon from "@/assets/nav_allosicon.svg";
 import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
-import { Image, Text, TouchableOpacity, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const TAB_ITEMS = [
@@ -47,7 +48,7 @@ export default function BottomBar({ state, navigation }: BottomTabBarProps) {
       >
         {TAB_ITEMS.map((item, index) => {
           const isFocused = state.index === index;
-          const color = isFocused ? "#CF5363" : "#aaa";
+          const color = isFocused ? "#FF7654" : "#aaa";
           const isHome = item.name === "Home";
 
           return (
@@ -65,21 +66,36 @@ export default function BottomBar({ state, navigation }: BottomTabBarProps) {
                   : { width: 68 }
               }
               className={isHome ? "" : "items-center justify-center gap-1 py-4"}
-              onPress={() => navigation.navigate(item.name)}
+              onPress={() =>
+                item.name === "More"
+                  ? navigation.navigate("More", { screen: "MoreMain" })
+                  : navigation.navigate(item.name)
+              }
               activeOpacity={0.7}
             >
               {isHome ? (
-                <Image
-                  source={require("@/assets/pngs/homeDuck.png")}
-                  style={{ width: "100%", height: "100%" }}
-                  resizeMode="contain"
-                />
+                <View
+                  className={`w-20 h-20 rounded-full  items-center justify-center shadow-allos ${isFocused ? "bg-secondary-salmon" : "bg-soft-gray-white"}`}
+                >
+                  <View className="items-center">
+                    <View className="items-center shadow-allos">
+                      <NavAllosIcon width={32} height={32} />
+                    </View>
+                    <Text
+                      className={` text-center font-extrabold text-[11px] mt-[5px] ${isFocused ? "text-white" : "text-gray"}`}
+                    >
+                      HOME
+                    </Text>
+                  </View>
+                </View>
               ) : (
                 <>
                   {item.Icon && (
                     <item.Icon width={24} height={24} color={color} />
                   )}
-                  <Text className="text-gray text-[11px] font-sb">
+                  <Text
+                    className={`text-[11px] font-eb ${isFocused ? "text-text-salmon" : "text-gray"}`}
+                  >
                     {item.label}
                   </Text>
                 </>

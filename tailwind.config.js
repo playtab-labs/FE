@@ -32,6 +32,9 @@ module.exports = {
         sb: "600",
         rg: "400",
       },
+      boxShadow: {
+        allos: "0 0 4px 0 rgba(0, 0, 0, 0.25)",
+      },
       colors: {
         // ── Grayscale ────────────────────────────
         "extra-white": "#FFFFFF",

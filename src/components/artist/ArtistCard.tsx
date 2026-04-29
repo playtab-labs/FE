@@ -1,8 +1,9 @@
-import { ImageBackground, Text, View } from "react-native";
-import { typo } from "@/styles/typography";
 import FavoriteButton from "@/components/artist/FavoriteButton";
+import { typo } from "@/styles/typography";
+import { ImageBackground, Text, View } from "react-native";
 
 interface ArtistCardProps {
+  performerId: string;
   name: string;
   imageUri: string;
   initialFavorited?: boolean;
@@ -10,6 +11,7 @@ interface ArtistCardProps {
 }
 
 const ArtistCard = ({
+  performerId,
   name,
   imageUri,
   initialFavorited,
