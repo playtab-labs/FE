@@ -6,7 +6,7 @@ import { getNoticeDetail, NoticeDetail as NoticeDetailType, NoticeSummary } from
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useEffect, useState } from "react";
-import { ActivityIndicator, StyleSheet, View } from "react-native";
+import { ActivityIndicator, ScrollView, StyleSheet, View } from "react-native";
 
 type NoticeDetailParams = {
   NoticeDetail: {
@@ -43,16 +43,18 @@ export default function NoticeDetail() {
           <ActivityIndicator />
         </View>
       ) : (
-        <View style={styles.container}>
-          <NoticeDetailHeader
-            title={detail.title}
-            date={formatDate(detail.postedAt)}
-            badge={detail.isPinned ? "필독" : undefined}
-          />
-          <View style={styles.dividerWrap}>
-            <View style={styles.divider} />
+        <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false}>
+          <View style={styles.contentPad}>
+            <NoticeDetailHeader
+              title={detail.title}
+              date={formatDate(detail.postedAt)}
+              badge={detail.isPinned ? "필독" : undefined}
+            />
+            <View style={styles.dividerWrap}>
+              <View style={styles.divider} />
+            </View>
+            <NoticeDetailBody content={detail.content} image={detail.imageUrl || undefined} />
           </View>
-          <NoticeDetailBody content={detail.content} image={detail.imageUrl || undefined} />
           <View style={styles.navContainer}>
             {prev && (
               <NoticeNavItem
@@ -72,7 +74,7 @@ export default function NoticeDetail() {
               />
             )}
           </View>
-        </View>
+        </ScrollView>
       )}
     </Layout>
   );
@@ -84,9 +86,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  container: {
+  scroll: {
     flex: 1,
-    paddingHorizontal: 0,
+  },
+  contentPad: {
     paddingVertical: 5,
   },
   dividerWrap: {
@@ -99,8 +102,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#BFBFBF",
   },
   navContainer: {
-    marginTop: "auto",
-    marginBottom: 10,
+    marginTop: 40,
+    marginBottom: 20,
   },
   navDivider: {
     height: 1,

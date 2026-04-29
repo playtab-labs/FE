@@ -62,6 +62,6 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
     color: '#1A1A1A',
     fontWeight: '300',
-    marginTop: 9,
+    marginTop: 7,
   },
 });
