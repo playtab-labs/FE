@@ -49,6 +49,7 @@ export const getNoticeDetail = (noticeId: string): Promise<{ data: { noticeDetai
         content
         postedAt
         isPinned
+        imageUrl
       }
     }`,
     { noticeId }

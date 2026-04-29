@@ -52,7 +52,7 @@ export default function NoticeDetail() {
           <View style={styles.dividerWrap}>
             <View style={styles.divider} />
           </View>
-          <NoticeDetailBody content={detail.content} />
+          <NoticeDetailBody content={detail.content} image={detail.imageUrl || undefined} />
           <View style={styles.navContainer}>
             {prev && (
               <NoticeNavItem
