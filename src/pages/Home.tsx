@@ -1,3 +1,4 @@
+import { getNotices } from "@/api/notice";
 import { getMyStamps } from "@/api/stamp";
 import Layout from "@/components/Layout";
 import AdBanner from "@/components/home/AdBanner";
@@ -7,20 +8,12 @@ import HomeNoticeSection from "@/components/home/HomeNoticeSection";
 import HomePoster from "@/components/home/HomePoster";
 import MDBanner from "@/components/home/MDBanner";
 import StampTourBanner from "@/components/home/StampTourBanner";
-import { NOTICE_ITEMS } from "@/pages/more/Notice";
 import { useAuthStore } from "@/stores/authStore";
 import { useNavigation } from "@react-navigation/native";
 import { useEffect, useState } from "react";
 import { ScrollView, View } from "react-native";
 
 const AD_BANNERS = [1, 2, 3, 4, 5];
-
-const HOME_NOTICES = NOTICE_ITEMS.slice(0, 3).map((item, index) => ({
-  id: index,
-  title: item.title,
-  date: item.date,
-  badge: item.badge,
-}));
 
 const SAMPLE_DRINK_BOOTHS = [
   { id: 1, name: '국어국문학과' },
@@ -38,11 +31,14 @@ const SAMPLE_FOOD_TRUCKS = [
   { id: 4, name: '타코 트럭', description: '멕시칸 푸드' },
 ];
 
+const formatDate = (postedAt: string) => postedAt.split("T")[0].replace(/-/g, ".");
+
 export default function Home() {
   const navigation = useNavigation<any>();
   const { loadEmail } = useAuthStore();
   const [isSogang, setIsSogang] = useState(false);
   const [stampProgress, setStampProgress] = useState(0);
+  const [homeNotices, setHomeNotices] = useState<{ id: string; title: string; date: string; badge?: "NEW" | "필독" }[]>([]);
 
   useEffect(() => {
     loadEmail().then((email) => setIsSogang(email?.endsWith("@sogang.ac.kr") ?? false));
@@ -51,6 +47,21 @@ export default function Home() {
   useEffect(() => {
     getMyStamps()
       .then(({ visitedCount }) => setStampProgress(Math.round((visitedCount / 9) * 100)))
+      .catch(() => {});
+  }, []);
+
+  useEffect(() => {
+    getNotices()
+      .then((res) =>
+        setHomeNotices(
+          res.data.notices.notices.slice(0, 3).map((n) => ({
+            id: n.id,
+            title: n.title,
+            date: formatDate(n.postedAt),
+            badge: n.isPinned ? ("필독" as const) : undefined,
+          }))
+        )
+      )
       .catch(() => {});
   }, []);
 
@@ -82,7 +93,7 @@ export default function Home() {
       </ScrollView>
       <View style={{ marginTop: 24 }}>
         <HomeNoticeSection
-          items={HOME_NOTICES}
+          items={homeNotices}
           onMorePress={() => navigation.navigate('More', { screen: 'Notice' })}
         />
       </View>

@@ -16,6 +16,8 @@ export interface NoticeSummary {
   title: string;
   postedAt: string;
   isPinned: boolean;
+  imageUrl: string;
+  contentPreview: string;
 }
 
 export interface NoticeDetail extends NoticeSummary {
@@ -31,6 +33,8 @@ export const getNotices = (): Promise<{ data: { notices: { notices: NoticeSummar
           title
           postedAt
           isPinned
+          imageUrl
+          contentPreview
         }
       }
     }

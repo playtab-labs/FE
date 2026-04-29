@@ -36,7 +36,7 @@ export default function Notice() {
               key={item.id}
               title={item.title}
               date={formatDate(item.postedAt)}
-              content=""
+              content={item.contentPreview}
               badge={item.isPinned ? "필독" : undefined}
               onPress={() => navigation.navigate("NoticeDetail", { noticeId: item.id, notices })}
             />
