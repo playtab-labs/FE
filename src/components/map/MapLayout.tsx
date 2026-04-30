@@ -32,8 +32,11 @@ const MapLayout = ({ onMarkerSelect }: MapLayoutProps) => {
     const today = new Date();
     const isDay1 = today.getMonth() === 4 && today.getDate() === 13;
 
+    const UNTAPPABLE = ["🚬", "📷"];
+
     for (const marker of MOCK_MARKERS) {
       if (marker.day1Only && !isDay1) continue;
+      if (UNTAPPABLE.includes(marker.label)) continue;
 
       const asset = Image.resolveAssetSource(marker.image);
       const w = asset.width / 2;

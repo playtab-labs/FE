@@ -10,6 +10,7 @@ export interface MarkerData {
   image: ReturnType<typeof require>;
   /** true이면 day1(5/13)에만 표시 */
   day1Only?: boolean;
+  desc?: string;
 }
 
 export interface BoothItem {
@@ -86,8 +87,8 @@ export const MOCK_MARKERS: MarkerData[] = [
     id: "m6",
     label: "📷",
     type: "facility",
-    fx: 0.3,
-    fy: 0.3,
+    fx: 0.284,
+    fy: 0.5,
     image: require("@/assets/map_sub_photo.png"),
   },
   {
@@ -130,6 +131,7 @@ export const MOCK_MARKERS: MarkerData[] = [
     // 하이트 진로
     id: "m11",
     label: "🎈",
+    desc: "하이트 진로",
     type: "facility",
     fx: 0.495,
     fy: 0.575,
@@ -144,4 +146,22 @@ export const MOCK_MARKERS: MarkerData[] = [
   //   fy: 0.565,
   //   image: require("@/assets/map_sub_popup.png"),
   // },
+  {
+    // k관 위
+    id: "m13",
+    label: "📷",
+    type: "facility",
+    fx: 0.31,
+    fy: 0.62,
+    image: require("@/assets/map_sub_photo.png"),
+  },
+  {
+    // J관 위
+    id: "m14",
+    label: "📷",
+    type: "facility",
+    fx: 0.79,
+    fy: 0.58,
+    image: require("@/assets/map_sub_photo.png"),
+  },
 ];
