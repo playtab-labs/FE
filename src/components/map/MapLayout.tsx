@@ -1,9 +1,8 @@
+import { MOCK_MARKERS, type MarkerData } from "@/data/mockMarkers";
 import { Image, View } from "react-native";
 import { useSharedValue } from "react-native-reanimated";
-import ZoomableMap from "./ZoomableMap";
 import MapMarkerLayer from "./MapMarkerLayer";
-import { MOCK_MARKERS, type MarkerData } from "@/data/mockMarkers";
-
+import ZoomableMap from "./ZoomableMap";
 
 interface MapLayoutProps {
   onMarkerSelect: (marker: MarkerData) => void;
@@ -32,7 +31,7 @@ const MapLayout = ({ onMarkerSelect }: MapLayoutProps) => {
     const today = new Date();
     const isDay1 = today.getMonth() === 4 && today.getDate() === 13;
 
-    const UNTAPPABLE = ["🚬", "📷"];
+    const UNTAPPABLE = ["🚬", "📷", "돗자리 배부", "DJ Booth"];
 
     for (const marker of MOCK_MARKERS) {
       if (marker.day1Only && !isDay1) continue;

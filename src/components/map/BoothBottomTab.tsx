@@ -1,7 +1,5 @@
 import CloseWhiteIcon from "@/assets/close-white.svg";
-import TabBar from "@/components/common/TabBar";
 import type { MarkerData } from "@/data/mockMarkers";
-import { typo } from "@/styles/typography";
 import { useEffect, useState } from "react";
 import {
   Text,
@@ -21,7 +19,6 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import BoothLayout from "./BoothLayout";
 import BoothList from "./BoothList";
 
 interface BoothBottomTabProps {
@@ -102,15 +99,6 @@ const BoothBottomTab = ({ marker, onClose }: BoothBottomTabProps) => {
 
   return (
     <View className="absolute inset-0">
-      {/* 딤 오버레이
-      <Animated.View className="flex-1" style={dimStyle}>
-        <TouchableOpacity
-          className="flex-1"
-          activeOpacity={1}
-          onPress={triggerClose}
-        />
-      </Animated.View> */}
-
       {/* 바텀시트 패널: shadow 외층 + overflow-hidden 내층 분리 */}
       <Animated.View
         className="absolute left-0 right-0 bottom-0 rounded-t-3xl"
@@ -134,7 +122,7 @@ const BoothBottomTab = ({ marker, onClose }: BoothBottomTabProps) => {
                 <View className="w-10 h-1 rounded-full bg-soft-gray" />
               </View>
               <View className="relative items-center justify-center py-5 rounded-t-xl">
-                <Text className={`${typo.T2_Eb} text-gray-black`}>MAP</Text>
+                <Text className="text-t2 font-eb">{marker.label}</Text>
                 <TouchableOpacity
                   className="absolute right-5"
                   onPress={triggerClose}
@@ -146,12 +134,9 @@ const BoothBottomTab = ({ marker, onClose }: BoothBottomTabProps) => {
             </View>
           </GestureDetector>
 
-          {/* 탭바 */}
-          <TabBar type="map" activeTab={activeTab} onTabChange={setActiveTab} />
-
           {/* 콘텐츠 */}
           <View className="flex-1">
-            {activeTab === "booth" ? <BoothLayout /> : <BoothList marker={marker} />}
+            <BoothList marker={marker} />
           </View>
         </View>
       </Animated.View>
