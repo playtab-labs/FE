@@ -59,8 +59,8 @@ export const MOCK_MARKERS: MarkerData[] = [
     id: "m3",
     label: "주점",
     type: "main",
-    fx: 0.59,
-    fy: 0.565,
+    fx: 0.57,
+    fy: 0.568,
     image: require("@/assets/map_main_pub.png"),
   },
   {
