@@ -1,12 +1,14 @@
 import { authApi } from "@/api/auth";
 import Layout from "@/components/Layout";
 import Button from "@/components/common/Button";
+import ColoredText from "@/components/common/ColoredText";
 import Input from "@/components/common/Input";
 import { useSignupStore } from "@/stores/signupStore";
 import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
 import { Keyboard, Text, TouchableWithoutFeedback, View } from "react-native";
 import Svg, { Circle, Line, Path } from "react-native-svg";
+import { useTranslation } from "react-i18next";
 
 function EyeIcon({ visible }: { visible: boolean }) {
   return (
@@ -32,6 +34,7 @@ function EyeIcon({ visible }: { visible: boolean }) {
 }
 
 export default function SetPassword() {
+  const { t } = useTranslation();
   const navigation = useNavigation<any>();
   const { name, gender, birthDate, nationality, email, consents } =
     useSignupStore();
@@ -51,20 +54,13 @@ export default function SetPassword() {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <View style={{ flex: 1 }}>
-        <Layout title="비밀번호 설정" showBack>
+        <Layout title={t("setPassword.appBar")} showBack>
           <View className="mt-6 gap-6">
             {/* 안내 문구 */}
             <View className="w-full mb-2">
-              <View className="flex-row items-center flex-wrap">
-                <Text className="text-h1 font-eb text-text-salmon">
-                  비밀번호
-                </Text>
-                <Text className="text-h1 font-eb text-gray-black">
-                  를 입력해주세요.
-                </Text>
-              </View>
+              <ColoredText text={t("setPassword.title")} className="text-h1 font-eb text-gray-black" />
               <Text className="text-b3 font-sb text-dark-gray mt-1">
-                영문/숫자 혼합, 8글자 이상으로 만들어주세요.
+                {t("setPassword.subtitle")}
               </Text>
             </View>
 
@@ -73,16 +69,16 @@ export default function SetPassword() {
               <View className="w-full gap-[6px]">
                 <View className="flex-row justify-between items-center">
                   <Text className="text-b3 font-sb text-dark-gray">
-                    비밀번호
+                    {t("setPassword.passwordLabel")}
                   </Text>
                   {isPasswordInvalid && (
                     <Text className="text-b4 text-secondary-bubblegum-pink">
-                      규칙에 맞춰 설정해주세요.
+                      {t("setPassword.formatError")}
                     </Text>
                   )}
                 </View>
                 <Input
-                  placeholder="비밀번호를 입력해주세요."
+                  placeholder={t("setPassword.title")}
                   value={password}
                   onChangeText={setPasswordInput}
                   onFocus={() => setPasswordTouched(false)}
@@ -99,16 +95,16 @@ export default function SetPassword() {
               <View className="w-full gap-[6px]">
                 <View className="flex-row justify-between items-center">
                   <Text className="text-b3 font-sb text-dark-gray">
-                    비밀번호 확인
+                    {t("setPassword.confirmPasswordLabel")}
                   </Text>
                   {isMismatch && (
                     <Text className="text-b4 text-secondary-bubblegum-pink">
-                      비밀번호가 일치하지 않습니다.
+                      {t("setPassword.mismatch")}
                     </Text>
                   )}
                 </View>
                 <Input
-                  placeholder="비밀번호를 한 번 더 입력해주세요."
+                  placeholder={t("setPassword.confirmPlaceholder")}
                   value={confirm}
                   onChangeText={setConfirm}
                   onFocus={() => setConfirmTouched(false)}
@@ -125,7 +121,7 @@ export default function SetPassword() {
 
           <View className="py-4 mt-auto mb-10">
             <Button
-              label="계속하기"
+              label={t("setPassword.continue")}
               size="long"
               state={isValid ? "active" : "inactive"}
               onPress={async () => {

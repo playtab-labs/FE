@@ -1,6 +1,6 @@
 {
   "register": {
-    "title": "회원가입을 진행할게요.",
+    "title": "[[회원가입]]을 진행할게요.",
     "subtitle": "만나서 반가워요!",
     "appBar": "회원가입",
     "sogangUser": "서강대생으로 시작하기",
@@ -9,7 +9,7 @@
   },
   "personalInfo": {
     "appBar": "이름 및 기타 정보",
-    "title": "이름과 기타 정보를 입력해주세요.",
+    "title": "[[이름]]과 [[기타 정보]]를 입력해주세요.",
     "subtitle": "사용자님에 대해서 알려주세요.",
     "nameLabel": "이름",
     "nameDescription": "실명을 입력해주세요.",
@@ -19,22 +19,25 @@
     "female": "여성",
     "birthdayLabel": "생일",
     "birthdayPlaceholder": "8자리 숫자로 입력해주세요.",
+    "birthdayInvalid": "날짜를 다시 확인해주세요.",
     "nationalityLabel": "국적",
     "nationalityDescription": "이중국적인 경우 하나만 선택해주세요.",
     "nationalityPlaceholder": "선택",
     "confirmTitle": "성함이 '{{name}}'이 맞나요?",
-    "confirmWarning": "이름은 변경할 수 없습니다.\n설정한 이름이 실명과 다를 시 서비스 이용에 제한이 있을 수 있습니다.",
+    "confirmWarning": "이름은 변경할 수 없습니다.",
+    "confirmDescription": "설정한 이름이 실명과 다를 시 서비스 이용에 제한이 있을 수 있습니다.",
     "confirmNo": "아니에요",
     "confirmYes": "네, 맞아요",
     "continue": "계속하기"
   },
   "terms": {
     "appBar": "약관동의",
-    "title": "약관에 동의해주세요.",
+    "title": "[[약관에 동의]]해주세요.",
     "subtitle": "PLAYTAP의 서비스를 이용하기 위해 필요해요.",
     "all": "전체",
     "agreeAll": "약관 전체동의",
     "required": "필수",
+    "optional": "선택",
     "agreeTermsOfUse": "이용 약관동의",
     "agreePrivacy": "개인정보 수집 및 이용 동의",
     "agreeLocation": "위치 정보 서비스 이용약관",
@@ -44,23 +47,26 @@
   },
   "emailVerify": {
     "appBar": "이메일 인증",
-    "title": "서강대학교 이메일을 인증해주세요.",
+    "title": "[[서강대학교 이메일]]을 인증해주세요.",
+    "titleExternal": "[[이메일]]을 인증해주세요.",
     "subtitle": "이메일은 추후에 변경할 수 없으니 신중히 입력해주세요.",
     "emailLabel": "이메일",
     "send": "발송하기",
     "resend": "재발송하기",
     "verificationCodeLabel": "이메일 인증번호",
+    "codeLabel": "인증번호",
     "verificationCodePlaceholder": "인증번호를 입력해주세요.",
     "verify": "인증하기",
     "emailAlreadyRegistered": "이미 가입된 메일입니다.",
     "verifyWithin3Min": "3분 이내에 인증해주세요.",
     "codeMismatch": "인증번호가 일치하지 않습니다.",
     "verified": "인증되었습니다.",
+    "sendFailed": "인증번호 발송에 실패했습니다.",
     "continue": "계속하기"
   },
   "setPassword": {
     "appBar": "비밀번호 설정",
-    "title": "비밀번호를 입력해주세요.",
+    "title": "[[비밀번호]]를 입력해주세요.",
     "subtitle": "영문/숫자 혼합, 8글자 이상으로 만들어주세요.",
     "passwordLabel": "비밀번호",
     "confirmPasswordLabel": "비밀번호 확인",
@@ -71,17 +77,21 @@
   },
   "signUpComplete": {
     "appBar": "회원가입 완료",
-    "title": "회원가입이 완료되었어요.",
+    "title": "[[회원가입]]이 완료되었어요.",
     "subtitle": "PLAYTAB과 함께 ODYSSEY를 즐겨봐요.",
     "continue": "계속하기"
   },
   "login": {
     "loginFailed": "로그인에 실패했습니다. 잠시 후 시도해주세요.",
     "emailPlaceholder": "이메일을 입력해주세요.",
+    "passwordPlaceholder": "비밀번호를 입력해주세요.",
     "keepLogin": "로그인 상태 유지",
     "rememberEmail": "이메일 기억하기",
     "login": "로그인",
-    "findPassword": "비밀번호 찾기"
+    "findPassword": "비밀번호 찾기",
+    "loginInfoEmpty": "로그인 정보를 입력하여 주세요.",
+    "userNotFound": "해당하는 사용자가 없습니다.",
+    "userMismatch": "사용자 정보가 일치하지 않습니다."
   },
   "nationality": {
     "southKorea": "대한민국",

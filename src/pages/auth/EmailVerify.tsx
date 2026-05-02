@@ -1,15 +1,18 @@
 import { authApi } from "@/api/auth";
 import Layout from "@/components/Layout";
 import Button from "@/components/common/Button";
+import ColoredText from "@/components/common/ColoredText";
 import Input from "@/components/common/Input";
 import { useSignupStore } from "@/stores/signupStore";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { useEffect, useRef, useState } from "react";
 import { ScrollView, Text, TextInput, View } from "react-native";
+import { useTranslation } from "react-i18next";
 
 const SOGANG_DOMAIN = "@sogang.ac.kr";
 
 export default function EmailVerify() {
+  const { t } = useTranslation();
   const navigation = useNavigation<any>();
   const route = useRoute<any>();
   const isSogang = route.params?.userType === "sogang";
@@ -76,9 +79,9 @@ export default function EmailVerify() {
       startTimer();
     } catch (e: any) {
       if (e?.response?.status === 409) {
-        setEmailError("이미 가입된 이메일입니다.");
+        setEmailError(t("emailVerify.emailAlreadyRegistered"));
       } else {
-        setError("인증번호 발송에 실패했습니다.");
+        setError(t("emailVerify.sendFailed"));
       }
     }
   };
@@ -92,15 +95,15 @@ export default function EmailVerify() {
         setError("");
         if (timerRef.current) clearInterval(timerRef.current);
       } else {
-        setError("인증번호가 일치하지 않습니다.");
+        setError(t("emailVerify.codeMismatch"));
       }
     } catch {
-      setError("인증번호가 일치하지 않습니다.");
+      setError(t("emailVerify.codeMismatch"));
     }
   };
 
   return (
-    <Layout title="이메일 인증" showBack>
+    <Layout title={t("emailVerify.appBar")} showBack>
       <ScrollView
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="handled"
@@ -108,29 +111,12 @@ export default function EmailVerify() {
         <View className="mt-6 gap-6">
           {/* 안내 문구 */}
           <View className="w-full mb-2">
-            <View className="flex-row items-center flex-wrap">
-              {isSogang ? (
-                <>
-                  <Text className="text-h1 font-eb text-text-salmon">
-                    서강대학교 이메일 인증
-                  </Text>
-                  <Text className="text-h1 font-eb text-gray-black">
-                    을 해주세요.
-                  </Text>
-                </>
-              ) : (
-                <>
-                  <Text className="text-h1 font-eb text-text-salmon">
-                    이메일 인증
-                  </Text>
-                  <Text className="text-h1 font-eb text-gray-black">
-                    을 해주세요.
-                  </Text>
-                </>
-              )}
-            </View>
+            <ColoredText
+              text={t(isSogang ? "emailVerify.title" : "emailVerify.titleExternal")}
+              className="text-h1 font-eb text-gray-black"
+            />
             <Text className="text-b3 font-sb text-dark-gray mt-1">
-              이메일은 추후에 변경할 수 없으니 신중히 입력해주세요.
+              {t("emailVerify.subtitle")}
             </Text>
           </View>
 
@@ -138,7 +124,7 @@ export default function EmailVerify() {
             {/* 이메일 입력 */}
             <View className="w-full gap-[6px]">
               <View className="flex-row justify-between items-center">
-                <Text className="text-b3 font-sb text-dark-gray">이메일</Text>
+                <Text className="text-b3 font-sb text-dark-gray">{t("emailVerify.emailLabel")}</Text>
                 {emailError ? (
                   <Text className="text-b4 font-rg text-secondary-bubblegum-pink">
                     {emailError}
@@ -155,7 +141,7 @@ export default function EmailVerify() {
                       className="flex-1 text-b3 font-md text-gray-black"
                       placeholderTextColor="#E4E4E4"
                       value={emailPrefix}
-                      onChangeText={(t) => { setEmailPrefix(t); setEmailError(""); }}
+                      onChangeText={(text) => { setEmailPrefix(text); setEmailError(""); }}
                       autoCapitalize="none"
                       keyboardType="email-address"
                       editable={!verified}
@@ -167,16 +153,16 @@ export default function EmailVerify() {
                 ) : (
                   <Input
                     size="with-button"
-                    placeholder="이메일을 입력해주세요."
+                    placeholder={t("login.emailPlaceholder")}
                     value={emailPrefix}
-                    onChangeText={(t) => { setEmailPrefix(t); setEmailError(""); }}
+                    onChangeText={(text) => { setEmailPrefix(text); setEmailError(""); }}
                     autoCapitalize="none"
                     keyboardType="email-address"
                     editable={!verified}
                   />
                 )}
                 <Button
-                  label={sent ? "재발송하기" : "발송하기"}
+                  label={sent ? t("emailVerify.resend") : t("emailVerify.send")}
                   size="short"
                   state={sendState}
                   onPress={handleSend}
@@ -187,33 +173,33 @@ export default function EmailVerify() {
             {/* 인증번호 입력 */}
             <View className="w-full gap-[6px]">
               <View className="flex-row items-center justify-between">
-                <Text className="text-b3 font-sb text-dark-gray">인증번호</Text>
+                <Text className="text-b3 font-sb text-dark-gray">{t("emailVerify.codeLabel")}</Text>
                 {verified ? (
                   <Text className="text-b4 text-dark-gray">
-                    인증되었습니다.
+                    {t("emailVerify.verified")}
                   </Text>
                 ) : error ? (
                   <Text className="text-b4 text-red-500">{error}</Text>
                 ) : sent ? (
                   <Text className="text-b4 text-dark-gray">
-                    3분 이내에 인증해주세요.
+                    {t("emailVerify.verifyWithin3Min")}
                   </Text>
                 ) : null}
               </View>
               <View className="flex-row gap-2 items-center">
                 <Input
                   size="with-button"
-                  placeholder="인증번호를 입력해주세요."
+                  placeholder={t("emailVerify.verificationCodePlaceholder")}
                   value={code}
-                  onChangeText={(t) => {
-                    setCode(t);
+                  onChangeText={(text) => {
+                    setCode(text);
                     setError("");
                   }}
                   keyboardType="number-pad"
                   editable={sent && !verified}
                 />
                 <Button
-                  label="인증하기"
+                  label={t("emailVerify.verify")}
                   size="short"
                   state={verifyState}
                   onPress={handleVerify}
@@ -227,7 +213,7 @@ export default function EmailVerify() {
       {/* 계속하기 */}
       <View className="py-4 pb-10">
         <Button
-          label="계속하기"
+          label={t("emailVerify.continue")}
           size="long"
           state={verified ? "active" : "inactive"}
           onPress={() => navigation.navigate("SetPassword")}

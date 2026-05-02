@@ -1,6 +1,6 @@
 {
   "register": {
-    "title": "会員登録を進めます。",
+    "title": "[[会員登録]]を進めます。",
     "subtitle": "はじめまして！",
     "appBar": "会員登録",
     "sogangUser": "西江大生として始める",
@@ -9,7 +9,7 @@
   },
   "personalInfo": {
     "appBar": "名前・その他の情報",
-    "title": "名前とその他の情報を入力してください。",
+    "title": "[[名前]]と[[その他の情報]]を入力してください。",
     "subtitle": "あなたについて教えてください。",
     "nameLabel": "名前",
     "nameDescription": "実名を入力してください。",
@@ -19,22 +19,25 @@
     "female": "女性",
     "birthdayLabel": "生年月日",
     "birthdayPlaceholder": "8桁の数字で入力してください。",
+    "birthdayInvalid": "日付を再確認してください。",
     "nationalityLabel": "国籍",
     "nationalityDescription": "二重国籍の場合は1つだけ選択してください。",
     "nationalityPlaceholder": "選択",
     "confirmTitle": "お名前は「{{name}}」でよろしいですか？",
-    "confirmWarning": "名前は変更できません。\n設定した名前が実名と異なる場合、サービスの利用が制限されることがあります。",
+    "confirmWarning": "名前は変更できません。",
+    "confirmDescription": "設定した名前が実名と異なる場合、サービスの利用が制限されることがあります。",
     "confirmNo": "いいえ",
     "confirmYes": "はい、合っています",
     "continue": "続ける"
   },
   "terms": {
     "appBar": "規約に同意",
-    "title": "規約に同意してください。",
+    "title": "[[規約に同意]]してください。",
     "subtitle": "PLAYTAPのサービスを利用するために必要です。",
     "all": "すべて",
     "agreeAll": "すべての規約に同意",
     "required": "必須",
+    "optional": "任意",
     "agreeTermsOfUse": "利用規約に同意",
     "agreePrivacy": "個人情報の収集および利用に同意",
     "agreeLocation": "位置情報サービス利用規約",
@@ -44,23 +47,26 @@
   },
   "emailVerify": {
     "appBar": "メール認証",
-    "title": "西江大学のメールアドレスを認証してください。",
+    "title": "[[西江大学のメールアドレス]]を認証してください。",
+    "titleExternal": "[[メールアドレス]]を認証してください。",
     "subtitle": "メールアドレスは後で変更できないため、慎重に入力してください。",
     "emailLabel": "メールアドレス",
     "send": "送信する",
     "resend": "再送信する",
     "verificationCodeLabel": "メール認証コード",
+    "codeLabel": "認証コード",
     "verificationCodePlaceholder": "認証コードを入力してください。",
     "verify": "認証する",
     "emailAlreadyRegistered": "このメールアドレスはすでに登録されています。",
     "verifyWithin3Min": "3分以内に認証してください。",
     "codeMismatch": "認証コードが一致しません。",
     "verified": "認証されました。",
+    "sendFailed": "認証コードの送信に失敗しました。",
     "continue": "続ける"
   },
   "setPassword": {
     "appBar": "パスワード設定",
-    "title": "パスワードを入力してください。",
+    "title": "[[パスワード]]を入力してください。",
     "subtitle": "英字と数字を組み合わせて、8文字以上で設定してください。",
     "passwordLabel": "パスワード",
     "confirmPasswordLabel": "パスワード確認",
@@ -71,17 +77,21 @@
   },
   "signUpComplete": {
     "appBar": "会員登録完了",
-    "title": "会員登録が完了しました。",
+    "title": "[[会員登録]]が完了しました。",
     "subtitle": "PLAYTAPと一緒にODYSSEYを楽しみましょう。",
     "continue": "続ける"
   },
   "login": {
     "loginFailed": "ログインに失敗しました。しばらくしてからもう一度お試しください。",
     "emailPlaceholder": "メールアドレスを入力してください。",
+    "passwordPlaceholder": "パスワードを入力してください。",
     "keepLogin": "ログイン状態を保持",
     "rememberEmail": "メールアドレスを保存",
     "login": "ログイン",
-    "findPassword": "パスワードを探す"
+    "findPassword": "パスワードを探す",
+    "loginInfoEmpty": "ログイン情報を入力してください。",
+    "userNotFound": "該当するユーザーが見つかりません。",
+    "userMismatch": "ユーザー情報が一致しません。"
   },
   "nationality": {
     "southKorea": "韓国",

@@ -1,6 +1,6 @@
 {
   "register": {
-    "title": "我们来创建你的账号。",
+    "title": "我们来[[创建你的账号]]。",
     "subtitle": "很高兴见到你！",
     "appBar": "注册",
     "sogangUser": "以西江大学学生身份开始",
@@ -9,7 +9,7 @@
   },
   "personalInfo": {
     "appBar": "姓名及其他信息",
-    "title": "请输入姓名和其他信息。",
+    "title": "请输入[[姓名]]和[[其他信息]]。",
     "subtitle": "请告诉我们关于你的信息。",
     "nameLabel": "姓名",
     "nameDescription": "请输入真实姓名。",
@@ -19,22 +19,25 @@
     "female": "女",
     "birthdayLabel": "出生日期",
     "birthdayPlaceholder": "请输入8位数字。",
+    "birthdayInvalid": "请重新确认日期。",
     "nationalityLabel": "国籍",
     "nationalityDescription": "如有双重国籍，请选择其中一个。",
     "nationalityPlaceholder": "选择",
     "confirmTitle": "你的姓名是\"{{name}}\"吗？",
-    "confirmWarning": "姓名无法更改。\n如果填写的姓名与真实姓名不一致，服务使用可能会受到限制。",
+    "confirmWarning": "姓名无法更改。",
+    "confirmDescription": "如果填写的姓名与真实姓名不一致，服务使用可能会受到限制。",
     "confirmNo": "不是",
     "confirmYes": "是的，没错",
     "continue": "继续"
   },
   "terms": {
     "appBar": "同意条款",
-    "title": "请同意相关条款。",
+    "title": "请[[同意相关条款]]。",
     "subtitle": "这是使用 PLAYTAP 服务所必需的。",
     "all": "全部",
     "agreeAll": "同意全部条款",
     "required": "必填",
+    "optional": "选填",
     "agreeTermsOfUse": "同意使用条款",
     "agreePrivacy": "同意收集及使用个人信息",
     "agreeLocation": "位置服务使用条款",
@@ -44,23 +47,26 @@
   },
   "emailVerify": {
     "appBar": "邮箱验证",
-    "title": "请验证你的西江大学邮箱。",
+    "title": "请验证你的[[西江大学邮箱]]。",
+    "titleExternal": "请验证你的[[邮箱]]。",
     "subtitle": "邮箱之后无法更改，请谨慎填写。",
     "emailLabel": "邮箱",
     "send": "发送",
     "resend": "重新发送",
     "verificationCodeLabel": "邮箱验证码",
+    "codeLabel": "验证码",
     "verificationCodePlaceholder": "请输入验证码。",
     "verify": "验证",
     "emailAlreadyRegistered": "该邮箱已注册。",
     "verifyWithin3Min": "请在3分钟内完成验证。",
     "codeMismatch": "验证码不一致。",
     "verified": "已验证。",
+    "sendFailed": "验证码发送失败。",
     "continue": "继续"
   },
   "setPassword": {
     "appBar": "设置密码",
-    "title": "请输入密码。",
+    "title": "请输入[[密码]]。",
     "subtitle": "请使用英文和数字组合，至少8个字符。",
     "passwordLabel": "密码",
     "confirmPasswordLabel": "确认密码",
@@ -71,17 +77,21 @@
   },
   "signUpComplete": {
     "appBar": "注册完成",
-    "title": "注册已完成。",
+    "title": "[[注册]]已完成。",
     "subtitle": "和 PLAYTAP 一起享受 ODYSSEY 吧。",
     "continue": "继续"
   },
   "login": {
     "loginFailed": "登录失败。请稍后再试。",
     "emailPlaceholder": "请输入邮箱。",
+    "passwordPlaceholder": "请输入密码。",
     "keepLogin": "保持登录状态",
     "rememberEmail": "记住邮箱",
     "login": "登录",
-    "findPassword": "找回密码"
+    "findPassword": "找回密码",
+    "loginInfoEmpty": "请输入登录信息。",
+    "userNotFound": "找不到该用户。",
+    "userMismatch": "用户信息不匹配。"
   },
   "nationality": {
     "southKorea": "韩国",
