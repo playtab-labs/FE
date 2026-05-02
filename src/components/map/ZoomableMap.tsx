@@ -1,8 +1,13 @@
+import MapDay1 from "@/assets/map_day1svg.svg";
+import MapDay23 from "@/assets/map_day23.svg";
+import { View } from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
-import Animated, { useAnimatedStyle, runOnJS } from "react-native-reanimated";
 import type { SharedValue } from "react-native-reanimated";
-import { View, StyleSheet } from "react-native";
-import MapImage from "@/assets/map_image.svg";
+import Animated, { runOnJS, useAnimatedStyle } from "react-native-reanimated";
+
+const today = new Date();
+const isDay1 = today.getMonth() === 4 && today.getDate() === 13; // 5/13
+const MapImage = isDay1 ? MapDay1 : MapDay23;
 
 const MIN_SCALE = 1;
 const MAX_SCALE = 5;
@@ -85,12 +90,12 @@ const ZoomableMap = ({
     <GestureDetector gesture={composed}>
       <View style={{ flex: 1 }}>
         {/* 1. 지도 이미지 */}
-        <Animated.View style={[StyleSheet.absoluteFill, animatedStyle]}>
+        <Animated.View className="absolute inset-0" style={animatedStyle}>
           <MapImage width="100%" height="100%" />
         </Animated.View>
 
         {/* 2. 마커 레이어 */}
-        <View style={[StyleSheet.absoluteFill, { pointerEvents: "box-none" }]}>
+        <View className="absolute inset-0" style={{ pointerEvents: "box-none" }}>
           {children}
         </View>
       </View>

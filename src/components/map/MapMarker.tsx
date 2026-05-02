@@ -1,19 +1,10 @@
-import { View, Text, StyleSheet } from "react-native";
-import Animated, { useAnimatedStyle } from "react-native-reanimated";
-import type { SharedValue } from "react-native-reanimated";
 import type { MarkerData } from "@/data/mockMarkers";
+import { Image } from "react-native";
+import type { SharedValue } from "react-native-reanimated";
+import Animated, { useAnimatedStyle } from "react-native-reanimated";
 
-const MARKER_CLASSNAME: Record<MarkerData["type"], string> = {
-  main: "bg-text-salmon min-w-20 h-10  px-4 rounded-[16px] border-white",
-  sub: "bg-secondary-salmon min-w-14 h-8  px-4 rounded-[16px] border-white",
-  facility: "bg-white w-10 aspect-square rounded-full border-text-salmon",
-};
-
-const MARKER_TYPO: Record<MarkerData["type"], string> = {
-  main: "text-t3 font-eb ",
-  sub: "text-b4 font-eb ",
-  facility: "text-t3 font-eb text text-center",
-};
+const today = new Date();
+const isDay1 = today.getMonth() === 4 && today.getDate() === 13; // 5/13
 
 interface MapMarkerProps {
   marker: MarkerData;
@@ -24,8 +15,6 @@ interface MapMarkerProps {
   containerHeight: SharedValue<number>;
 }
 
-const FACILITY_VISIBLE_SCALE = 2;
-
 const MapMarker = ({
   marker,
   scale,
@@ -34,6 +23,12 @@ const MapMarker = ({
   containerWidth,
   containerHeight,
 }: MapMarkerProps) => {
+  if (marker.day1Only && !isDay1) return null;
+
+  const asset = Image.resolveAssetSource(marker.image);
+  const w = asset.width / 2;
+  const h = asset.height / 2;
+
   const animatedStyle = useAnimatedStyle(() => {
     "worklet";
     const cx = containerWidth.value / 2;
@@ -41,42 +36,21 @@ const MapMarker = ({
     const x = marker.fx * containerWidth.value;
     const y = marker.fy * containerHeight.value;
 
-    const left = (x - cx) * scale.value + cx + translateX.value;
-    const top = (y - cy) * scale.value + cy + translateY.value;
+    const left = (x - cx) * scale.value + cx + translateX.value - w / 2;
+    const top = (y - cy) * scale.value + cy + translateY.value - h;
 
-    const opacity =
-      marker.type === "facility"
-        ? scale.value >= FACILITY_VISIBLE_SCALE
-          ? 1
-          : 0
-        : 1;
-
-    return { left, top, opacity };
+    return { position: "absolute", left, top };
   });
 
   return (
-    <Animated.View
-      style={[{ position: "absolute", pointerEvents: "none" }, animatedStyle]}
-    >
-      <View
-        collapsable={false}
-        className={` border-[1px] items-center justify-center text-gray-black ${MARKER_CLASSNAME[marker.type]}`}
-        style={[styles.shadow, { pointerEvents: "none" }]}
-      >
-        <Text className={MARKER_TYPO[marker.type]}>{marker.label}</Text>
-      </View>
+    <Animated.View style={[animatedStyle, { pointerEvents: "none" }]}>
+      <Image
+        source={marker.image}
+        style={{ width: w, height: h }}
+        resizeMode="contain"
+      />
     </Animated.View>
   );
 };
-
-const styles = StyleSheet.create({
-  shadow: {
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 4,
-  },
-});
 
 export default MapMarker;
