@@ -3,30 +3,96 @@ import MDImageCarousel from '@/components/md/MDImageCarousel';
 import MDSaleTypeBadge from '@/components/md/MDSaleTypeBadge';
 import MDSizeBadge from '@/components/md/MDSizeBadge';
 import { typo } from '@/styles/typography';
+import { gql } from '@apollo/client';
+import { useQuery } from '@apollo/client/react';
 import { RouteProp, useRoute } from '@react-navigation/native';
-import { Text, View } from 'react-native';
+import { Image, Text, View } from 'react-native';
 
-const mdSample = require('@/assets/pngs/mdsample.png');
+const GET_MD_ITEM_DETAIL = gql`
+  query MdItemDetail($mdItemId: ID!) {
+    mdItemDetail(mdItemId: $mdItemId) {
+      id
+      name
+      thumbnailImageUrl
+      detailImageUrl
+      price
+      isSoldOut
+      productDescription
+      detailDescription
+      optionGroups {
+        id
+        name
+        displayOrder
+        values {
+          id
+          valueName
+          extraPrice
+          isSoldOut
+          displayOrder
+        }
+      }
+    }
+  }
+`;
 
-const MOCK_IMAGES = [mdSample, mdSample, mdSample];
+interface OptionValue {
+  id: string;
+  valueName: string;
+  extraPrice: number;
+  isSoldOut: boolean;
+  displayOrder: number;
+}
 
-type MDDetailRouteProp = RouteProp<{ MDDetail: { title: string; soldOut: boolean } }, 'MDDetail'>;
+interface OptionGroup {
+  id: string;
+  name: string;
+  displayOrder: number;
+  values: OptionValue[];
+}
+
+interface MdItemDetail {
+  id: string;
+  name: string;
+  thumbnailImageUrl: string;
+  detailImageUrl: string;
+  price: number;
+  isSoldOut: boolean;
+  productDescription: string;
+  detailDescription: string;
+  optionGroups: OptionGroup[];
+}
+
+interface MdItemDetailResponse {
+  mdItemDetail: MdItemDetail;
+}
+
+type MDDetailRouteProp = RouteProp<{ MDDetail: { id: string; title: string; soldOut: boolean } }, 'MDDetail'>;
 
 export default function MDDetail() {
   const route = useRoute<MDDetailRouteProp>();
-  const { title, soldOut } = route.params;
+  const { id, title, soldOut } = route.params;
+
+  const { data, loading, error } = useQuery<MdItemDetailResponse>(GET_MD_ITEM_DETAIL, {
+    variables: { mdItemId: id },
+  });
+
+  if (error) console.error('[MDDetail] query error:', error.message);
+
+  const detail = data?.mdItemDetail;
+  const images = detail
+    ? [{ uri: detail.thumbnailImageUrl }, { uri: detail.detailImageUrl }]
+    : [];
 
   return (
     <Layout
-      title={title}
+      title={detail?.name ?? title}
       showBack
       scrollable
-      fullBleedHeader={<MDImageCarousel images={MOCK_IMAGES} soldOut={soldOut} />}
+      fullBleedHeader={<MDImageCarousel images={images} soldOut={detail?.isSoldOut ?? soldOut} />}
     >
-
-      <View style={{ paddingTop: 20, paddingHorizontal: 20 }}>
+      <View style={{ paddingTop: 20, paddingHorizontal: 20, alignItems: 'center' }}>
         {/* 뱃지 행 */}
-        <View style={{ flexDirection: 'row', gap: 8 }}>
+        <View style={{ flexDirection: 'row', gap: 8, width: '100%' }}>
           <MDSaleTypeBadge type="preorder" />
           <MDSaleTypeBadge type="onsite" />
         </View>
@@ -34,44 +100,65 @@ export default function MDDetail() {
         {/* 제품 이름 */}
         <Text
           className={typo.T2_Eb}
-          style={{ color: '#1A1A1A', letterSpacing: -0.18, marginTop: 16 }}
+          style={{ color: '#1A1A1A', letterSpacing: -0.18, marginTop: 16, width: '100%' }}
         >
-          {title}
+          {detail?.name ?? title}
         </Text>
 
-        {/* 가격 + 사이즈 뱃지 */}
+        {/* 가격 */}
         <View
           style={{
             flexDirection: 'row',
             justifyContent: 'space-between',
             alignItems: 'center',
             marginTop: 8,
+            width: '100%',
           }}
         >
           <Text className={typo.B3_Rg} style={{ color: '#1A1A1A', letterSpacing: -0.14 }}>
-            {'10,000원'}
+            {detail ? `${detail.price.toLocaleString()}원` : ''}
           </Text>
-          <View style={{ flexDirection: 'row', gap: 4 }}>
-            <MDSizeBadge size="S" />
-            <MDSizeBadge size="M" />
-            <MDSizeBadge size="L" soldOut />
-          </View>
         </View>
+
+        {/* 사이즈 뱃지 */}
+        {detail?.optionGroups.map((group) => (
+          <View key={group.id} style={{ width: '100%', marginTop: 12 }}>
+            <Text className={typo.B5_Rg} style={{ color: '#656565', marginBottom: 8 }}>
+              {group.name}
+            </Text>
+            <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8 }}>
+              {group.values.map((value) => (
+                <MDSizeBadge key={value.id} size={value.valueName} soldOut={value.isSoldOut} />
+              ))}
+            </View>
+          </View>
+        ))}
 
         {/* 구분선 */}
         <View
           style={{
-            width: 335,
             height: 1,
             backgroundColor: '#E4E4E4',
             marginTop: 24,
+            width: '100%',
           }}
         />
+
+        {/* 제품 상세 사진 */}
+        {detail?.detailImageUrl && (
+          <View style={{ alignItems: 'center', marginTop: 24 }}>
+            <Image
+              source={{ uri: detail.detailImageUrl }}
+              style={{ height: 418.75, alignSelf: 'stretch', aspectRatio: 4 / 5 }}
+              resizeMode="contain"
+            />
+          </View>
+        )}
 
         {/* 상세설명 */}
         <Text
           className={typo.B2_Sb}
-          style={{ color: '#656565', letterSpacing: -0.16, marginTop: 24 }}
+          style={{ color: '#656565', letterSpacing: -0.16, marginTop: 24, width: '100%' }}
         >
           상세설명
         </Text>
@@ -79,9 +166,9 @@ export default function MDDetail() {
         {/* 본문 내용 */}
         <Text
           className={typo.B4_Rg}
-          style={{ color: '#1A1A1A', letterSpacing: -0.12, marginTop: 24 }}
+          style={{ color: '#1A1A1A', letterSpacing: -0.12, marginTop: 24, marginBottom: 100, width: '100%' }}
         >
-          {'서강대학교 2026 축구 유니폼입니다.'}
+          {detail?.detailDescription ?? ''}
         </Text>
       </View>
     </Layout>

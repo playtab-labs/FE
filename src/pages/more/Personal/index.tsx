@@ -1,8 +1,8 @@
-import { gql } from "@apollo/client";
-import { useQuery } from "@apollo/client/react";
 import Layout from "@/components/Layout";
 import ToastError from "@/components/common/ToastError";
 import ChangeSelection from "@/components/more/personalchange/ChangeSelection";
+import { gql } from "@apollo/client";
+import { useQuery } from "@apollo/client/react";
 import { useNavigation } from "@react-navigation/native";
 import { useRef, useState } from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
@@ -21,7 +21,15 @@ const GET_ME = gql`
 
 export default function PersonalChange() {
   const navigation = useNavigation<any>();
-  const { data } = useQuery<{ me: { name: string; gender: string; birthDate: string; nationality: string; email: string } }>(GET_ME);
+  const { data } = useQuery<{
+    me: {
+      name: string;
+      gender: string;
+      birthDate: string;
+      nationality: string;
+      email: string;
+    };
+  }>(GET_ME);
   const me = data?.me;
   const [emailToast, setEmailToast] = useState(false);
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -37,7 +45,7 @@ export default function PersonalChange() {
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* 내 정보 */}
         <View className="mt-4">
-          <View className="flex-row items-center justify-between px-[12px] py-2">
+          <View className="flex-row items-center justify-between py-2 px-2">
             <Text className="text-b2 font-sb text-gray-black">내 정보</Text>
             <TouchableOpacity
               onPress={() => navigation.navigate("MyInfoChange")}
@@ -48,14 +56,26 @@ export default function PersonalChange() {
             </TouchableOpacity>
           </View>
           <ChangeSelection label="이름" value={me?.name ?? "-"} />
-          <ChangeSelection label="성별" value={me?.gender === "MALE" ? "남성" : me?.gender === "FEMALE" ? "여성" : "-"} />
-          <ChangeSelection label="생일" value={me?.birthDate?.replace(/-/g, ".") ?? "-"} />
+          <ChangeSelection
+            label="성별"
+            value={
+              me?.gender === "MALE"
+                ? "남성"
+                : me?.gender === "FEMALE"
+                  ? "여성"
+                  : "-"
+            }
+          />
+          <ChangeSelection
+            label="생일"
+            value={me?.birthDate?.replace(/-/g, ".") ?? "-"}
+          />
           <ChangeSelection label="국적" value={me?.nationality ?? "-"} />
         </View>
 
         {/* 로그인 정보 */}
         <View className="mt-10">
-          <View className="px-[12px] py-2">
+          <View className="py-2 px-2">
             <Text className="text-b2 font-sb text-gray-black">로그인 정보</Text>
           </View>
           <ChangeSelection
@@ -74,13 +94,13 @@ export default function PersonalChange() {
         </View>
 
         {/* 회원탈퇴 */}
-        <View className="flex-row items-center justify-between px-[12px] mt-auto py-8">
+        <View className="flex-row items-center justify-between mt-auto py-8 px-2">
           <Text className="text-b4 font-rg text-[#BFBFBF]">
             서비스를 탈퇴하고 싶으신가요?
           </Text>
           <TouchableOpacity
             activeOpacity={0.7}
-            onPress={() => navigation.navigate("ServiceWithdrawal")}
+            onPress={() => navigation.navigate("WithdrawConfirm")}
           >
             <Text className="text-b4 font-rg text-[#BFBFBF] underline">
               회원탈퇴

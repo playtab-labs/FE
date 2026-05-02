@@ -12,6 +12,8 @@ import IdCard from "@/components/more/IdCard";
 import TabList from "@/components/more/TabList";
 import Ticket from "@/components/more/Ticket";
 import { useAuthStore } from "@/stores/authStore";
+import { gql } from "@apollo/client";
+import { useQuery } from "@apollo/client/react";
 import { useNavigation } from "@react-navigation/native";
 import * as SecureStore from "expo-secure-store";
 import { useEffect, useRef, useState } from "react";
@@ -60,12 +62,26 @@ const TICKETS: React.ComponentProps<typeof Ticket>[] = (
 const PEEK = 50; // 뒤 티켓이 앞 티켓 아래로 보이는 높이
 const GAP = 8; // 펼쳐졌을 때 두 티켓 사이 간격
 
+const MY_WRISTBANDS = gql`
+  query MyWristbands {
+    myWristbands {
+      rfid
+      activeDate
+      linkedAt
+    }
+  }
+`;
+
 export default function More() {
   const navigation = useNavigation<any>();
-  const { clearTokens, refreshToken } = useAuthStore();
+  const { clearTokens, refreshToken, accessToken } = useAuthStore();
+  const { data: wristbandData, refetch: refetchWristbands } = useQuery<{
+    myWristbands: { rfid: string; activeDate: string; linkedAt: string }[];
+  }>(MY_WRISTBANDS);
   const [me, setMe] = useState<{ name: string; email: string } | null>(null);
 
   useEffect(() => {
+    if (!accessToken) return;
     const fetchMe = async () => {
       try {
         const token = await SecureStore.getItemAsync("accessToken").catch(
@@ -80,7 +96,8 @@ export default function More() {
       } catch {}
     };
     fetchMe();
-  }, []);
+    refetchWristbands();
+  }, [accessToken]);
 
   const isSogang = me?.email?.endsWith("@sogang.ac.kr") ?? false;
   const [expanded, setExpanded] = useState(false);
@@ -112,14 +129,12 @@ export default function More() {
   });
 
   return (
-    <Layout title="MORE" showBack={false} showCamera={false}>
+    <Layout title="MORE" showBack={false} showCamera={false} noPadding>
       <ScrollView
         showsVerticalScrollIndicator={false}
-        style={{ marginHorizontal: -17 }}
         contentContainerStyle={{
-          paddingHorizontal: 17,
+          paddingHorizontal: 20,
           paddingVertical: 16,
-          alignItems: "center",
           gap: 16,
         }}
       >
@@ -131,10 +146,12 @@ export default function More() {
         />
 
         {/* 티켓 */}
-        {TICKETS.length === 0 ? null : !hasMultiple ? (
+        {!wristbandData || wristbandData.myWristbands.length === 0 ? (
+          <Ticket noticket />
+        ) : !hasMultiple ? (
           <Ticket {...TICKETS[0]} />
         ) : (
-          <View style={{ width: 329 }}>
+          <View style={{ width: "100%" }}>
             {/* 뒤 티켓 — absolute, 상단 PEEK만 노출, 흐릿 → 선명 */}
             <Animated.View
               style={{
@@ -175,7 +192,7 @@ export default function More() {
         )}
 
         {/* 탭 리스트 */}
-        <View className="w-[329px]">
+        <View className="w-full">
           {TAB_ITEMS.map((item) => (
             <TabList
               key={item.label}
@@ -218,7 +235,7 @@ export default function More() {
             await clearTokens();
             navigation.reset({ index: 0, routes: [{ name: "Login" }] });
           }}
-          className="w-[329px] h-11 border border-gray-300 rounded-lg items-center justify-center"
+          className="w-full h-11 border border-gray-300 rounded-lg items-center justify-center"
         >
           <Text className="text-sm text-gray-400">임시 - 로그아웃</Text>
         </TouchableOpacity>

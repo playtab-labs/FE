@@ -22,7 +22,7 @@ export default function Success() {
     <Layout title="PERSONAL" showBack={true} showBottomBar={false}>
       <View className="flex-1 flex-col">
         {/* 문구 */}
-        <View className="py-4 mt-2 gap-4 px-5">
+        <View className="py-4 mt-2 gap-4 ">
           <Text className="text-h1 font-eb text-text-salmon">인식 성공!</Text>
 
           <Text className="text-b3 font-sb text-dark-gray">

@@ -13,7 +13,7 @@ export default function Personal() {
     <Layout title="PERSONAL" showBack={true}>
       <View className="flex-1 flex-col">
         {/* 문구 */}
-        <View className="py-4 mt-2 gap-4 px-5">
+        <View className="py-4 mt-2 gap-4">
           <View className="flex-row items-center">
             <Text className="text-h1 font-eb text-text-salmon">팔찌 연동</Text>
             <Text className="text-h1 font-eb text-gray-black">
