@@ -1,0 +1,96 @@
+{
+  "register": {
+    "title": "Let's create your account.",
+    "subtitle": "Nice to meet you!",
+    "appBar": "Sign Up",
+    "sogangUser": "Start as a Sogang Student",
+    "guestUser": "Start as a Guest",
+    "continue": "Continue"
+  },
+  "personalInfo": {
+    "appBar": "Name and Other Information",
+    "title": "Please enter your name and other information.",
+    "subtitle": "Tell us about yourself.",
+    "nameLabel": "Name",
+    "nameDescription": "Please enter your real name.",
+    "namePlaceholder": "Please enter your name.",
+    "genderLabel": "Gender",
+    "male": "Male",
+    "female": "Female",
+    "birthdayLabel": "Date of Birth",
+    "birthdayPlaceholder": "Please enter 8 digits.",
+    "nationalityLabel": "Nationality",
+    "nationalityDescription": "If you have dual nationality, please select one.",
+    "nationalityPlaceholder": "Select",
+    "confirmTitle": "Is your name \"{{name}}\"?",
+    "confirmWarning": "Your name cannot be changed.\nIf the name you enter is not your real name, your use of the service may be restricted.",
+    "confirmNo": "No",
+    "confirmYes": "Yes, that's correct",
+    "continue": "Continue"
+  },
+  "terms": {
+    "appBar": "Agree to Terms",
+    "title": "Please agree to the terms.",
+    "subtitle": "This is required to use PLAYTAP services.",
+    "all": "All",
+    "agreeAll": "Agree to All Terms",
+    "required": "Required",
+    "agreeTermsOfUse": "Agree to Terms of Use",
+    "agreePrivacy": "Consent to Collection and Use of Personal Information",
+    "agreeLocation": "Location-Based Service Terms of Use",
+    "agreeMarketing": "Consent to Receive Promotional Information",
+    "agreeButton": "I agree to these terms.",
+    "continue": "Continue"
+  },
+  "emailVerify": {
+    "appBar": "Email Verification",
+    "title": "Please verify your Sogang University email.",
+    "subtitle": "You cannot change your email later, so please enter it carefully.",
+    "emailLabel": "Email",
+    "send": "Send",
+    "resend": "Resend",
+    "verificationCodeLabel": "Email Verification Code",
+    "verificationCodePlaceholder": "Please enter the verification code.",
+    "verify": "Verify",
+    "emailAlreadyRegistered": "This email is already registered.",
+    "verifyWithin3Min": "Please verify within 3 minutes.",
+    "codeMismatch": "The verification code does not match.",
+    "verified": "Verified.",
+    "continue": "Continue"
+  },
+  "setPassword": {
+    "appBar": "Set Password",
+    "title": "Please enter your password.",
+    "subtitle": "Use at least 8 characters, including letters and numbers.",
+    "passwordLabel": "Password",
+    "confirmPasswordLabel": "Confirm Password",
+    "confirmPlaceholder": "Please enter your password again.",
+    "formatError": "Please follow the password rules.",
+    "mismatch": "Passwords do not match.",
+    "continue": "Continue"
+  },
+  "signUpComplete": {
+    "appBar": "Sign-Up Complete",
+    "title": "Your sign-up is complete.",
+    "subtitle": "Enjoy ODYSSEY with PLAYTAP.",
+    "continue": "Continue"
+  },
+  "login": {
+    "loginFailed": "Login failed. Please try again shortly.",
+    "emailPlaceholder": "Please enter your email.",
+    "keepLogin": "Keep Me Logged In",
+    "rememberEmail": "Remember Email",
+    "login": "Log In",
+    "findPassword": "Find Password"
+  },
+  "nationality": {
+    "southKorea": "South Korea",
+    "ghana": "Ghana",
+    "nigeria": "Nigeria",
+    "denmark": "Denmark",
+    "russia": "Russia",
+    "usa": "United States",
+    "vietnam": "Vietnam",
+    "serbia": "Serbia"
+  }
+}

@@ -1,0 +1,96 @@
+{
+  "register": {
+    "title": "我們來建立你的帳號。",
+    "subtitle": "很高興見到你！",
+    "appBar": "註冊",
+    "sogangUser": "以西江大學學生身分開始",
+    "guestUser": "以校外訪客身分開始",
+    "continue": "繼續"
+  },
+  "personalInfo": {
+    "appBar": "姓名及其他資訊",
+    "title": "請輸入姓名和其他資訊。",
+    "subtitle": "請告訴我們關於你的資訊。",
+    "nameLabel": "姓名",
+    "nameDescription": "請輸入真實姓名。",
+    "namePlaceholder": "請輸入姓名。",
+    "genderLabel": "性別",
+    "male": "男",
+    "female": "女",
+    "birthdayLabel": "出生日期",
+    "birthdayPlaceholder": "請輸入8位數字。",
+    "nationalityLabel": "國籍",
+    "nationalityDescription": "如有雙重國籍，請選擇其中一個。",
+    "nationalityPlaceholder": "選擇",
+    "confirmTitle": "你的姓名是「{{name}}」嗎？",
+    "confirmWarning": "姓名無法變更。\n若填寫的姓名與真實姓名不一致，服務使用可能會受到限制。",
+    "confirmNo": "不是",
+    "confirmYes": "是的，沒錯",
+    "continue": "繼續"
+  },
+  "terms": {
+    "appBar": "同意條款",
+    "title": "請同意相關條款。",
+    "subtitle": "這是使用 PLAYTAP 服務所必需的。",
+    "all": "全部",
+    "agreeAll": "同意全部條款",
+    "required": "必填",
+    "agreeTermsOfUse": "同意使用條款",
+    "agreePrivacy": "同意蒐集及使用個人資料",
+    "agreeLocation": "位置資訊服務使用條款",
+    "agreeMarketing": "同意接收廣告性資訊",
+    "agreeButton": "我同意該條款。",
+    "continue": "繼續"
+  },
+  "emailVerify": {
+    "appBar": "電子信箱驗證",
+    "title": "請驗證你的西江大學信箱。",
+    "subtitle": "信箱之後無法變更，請謹慎填寫。",
+    "emailLabel": "電子信箱",
+    "send": "發送",
+    "resend": "重新發送",
+    "verificationCodeLabel": "電子信箱驗證碼",
+    "verificationCodePlaceholder": "請輸入驗證碼。",
+    "verify": "驗證",
+    "emailAlreadyRegistered": "該電子信箱已註冊。",
+    "verifyWithin3Min": "請在3分鐘內完成驗證。",
+    "codeMismatch": "驗證碼不一致。",
+    "verified": "已驗證。",
+    "continue": "繼續"
+  },
+  "setPassword": {
+    "appBar": "設定密碼",
+    "title": "請輸入密碼。",
+    "subtitle": "請使用英文字母與數字組合，至少8個字元。",
+    "passwordLabel": "密碼",
+    "confirmPasswordLabel": "確認密碼",
+    "confirmPlaceholder": "請再次輸入密碼。",
+    "formatError": "請按照規則進行設定。",
+    "mismatch": "密碼不一致。",
+    "continue": "繼續"
+  },
+  "signUpComplete": {
+    "appBar": "註冊完成",
+    "title": "註冊已完成。",
+    "subtitle": "和 PLAYTAP 一起享受 ODYSSEY 吧。",
+    "continue": "繼續"
+  },
+  "login": {
+    "loginFailed": "登入失敗。請稍後再試。",
+    "emailPlaceholder": "請輸入電子信箱。",
+    "keepLogin": "保持登入狀態",
+    "rememberEmail": "記住電子信箱",
+    "login": "登入",
+    "findPassword": "找回密碼"
+  },
+  "nationality": {
+    "southKorea": "韓國",
+    "ghana": "迦納",
+    "nigeria": "奈及利亞",
+    "denmark": "丹麥",
+    "russia": "俄羅斯",
+    "usa": "美國",
+    "vietnam": "越南",
+    "serbia": "塞爾維亞"
+  }
+}

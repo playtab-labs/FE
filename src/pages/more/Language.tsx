@@ -1,4 +1,6 @@
 import ConfirmModal from "@/components/common/ConfirmModal";
+import { changeLanguage, SupportedLanguage } from "@/i18n";
+import i18n from "@/i18n";
 import Layout from "@/components/Layout";
 import { useNavigation } from "@react-navigation/native";
 import { useEffect, useRef, useState } from "react";
@@ -15,6 +17,22 @@ import Svg, { Circle, Path } from "react-native-svg";
 type LangKey = "한국어" | "English" | "日本語" | "简体" | "繁體";
 
 const LANGUAGES: LangKey[] = ["한국어", "English", "日本語", "简体", "繁體"];
+
+const LANG_CODE: Record<LangKey, SupportedLanguage> = {
+  한국어: "ko",
+  English: "en",
+  日本語: "ja",
+  简体: "zh",
+  繁體: "zh-TW",
+};
+
+const CODE_TO_LANG: Record<SupportedLanguage, LangKey> = {
+  ko: "한국어",
+  en: "English",
+  ja: "日本語",
+  zh: "简体",
+  "zh-TW": "繁體",
+};
 
 const LANG_STRINGS: Record<
   LangKey,
@@ -125,7 +143,9 @@ function RefreshIcon({
 
 export default function Language() {
   const navigation = useNavigation<any>();
-  const [selected, setSelected] = useState<LangKey>("한국어");
+  const [selected, setSelected] = useState<LangKey>(
+    CODE_TO_LANG[i18n.language as SupportedLanguage] ?? "한국어",
+  );
   const [pendingLang, setPendingLang] = useState<LangKey | null>(null);
   const [showConfirm, setShowConfirm] = useState(false);
   const [showLoading, setShowLoading] = useState(false);
@@ -168,6 +188,7 @@ export default function Language() {
   };
 
   const handleConfirm = () => {
+    if (pendingLang) changeLanguage(LANG_CODE[pendingLang]);
     setShowConfirm(false);
     setShowLoading(true);
   };
