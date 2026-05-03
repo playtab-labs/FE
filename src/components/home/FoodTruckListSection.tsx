@@ -1,29 +1,30 @@
 import MoreButton from "@/components/common/MoreButton";
 import { typo } from "@/styles/typography";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
-import DrinkBoothItem from "./DrinkBoothItem";
+import FoodTruckItem from "./FoodTruckItem";
 
-interface DrinkBoothData {
+interface FoodTruckData {
   id: string | number;
   name: string;
+  description?: string;
 }
 
-interface DrinkBoothListSectionProps {
-  items: DrinkBoothData[];
+interface FoodTruckListSectionProps {
+  items: FoodTruckData[];
   onMorePress?: () => void;
   onItemPress?: (id: string | number) => void;
 }
 
-export default function DrinkBoothListSection({
+export default function FoodTruckListSection({
   items,
   onMorePress,
   onItemPress,
-}: DrinkBoothListSectionProps) {
+}: FoodTruckListSectionProps) {
   return (
     <View style={styles.section}>
       <View style={styles.header}>
         <Text className={typo.T3_Eb} style={styles.sectionTitle}>
-          주점 리스트
+          푸드트럭 리스트
         </Text>
         <MoreButton onPress={onMorePress} />
       </View>
@@ -34,9 +35,10 @@ export default function DrinkBoothListSection({
         contentContainerStyle={styles.list}
       >
         {items.map((item) => (
-          <DrinkBoothItem
+          <FoodTruckItem
             key={item.id}
             name={item.name}
+            description={item.description}
             onPress={() => onItemPress?.(item.id)}
           />
         ))}
