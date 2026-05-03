@@ -1,9 +1,15 @@
 import { View, Text } from 'react-native';
 import { typo } from '@/styles/typography';
+import Prize1 from '@/assets/svgs/stamptour/prize1.svg';
+import Prize2 from '@/assets/svgs/stamptour/prize2.svg';
+import Prize3 from '@/assets/svgs/stamptour/prize3.svg';
+
+const PRIZE_IMAGES = [Prize1, Prize2, Prize3];
 
 const ITEMS = [
-  '9개 미션 중 6개 이상 달성 시 전원 000 증정!',
-  '9개 미션 중 6개 이상 달성 시 에어팟 추첨 자동 응모',
+  '9개 미션 중 6개 이상 달성 시 전원 알로스 키링 증정!',
+  '9개 미션 중 6개 이상 달성 시 BOSE 제품 추첨 자동 응모',
+  '제품: QC 울트라 헤드폰 2개, 오픈 이어버드 3개, 사운드링크 마이크로 2세대 스피커 5개'
 ];
 
 export default function ProductInfo() {
@@ -15,7 +21,7 @@ export default function ProductInfo() {
           padding: 16,
           borderRadius: 8,
           backgroundColor: '#FFFFFF',
-          gap: 14,
+          gap: 8,
         }}
       >
         <Text className={`${typo.T3_Eb} text-gray-black`}>
@@ -31,6 +37,12 @@ export default function ProductInfo() {
             >
               {item}
             </Text>
+          ))}
+        </View>
+
+        <View style={{ flexDirection: 'row', gap: 25, marginTop: 8 }}>
+          {PRIZE_IMAGES.map((PrizeImage, index) => (
+            <PrizeImage key={index} width={93} height={93} />
           ))}
         </View>
       </View>

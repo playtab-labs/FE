@@ -2,11 +2,11 @@ import { View, Text } from 'react-native';
 import { typo } from '@/styles/typography';
 
 const ITEMS = [
-  '하루에 모두 돌 필요 없이, 축제 기간 동안 자유롭게 참여 가능',
-  '인기 부스는 대기 시간이 있을 수 있으니 미리 방문 추천!'
+  '축제 기간 중 청년광장 내 총학생회 부스에 와서 앱을 보여주세요!',
+  'BOSE 이어폰 추첨 당첨자께는 서강메일로 개별 안내드릴 예정입니다.',
 ];
 
-export default function ProductInfo() {
+export default function PrizeInfo() {
   return (
     <View style={{ marginTop: 16, width: '100%' }}>
       <View
@@ -19,7 +19,7 @@ export default function ProductInfo() {
         }}
       >
         <Text className={`${typo.T3_Eb} text-gray-black`}>
-          💡 TIP
+          경품 수령 방법
         </Text>
 
         <View>
