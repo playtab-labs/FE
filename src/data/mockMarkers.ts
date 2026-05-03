@@ -7,6 +7,10 @@ export interface MarkerData {
   /** 원본 지도 이미지 기준 비율 (0~1) */
   fx: number;
   fy: number;
+  image: ReturnType<typeof require>;
+  /** true이면 day1(5/13)에만 표시 */
+  day1Only?: boolean;
+  desc?: string;
 }
 
 export interface BoothItem {
@@ -33,11 +37,131 @@ export const MOCK_BOOTH_ITEMS: Record<string, BoothItem[]> = {
 };
 
 export const MOCK_MARKERS: MarkerData[] = [
-  { id: "m1", label: "버스킹 무대", type: "main", fx: 0.42, fy: 0.38 },
-  { id: "m2", label: "아티스트 무대", type: "main", fx: 0.72, fy: 0.52 },
-  { id: "m3", label: "주점", type: "main", fx: 0.2, fy: 0.58 },
-  { id: "m4", label: "MD", type: "sub", fx: 0.28, fy: 0.35 },
-  { id: "m5", label: "푸드", type: "sub", fx: 0.58, fy: 0.62 },
-  { id: "m6", label: "📷", type: "facility", fx: 0.5, fy: 0.5 },
-  { id: "m7", label: "🚬", type: "facility", fx: 0.46, fy: 0.48 },
+  {
+    // DJ 부스 (완)
+    id: "m1",
+    label: "DJ Booth",
+    type: "main",
+    fx: 0.54,
+    fy: 0.565,
+    image: require("@/assets/map_main_djbooth.png"),
+  },
+  // {
+  //   id: "m2",
+  //   label: "아티스트 무대",
+  //   type: "main",
+  //   fx: 0.72,
+  //   fy: 0.52,
+  //   image: require("@/assets/map_main_djbooth.png"),
+  // },
+  {
+    // 주점 (완)
+    id: "m3",
+    label: "주점",
+    type: "main",
+    fx: 0.57,
+    fy: 0.568,
+    image: require("@/assets/map_main_pub.png"),
+  },
+  {
+    // 플리마켓 (완) -> day 1에만 보이게
+    id: "m4",
+    label: "플리마켓",
+    type: "sub",
+    fx: 0.8,
+    fy: 0.56,
+    image: require("@/assets/map_sub_market.png"),
+    day1Only: true,
+  },
+  {
+    // 돗자리 배부 (완)
+    id: "m5",
+    label: "돗자리 배부",
+    type: "sub",
+    fx: 0.48,
+    fy: 0.51,
+    image: require("@/assets/map_sub_mat.png"),
+  },
+  {
+    // 위치 아직 안나옴
+    id: "m6",
+    label: "📷",
+    type: "facility",
+    fx: 0.284,
+    fy: 0.5,
+    image: require("@/assets/map_sub_photo.png"),
+  },
+  {
+    // 입학처 흡구 (완)
+    id: "m7",
+    label: "🚬",
+    type: "facility",
+    fx: 0.214,
+    fy: 0.621,
+    image: require("@/assets/map_sub_smoking.png"),
+  },
+  {
+    // 마태오관 흡구 (완)
+    id: "m8",
+    label: "🚬",
+    type: "facility",
+    fx: 0.235,
+    fy: 0.355,
+    image: require("@/assets/map_sub_smoking.png"),
+  },
+  {
+    // GA 관 흡구 (완)
+    id: "m9",
+    label: "🚬",
+    type: "facility",
+    fx: 0.16,
+    fy: 0.445,
+    image: require("@/assets/map_sub_smoking.png"),
+  },
+  {
+    // X관 흡구 (완)
+    id: "m10",
+    label: "🚬",
+    type: "facility",
+    fx: 0.845,
+    fy: 0.451,
+    image: require("@/assets/map_sub_smoking.png"),
+  },
+  {
+    // 하이트 진로
+    id: "m11",
+    label: "🎈",
+    desc: "하이트 진로",
+    type: "facility",
+    fx: 0.495,
+    fy: 0.575,
+    image: require("@/assets/map_sub_popup.png"),
+  },
+  // {
+  //   // 레드불
+  //   id: "m12",
+  //   label: "🎈",
+  //   type: "facility",
+  //   fx: 0.54,
+  //   fy: 0.565,
+  //   image: require("@/assets/map_sub_popup.png"),
+  // },
+  {
+    // k관 위
+    id: "m13",
+    label: "📷",
+    type: "facility",
+    fx: 0.31,
+    fy: 0.62,
+    image: require("@/assets/map_sub_photo.png"),
+  },
+  {
+    // J관 위
+    id: "m14",
+    label: "📷",
+    type: "facility",
+    fx: 0.79,
+    fy: 0.58,
+    image: require("@/assets/map_sub_photo.png"),
+  },
 ];
