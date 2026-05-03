@@ -6,6 +6,7 @@ import { useQuery } from "@apollo/client/react";
 import { useNavigation } from "@react-navigation/native";
 import { useRef, useState } from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { useTranslation } from "react-i18next";
 
 const GET_ME = gql`
   query GetMe {
@@ -20,6 +21,7 @@ const GET_ME = gql`
 `;
 
 export default function PersonalChange() {
+  const { t } = useTranslation();
   const navigation = useNavigation<any>();
   const { data } = useQuery<{
     me: {
@@ -41,52 +43,52 @@ export default function PersonalChange() {
   };
 
   return (
-    <Layout title="개인정보 변경" showBack showCamera={false}>
+    <Layout title={t("more.editPersonalInfo")} showBack showCamera={false}>
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* 내 정보 */}
         <View className="mt-4">
           <View className="flex-row items-center justify-between py-2 px-2">
-            <Text className="text-b2 font-sb text-gray-black">내 정보</Text>
+            <Text className="text-b2 font-sb text-gray-black">{t("personalChange.myInfoSection")}</Text>
             <TouchableOpacity
               onPress={() => navigation.navigate("MyInfoChange")}
               activeOpacity={0.7}
               className="flex-row bg-extra-white rounded-2xl items-center justify-center px-[8px] py-[6px]"
             >
-              <Text className="text-b4 font-sb text-dark-gray">변경하기</Text>
+              <Text className="text-b4 font-sb text-dark-gray">{t("personalChange.editButton")}</Text>
             </TouchableOpacity>
           </View>
-          <ChangeSelection label="이름" value={me?.name ?? "-"} />
+          <ChangeSelection label={t("personalInfo.nameLabel")} value={me?.name ?? "-"} />
           <ChangeSelection
-            label="성별"
+            label={t("personalInfo.genderLabel")}
             value={
               me?.gender === "MALE"
-                ? "남성"
+                ? t("personalInfo.male")
                 : me?.gender === "FEMALE"
-                  ? "여성"
+                  ? t("personalInfo.female")
                   : "-"
             }
           />
           <ChangeSelection
-            label="생일"
+            label={t("personalInfo.birthdayLabel")}
             value={me?.birthDate?.replace(/-/g, ".") ?? "-"}
           />
-          <ChangeSelection label="국적" value={me?.nationality ?? "-"} />
+          <ChangeSelection label={t("personalInfo.nationalityLabel")} value={me?.nationality ?? "-"} />
         </View>
 
         {/* 로그인 정보 */}
         <View className="mt-10">
           <View className="py-2 px-2">
-            <Text className="text-b2 font-sb text-gray-black">로그인 정보</Text>
+            <Text className="text-b2 font-sb text-gray-black">{t("personalChange.loginInfoSection")}</Text>
           </View>
           <ChangeSelection
-            label="이메일"
+            label={t("emailVerify.emailLabel")}
             value={me?.email ?? "-"}
             onRowPress={showEmailToast}
             dimmed
-            rightLabel="이메일은 변경할 수 없습니다."
+            rightLabel={t("personalChange.emailNotChangeable")}
           />
           <ChangeSelection
-            label="비밀번호"
+            label={t("setPassword.passwordLabel")}
             value="**********"
             onRowPress={() => navigation.navigate("PasswordChange")}
             showChevron
@@ -96,14 +98,14 @@ export default function PersonalChange() {
         {/* 회원탈퇴 */}
         <View className="flex-row items-center justify-between mt-auto py-8 px-2">
           <Text className="text-b4 font-rg text-[#BFBFBF]">
-            서비스를 탈퇴하고 싶으신가요?
+            {t("personalChange.leaveQuestion")}
           </Text>
           <TouchableOpacity
             activeOpacity={0.7}
             onPress={() => navigation.navigate("WithdrawConfirm")}
           >
             <Text className="text-b4 font-rg text-[#BFBFBF] underline">
-              회원탈퇴
+              {t("personalChange.deleteAccount")}
             </Text>
           </TouchableOpacity>
         </View>
@@ -111,7 +113,7 @@ export default function PersonalChange() {
 
       {emailToast && (
         <View className="absolute bottom-[16px] left-0 right-0 items-center">
-          <ToastError type="email" message="이메일은 변경할 수 없습니다." />
+          <ToastError type="email" message={t("personalChange.emailNotChangeable")} />
         </View>
       )}
     </Layout>

@@ -24,40 +24,25 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { useTranslation } from "react-i18next";
 
 const TAB_ITEMS = [
-  { label: "개인정보 변경", icon: <ProfileIcon width={24} height={24} /> },
-  { label: "공지사항", icon: <RingIcon width={24} height={24} /> },
-  { label: "언어", icon: <LanguageIcon width={24} height={24} /> },
-  { label: "FAQ", icon: <FaqIcon width={24} height={24} /> },
-  { label: "주최 주관 정보", icon: <HostIcon width={24} height={24} /> },
-  { label: "후원 협찬", icon: <SponsorIcon width={24} height={24} /> },
-  { label: "이용약관", icon: <TermIcon width={24} height={24} /> },
+  { key: "editPersonalInfo", screen: "PersonalChange", icon: <ProfileIcon width={24} height={24} /> },
+  { key: "notices", screen: "Notice", icon: <RingIcon width={24} height={24} /> },
+  { key: "language", screen: "Language", icon: <LanguageIcon width={24} height={24} /> },
+  { key: "faq", screen: "FAQ", icon: <FaqIcon width={24} height={24} /> },
+  { key: "hostOrganizerInfo", screen: "Host", icon: <HostIcon width={24} height={24} /> },
+  { key: "sponsors", screen: "Sponsor", icon: <SponsorIcon width={24} height={24} /> },
+  { key: "termsOfUse", screen: "Terms", icon: <TermIcon width={24} height={24} /> },
 ];
 
-// day 내림차순 정렬 (3>2>1)
-const TICKETS: React.ComponentProps<typeof Ticket>[] = (
-  [
-    {
-      day: 3,
-      status: "available",
-      date: "26.05.14",
-      time: "18:00~22:00",
-      location: "청년광장",
-    },
-    {
-      day: 2,
-      status: "expired",
-      date: "26.05.14",
-      time: "18:00~22:00",
-      location: "청년광장",
-    },
-  ] as React.ComponentProps<typeof Ticket>[]
-).sort((a, b) => {
-  const dayA = "day" in a ? a.day : 0;
-  const dayB = "day" in b ? b.day : 0;
-  return dayB - dayA;
-});
+const LANG_NAMES: Record<string, string> = {
+  ko: "한국어",
+  en: "English",
+  ja: "日本語",
+  zh: "中文(简体)",
+  "zh-TW": "中文(繁體)",
+};
 
 const PEEK = 50; // 뒤 티켓이 앞 티켓 아래로 보이는 높이
 const GAP = 8; // 펼쳐졌을 때 두 티켓 사이 간격
@@ -73,6 +58,31 @@ const MY_WRISTBANDS = gql`
 `;
 
 export default function More() {
+  const { t, i18n } = useTranslation();
+
+  const TICKETS: React.ComponentProps<typeof Ticket>[] = (
+    [
+      {
+        day: 3,
+        status: "available",
+        date: "26.05.14",
+        time: "18:00~22:00",
+        location: t("more.youthPlaza"),
+      },
+      {
+        day: 2,
+        status: "expired",
+        date: "26.05.14",
+        time: "18:00~22:00",
+        location: t("more.youthPlaza"),
+      },
+    ] as React.ComponentProps<typeof Ticket>[]
+  ).sort((a, b) => {
+    const dayA = "day" in a ? a.day : 0;
+    const dayB = "day" in b ? b.day : 0;
+    return dayB - dayA;
+  });
+
   const navigation = useNavigation<any>();
   const { clearTokens, refreshToken, accessToken } = useAuthStore();
   const { data: wristbandData, refetch: refetchWristbands } = useQuery<{
@@ -129,7 +139,7 @@ export default function More() {
   });
 
   return (
-    <Layout title="MORE" showBack={false} showCamera={false} noPadding>
+    <Layout title={t("more.appBar")} showBack={false} showCamera={false} noPadding>
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
@@ -195,30 +205,14 @@ export default function More() {
         <View className="w-full">
           {TAB_ITEMS.map((item) => (
             <TabList
-              key={item.label}
+              key={item.key}
               icon={item.icon}
-              label={item.label}
-              onPress={
-                item.label === "개인정보 변경"
-                  ? () => navigation.navigate("PersonalChange")
-                  : item.label === "공지사항"
-                    ? () => navigation.navigate("Notice")
-                    : item.label === "FAQ"
-                      ? () => navigation.navigate("FAQ")
-                      : item.label === "주최 주관 정보"
-                        ? () => navigation.navigate("Host")
-                        : item.label === "후원 협찬"
-                          ? () => navigation.navigate("Sponsor")
-                          : item.label === "언어"
-                            ? () => navigation.navigate("Language")
-                            : item.label === "이용약관"
-                              ? () => navigation.navigate("Terms")
-                              : undefined
-              }
+              label={t(`more.${item.key}`)}
+              onPress={() => navigation.navigate(item.screen)}
               rightElement={
-                item.label === "언어" ? (
+                item.key === "language" ? (
                   <Text className="text-b4 font-rg text-[#656565] text-right">
-                    한국어
+                    {LANG_NAMES[i18n.language] ?? i18n.language}
                   </Text>
                 ) : undefined
               }
