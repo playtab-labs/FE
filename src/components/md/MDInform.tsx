@@ -9,7 +9,7 @@ const ITEMS = [
 
 export default function ProductInfo() {
   return (
-    <View style={{ marginTop: 16, width: '100%' }}>
+    <View style={{ width: '100%' }}>
       <View
         style={{
           width: '100%',
@@ -17,7 +17,7 @@ export default function ProductInfo() {
           paddingHorizontal: 25,
           borderRadius: 8,
           backgroundColor: '#FFFFFF',
-          gap: 16,
+          gap: 10,
         }}
       >
         <Text className={`${typo.T2_Eb} text-gray-black`}>
