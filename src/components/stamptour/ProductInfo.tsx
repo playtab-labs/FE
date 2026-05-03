@@ -1,5 +1,10 @@
 import { View, Text } from 'react-native';
 import { typo } from '@/styles/typography';
+import Prize1 from '@/assets/svgs/stamptour/prize1.svg';
+import Prize2 from '@/assets/svgs/stamptour/prize2.svg';
+import Prize3 from '@/assets/svgs/stamptour/prize3.svg';
+
+const PRIZE_IMAGES = [Prize1, Prize2, Prize3];
 
 const ITEMS = [
   '9개 미션 중 6개 이상 달성 시 전원 알로스 키링 증정!',
@@ -32,6 +37,12 @@ export default function ProductInfo() {
             >
               {item}
             </Text>
+          ))}
+        </View>
+
+        <View style={{ flexDirection: 'row', gap: 25, marginTop: 8 }}>
+          {PRIZE_IMAGES.map((PrizeImage, index) => (
+            <PrizeImage key={index} width={93} height={93} />
           ))}
         </View>
       </View>
