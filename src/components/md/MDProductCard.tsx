@@ -62,6 +62,7 @@ export default function MDProductCard({ imageSource, title, price, soldOut = fal
       <View
         style={{
           padding: 16,
+          paddingTop:13,
           paddingBottom: 0,
           flexDirection: 'column',
           alignItems: 'flex-start',
@@ -77,7 +78,7 @@ export default function MDProductCard({ imageSource, title, price, soldOut = fal
           {title}
         </Text>
 
-        <Text className={typo.B5_Rg} style={{ color: '#1A1A1A', marginTop: 14, letterSpacing: -0.1 }}>
+        <Text className={typo.B5_Rg} style={{ color: '#1A1A1A', marginTop: 10, letterSpacing: -0.1 }}>
           {price}
         </Text>
       </View>
