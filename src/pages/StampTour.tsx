@@ -5,6 +5,7 @@ import HowToParticipate from '@/components/stamptour/HowToParticipate';
 import ProductInfo from '@/components/stamptour/ProductInfo';
 import StampToast from '@/components/stamptour/StampToast';
 import TipInfo from '@/components/stamptour/TipInfo'
+import PrizeInfo from '@/components/stamptour/PrizeInfo'
 import { getMyStamps, MyStampsResult } from '@/api/stamp';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -123,6 +124,8 @@ export default function StampTour() {
       <HowToParticipate />
 
       <ProductInfo />
+
+      <PrizeInfo />
 
       <TipInfo />
       <View style={{ height: 80 }} />
