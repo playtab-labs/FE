@@ -1,4 +1,4 @@
-import { getPubs } from "@/api/booth";
+import { getFoodTrucks, getPubs } from "@/api/booth";
 import { getNotices } from "@/api/notice";
 import { getMyStamps } from "@/api/stamp";
 import Layout from "@/components/Layout";
@@ -18,14 +18,6 @@ import adbanner1 from '@/assets/pngs/adbanner1.png';
 
 const AD_BANNERS = [1, 2];
 
-
-const SAMPLE_FOOD_TRUCKS = [
-  { id: 1, name: "맛있는 트럭", menu: "불초밥" },
-  { id: 2, name: "버거킹 트럭", menu: "수제버거" },
-  { id: 3, name: "달콤한 트럭", menu: "디저트 & 음료" },
-  { id: 4, name: "타코 트럭", menu: "멕시칸 푸드" },
-];
-
 const formatDate = (postedAt: string) => postedAt.split("T")[0].replace(/-/g, ".");
 
 export default function Home() {
@@ -39,6 +31,7 @@ export default function Home() {
   const [homeNotices, setHomeNotices] = useState<
     { id: string; title: string; date: string; badge?: "NEW" | "필독" }[]
   >([]);
+  const [foodTrucks, setFoodTrucks] = useState<{ id: string; name: string; menu?: string }[]>([]);
 
   useEffect(() => {
     loadEmail().then((email) =>
@@ -56,11 +49,25 @@ export default function Home() {
     getPubs()
       .then((res) =>
         setDrinkBooths(
-          res.data.pubs.map((p: { id: string; collegeName: string; thumbnailImageUrl: string }) => ({
-            id: p.id,
-            name: p.collegeName,
-            thumbnailImageUrl: p.thumbnailImageUrl,
-          }))
+          [...res.data.pubs]
+            .sort((a: { displayOrder: number }, b: { displayOrder: number }) => a.displayOrder - b.displayOrder)
+            .map((p: { id: string; collegeName: string; thumbnailImageUrl: string }) => ({
+              id: p.id,
+              name: p.collegeName,
+              thumbnailImageUrl: p.thumbnailImageUrl,
+            }))
+        )
+      )
+      .catch(() => {});
+  }, []);
+
+  useEffect(() => {
+    getFoodTrucks()
+      .then((res) =>
+        setFoodTrucks(
+          [...res.data.foodTrucks]
+            .sort((a: { displayOrder: number }, b: { displayOrder: number }) => a.displayOrder - b.displayOrder)
+            .map((t: { id: string; name: string; shortDescription?: string }) => ({ id: t.id, name: t.name, menu: t.shortDescription }))
         )
       )
       .catch(() => {});
@@ -121,7 +128,7 @@ export default function Home() {
         <DrinkBoothListSection items={drinkBooths} />
       </View>
       <View style={{ marginTop: 24, marginBottom: 50 }}>
-        <FoodTruckListSection items={SAMPLE_FOOD_TRUCKS} />
+        <FoodTruckListSection items={foodTrucks} />
       </View>
     </Layout>
   );
