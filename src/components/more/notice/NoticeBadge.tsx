@@ -9,7 +9,7 @@ interface NoticeBadgeProps {
 
 export default function NoticeBadge({ type }: NoticeBadgeProps) {
   return (
-    <View style={styles.badge}>
+    <View style={[styles.badge, type === 'NEW' && styles.badgeNew]}>
       <Text className={typo.B5_Sb} style={styles.text}>{type}</Text>
     </View>
   );
@@ -17,12 +17,15 @@ export default function NoticeBadge({ type }: NoticeBadgeProps) {
 
 const styles = StyleSheet.create({
   badge: {
-    paddingHorizontal: 6,
-    paddingVertical: 6,
+    paddingHorizontal: 7,
+    paddingVertical: 5,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 20,
     backgroundColor: '#FFA38C',
+  },
+  badgeNew: {
+    backgroundColor: '#FFDAD1',
   },
   text: {
     color: '#1A1A1A',

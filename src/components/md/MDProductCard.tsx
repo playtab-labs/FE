@@ -1,16 +1,14 @@
 import { Image, ImageSourcePropType, Text, View } from 'react-native';
 import { typo } from '@/styles/typography';
-import MDSizeBadge from './MDSizeBadge';
 
 interface MDProductCardProps {
   imageSource: ImageSourcePropType;
   title: string;
   price: string;
-  sizes?: string[];
   soldOut?: boolean;
 }
 
-export default function MDProductCard({ imageSource, title, price, sizes, soldOut = false }: MDProductCardProps) {
+export default function MDProductCard({ imageSource, title, price, soldOut = false }: MDProductCardProps) {
   return (
     <View
       style={{
@@ -67,30 +65,19 @@ export default function MDProductCard({ imageSource, title, price, sizes, soldOu
           paddingBottom: 0,
           flexDirection: 'column',
           alignItems: 'flex-start',
-          gap: 16,
           alignSelf: 'stretch',
         }}
       >
-        <View style={{ flexDirection: 'column', alignItems: 'flex-start', alignSelf: 'stretch' }}>
-          <Text
-            className={typo.B3_Eb}
-            style={{ color: '#1A1A1A' }}
-            numberOfLines={1}
-            ellipsizeMode="tail"
-          >
-            {title}
-          </Text>
+        <Text
+          className={typo.B3_Eb}
+          style={{ color: '#1A1A1A', alignSelf: 'stretch' }}
+          numberOfLines={1}
+          ellipsizeMode="tail"
+        >
+          {title}
+        </Text>
 
-          {sizes && sizes.length > 0 && (
-            <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 2, marginTop: 8 }}>
-              {sizes.map((size) => (
-                <MDSizeBadge key={size} size={size} soldOut={soldOut} />
-              ))}
-            </View>
-          )}
-        </View>
-
-        <Text className={typo.B5_Rg} style={{ color: '#1A1A1A' }}>
+        <Text className={typo.B5_Rg} style={{ color: '#1A1A1A', marginTop: 14, letterSpacing: -0.1 }}>
           {price}
         </Text>
       </View>

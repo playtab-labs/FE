@@ -19,7 +19,7 @@ export default function ConfirmModal({
   description,
   confirmLabel = "확인",
   cancelLabel = "취소",
-  confirmColor = "#FFA38C",
+  confirmColor = "#FFAD96",
   onConfirm,
   onCancel,
 }: ConfirmModalProps) {

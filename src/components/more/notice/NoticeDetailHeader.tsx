@@ -27,7 +27,7 @@ export default function NoticeDetailHeader({ title, date, badge }: NoticeDetailH
 const styles = StyleSheet.create({
   container: {
     alignSelf: 'stretch',
-    gap: 16,
+    gap: 8,
   },
   title: {
     alignSelf: 'stretch',

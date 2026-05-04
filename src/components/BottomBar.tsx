@@ -66,7 +66,11 @@ export default function BottomBar({ state, navigation }: BottomTabBarProps) {
                   : { width: 68 }
               }
               className={isHome ? "" : "items-center justify-center gap-1 py-4"}
-              onPress={() => navigation.navigate(item.name)}
+              onPress={() =>
+                item.name === "More"
+                  ? navigation.navigate("More", { screen: "MoreMain" })
+                  : navigation.navigate(item.name)
+              }
               activeOpacity={0.7}
             >
               {isHome ? (

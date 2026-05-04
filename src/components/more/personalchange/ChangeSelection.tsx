@@ -21,7 +21,7 @@ export default function ChangeSelection({
 }: ChangeSelectionProps) {
   return (
     <TouchableOpacity
-      className="px-4 py-4 self-stretch"
+      className="px-2 py-4 self-stretch"
       onPress={onRowPress}
       activeOpacity={onRowPress ? 0.7 : 1}
       disabled={!onRowPress}

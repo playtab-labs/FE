@@ -6,7 +6,6 @@ import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Image as ExpoImage } from "expo-image";
 import { useEffect, useState } from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
-import NfcManager, { NfcTech } from "react-native-nfc-manager";
 import Animated, {
   Easing,
   useAnimatedStyle,
@@ -16,6 +15,17 @@ import Animated, {
   withSequence,
   withTiming,
 } from "react-native-reanimated";
+
+let NfcManager: any = null;
+let NfcTech: any = null;
+try {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const nfc = require("react-native-nfc-manager");
+  NfcManager = nfc.default;
+  NfcTech = nfc.NfcTech;
+} catch {
+  // Expo Go 환경 — NFC 네이티브 모듈 없음
+}
 
 const AnimatedImage = Animated.createAnimatedComponent(Image);
 
@@ -40,6 +50,7 @@ export default function Tag() {
     let cancelled = false;
 
     const startNfc = async () => {
+      if (!NfcManager) return;
       try {
         await NfcManager.start();
         await NfcManager.requestTechnology(NfcTech.NfcA);
@@ -62,14 +73,14 @@ export default function Tag() {
       } catch (e) {
         // NFC 미지원 기기이거나 취소된 경우 무시
       } finally {
-        NfcManager.cancelTechnologyRequest();
+        NfcManager?.cancelTechnologyRequest();
       }
     };
 
     startNfc();
     return () => {
       cancelled = true;
-      NfcManager.cancelTechnologyRequest();
+      NfcManager?.cancelTechnologyRequest();
     };
   }, []);
 
@@ -120,7 +131,7 @@ export default function Tag() {
     <Layout title="PERSONAL" showBack={true} showBottomBar={false}>
       <View className="flex-1 flex-col justify-start">
         {/* 문구 */}
-        <View className="mt-2 gap-4 py-4 px-5" style={{ zIndex: 1 }}>
+        <View className="mt-2 gap-4 py-4" style={{ zIndex: 1 }}>
           <View className="flex-row items-center">
             <Text className="text-h1 font-eb text-gray-black">휴대폰에 </Text>
             <Text className="text-h1 font-eb text-text-salmon">

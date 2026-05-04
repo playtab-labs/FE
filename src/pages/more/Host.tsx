@@ -1,3 +1,5 @@
+import HangHaeIcon from "@/assets/svgs/HangHae.svg";
+import SogangIcon from "@/assets/svgs/Sogang.svg";
 import Layout from "@/components/Layout";
 import HostLinker from "@/components/more/host/HostLinker";
 import { ScrollView, Text, View } from "react-native";
@@ -5,22 +7,22 @@ import { ScrollView, Text, View } from "react-native";
 const HOST_ITEMS = [
   {
     name: "서강대학교",
-    logo: require("@/assets/pngs/soganghost.png"),
+    logo: SogangIcon,
     url: "https://www.sogang.ac.kr",
   },
   {
     name: "서강대학교 총학생회 '항해'",
-    logo: require("@/assets/pngs/goto.png"),
+    logo: HangHaeIcon,
     url: "https://student.sogang.ac.kr/student/",
   },
   {
     name: "서강대학교 어쩌구저쩌구",
-    logo: require("@/assets/pngs/goto.png"),
+    logo: HangHaeIcon,
     url: "https://www.sogang.ac.kr",
   },
   {
     name: "서강대학교 어쩌구저쩌구",
-    logo: require("@/assets/pngs/goto.png"),
+    logo: HangHaeIcon,
     url: "https://www.sogang.ac.kr",
   },
 ];
@@ -30,14 +32,11 @@ export default function Host() {
     <Layout title="주최 주관 정보" showBack showCamera={false}>
       <ScrollView
         showsVerticalScrollIndicator={false}
-        style={{ marginHorizontal: -17 }}
         contentContainerStyle={{
-          paddingHorizontal: 17,
           paddingTop: 24,
           paddingBottom: 32,
           gap: 16,
         }}
-        className="px-4"
       >
         <View className="gap-2 mb-10">
           <Text className="text-h1 font-eb text-gray-black">

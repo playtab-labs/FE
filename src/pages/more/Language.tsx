@@ -1,7 +1,7 @@
+import ConfirmModal from "@/components/common/ConfirmModal";
 import Layout from "@/components/Layout";
 import { useNavigation } from "@react-navigation/native";
 import { useEffect, useRef, useState } from "react";
-import ConfirmModal from "@/components/common/ConfirmModal";
 import {
   Animated,
   Easing,
@@ -186,7 +186,7 @@ export default function Language() {
               key={lang}
               onPress={() => handlePress(lang)}
               activeOpacity={0.7}
-              className="flex-row items-center gap-3 px-[17px] py-6 border-b border-b-[rgba(191,191,191,0.30)]"
+              className="flex-row items-center gap-3 px-[10px] py-6 border-b border-b-[rgba(191,191,191,0.30)]"
             >
               <RadioIcon active={isSelected} />
               <Text
@@ -206,7 +206,7 @@ export default function Language() {
         description={strings.sub}
         confirmLabel={strings.change}
         cancelLabel={strings.back}
-        confirmColor="#FF7654"
+        confirmColor="#FFAD96"
         onConfirm={handleConfirm}
         onCancel={() => setShowConfirm(false)}
       />

@@ -32,7 +32,8 @@ export type RootStackParamList = {
   SignUpComplete: undefined;
   FindPassword: undefined;
   ResetPassword: undefined;
-  StampTour: undefined;
+  LoadingScreen: undefined;
+  StampTour: { newStampTitle?: string } | undefined;
   QrScan: undefined;
   Tag: undefined;
   SerialInput: undefined;
