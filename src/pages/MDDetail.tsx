@@ -6,7 +6,8 @@ import { typo } from '@/styles/typography';
 import { gql } from '@apollo/client';
 import { useQuery } from '@apollo/client/react';
 import { RouteProp, useRoute } from '@react-navigation/native';
-import { Image, Text, View } from 'react-native';
+import { Image, Text, useWindowDimensions, View } from 'react-native';
+import { useEffect, useState } from 'react';
 
 const GET_MD_ITEM_DETAIL = gql`
   query MdItemDetail($mdItemId: ID!) {
@@ -18,7 +19,6 @@ const GET_MD_ITEM_DETAIL = gql`
       price
       isSoldOut
       productDescription
-      detailDescription
       optionGroups {
         id
         name
@@ -58,7 +58,6 @@ interface MdItemDetail {
   price: number;
   isSoldOut: boolean;
   productDescription: string;
-  detailDescription: string;
   optionGroups: OptionGroup[];
 }
 
@@ -71,6 +70,8 @@ type MDDetailRouteProp = RouteProp<{ MDDetail: { id: string; title: string; sold
 export default function MDDetail() {
   const route = useRoute<MDDetailRouteProp>();
   const { id, title, soldOut } = route.params;
+  const { width } = useWindowDimensions();
+  const [detailImageHeight, setDetailImageHeight] = useState<number>(0);
 
   const { data, loading, error } = useQuery<MdItemDetailResponse>(GET_MD_ITEM_DETAIL, {
     variables: { mdItemId: id },
@@ -79,18 +80,23 @@ export default function MDDetail() {
   if (error) console.error('[MDDetail] query error:', error.message);
 
   const detail = data?.mdItemDetail;
-  const images = detail
-    ? [{ uri: detail.thumbnailImageUrl }, { uri: detail.detailImageUrl }]
-    : [];
+  const image = detail ? { uri: detail.thumbnailImageUrl } : undefined;
+
+  useEffect(() => {
+    if (!detail?.detailImageUrl) return;
+    Image.getSize(detail.detailImageUrl, (imgWidth, imgHeight) => {
+      setDetailImageHeight((imgHeight / imgWidth) * width);
+    });
+  }, [detail?.detailImageUrl, width]);
 
   return (
     <Layout
       title={detail?.name ?? title}
       showBack
       scrollable
-      fullBleedHeader={<MDImageCarousel images={images} soldOut={detail?.isSoldOut ?? soldOut} />}
+      fullBleedHeader={image && <MDImageCarousel image={image} soldOut={detail?.isSoldOut ?? soldOut} />}
     >
-      <View style={{ paddingTop: 20, paddingHorizontal: 20, alignItems: 'center' }}>
+      <View style={{ paddingTop: 20, alignItems: 'center' }}>
         {/* 뱃지 행 */}
         <View style={{ flexDirection: 'row', gap: 8, width: '100%' }}>
           <MDSaleTypeBadge type="preorder" />
@@ -100,76 +106,54 @@ export default function MDDetail() {
         {/* 제품 이름 */}
         <Text
           className={typo.T2_Eb}
-          style={{ color: '#1A1A1A', letterSpacing: -0.18, marginTop: 16, width: '100%' }}
+          style={{ color: '#1A1A1A', letterSpacing: -0.18, marginTop: 14, width: '100%' }}
         >
           {detail?.name ?? title}
         </Text>
 
-        {/* 가격 */}
+        {/* 가격 + 사이즈 뱃지 */}
         <View
           style={{
             flexDirection: 'row',
             justifyContent: 'space-between',
             alignItems: 'center',
-            marginTop: 8,
+            marginTop: 6,
             width: '100%',
           }}
         >
           <Text className={typo.B3_Rg} style={{ color: '#1A1A1A', letterSpacing: -0.14 }}>
             {detail ? `${detail.price.toLocaleString()}원` : ''}
           </Text>
-        </View>
-
-        {/* 사이즈 뱃지 */}
-        {detail?.optionGroups.map((group) => (
-          <View key={group.id} style={{ width: '100%', marginTop: 12 }}>
-            <Text className={typo.B5_Rg} style={{ color: '#656565', marginBottom: 8 }}>
-              {group.name}
-            </Text>
-            <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8 }}>
-              {group.values.map((value) => (
+          <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8, justifyContent: 'flex-end' }}>
+            {detail?.optionGroups.flatMap((group) =>
+              group.values.map((value) => (
                 <MDSizeBadge key={value.id} size={value.valueName} soldOut={value.isSoldOut} />
-              ))}
-            </View>
+              ))
+            )}
           </View>
-        ))}
+        </View>
 
         {/* 구분선 */}
         <View
           style={{
             height: 1,
             backgroundColor: '#E4E4E4',
-            marginTop: 24,
+            marginTop: 20,
             width: '100%',
           }}
         />
 
         {/* 제품 상세 사진 */}
-        {detail?.detailImageUrl && (
-          <View style={{ alignItems: 'center', marginTop: 24 }}>
+        {detail?.detailImageUrl && detailImageHeight > 0 && (
+          <View style={{ marginTop: 24, width: '100%', marginBottom: 50}}>
             <Image
               source={{ uri: detail.detailImageUrl }}
-              style={{ height: 418.75, alignSelf: 'stretch', aspectRatio: 4 / 5 }}
-              resizeMode="contain"
+              style={{ width: '100%', height: detailImageHeight }}
+              resizeMode="cover"
             />
           </View>
         )}
 
-        {/* 상세설명 */}
-        <Text
-          className={typo.B2_Sb}
-          style={{ color: '#656565', letterSpacing: -0.16, marginTop: 24, width: '100%' }}
-        >
-          상세설명
-        </Text>
-
-        {/* 본문 내용 */}
-        <Text
-          className={typo.B4_Rg}
-          style={{ color: '#1A1A1A', letterSpacing: -0.12, marginTop: 24, marginBottom: 100, width: '100%' }}
-        >
-          {detail?.detailDescription ?? ''}
-        </Text>
       </View>
     </Layout>
   );
