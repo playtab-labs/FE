@@ -1,7 +1,7 @@
-import { View, Text, ScrollView, StyleSheet } from 'react-native';
-import { typo } from '@/styles/typography';
-import MoreButton from '@/components/common/MoreButton';
-import FoodTruckItem from './FoodTruckItem';
+import MoreButton from "@/components/common/MoreButton";
+import { typo } from "@/styles/typography";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
+import FoodTruckItem from "./FoodTruckItem";
 
 interface FoodTruckData {
   id: string | number;
@@ -15,7 +15,11 @@ interface FoodTruckListSectionProps {
   onItemPress?: (id: string | number) => void;
 }
 
-export default function FoodTruckListSection({ items, onMorePress, onItemPress }: FoodTruckListSectionProps) {
+export default function FoodTruckListSection({
+  items,
+  onMorePress,
+  onItemPress,
+}: FoodTruckListSectionProps) {
   return (
     <View style={styles.section}>
       <View style={styles.header}>
@@ -48,19 +52,19 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   sectionTitle: {
-    color: '#1A1A1A',
+    color: "#1A1A1A",
     letterSpacing: -0.16,
   },
   scroll: {
     marginHorizontal: -17,
   },
   list: {
-    flexDirection: 'row',
+    flexDirection: "row",
     gap: 8,
     paddingHorizontal: 17,
   },

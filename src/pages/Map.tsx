@@ -4,6 +4,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import Layout from "@/components/Layout";
 import MapLayout from "@/components/map/MapLayout";
 import BoothBottomTab from "@/components/map/BoothBottomTab";
+import PopupBottomSheet from "@/components/map/PopupBottomSheet";
 import type { MarkerData } from "@/data/mockMarkers";
 
 export default function Map() {
@@ -28,10 +29,17 @@ export default function Map() {
         <MapLayout key={gestureKey} onMarkerSelect={setSelectedMarker} />
       </Layout>
       {selectedMarker && (
-        <BoothBottomTab
-          marker={selectedMarker}
-          onClose={() => setSelectedMarker(null)}
-        />
+        selectedMarker.label === "🎈" ? (
+          <PopupBottomSheet
+            marker={selectedMarker}
+            onClose={() => setSelectedMarker(null)}
+          />
+        ) : (
+          <BoothBottomTab
+            marker={selectedMarker}
+            onClose={() => setSelectedMarker(null)}
+          />
+        )
       )}
     </View>
   );

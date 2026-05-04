@@ -27,7 +27,7 @@ export default function MDSaleTypeBadge({ type }: MDSaleTypeBadgeProps) {
     <View
       style={{
         paddingHorizontal: 10,
-        paddingVertical: 8,
+        paddingVertical: 6,
         justifyContent: 'center',
         alignItems: 'center',
         gap: 10,

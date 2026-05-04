@@ -1,7 +1,7 @@
-import { View, Text, ScrollView, StyleSheet } from 'react-native';
-import { typo } from '@/styles/typography';
-import MoreButton from '@/components/common/MoreButton';
-import DrinkBoothItem from './DrinkBoothItem';
+import MoreButton from "@/components/common/MoreButton";
+import { typo } from "@/styles/typography";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
+import DrinkBoothItem from "./DrinkBoothItem";
 
 interface DrinkBoothData {
   id: string | number;
@@ -14,7 +14,11 @@ interface DrinkBoothListSectionProps {
   onItemPress?: (id: string | number) => void;
 }
 
-export default function DrinkBoothListSection({ items, onMorePress, onItemPress }: DrinkBoothListSectionProps) {
+export default function DrinkBoothListSection({
+  items,
+  onMorePress,
+  onItemPress,
+}: DrinkBoothListSectionProps) {
   return (
     <View style={styles.section}>
       <View style={styles.header}>
@@ -46,19 +50,19 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   sectionTitle: {
-    color: '#1A1A1A',
+    color: "#1A1A1A",
     letterSpacing: -0.16,
   },
   scroll: {
     marginHorizontal: -17,
   },
   list: {
-    flexDirection: 'row',
+    flexDirection: "row",
     gap: 8,
     paddingHorizontal: 17,
   },

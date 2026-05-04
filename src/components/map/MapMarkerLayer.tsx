@@ -1,7 +1,18 @@
+import { MOCK_MARKERS, type MarkerData } from "@/data/mockMarkers";
+
+const TYPE_ORDER: Record<MarkerData["type"], number> = {
+  facility: 0,
+  sub: 1,
+  main: 2,
+};
+
+const SORTED_MARKERS = [...MOCK_MARKERS].sort(
+  (a, b) => TYPE_ORDER[a.type] - TYPE_ORDER[b.type],
+);
 import { View } from "react-native";
 import type { SharedValue } from "react-native-reanimated";
 import MapMarker from "./MapMarker";
-import { useEffect, useState } from "react";
+import UserLocationMarker from "./UserLocationMarker";
 
 interface MapMarkerLayerProps {
   scale: SharedValue<number>;
@@ -12,37 +23,13 @@ interface MapMarkerLayerProps {
   onMarkerClick?: (id: number | string) => void;
 }
 
-// 마커의 타입을 정의합니다.
-interface Marker {
-  id: number | string;
-  type: "RESTAURANT" | "CAFE" | "PARK"; // 실제 사용하는 타입들로 제한
-  label: string;
-  iconUrl: string;
-  latitude: number;
-  longitude: number;
-}
-
 const MapMarkerLayer = (props: MapMarkerLayerProps) => {
-  const [markers, setMarkers] = useState<Marker[]>([]);
-
-  useEffect(() => {
-    // 2. fetch를 사용하여 목데이터(JSON) 가져오기
-    // 파일 경로(예: /data/markers.json)나 API URL을 입력하세요.
-    fetch("/data/markers.json")
-      .then((response) => response.json())
-      .then((data) => {
-        setMarkers(data);
-      })
-      .catch((error) => {
-        console.error("마커 데이터를 가져오는데 실패했습니다:", error);
-      });
-  }, []);
-
   return (
     <View className="absolute inset-0" style={{ pointerEvents: "box-none" }}>
-      {markers.map((marker) => (
+      {SORTED_MARKERS.map((marker) => (
         <MapMarker key={marker.id} marker={marker} {...props} />
       ))}
+      <UserLocationMarker {...props} />
     </View>
   );
 };

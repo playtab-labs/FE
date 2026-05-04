@@ -1,28 +1,25 @@
-import { useState, useEffect } from "react";
+import CloseWhiteIcon from "@/assets/close-white.svg";
+import type { MarkerData } from "@/data/mockMarkers";
+import { useEffect, useState } from "react";
 import {
-  View,
   Text,
   TouchableOpacity,
   useWindowDimensions,
+  View,
 } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import Animated, {
-  useSharedValue,
+  Easing,
+  Extrapolation,
+  interpolate,
+  runOnJS,
   useAnimatedStyle,
+  useSharedValue,
   withSpring,
   withTiming,
-  Easing,
-  runOnJS,
-  interpolate,
-  Extrapolation,
 } from "react-native-reanimated";
-import { Gesture, GestureDetector } from "react-native-gesture-handler";
-import { AntDesign } from "@expo/vector-icons";
-import TabBar from "@/components/common/TabBar";
-import { typo } from "@/styles/typography";
-import BoothLayout from "./BoothLayout";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import BoothList from "./BoothList";
-import type { MarkerData } from "@/data/mockMarkers";
 
 interface BoothBottomTabProps {
   marker: MarkerData;
@@ -102,15 +99,6 @@ const BoothBottomTab = ({ marker, onClose }: BoothBottomTabProps) => {
 
   return (
     <View className="absolute inset-0">
-      {/* 딤 오버레이
-      <Animated.View className="flex-1" style={dimStyle}>
-        <TouchableOpacity
-          className="flex-1"
-          activeOpacity={1}
-          onPress={triggerClose}
-        />
-      </Animated.View> */}
-
       {/* 바텀시트 패널: shadow 외층 + overflow-hidden 내층 분리 */}
       <Animated.View
         className="absolute left-0 right-0 bottom-0 rounded-t-3xl"
@@ -130,32 +118,25 @@ const BoothBottomTab = ({ marker, onClose }: BoothBottomTabProps) => {
           {/* 드래그 핸들 영역 */}
           <GestureDetector gesture={panGesture}>
             <View>
-              <View className="items-center">
-                <View className="w-10 h-1 rounded-full bg-gray-300" />
+              <View className="items-center pt-3">
+                <View className="w-10 h-1 rounded-full bg-soft-gray" />
               </View>
               <View className="relative items-center justify-center py-5 rounded-t-xl">
-                <Text className={`${typo.T2_Eb} text-gray-black`}>MAP</Text>
+                <Text className="text-t2 font-eb">{marker.label}</Text>
                 <TouchableOpacity
                   className="absolute right-5"
                   onPress={triggerClose}
                   hitSlop={8}
                 >
-                  <AntDesign name="close" size={20} color="#888" />
+                  <CloseWhiteIcon width={20} height={20} />
                 </TouchableOpacity>
               </View>
             </View>
           </GestureDetector>
 
-          {/* 탭바 */}
-          <TabBar type="map" activeTab={activeTab} onTabChange={setActiveTab} />
-
           {/* 콘텐츠 */}
           <View className="flex-1">
-            {activeTab === "booth" ? (
-              <BoothLayout />
-            ) : (
-              <BoothList marker={marker} />
-            )}
+            <BoothList marker={marker} />
           </View>
         </View>
       </Animated.View>

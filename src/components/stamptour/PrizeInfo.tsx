@@ -2,26 +2,24 @@ import { View, Text } from 'react-native';
 import { typo } from '@/styles/typography';
 
 const ITEMS = [
-  '- 사전수령 안내사항',
-  '- 현장구매 안내사항',
-  '- 기타 안내사항'
+  '축제 기간 중 청년광장 내 총학생회 부스에 와서 앱을 보여주세요!',
+  'BOSE 이어폰 추첨 당첨자께는 서강메일로 개별 안내드릴 예정입니다.',
 ];
 
-export default function ProductInfo() {
+export default function PrizeInfo() {
   return (
-    <View style={{ width: '100%' }}>
+    <View style={{ marginTop: 16, width: '100%' }}>
       <View
         style={{
           width: '100%',
-          paddingVertical: 16,
-          paddingHorizontal: 25,
+          padding: 16,
           borderRadius: 8,
           backgroundColor: '#FFFFFF',
-          gap: 10,
+          gap: 8,
         }}
       >
-        <Text className={`${typo.T2_Eb} text-gray-black`}>
-          2026 ODYSSEY OFFICIAL GOODS
+        <Text className={`${typo.T3_Eb} text-gray-black`}>
+          경품 수령 방법
         </Text>
 
         <View>
