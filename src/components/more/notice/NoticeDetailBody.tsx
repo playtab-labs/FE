@@ -1,4 +1,5 @@
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { useState, useEffect } from 'react';
+import { View, Text, Image, StyleSheet, useWindowDimensions } from 'react-native';
 import { typo } from '@/styles/typography';
 import { SvgProps } from 'react-native-svg';
 
@@ -8,12 +9,28 @@ interface NoticeDetailBodyProps {
 }
 
 export default function NoticeDetailBody({ content, image }: NoticeDetailBodyProps) {
+  const { width } = useWindowDimensions();
+  const [imageHeight, setImageHeight] = useState<number>(0);
+
+  useEffect(() => {
+    if (typeof image !== 'string') return;
+    Image.getSize(image, (imgWidth, imgHeight) => {
+      setImageHeight((imgHeight / imgWidth) * width);
+    });
+  }, [image, width]);
+
   return (
     <View style={styles.container}>
       {image && (
         <>
           {typeof image === 'string' ? (
-            <Image source={{ uri: image }} style={styles.image} resizeMode="cover" />
+            imageHeight > 0 && (
+              <Image
+                source={{ uri: image }}
+                style={{ width: '100%', height: imageHeight }}
+                resizeMode="cover"
+              />
+            )
           ) : (
             (() => {
               const SvgImage = image;
@@ -33,11 +50,6 @@ export default function NoticeDetailBody({ content, image }: NoticeDetailBodyPro
 const styles = StyleSheet.create({
   container: {
     alignSelf: 'stretch',
-  },
-  image: {
-    height: 131,
-    alignSelf: 'stretch',
-    borderRadius: 8,
   },
   imageGap: {
     height: 24,

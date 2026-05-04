@@ -73,7 +73,7 @@ export default function MDDetail() {
   const { width } = useWindowDimensions();
   const [detailImageHeight, setDetailImageHeight] = useState<number>(0);
 
-  const { data, loading, error } = useQuery<MdItemDetailResponse>(GET_MD_ITEM_DETAIL, {
+  const { data, error } = useQuery<MdItemDetailResponse>(GET_MD_ITEM_DETAIL, {
     variables: { mdItemId: id },
   });
 
