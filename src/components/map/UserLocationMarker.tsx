@@ -5,19 +5,21 @@ import type { SharedValue } from "react-native-reanimated";
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
+  withSpring,
 } from "react-native-reanimated";
 
-// 맵 GPS 경계
-const MAP_BOUNDS = {
-  north: 37.55285, // 좌상단
-  south: 37.550011, // 우하단
-  west: 126.937762, // 좌상단
-  east: 126.944128, // 우하단
-};
+// 2점 GPS 캘리브레이션
+// 기준점 A: 정문 (GPS → 이미지 내 픽셀 비율)
+const REF_A = { lat: 37.551617, lng: 126.937870, fx: 0.116, fy: 0.479 };
+// 기준점 B: 스타벅스 서강대프라자점 (곤자가플라자)
+const REF_B = { lat: 37.551056, lng: 126.943058, fx: 0.786, fy: 0.543 };
+
+const SCALE_X = (REF_B.fx - REF_A.fx) / (REF_B.lng - REF_A.lng);
+const SCALE_Y = (REF_B.fy - REF_A.fy) / (REF_A.lat - REF_B.lat);
 
 const gpsToFraction = (lat: number, lng: number) => ({
-  fx: (lng - MAP_BOUNDS.west) / (MAP_BOUNDS.east - MAP_BOUNDS.west),
-  fy: (MAP_BOUNDS.north - lat) / (MAP_BOUNDS.north - MAP_BOUNDS.south),
+  fx: REF_A.fx + (lng - REF_A.lng) * SCALE_X,
+  fy: REF_A.fy + (REF_A.lat - lat) * SCALE_Y,
 });
 
 // SVG viewBox 56x77 기준
@@ -58,8 +60,8 @@ const UserLocationMarker = ({
           console.log(
             `[GPS] lat=${latitude}, lng=${longitude} → fx=${pos.fx.toFixed(3)}, fy=${pos.fy.toFixed(3)}`,
           );
-          fx.value = pos.fx;
-          fy.value = pos.fy;
+          fx.value = withSpring(pos.fx, { damping: 20, stiffness: 80 });
+          fy.value = withSpring(pos.fy, { damping: 20, stiffness: 80 });
         },
       );
     })();
