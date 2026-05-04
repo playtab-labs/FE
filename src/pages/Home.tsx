@@ -1,3 +1,4 @@
+import { getPubs } from "@/api/booth";
 import { getNotices } from "@/api/notice";
 import { getMyStamps } from "@/api/stamp";
 import Layout from "@/components/Layout";
@@ -15,31 +16,8 @@ import { Linking, ScrollView, View } from "react-native";
 
 import adbanner1 from '@/assets/pngs/adbanner1.png';
 
-// const SAMPLE_NOTICES = [
-//   {
-//     id: 1,
-//     title: "2025 서강대학교 축제 공지사항입니다.",
-//     date: "25.04.23",
-//     badge: "NEW" as const,
-//   },
-//   { id: 2, title: "스탬프 투어 운영 안내", date: "25.04.22" },
-//   {
-//     id: 3,
-//     title: "MD 굿즈 판매 관련 안내사항",
-//     date: "25.04.21",
-//     badge: "필독" as const,
-//   },
-// ];
 const AD_BANNERS = [1, 2];
 
-const SAMPLE_DRINK_BOOTHS = [
-  { id: 1, name: "국어국문학과" },
-  { id: 2, name: "영어영문학과" },
-  { id: 3, name: "사학과" },
-  { id: 4, name: "철학과" },
-  { id: 5, name: "경제학과" },
-  { id: 6, name: "경영학과" },
-];
 
 const SAMPLE_FOOD_TRUCKS = [
   { id: 1, name: "맛있는 트럭", description: "저희꺼 맛있어요" },
@@ -55,15 +33,36 @@ export default function Home() {
   const { loadEmail } = useAuthStore();
   const [isSogang, setIsSogang] = useState(false);
   const [stampProgress, setStampProgress] = useState(0);
-  const [homeNotices, setHomeNotices] = useState<{ id: string; title: string; date: string; badge?: "NEW" | "필독" }[]>([]);
+  const [drinkBooths, setDrinkBooths] = useState<
+    { id: string; name: string; thumbnailImageUrl?: string }[]
+  >([]);
+  const [homeNotices, setHomeNotices] = useState<
+    { id: string; title: string; date: string; badge?: "NEW" | "필독" }[]
+  >([]);
 
   useEffect(() => {
-    loadEmail().then((email) => setIsSogang(email?.endsWith("@sogang.ac.kr") ?? false));
-  }, []);
+    loadEmail().then((email) =>
+      setIsSogang(email?.endsWith("@sogang.ac.kr") ?? false),
+    );
+  }, [loadEmail]);
 
   useEffect(() => {
     getMyStamps()
       .then(({ visitedCount }) => setStampProgress(Math.round((visitedCount / 9) * 100)))
+      .catch(() => {});
+  }, []);
+
+  useEffect(() => {
+    getPubs()
+      .then((res) =>
+        setDrinkBooths(
+          res.data.pubs.map((p: { id: string; collegeName: string; thumbnailImageUrl: string }) => ({
+            id: p.id,
+            name: p.collegeName,
+            thumbnailImageUrl: p.thumbnailImageUrl,
+          }))
+        )
+      )
       .catch(() => {});
   }, []);
 
@@ -119,7 +118,7 @@ export default function Home() {
         />
       </View>
       <View style={{ marginTop: 24 }}>
-        <DrinkBoothListSection items={SAMPLE_DRINK_BOOTHS} />
+        <DrinkBoothListSection items={drinkBooths} />
       </View>
       <View style={{ marginTop: 24, marginBottom: 50 }}>
         <FoodTruckListSection items={SAMPLE_FOOD_TRUCKS} />
