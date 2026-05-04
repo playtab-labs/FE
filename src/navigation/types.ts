@@ -17,7 +17,7 @@ export type TabParamList = {
   Artist: undefined;
   Personal: undefined;
   Home: undefined;
-  Map: undefined;
+  Map: { preselectedMarkerId?: string; openTabTimestamp?: number } | undefined;
   More: NavigatorScreenParams<MoreStackParamList>;
 };
 

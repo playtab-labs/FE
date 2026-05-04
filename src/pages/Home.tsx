@@ -144,7 +144,10 @@ export default function Home() {
         />
       </View>
       <View style={{ marginTop: 24 }}>
-        <DrinkBoothListSection items={drinkBooths} />
+        <DrinkBoothListSection
+          items={drinkBooths}
+          onMorePress={() => navigation.navigate("Map", { preselectedMarkerId: "m3", openTabTimestamp: Date.now() })}
+        />
       </View>
       <View style={{ marginTop: 24, marginBottom: 50 }}>
         <FoodTruckListSection items={foodTrucks} />
