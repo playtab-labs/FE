@@ -132,6 +132,14 @@
     "pubList": "주점 리스트",
     "foodTruckList": "푸드트럭 리스트"
   },
+  "md": {
+    "prePickupInfo": "- 사전수령 안내사항",
+    "onsiteInfo": "- 현장구매 안내사항",
+    "otherInfo": "- 기타 안내사항",
+    "preorder": "사전주문",
+    "onsite": "현장판매",
+    "priceFormat": "{{price}}원"
+  },
   "personalChange": {
     "myInfoSection": "내 정보",
     "editButton": "변경하기",

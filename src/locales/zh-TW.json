@@ -132,6 +132,14 @@
     "pubList": "酒館列表",
     "foodTruckList": "餐車列表"
   },
+  "md": {
+    "prePickupInfo": "- 預領取說明",
+    "onsiteInfo": "- 現場購買說明",
+    "otherInfo": "- 其他注意事項",
+    "preorder": "預購",
+    "onsite": "現場販售",
+    "priceFormat": "{{price}}韓元"
+  },
   "personalChange": {
     "myInfoSection": "我的資訊",
     "editButton": "更改",

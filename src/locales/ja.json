@@ -132,6 +132,14 @@
     "pubList": "居酒屋リスト",
     "foodTruckList": "フードトラックリスト"
   },
+  "md": {
+    "prePickupInfo": "- 事前受取のご案内",
+    "onsiteInfo": "- 現地購入のご案内",
+    "otherInfo": "- その他のご案内",
+    "preorder": "事前注文",
+    "onsite": "現地販売",
+    "priceFormat": "{{price}}ウォン"
+  },
   "personalChange": {
     "myInfoSection": "マイ情報",
     "editButton": "変更する",

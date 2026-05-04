@@ -8,6 +8,7 @@ import { useQuery } from '@apollo/client/react';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { Image, Text, useWindowDimensions, View } from 'react-native';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const GET_MD_ITEM_DETAIL = gql`
   query MdItemDetail($mdItemId: ID!) {
@@ -68,6 +69,7 @@ interface MdItemDetailResponse {
 type MDDetailRouteProp = RouteProp<{ MDDetail: { id: string; title: string; soldOut: boolean } }, 'MDDetail'>;
 
 export default function MDDetail() {
+  const { t } = useTranslation();
   const route = useRoute<MDDetailRouteProp>();
   const { id, title, soldOut } = route.params;
   const { width } = useWindowDimensions();
@@ -122,7 +124,7 @@ export default function MDDetail() {
           }}
         >
           <Text className={typo.B3_Rg} style={{ color: '#1A1A1A', letterSpacing: -0.14 }}>
-            {detail ? `${detail.price.toLocaleString()}원` : ''}
+            {detail ? t("md.priceFormat", { price: detail.price.toLocaleString() }) : ''}
           </Text>
           <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8, justifyContent: 'flex-end' }}>
             {detail?.optionGroups.flatMap((group) =>

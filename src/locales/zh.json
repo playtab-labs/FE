@@ -132,6 +132,14 @@
     "pubList": "酒馆列表",
     "foodTruckList": "餐车列表"
   },
+  "md": {
+    "prePickupInfo": "- 预领取说明",
+    "onsiteInfo": "- 现场购买说明",
+    "otherInfo": "- 其他注意事项",
+    "preorder": "预订",
+    "onsite": "现场销售",
+    "priceFormat": "{{price}}韩元"
+  },
   "personalChange": {
     "myInfoSection": "我的信息",
     "editButton": "修改",

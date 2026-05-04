@@ -132,6 +132,14 @@
     "pubList": "Pub List",
     "foodTruckList": "Food Truck List"
   },
+  "md": {
+    "prePickupInfo": "- Pre-pickup information",
+    "onsiteInfo": "- On-site purchase information",
+    "otherInfo": "- Other notes",
+    "preorder": "Pre-order",
+    "onsite": "On-site Sale",
+    "priceFormat": "KRW {{price}}"
+  },
   "personalChange": {
     "myInfoSection": "My Information",
     "editButton": "Edit",
