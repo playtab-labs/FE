@@ -20,10 +20,10 @@ const AD_BANNERS = [1, 2];
 
 
 const SAMPLE_FOOD_TRUCKS = [
-  { id: 1, name: "맛있는 트럭", description: "저희꺼 맛있어요" },
-  { id: 2, name: "버거킹 트럭", description: "수제버거 전문점" },
-  { id: 3, name: "달콤한 트럭", description: "디저트 & 음료" },
-  { id: 4, name: "타코 트럭", description: "멕시칸 푸드" },
+  { id: 1, name: "맛있는 트럭", menu: "불초밥" },
+  { id: 2, name: "버거킹 트럭", menu: "수제버거" },
+  { id: 3, name: "달콤한 트럭", menu: "디저트 & 음료" },
+  { id: 4, name: "타코 트럭", menu: "멕시칸 푸드" },
 ];
 
 const formatDate = (postedAt: string) => postedAt.split("T")[0].replace(/-/g, ".");
