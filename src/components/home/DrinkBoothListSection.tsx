@@ -1,7 +1,7 @@
 import MoreButton from "@/components/common/MoreButton";
 import { typo } from "@/styles/typography";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
-import DrinkBoothItem from "../map/PubItem";
+import DrinkBoothItem from "./DrinkBoothItem";
 
 interface DrinkBoothData {
   id: string | number;

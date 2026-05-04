@@ -4,21 +4,28 @@ import { getMyStamps } from "@/api/stamp";
 import Layout from "@/components/Layout";
 import AdBanner from "@/components/home/AdBanner";
 import DrinkBoothListSection from "@/components/home/DrinkBoothListSection";
+import FoodTruckListSection from "@/components/home/FoodTruckListSection";
 import HomeNoticeSection from "@/components/home/HomeNoticeSection";
 import HomePoster from "@/components/home/HomePoster";
 import MDBanner from "@/components/home/MDBanner";
 import StampTourBanner from "@/components/home/StampTourBanner";
-import FoodTruckListSection from "@/components/map/BoothList";
 import { useAuthStore } from "@/stores/authStore";
 import { useNavigation } from "@react-navigation/native";
 import { useEffect, useState } from "react";
 import { Linking, ScrollView, View } from "react-native";
 
-import adbanner1 from '@/assets/pngs/adbanner1.png';
+import adbanner1 from "@/assets/pngs/adbanner1.png";
 
 const AD_BANNERS = [1, 2];
 
 const formatDate = (postedAt: string) => postedAt.split("T")[0].replace(/-/g, ".");
+
+const getNoticeBadge = (isPinned: boolean, postedAt: string): "필독" | "NEW" | undefined => {
+  if (isPinned) return "필독";
+  const diff = Date.now() - new Date(postedAt).getTime();
+  if (diff >= 0 && diff < 24 * 60 * 60 * 1000) return "NEW";
+  return undefined;
+};
 
 export default function Home() {
   const navigation = useNavigation<any>();
@@ -42,7 +49,9 @@ export default function Home() {
 
   useEffect(() => {
     getMyStamps()
-      .then(({ visitedCount }) => setStampProgress(Math.round((visitedCount / 9) * 100)))
+      .then(({ visitedCount }) =>
+        setStampProgress(Math.round((visitedCount / 9) * 100)),
+      )
       .catch(() => {});
   }, []);
 
@@ -84,13 +93,12 @@ export default function Home() {
             id: n.id,
             title: n.title,
             date: formatDate(n.postedAt),
-            badge: n.isPinned ? ("필독" as const) : undefined,
+            badge: getNoticeBadge(n.isPinned, n.postedAt),
           }))
         );
       })
       .catch(() => {});
   }, []);
-
 
   return (
     <Layout
@@ -101,11 +109,11 @@ export default function Home() {
     >
       <View style={{ marginTop: 24, flexDirection: "column", gap: 16 }}>
         <StampTourBanner
-          onPress={() => navigation.navigate('StampTour')}
+          onPress={() => navigation.navigate("StampTour")}
           disabled={!isSogang}
           progress={stampProgress}
         />
-        <MDBanner onPress={() => navigation.navigate('MD')} />
+        <MDBanner onPress={() => navigation.navigate("MD")} />
       </View>
       <ScrollView
         horizontal
@@ -117,14 +125,20 @@ export default function Home() {
           <AdBanner
             key={id}
             image={id === 1 ? adbanner1 : undefined}
-            onPress={id === 1 ? () => Linking.openURL('https://obank.kbstar.com/quics?page=C041244&scheme=kbbank&pageid=D001352&urlparam=%EC%9D%B4%EB%B2%A4%ED%8A%B8%EC%9D%BC%EB%A0%A8%EB%B2%88%ED%98%B8:351412') : undefined}
+            onPress={
+              id === 1
+                ? () =>
+                    Linking.openURL(
+                      "https://obank.kbstar.com/quics?page=C041244&scheme=kbbank&pageid=D001352&urlparam=%EC%9D%B4%EB%B2%A4%ED%8A%B8%EC%9D%BC%EB%A0%A8%EB%B2%88%ED%98%B8:351412",
+                    )
+                : undefined
+            }
           />
         ))}
       </ScrollView>
       <View style={{ marginTop: 24 }}>
         <HomeNoticeSection
           items={homeNotices}
-<<<<<<< HEAD
           onMorePress={() => navigation.navigate("Notice")}
           onItemPress={(id) => navigation.navigate("NoticeDetail", { noticeId: id, notices: rawNotices })}
         />

@@ -5,6 +5,7 @@ import HowToParticipate from '@/components/stamptour/HowToParticipate';
 import ProductInfo from '@/components/stamptour/ProductInfo';
 import StampToast from '@/components/stamptour/StampToast';
 import TipInfo from '@/components/stamptour/TipInfo'
+import PrizeInfo from '@/components/stamptour/PrizeInfo'
 import { getMyStamps, MyStampsResult } from '@/api/stamp';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -39,7 +40,7 @@ const STAMP_SVGS: (React.ComponentType<SvgProps> | null)[] = [
 const BINGO_CELL_INFO = [
   { title: '📸알로스와\n사진 찍기', description: '5/13(수)-15(금) 중\n알바탑 앞' },
   { title: '🖼포토부스\n이용하기', description: '5/13(수)-15(금) 중\n포토부스 내부' },
-  { title: '🏕총학생회\n부스 방문', description: '5/14(목)\n체육관 내' },
+  { title: '🏦KB 국민은행\n부스 참여', description: '5/13(수)-15(금)\n청년광장' },
   { title: '🎪재학생 부스\n체험하기 (1)', description: '5/13(수)\n각 재학생 부스' },
   { title: '🎤버스킹\n즐기기', description: '5/13(수)\n청년광장 내\n총학생회 부스' },
   { title: '🛍총학생회 굿즈\n부스 방문', description: '※ 구매 없이 참여 가능\n5/13(수)－15(금) 중\n대운동장 앞 굿즈 테이블' },
@@ -123,6 +124,8 @@ export default function StampTour() {
       <HowToParticipate />
 
       <ProductInfo />
+
+      <PrizeInfo />
 
       <TipInfo />
       <View style={{ height: 80 }} />

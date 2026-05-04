@@ -15,7 +15,7 @@ export default function ProductInfo() {
           padding: 16,
           borderRadius: 8,
           backgroundColor: '#FFFFFF',
-          gap: 14,
+          gap: 8,
         }}
       >
         <Text className={`${typo.T3_Eb} text-gray-black`}>
