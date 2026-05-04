@@ -1,4 +1,5 @@
 import Layout from "@/components/Layout";
+import ColoredText from "@/components/common/ColoredText";
 import { getMyWristbands, linkWristband } from "@/api/personal";
 import type { RootStackParamList } from "@/navigation/types";
 import { useNavigation } from "@react-navigation/native";
@@ -6,6 +7,7 @@ import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Image as ExpoImage } from "expo-image";
 import { useEffect, useState } from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
+import { useTranslation } from "react-i18next";
 import Animated, {
   Easing,
   useAnimatedStyle,
@@ -30,6 +32,7 @@ try {
 const AnimatedImage = Animated.createAnimatedComponent(Image);
 
 export default function Tag() {
+  const { t } = useTranslation();
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
@@ -106,13 +109,6 @@ export default function Tag() {
         false,
       ),
     );
-
-    // Y: 10px 살짝 위아래 반복
-    // phoneTranslateY.value = withRepeat(
-    //   withTiming(20, { duration: 700, easing: Easing.inOut(Easing.ease) }),
-    //   -1,
-    //   true,
-    // );
   }, []);
 
   const bandStyle = useAnimatedStyle(() => ({
@@ -122,7 +118,6 @@ export default function Tag() {
   const phoneStyle = useAnimatedStyle(() => ({
     transform: [
       { translateX: phoneTranslateX.value },
-      //   { translateY: phoneTranslateY.value },
       { rotate: "-37.21deg" },
     ],
   }));
@@ -132,16 +127,14 @@ export default function Tag() {
       <View className="flex-1 flex-col justify-start">
         {/* 문구 */}
         <View className="mt-2 gap-4 py-4" style={{ zIndex: 1 }}>
-          <View className="flex-row items-center">
-            <Text className="text-h1 font-eb text-gray-black">휴대폰에 </Text>
-            <Text className="text-h1 font-eb text-text-salmon">
-              팔찌를 태그
-            </Text>
-            <Text className="text-h1 font-eb text-gray-black">해주세요</Text>
-          </View>
-          <Text className="text-b3 font-sb text-dark-gray">
-            퍼스널라이징을 위해서는 팔찌를 연동해야 해요.
-          </Text>
+          <ColoredText
+            text={t("personal.tagTitle")}
+            className="text-h1 font-eb text-gray-black"
+          />
+          <ColoredText
+            text={t("personal.startSubtitle")}
+            className="text-b3 font-sb text-dark-gray"
+          />
         </View>
 
         {/* 이미지 영역 */}
@@ -196,7 +189,7 @@ export default function Tag() {
         activeOpacity={0.7}
       >
         <Text className="text-b4 font-bd items-center text-center justify-center mb-6 font-rg text-dark-gray underline">
-          태그 인식에 문제가 있나요?
+          {t("personal.tagTrouble")}
         </Text>
       </TouchableOpacity>
     </Layout>

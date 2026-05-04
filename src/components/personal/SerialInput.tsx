@@ -1,6 +1,7 @@
 import Band from "@/assets/personal/band_default.png";
 import Layout from "@/components/Layout";
 import Button from "@/components/common/Button";
+import ColoredText from "@/components/common/ColoredText";
 import type { RootStackParamList } from "@/navigation/types";
 import { useNavigation } from "@react-navigation/native";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
@@ -13,8 +14,10 @@ import {
   TextInput,
   View,
 } from "react-native";
+import { useTranslation } from "react-i18next";
 
 export default function SerialInput() {
+  const { t } = useTranslation();
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const [serial, setSerial] = useState("");
@@ -36,7 +39,7 @@ export default function SerialInput() {
 
   return (
     <Layout
-      title="팔찌 연동"
+      title={t("personal.appBar")}
       showBack={true}
       showBottomBar={true}
       activeTab="Personal"
@@ -49,16 +52,12 @@ export default function SerialInput() {
         <View className="flex-1 flex-col">
           {/* 문구 */}
           <View className="py-4 mt-2 gap-4 mx-5">
-            <View className="flex-row items-center flex-wrap">
-              <Text className="text-h1 font-eb text-gray-black">팔찌의 </Text>
-              <Text className="text-h1 font-eb text-text-salmon">일련번호</Text>
-              <Text className="text-h1 font-eb text-gray-black">
-                를 입력해주세요.
-              </Text>
-            </View>
+            <ColoredText
+              text={t("personal.serialTitle")}
+              className="text-h1 font-eb text-gray-black"
+            />
             <Text className="text-b3 font-sb text-dark-gray">
-              태그, 일련번호 입력 모두 인식되지 않는다면{"\n"}스태프에게
-              문의해주세요.
+              {t("personal.serialSubtitle")}
             </Text>
           </View>
 
@@ -81,7 +80,7 @@ export default function SerialInput() {
               }}
             >
               <Text className="text-b3 font-sb text-gray-black/60 text-center">
-                {"팔찌에 새겨진\n일련번호를\n입력해주세요!"}
+                {t("personal.serialBandOverlay")}
               </Text>
             </View>
           </View>
@@ -91,11 +90,11 @@ export default function SerialInput() {
             <View className="gap-2">
               <View className="flex-row justify-between items-center">
                 <Text className="text-b3 font-sb text-gray-black">
-                  일련번호
+                  {t("personal.serialLabel")}
                 </Text>
                 {isError && (
                   <Text className="text-b4 font-rg text-secondary-bubblegum-pink">
-                    일치하지 않습니다.
+                    {t("personal.serialMismatch")}
                   </Text>
                 )}
               </View>
@@ -104,7 +103,7 @@ export default function SerialInput() {
               >
                 <TextInput
                   className="flex-1 text-b3 font-rg text-gray-black"
-                  placeholder="일련번호를 입력해주세요."
+                  placeholder={t("personal.serialPlaceholder")}
                   placeholderTextColor="#BFBFBF"
                   value={serial}
                   onChangeText={handleChangeText}
@@ -115,7 +114,7 @@ export default function SerialInput() {
             {/* 버튼 */}
             <View className="mb-6 items-center mt-4">
               <Button
-                label="팔찌 연동하기"
+                label={t("personal.linkButton")}
                 size="long"
                 state={serial.trim() ? "active" : "active"}
                 onPress={handleSubmit}

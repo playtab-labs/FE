@@ -1,9 +1,11 @@
 import { getPubs, type Pub } from "@/api/booth";
 import { useEffect, useState } from "react";
 import { ActivityIndicator, View } from "react-native";
+import { useTranslation } from "react-i18next";
 import PubItem from "./PubItem";
 
 export default function PubListSection() {
+  const { t } = useTranslation();
   const [items, setItems] = useState<Pub[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -26,7 +28,7 @@ export default function PubListSection() {
           {items.map((item) => (
             <PubItem
               key={item.id}
-              name={item.isNameConfirmed ? item.collegeName : "미공개"}
+              name={item.isNameConfirmed ? item.collegeName : t("map.unrevealed")}
               thumbnailImageUrl={item.thumbnailImageUrl}
             />
           ))}

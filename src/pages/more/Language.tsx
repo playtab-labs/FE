@@ -13,6 +13,7 @@ import {
   View,
 } from "react-native";
 import Svg, { Circle, Path } from "react-native-svg";
+import { useTranslation } from "react-i18next";
 
 type LangKey = "한국어" | "English" | "日本語" | "简体" | "繁體";
 
@@ -197,8 +198,10 @@ export default function Language() {
     ? LANG_STRINGS[pendingLang]
     : LANG_STRINGS["English"];
 
+  const { t } = useTranslation();
+
   return (
-    <Layout title="언어" showBack showCamera={false}>
+    <Layout title={t("more.language")} showBack showCamera={false}>
       <View className="">
         {LANGUAGES.map((lang) => {
           const isSelected = lang === selected;

@@ -3,6 +3,7 @@ import { typo } from "@/styles/typography";
 import { useTranslation } from "react-i18next";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import DrinkBoothItem from "./DrinkBoothItem";
+``;
 
 interface DrinkBoothData {
   id: string | number;

@@ -132,6 +132,18 @@
     "pubList": "酒馆列表",
     "foodTruckList": "餐车列表"
   },
+  "artist": {
+    "lineup": "阵容",
+    "timetable": "时间表",
+    "noFavorites": "没有收藏的艺人。",
+    "noFavoritesOnDate": "该日期没有收藏的艺人。",
+    "noPerformance": "📢 DAY {{day}} 没有艺人舞台演出。 📢"
+  },
+  "map": {
+    "booth": "摊位布局图",
+    "list": "列表",
+    "unrevealed": "未公开"
+  },
   "md": {
     "prePickupInfo": "- 预领取说明",
     "onsiteInfo": "- 现场购买说明",
@@ -139,6 +151,35 @@
     "preorder": "预订",
     "onsite": "现场销售",
     "priceFormat": "{{price}}韩元"
+  },
+  "personal": {
+    "appBar": "手腕带绑定",
+    "startTitle": "我们开始[[绑定手腕带]]吧。",
+    "startSubtitle": "个性化服务需要绑定手腕带。",
+    "startButton": "开始绑定手腕带",
+    "tagTitle": "请将[[手腕带]]贴近手机进行扫描。",
+    "tagTrouble": "无法识别扫描吗？",
+    "serialTitle": "请输入手腕带上的[[序列号]]。",
+    "serialSubtitle": "如果扫描和序列号输入都无法识别，\n请向工作人员寻求帮助。",
+    "serialBandOverlay": "请输入\n手腕带上印刷的\n序列号！",
+    "serialLabel": "序列号",
+    "serialPlaceholder": "请输入序列号。",
+    "serialMismatch": "不一致。",
+    "linkButton": "绑定手腕带",
+    "scanSuccess": "识别成功！",
+    "scanSuccessSubtitle": "3秒后进入下一画面。",
+    "mySerial": "我的序列号",
+    "addBand": "+ 添加新手腕带",
+    "importantNotes": "注意事项",
+    "notice1": "艺人舞台仅限持有手腕带的观众入场。",
+    "notice2": "手腕带仅在发放当天有效，次日需重新领取。",
+    "notice3": "如果手腕带损坏，请带至管理处，工作人员将协助重新发放。",
+    "staffAuthTitle": "删除手腕带需要工作人员验证。",
+    "staffAuthSubtitle": "请向附近手腕带配发处的\n工作人员咨询。",
+    "staffCodePlaceholder": "输入工作人员验证号",
+    "staffConfirm": "验证",
+    "staffMismatch": "验证号不一致。",
+    "bandDeleted": "手腕带已删除。"
   },
   "personalChange": {
     "myInfoSection": "我的信息",

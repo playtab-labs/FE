@@ -132,6 +132,18 @@
     "pubList": "居酒屋リスト",
     "foodTruckList": "フードトラックリスト"
   },
+  "artist": {
+    "lineup": "ラインナップ",
+    "timetable": "タイムテーブル",
+    "noFavorites": "お気に入り登録したアーティストはいません。",
+    "noFavoritesOnDate": "この日にお気に入り登録したアーティストはいません。",
+    "noPerformance": "📢 DAY {{day}}はアーティストステージがありません。 📢"
+  },
+  "map": {
+    "booth": "ブース配置図",
+    "list": "リスト",
+    "unrevealed": "未公開"
+  },
   "md": {
     "prePickupInfo": "- 事前受取のご案内",
     "onsiteInfo": "- 現地購入のご案内",
@@ -139,6 +151,35 @@
     "preorder": "事前注文",
     "onsite": "現地販売",
     "priceFormat": "{{price}}ウォン"
+  },
+  "personal": {
+    "appBar": "リストバンド連携",
+    "startTitle": "リストバンド[[連携]]を開始します。",
+    "startSubtitle": "パーソナライズにはリストバンド連携が必要です。",
+    "startButton": "リストバンド連携を開始",
+    "tagTitle": "スマートフォンに[[リストバンドをかざし]]てください。",
+    "tagTrouble": "タグ認識に問題がありますか？",
+    "serialTitle": "リストバンドの[[シリアル番号]]を入力してください。",
+    "serialSubtitle": "タグ認識・シリアル番号入力どちらもできない場合は、\nスタッフにお問い合わせください。",
+    "serialBandOverlay": "リストバンドに刻まれた\nシリアル番号を\n入力してください！",
+    "serialLabel": "シリアル番号",
+    "serialPlaceholder": "シリアル番号を入力してください。",
+    "serialMismatch": "一致しません。",
+    "linkButton": "リストバンドを連携する",
+    "scanSuccess": "認識成功！",
+    "scanSuccessSubtitle": "3秒後に次の画面へ進みます。",
+    "mySerial": "自分のシリアル番号",
+    "addBand": "+ 新しいリストバンドを追加",
+    "importantNotes": "案内事項",
+    "notice1": "アーティストステージはリストバンドをお持ちの観覧者のみ利用できます。",
+    "notice2": "リストバンドは発行当日のみ有効で、翌日は新たに発行を受ける必要があります。",
+    "notice3": "リストバンドが破損した場合、管理ブースにお持ちいただければ案内に従って再発行いたします。",
+    "staffAuthTitle": "リストバンド削除時はスタッフ認証が必要です。",
+    "staffAuthSubtitle": "近くのリストバンド配布所の\nスタッフにお問い合わせください。",
+    "staffCodePlaceholder": "スタッフ認証番号を入力",
+    "staffConfirm": "認証",
+    "staffMismatch": "認証番号が一致しません。",
+    "bandDeleted": "リストバンドを削除しました。"
   },
   "personalChange": {
     "myInfoSection": "マイ情報",

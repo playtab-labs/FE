@@ -132,6 +132,18 @@
     "pubList": "Pub List",
     "foodTruckList": "Food Truck List"
   },
+  "artist": {
+    "lineup": "Lineup",
+    "timetable": "Timetable",
+    "noFavorites": "You have no favorite artists.",
+    "noFavoritesOnDate": "You have no favorite artists on this date.",
+    "noPerformance": "📢 There are no artist performances on DAY {{day}}. 📢"
+  },
+  "map": {
+    "booth": "Booth Map",
+    "list": "List",
+    "unrevealed": "Unrevealed"
+  },
   "md": {
     "prePickupInfo": "- Pre-pickup information",
     "onsiteInfo": "- On-site purchase information",
@@ -139,6 +151,35 @@
     "preorder": "Pre-order",
     "onsite": "On-site Sale",
     "priceFormat": "KRW {{price}}"
+  },
+  "personal": {
+    "appBar": "Wristband Linking",
+    "startTitle": "Let's start [[linking your wristband]].",
+    "startSubtitle": "Linking your wristband is required for personalization.",
+    "startButton": "Start Linking Wristband",
+    "tagTitle": "[[Tap your wristband]] to your phone.",
+    "tagTrouble": "Having trouble with tap recognition?",
+    "serialTitle": "Enter the [[serial number]] on your wristband.",
+    "serialSubtitle": "If both the tapping method and serial number entry method fail,\nplease ask a staff member for help.",
+    "serialBandOverlay": "Enter the\nserial number\nprinted on your wristband!",
+    "serialLabel": "Serial Number",
+    "serialPlaceholder": "Please enter the serial number.",
+    "serialMismatch": "Does not match.",
+    "linkButton": "Link Wristband",
+    "scanSuccess": "Scan Successful!",
+    "scanSuccessSubtitle": "Moving to the next screen in 3 seconds.",
+    "mySerial": "My Serial Number",
+    "addBand": "+ Add New Wristband",
+    "importantNotes": "Important Notes",
+    "notice1": "Artist stage entry is available only to guests with wristbands.",
+    "notice2": "Wristbands are valid only on the day they are issued and must be reissued on the next day.",
+    "notice3": "If your wristband is damaged, bring it to the management booth for guidance on reissue.",
+    "staffAuthTitle": "Staff verification is required to delete a wristband.",
+    "staffAuthSubtitle": "Please ask a staff member\nat the nearest wristband distribution booth.",
+    "staffCodePlaceholder": "Enter staff verification code",
+    "staffConfirm": "Verify",
+    "staffMismatch": "Verification code does not match.",
+    "bandDeleted": "Wristband has been deleted."
   },
   "personalChange": {
     "myInfoSection": "My Information",

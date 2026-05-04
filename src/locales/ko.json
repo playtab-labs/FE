@@ -132,6 +132,18 @@
     "pubList": "주점 리스트",
     "foodTruckList": "푸드트럭 리스트"
   },
+  "artist": {
+    "lineup": "라인업",
+    "timetable": "타임테이블",
+    "noFavorites": "즐겨찾기한 아티스트가 없습니다.",
+    "noFavoritesOnDate": "해당 날짜에 즐겨찾기한 아티스트가 없습니다.",
+    "noPerformance": "📢 DAY {{day}}은 아티스트 무대가 없습니다. 📢"
+  },
+  "map": {
+    "booth": "부스 배치도",
+    "list": "리스트",
+    "unrevealed": "미공개"
+  },
   "md": {
     "prePickupInfo": "- 사전수령 안내사항",
     "onsiteInfo": "- 현장구매 안내사항",
@@ -139,6 +151,35 @@
     "preorder": "사전주문",
     "onsite": "현장판매",
     "priceFormat": "{{price}}원"
+  },
+  "personal": {
+    "appBar": "팔찌 연동",
+    "startTitle": "[[팔찌 연동]]을 시작할게요",
+    "startSubtitle": "퍼스널라이징을 위해서는 팔찌를 연동해야 해요.",
+    "startButton": "팔찌 연동 시작하기",
+    "tagTitle": "휴대폰에 [[팔찌를 태그]]해주세요",
+    "tagTrouble": "태그 인식에 문제가 있나요?",
+    "serialTitle": "팔찌의 [[일련번호]]를 입력해주세요.",
+    "serialSubtitle": "태그, 일련번호 입력 모두 인식되지 않는다면\n스태프에게 문의해주세요.",
+    "serialBandOverlay": "팔찌에 새겨진\n일련번호를\n입력해주세요!",
+    "serialLabel": "일련번호",
+    "serialPlaceholder": "일련번호를 입력해주세요.",
+    "serialMismatch": "일치하지 않습니다.",
+    "linkButton": "팔찌 연동하기",
+    "scanSuccess": "인식 성공!",
+    "scanSuccessSubtitle": "3초 뒤에 다음 화면으로 넘어갈게요.",
+    "mySerial": "내 일련번호",
+    "addBand": "+ 새 팔찌 추가하기",
+    "importantNotes": "안내사항",
+    "notice1": "아티스트 무대는 팔찌 소지 관람객만 이용 가능합니다.",
+    "notice2": "팔찌는 발급 받은 당일만 사용가능하며, 다음날에는 새로 발급 받아야 합니다.",
+    "notice3": "팔찌가 훼손된 경우, 관리 부스로 가져오시면 안내 하에 재발급 해드립니다.",
+    "staffAuthTitle": "팔찌 삭제 시 스태프 인증이 필요합니다.",
+    "staffAuthSubtitle": "가까이 있는 팔찌 배부처의\n스태프에게 문의해주세요.",
+    "staffCodePlaceholder": "스태프 인증번호를 입력",
+    "staffConfirm": "인증",
+    "staffMismatch": "인증번호가 일치하지 않습니다.",
+    "bandDeleted": "팔찌가 삭제되었습니다."
   },
   "personalChange": {
     "myInfoSection": "내 정보",
