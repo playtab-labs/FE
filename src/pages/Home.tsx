@@ -1,4 +1,5 @@
-import { getNotices } from "@/api/notice";
+import { getFoodTrucks, getPubs } from "@/api/booth";
+import { getNotices, NoticeSummary } from "@/api/notice";
 import { getMyStamps } from "@/api/stamp";
 import Layout from "@/components/Layout";
 import AdBanner from "@/components/home/AdBanner";
@@ -15,56 +16,36 @@ import { Linking, ScrollView, View } from "react-native";
 
 import adbanner1 from "@/assets/pngs/adbanner1.png";
 
-const SAMPLE_NOTICES = [
-  {
-    id: 1,
-    title: "2025 서강대학교 축제 공지사항입니다.",
-    date: "25.04.23",
-    badge: "NEW" as const,
-  },
-  { id: 2, title: "스탬프 투어 운영 안내", date: "25.04.22" },
-  {
-    id: 3,
-    title: "MD 굿즈 판매 관련 안내사항",
-    date: "25.04.21",
-    badge: "필독" as const,
-  },
-];
 const AD_BANNERS = [1, 2];
 
-const SAMPLE_DRINK_BOOTHS = [
-  { id: 1, name: "국어국문학과" },
-  { id: 2, name: "영어영문학과" },
-  { id: 3, name: "사학과" },
-  { id: 4, name: "철학과" },
-  { id: 5, name: "경제학과" },
-  { id: 6, name: "경영학과" },
-];
+const formatDate = (postedAt: string) => postedAt.split("T")[0].replace(/-/g, ".");
 
-const SAMPLE_FOOD_TRUCKS = [
-  { id: 1, name: "맛있는 트럭", description: "저희꺼 맛있어요" },
-  { id: 2, name: "버거킹 트럭", description: "수제버거 전문점" },
-  { id: 3, name: "달콤한 트럭", description: "디저트 & 음료" },
-  { id: 4, name: "타코 트럭", description: "멕시칸 푸드" },
-];
-
-const formatDate = (postedAt: string) =>
-  postedAt.split("T")[0].replace(/-/g, ".");
+const getNoticeBadge = (isPinned: boolean, postedAt: string): "필독" | "NEW" | undefined => {
+  if (isPinned) return "필독";
+  const diff = Date.now() - new Date(postedAt).getTime();
+  if (diff >= 0 && diff < 24 * 60 * 60 * 1000) return "NEW";
+  return undefined;
+};
 
 export default function Home() {
   const navigation = useNavigation<any>();
   const { loadEmail } = useAuthStore();
   const [isSogang, setIsSogang] = useState(false);
   const [stampProgress, setStampProgress] = useState(0);
+  const [drinkBooths, setDrinkBooths] = useState<
+    { id: string; name: string; thumbnailImageUrl?: string }[]
+  >([]);
   const [homeNotices, setHomeNotices] = useState<
     { id: string; title: string; date: string; badge?: "NEW" | "필독" }[]
   >([]);
+  const [rawNotices, setRawNotices] = useState<NoticeSummary[]>([]);
+  const [foodTrucks, setFoodTrucks] = useState<{ id: string; name: string; menu?: string }[]>([]);
 
   useEffect(() => {
     loadEmail().then((email) =>
       setIsSogang(email?.endsWith("@sogang.ac.kr") ?? false),
     );
-  }, []);
+  }, [loadEmail]);
 
   useEffect(() => {
     getMyStamps()
@@ -75,17 +56,47 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    getNotices()
+    getPubs()
       .then((res) =>
+        setDrinkBooths(
+          [...res.data.pubs]
+            .sort((a: { displayOrder: number }, b: { displayOrder: number }) => a.displayOrder - b.displayOrder)
+            .map((p: { id: string; collegeName: string; thumbnailImageUrl: string }) => ({
+              id: p.id,
+              name: p.collegeName,
+              thumbnailImageUrl: p.thumbnailImageUrl,
+            }))
+        )
+      )
+      .catch(() => {});
+  }, []);
+
+  useEffect(() => {
+    getFoodTrucks()
+      .then((res) =>
+        setFoodTrucks(
+          [...res.data.foodTrucks]
+            .sort((a: { displayOrder: number }, b: { displayOrder: number }) => a.displayOrder - b.displayOrder)
+            .map((t: { id: string; name: string; shortDescription?: string }) => ({ id: t.id, name: t.name, menu: t.shortDescription }))
+        )
+      )
+      .catch(() => {});
+  }, []);
+
+  useEffect(() => {
+    getNotices()
+      .then((res) => {
+        const sliced = res.data.notices.notices.slice(0, 3);
+        setRawNotices(sliced);
         setHomeNotices(
-          res.data.notices.notices.slice(0, 3).map((n) => ({
+          sliced.map((n) => ({
             id: n.id,
             title: n.title,
             date: formatDate(n.postedAt),
-            badge: n.isPinned ? ("필독" as const) : undefined,
-          })),
-        ),
-      )
+            badge: getNoticeBadge(n.isPinned, n.postedAt),
+          }))
+        );
+      })
       .catch(() => {});
   }, []);
 
@@ -128,14 +139,15 @@ export default function Home() {
       <View style={{ marginTop: 24 }}>
         <HomeNoticeSection
           items={homeNotices}
-          onMorePress={() => navigation.navigate("More", { screen: "Notice" })}
+          onMorePress={() => navigation.navigate("Notice")}
+          onItemPress={(id) => navigation.navigate("NoticeDetail", { noticeId: id, notices: rawNotices })}
         />
       </View>
       <View style={{ marginTop: 24 }}>
-        <DrinkBoothListSection items={SAMPLE_DRINK_BOOTHS} />
+        <DrinkBoothListSection items={drinkBooths} />
       </View>
       <View style={{ marginTop: 24, marginBottom: 50 }}>
-        <FoodTruckListSection items={SAMPLE_FOOD_TRUCKS} />
+        <FoodTruckListSection items={foodTrucks} />
       </View>
     </Layout>
   );

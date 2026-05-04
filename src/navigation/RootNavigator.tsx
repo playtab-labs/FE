@@ -14,6 +14,8 @@ import Terms from "@/pages/auth/Terms";
 import LoadingScreen from "@/pages/LoadingScreen";
 import MD from "@/pages/MD";
 import MDDetail from "@/pages/MDDetail";
+import Notice from "@/pages/more/Notice";
+import NoticeDetail from "@/pages/more/NoticeDetail";
 import QrScan from "@/pages/QrScan";
 import StampTour from "@/pages/StampTour";
 import { useAuthStore } from "@/stores/authStore";
@@ -129,6 +131,8 @@ export default function RootNavigator() {
         component={MDDetail}
         options={{ headerShown: false, contentStyle: { borderRadius: 0 } }}
       />
+      <Stack.Screen name="Notice" component={Notice} options={{ headerShown: false }} />
+      <Stack.Screen name="NoticeDetail" component={NoticeDetail} options={{ headerShown: false }} />
     </Stack.Navigator>
   );
 }

@@ -16,6 +16,7 @@ const TAB_NAMES = ["Artist", "Personal", "Home", "Map", "More"];
 interface LayoutProps {
   title?: React.ReactNode; //이미지도 받을 수 있게 수정
   showBack?: boolean;
+  onBack?: () => void;
   showCamera?: boolean;
   onCameraPress?: () => void;
   fullBleedHeader?: React.ReactNode;
@@ -34,6 +35,7 @@ interface LayoutProps {
 export default function Layout({
   title,
   showBack = false,
+  onBack,
   showCamera = false,
   onCameraPress,
   fullBleedHeader,
@@ -93,7 +95,7 @@ export default function Layout({
             <View style={{ width: 24, alignItems: "center", marginLeft: -8 }}>
               {showBack && (
                 <TouchableOpacity
-                  onPress={() => navigation.goBack()}
+                  onPress={() => onBack ? onBack() : navigation.goBack()}
                   hitSlop={{ top: 16, bottom: 16, left: 16, right: 16 }}
                 >
                   <GoBackIcon />

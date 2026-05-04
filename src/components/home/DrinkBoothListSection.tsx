@@ -6,6 +6,7 @@ import DrinkBoothItem from "./DrinkBoothItem";
 interface DrinkBoothData {
   id: string | number;
   name: string;
+  thumbnailImageUrl?: string;
 }
 
 interface DrinkBoothListSectionProps {
@@ -37,6 +38,7 @@ export default function DrinkBoothListSection({
           <DrinkBoothItem
             key={item.id}
             name={item.name}
+            thumbnailImageUrl={item.thumbnailImageUrl}
             onPress={() => onItemPress?.(item.id)}
           />
         ))}
