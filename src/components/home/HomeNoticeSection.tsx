@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { typo } from '@/styles/typography';
 import MoreButton from '@/components/common/MoreButton';
 import NoticeBadge, { BadgeType } from '@/components/more/notice/NoticeBadge';
@@ -13,9 +13,10 @@ interface NoticeItem {
 interface HomeNoticeSectionProps {
   items: NoticeItem[];
   onMorePress?: () => void;
+  onItemPress?: (id: string) => void;
 }
 
-export default function HomeNoticeSection({ items, onMorePress }: HomeNoticeSectionProps) {
+export default function HomeNoticeSection({ items, onMorePress, onItemPress }: HomeNoticeSectionProps) {
   const visibleItems = items.slice(0, 3);
 
   return (
@@ -28,7 +29,7 @@ export default function HomeNoticeSection({ items, onMorePress }: HomeNoticeSect
       </View>
       <View style={styles.list}>
         {visibleItems.map((item) => (
-          <View key={item.id} style={styles.row}>
+          <TouchableOpacity key={item.id} style={styles.row} onPress={() => onItemPress?.(String(item.id))} activeOpacity={0.7}>
             <View style={styles.left}>
               <Text className={typo.B4_Rg} style={styles.title} numberOfLines={1}>
                 {item.title}
@@ -38,7 +39,7 @@ export default function HomeNoticeSection({ items, onMorePress }: HomeNoticeSect
             <Text className={typo.B4_Rg} style={styles.date}>
               {item.date}
             </Text>
-          </View>
+          </TouchableOpacity>
         ))}
       </View>
     </View>

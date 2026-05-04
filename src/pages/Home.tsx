@@ -1,5 +1,5 @@
 import { getFoodTrucks, getPubs } from "@/api/booth";
-import { getNotices } from "@/api/notice";
+import { getNotices, NoticeSummary } from "@/api/notice";
 import { getMyStamps } from "@/api/stamp";
 import Layout from "@/components/Layout";
 import AdBanner from "@/components/home/AdBanner";
@@ -31,6 +31,7 @@ export default function Home() {
   const [homeNotices, setHomeNotices] = useState<
     { id: string; title: string; date: string; badge?: "NEW" | "필독" }[]
   >([]);
+  const [rawNotices, setRawNotices] = useState<NoticeSummary[]>([]);
   const [foodTrucks, setFoodTrucks] = useState<{ id: string; name: string; menu?: string }[]>([]);
 
   useEffect(() => {
@@ -75,16 +76,18 @@ export default function Home() {
 
   useEffect(() => {
     getNotices()
-      .then((res) =>
+      .then((res) => {
+        const sliced = res.data.notices.notices.slice(0, 3);
+        setRawNotices(sliced);
         setHomeNotices(
-          res.data.notices.notices.slice(0, 3).map((n) => ({
+          sliced.map((n) => ({
             id: n.id,
             title: n.title,
             date: formatDate(n.postedAt),
             badge: n.isPinned ? ("필독" as const) : undefined,
           }))
-        )
-      )
+        );
+      })
       .catch(() => {});
   }, []);
 
@@ -121,7 +124,9 @@ export default function Home() {
       <View style={{ marginTop: 24 }}>
         <HomeNoticeSection
           items={homeNotices}
-          onMorePress={() => navigation.navigate('More', { screen: 'Notice' })}
+<<<<<<< HEAD
+          onMorePress={() => navigation.navigate("Notice")}
+          onItemPress={(id) => navigation.navigate("NoticeDetail", { noticeId: id, notices: rawNotices })}
         />
       </View>
       <View style={{ marginTop: 24 }}>
