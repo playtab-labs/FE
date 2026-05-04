@@ -122,6 +122,16 @@
     "expired": "已过期",
     "youthPlaza": "青年广场"
   },
+  "home": {
+    "festivalTitle": "西江大学校庆 'Odyssey'",
+    "stampTour": "集章巡游",
+    "stampTourDisabled": "仅限西江大学在校生参与。",
+    "currentProgress": "当前进度",
+    "officialGoods": "官方周边",
+    "goodsSubtitle": "正在销售多款西江大学周边！",
+    "pubList": "酒馆列表",
+    "foodTruckList": "餐车列表"
+  },
   "personalChange": {
     "myInfoSection": "我的信息",
     "editButton": "修改",

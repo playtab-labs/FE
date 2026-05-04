@@ -67,7 +67,7 @@
   "setPassword": {
     "appBar": "パスワード設定",
     "title": "[[パスワード]]を入力してください。",
-    "subtitle": "英字と数字を組み合わせて、8文字以上で設定してください。",
+    "subtitle": "英字と数字を組み合わせて\n8文字以上で設定してください。",
     "passwordLabel": "パスワード",
     "confirmPasswordLabel": "パスワード確認",
     "confirmPlaceholder": "パスワードをもう一度入力してください。",
@@ -121,6 +121,16 @@
     "used": "使用済み",
     "expired": "期間満了",
     "youthPlaza": "青年広場"
+  },
+  "home": {
+    "festivalTitle": "西江大学 大同祭 'Odyssey'",
+    "stampTour": "スタンプツアー",
+    "stampTourDisabled": "西江大生のみ参加可能です。",
+    "currentProgress": "現在の進捗",
+    "officialGoods": "公式グッズ",
+    "goodsSubtitle": "さまざまな西江大学グッズを販売中！",
+    "pubList": "居酒屋リスト",
+    "foodTruckList": "フードトラックリスト"
   },
   "personalChange": {
     "myInfoSection": "マイ情報",

@@ -122,6 +122,16 @@
     "expired": "Expired",
     "youthPlaza": "Youth Plaza"
   },
+  "home": {
+    "festivalTitle": "Sogang University Festival 'Odyssey'",
+    "stampTour": "Stamp Tour",
+    "stampTourDisabled": "Available for Sogang students only.",
+    "currentProgress": "Current Progress",
+    "officialGoods": "Official Goods",
+    "goodsSubtitle": "Sogang goods are on sale!",
+    "pubList": "Pub List",
+    "foodTruckList": "Food Truck List"
+  },
   "personalChange": {
     "myInfoSection": "My Information",
     "editButton": "Edit",

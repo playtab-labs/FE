@@ -2,6 +2,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import { typo } from '@/styles/typography';
 import MoreButton from '@/components/common/MoreButton';
 import NoticeBadge, { BadgeType } from '@/components/more/notice/NoticeBadge';
+import { useTranslation } from 'react-i18next';
 
 interface NoticeItem {
   id: string | number;
@@ -16,13 +17,14 @@ interface HomeNoticeSectionProps {
 }
 
 export default function HomeNoticeSection({ items, onMorePress }: HomeNoticeSectionProps) {
+  const { t } = useTranslation();
   const visibleItems = items.slice(0, 3);
 
   return (
     <View style={styles.section}>
       <View style={styles.header}>
         <Text className={typo.T3_Eb} style={styles.sectionTitle}>
-          공지사항
+          {t("more.notices")}
         </Text>
         <MoreButton onPress={onMorePress} />
       </View>

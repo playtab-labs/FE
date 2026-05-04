@@ -122,6 +122,16 @@
     "expired": "기간 만료",
     "youthPlaza": "청년광장"
   },
+  "home": {
+    "festivalTitle": "서강대학교 대동제 'Odyssey'",
+    "stampTour": "스탬프 투어",
+    "stampTourDisabled": "서강대 학생만 참여 가능합니다.",
+    "currentProgress": "현재 진척도",
+    "officialGoods": "MD 굿즈",
+    "goodsSubtitle": "다양한 서강대 굿즈 판매 중!",
+    "pubList": "주점 리스트",
+    "foodTruckList": "푸드트럭 리스트"
+  },
   "personalChange": {
     "myInfoSection": "내 정보",
     "editButton": "변경하기",
