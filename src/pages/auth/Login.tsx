@@ -111,13 +111,11 @@ export default function Login() {
               } else {
                 await clearEmail();
               }
-              try {
-                await setTokens(
-                  res.data.accessToken,
-                  res.data.refreshToken,
-                  keepLogin,
-                );
-              } catch {}
+              await setTokens(
+                res.data.accessToken,
+                res.data.refreshToken,
+                keepLogin,
+              );
               navigation.reset({
                 index: 0,
                 routes: [{ name: "LoadingScreen" }],
