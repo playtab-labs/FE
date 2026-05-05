@@ -1,5 +1,6 @@
 import { typo } from "@/styles/typography";
 import { Text, View } from "react-native";
+import { useTranslation } from "react-i18next";
 
 interface StampToastProps {
   title: string;
@@ -8,6 +9,7 @@ interface StampToastProps {
 }
 
 export default function StampToast({ title, isBingo = false, boothName = 'XX' }: StampToastProps) {
+  const { t } = useTranslation();
   const textStyle = { color: '#FFF', textAlign: 'center' as const, letterSpacing: -0.14 };
 
   return (
@@ -26,15 +28,15 @@ export default function StampToast({ title, isBingo = false, boothName = 'XX' }:
       {isBingo ? (
         <>
           <Text className={typo.B3_Sb} style={textStyle}>
-            {boothName} 부스에서 경품을 수령할 수 있어요!
+            {t('stampTour.toastBingoPrize', { booth: boothName })}
           </Text>
           <Text className={typo.B3_Sb} style={textStyle}>
-            추가로 자동 응모가 완료되었어요.
+            {t('stampTour.toastBingoEntry')}
           </Text>
         </>
       ) : (
         <Text className={typo.B3_Sb} style={textStyle}>
-          {title} 스탬프를 채웠어요!
+          {t('stampTour.toastStamp', { title })}
         </Text>
       )}
     </View>
