@@ -122,7 +122,9 @@ export default function Login() {
               });
             } catch (e: any) {
               const status = e?.response?.status;
-              if (status === 404) {
+              if (!status) {
+                showToast(t("login.loginFailed"));
+              } else if (status === 404) {
                 showToast(t("login.userNotFound"));
               } else if (status >= 500) {
                 showToast(t("login.loginFailed"));

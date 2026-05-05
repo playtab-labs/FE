@@ -45,9 +45,12 @@ export default function SignUpComplete() {
               try {
                 const loginRes = await authApi.loginEmail(email, password);
                 await setTokens(loginRes.data.accessToken, loginRes.data.refreshToken, true);
-              } catch {}
-              reset();
-              navigation.reset({ index: 0, routes: [{ name: "Tabs" }] });
+                reset();
+                navigation.reset({ index: 0, routes: [{ name: "Tabs" }] });
+              } catch {
+                reset();
+                navigation.reset({ index: 0, routes: [{ name: "Login" }] });
+              }
             }}
           />
           {userType === "sogang" && (
