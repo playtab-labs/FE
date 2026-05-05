@@ -6,8 +6,10 @@ import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Image as ExpoImage } from "expo-image";
 import { useEffect } from "react";
 import { Image, Text, View } from "react-native";
+import { useTranslation } from "react-i18next";
 
 export default function Success() {
+  const { t } = useTranslation();
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
@@ -23,10 +25,11 @@ export default function Success() {
       <View className="flex-1 flex-col">
         {/* 문구 */}
         <View className="py-4 mt-2 gap-4 ">
-          <Text className="text-h1 font-eb text-text-salmon">인식 성공!</Text>
-
+          <Text className="text-h1 font-eb text-text-salmon">
+            {t("personal.scanSuccess")}
+          </Text>
           <Text className="text-b3 font-sb text-dark-gray">
-            3초 뒤에 다음 화면으로 넘어갈게요.
+            {t("personal.scanSuccessSubtitle")}
           </Text>
         </View>
 
@@ -38,7 +41,7 @@ export default function Success() {
             resizeMode="contain"
           />
 
-          {/* 이미지 위 "인식 성공!" 텍스트 */}
+          {/* 이미지 위 텍스트 */}
           <View
             style={{
               position: "absolute",
@@ -51,7 +54,7 @@ export default function Success() {
             }}
           >
             <Text className="text-b12 font-sb text-dark-gray/60">
-              인식 성공!
+              {t("personal.scanSuccess")}
             </Text>
           </View>
 

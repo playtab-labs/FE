@@ -18,8 +18,8 @@ export const useAuthStore = create<AuthState>((set) => ({
 
   setTokens: async (accessToken, refreshToken, keepLogin) => {
     if (keepLogin) {
-      await SecureStore.setItemAsync("accessToken", accessToken);
-      await SecureStore.setItemAsync("refreshToken", refreshToken);
+      await SecureStore.setItemAsync("accessToken", accessToken).catch(() => {});
+      await SecureStore.setItemAsync("refreshToken", refreshToken).catch(() => {});
     }
     set({ accessToken, refreshToken });
   },

@@ -25,7 +25,8 @@
           "cameraPermission": "QR코드 스캔을 위해 카메라 접근이 필요합니다."
         }
       ],
-      "react-native-nfc-manager"
+      "react-native-nfc-manager",
+      "expo-localization"
     ]
   }
 }

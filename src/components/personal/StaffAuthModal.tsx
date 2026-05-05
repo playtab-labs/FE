@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { useTranslation } from "react-i18next";
 import ToastError from "../common/ToastError";
 
 interface StaffAuthModalProps {
@@ -23,11 +24,11 @@ export default function StaffAuthModal({
   onConfirm,
   error,
 }: StaffAuthModalProps) {
+  const { t } = useTranslation();
   const [code, setCode] = useState("");
   const [toastVisible, setToastVisible] = useState(false);
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // error prop이 새로 들어올 때마다 토스트 표시 (타이밍 문제 해결)
   useEffect(() => {
     if (error) {
       setToastVisible(true);
@@ -80,10 +81,10 @@ export default function StaffAuthModal({
           {/* 안내 문구 */}
           <View className="items-center gap-[10px]">
             <Text className="text-b3 font-sb text-gray-black text-center">
-              팔찌 삭제 시 스태프 인증이 필요합니다.
+              {t("personal.staffAuthTitle")}
             </Text>
             <Text className="text-b4 font-rg text-[#656565] text-center">
-              가까이 있는 팔찌 배부처의{"\n"}스태프에게 문의해주세요.
+              {t("personal.staffAuthSubtitle")}
             </Text>
           </View>
 
@@ -92,7 +93,7 @@ export default function StaffAuthModal({
             <View className="flex-1 flex-row items-center rounded-lg border border-[#E4E4E4] bg-soft-gray-white px-3 h-[42px]">
               <TextInput
                 className="flex-1 text-b3 font-rg text-gray-black"
-                placeholder="스태프 인증번호를 입력"
+                placeholder={t("personal.staffCodePlaceholder")}
                 placeholderTextColor="#BFBFBF"
                 value={code}
                 onChangeText={setCode}
@@ -103,7 +104,9 @@ export default function StaffAuthModal({
               activeOpacity={0.8}
               className="h-[42px] px-4 items-center justify-center rounded-[8px] bg-secondary-salmon"
             >
-              <Text className="text-b3 font-sb text-gray-black">인증</Text>
+              <Text className="text-b3 font-sb text-gray-black">
+                {t("personal.staffConfirm")}
+              </Text>
             </TouchableOpacity>
           </View>
         </Pressable>
@@ -111,7 +114,7 @@ export default function StaffAuthModal({
         {/* 에러 토스트 */}
         {toastVisible && (
           <View className="absolute bottom-10 left-0 right-0 items-center">
-            <ToastError type="email" message="인증번호가 일치하지 않습니다." />
+            <ToastError type="email" message={t("personal.staffMismatch")} />
           </View>
         )}
       </Pressable>

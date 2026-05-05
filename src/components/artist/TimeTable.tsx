@@ -7,13 +7,7 @@ import { typo } from "@/styles/typography";
 import { useFocusEffect } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useCallback, useEffect, useState } from "react";
-import {
-  ActivityIndicator,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { ActivityIndicator, ScrollView, Text, View } from "react-native";
 import ArtistFilterBar from "./ArtistFilterBar";
 
 const DAY_ID: Record<string, string> = {
@@ -119,7 +113,7 @@ const TimeTable = () => {
       ) : (
         <>
           {/* 스테이지 탭 */}
-          {currentStages.length > 1 && (
+          {/* {currentStages.length > 1 && (
             <ScrollView
               horizontal
               showsHorizontalScrollIndicator={false}
@@ -158,7 +152,7 @@ const TimeTable = () => {
                 );
               })}
             </ScrollView>
-          )}
+          )} */}
 
           {/* 타임라인 */}
           <ScrollView showsVerticalScrollIndicator={false}>

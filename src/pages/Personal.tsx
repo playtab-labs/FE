@@ -1,11 +1,14 @@
 import Layout from "@/components/Layout";
 import Button from "@/components/common/Button";
+import ColoredText from "@/components/common/ColoredText";
 import type { RootStackParamList } from "@/navigation/types";
 import { useNavigation } from "@react-navigation/native";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { Image, Text, View } from "react-native";
+import { Image, View } from "react-native";
+import { useTranslation } from "react-i18next";
 
 export default function Personal() {
+  const { t } = useTranslation();
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
@@ -14,21 +17,20 @@ export default function Personal() {
       <View className="flex-1 flex-col">
         {/* 문구 */}
         <View className="py-4 mt-2 gap-4">
-          <View className="flex-row items-center">
-            <Text className="text-h1 font-eb text-text-salmon">팔찌 연동</Text>
-            <Text className="text-h1 font-eb text-gray-black">
-              을 시작할게요
-            </Text>
-          </View>
-          <Text className="text-b3 font-sb text-dark-gray">
-            퍼스널라이징을 위해서는 팔찌를 연동해야 해요.
-          </Text>
+          <ColoredText
+            text={t("personal.startTitle")}
+            className="text-h1 font-eb text-gray-black"
+          />
+          <ColoredText
+            text={t("personal.startSubtitle")}
+            className="text-b3 font-sb text-dark-gray"
+          />
         </View>
 
         {/* 로고 */}
         <View className="items-center mt-[103px] mb-40">
           <Image
-            source={require("@/assets/pngs/logo.png")}
+            source={require("@/assets/pngs/odysseyLogo_noempty.png")}
             style={{ width: 277, height: 173 }}
             resizeMode="contain"
           />
@@ -37,7 +39,7 @@ export default function Personal() {
         {/* 버튼 */}
         <View className="mt-auto mb-6 items-center">
           <Button
-            label="팔찌 연동 시작하기"
+            label={t("personal.startButton")}
             size="long"
             state="active"
             onPress={() => navigation.navigate("Tag")}

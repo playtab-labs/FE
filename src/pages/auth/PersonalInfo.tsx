@@ -1,5 +1,6 @@
 import Layout from "@/components/Layout";
 import Button from "@/components/common/Button";
+import ColoredText from "@/components/common/ColoredText";
 import ConfirmModal from "@/components/common/ConfirmModal";
 import Input from "@/components/common/Input";
 import NationalityModal from "@/components/common/NationalityModal";
@@ -8,17 +9,7 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import { useState } from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import Svg, { Polyline } from "react-native-svg";
-
-const NATIONALITIES = [
-  "대한민국",
-  "가나",
-  "나이지리아",
-  "덴마크",
-  "러시아",
-  "미국",
-  "베트남",
-  "세르비아",
-];
+import { useTranslation } from "react-i18next";
 
 const formatBirthday = (digits: string) => {
   if (digits.length <= 4) return digits;
@@ -32,6 +23,18 @@ const formatBirthdayForApi = (digits: string) => {
 };
 
 export default function PersonalInfo() {
+  const { t } = useTranslation();
+
+  const NATIONALITIES = [
+    t("nationality.southKorea"),
+    t("nationality.ghana"),
+    t("nationality.nigeria"),
+    t("nationality.denmark"),
+    t("nationality.russia"),
+    t("nationality.usa"),
+    t("nationality.vietnam"),
+    t("nationality.serbia"),
+  ];
   const navigation = useNavigation<any>();
   const route = useRoute<any>();
   const userType = route.params?.userType ?? "external";
@@ -74,7 +77,7 @@ export default function PersonalInfo() {
     nationality !== "";
 
   return (
-    <Layout title="이름 및 기타 정보" showBack>
+    <Layout title={t("personalInfo.appBar")} showBack>
       <ScrollView
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="handled"
@@ -82,58 +85,49 @@ export default function PersonalInfo() {
         <View>
           {/* 안내 문구 */}
           <View className="mt-[19px] gap-4">
-            <View className="flex-row items-center">
-              <Text className="text-h1 font-eb text-text-salmon">이름</Text>
-              <Text className="text-h1 font-eb text-gray-black">과 </Text>
-              <Text className="text-h1 font-eb text-text-salmon">
-                기타 정보
-              </Text>
-              <Text className="text-h1 font-eb text-gray-black">
-                를 입력해주세요.
-              </Text>
-            </View>
+            <ColoredText text={t("personalInfo.title")} className="text-h1 font-eb text-gray-black" />
             <Text className="text-b3 font-sb text-dark-gray">
-              사용자님에 대해서 알려주세요
+              {t("personalInfo.subtitle")}
             </Text>
           </View>
 
           <View className="flex mt-16 gap-6">
             {/* 이름 */}
             <Input
-              label="이름"
-              description="실명을 입력해주세요."
-              placeholder="이름을 입력해주세요."
+              label={t("personalInfo.nameLabel")}
+              description={t("personalInfo.nameDescription")}
+              placeholder={t("personalInfo.namePlaceholder")}
               value={name}
               onChangeText={setName}
             />
 
             {/* 성별 */}
             <View className="w-full gap-2">
-              <Text className="text-b3 font-sb text-dark-gray">성별</Text>
+              <Text className="text-b3 font-sb text-dark-gray">{t("personalInfo.genderLabel")}</Text>
               <View className="flex-row gap-3">
                 <TouchableOpacity
                   className={`flex-1 h-[42px] rounded-lg items-center justify-center border ${gender === "male" ? "bg-[#FFA38C] border-[#FFA38C]" : "bg-extra-white border-[#E4E4E4]"}`}
                   onPress={() => setGender("male")}
                 >
-                  <Text className="text-b3 font-sb text-gray-black">남성</Text>
+                  <Text className="text-b3 font-sb text-gray-black">{t("personalInfo.male")}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   className={`flex-1 h-[42px] rounded-lg items-center justify-center border ${gender === "female" ? "bg-[#FFA38C] border-[#FFA38C]" : "bg-extra-white border-[#E4E4E4]"}`}
                   onPress={() => setGender("female")}
                 >
-                  <Text className="text-b3 font-sb text-gray-black">여성</Text>
+                  <Text className="text-b3 font-sb text-gray-black">{t("personalInfo.female")}</Text>
                 </TouchableOpacity>
               </View>
             </View>
 
             {/* 생일 */}
             <Input
-              label="생일"
+              label={t("personalInfo.birthdayLabel")}
               description={
-                isBirthdayInvalid ? "날짜를 다시 확인해주세요." : undefined
+                isBirthdayInvalid ? t("personalInfo.birthdayInvalid") : undefined
               }
               error={isBirthdayInvalid}
-              placeholder="8자리 숫자로 입력해주세요."
+              placeholder={t("personalInfo.birthdayPlaceholder")}
               value={formatBirthday(birthdayRaw)}
               onChangeText={handleBirthday}
               keyboardType="number-pad"
@@ -143,9 +137,9 @@ export default function PersonalInfo() {
             {/* 국적 */}
             <View className="w-full gap-[6px]">
               <View className="flex-row justify-between items-center">
-                <Text className="text-b3 font-sb text-dark-gray">국적</Text>
+                <Text className="text-b3 font-sb text-dark-gray">{t("personalInfo.nationalityLabel")}</Text>
                 <Text className="text-b4 font-rg text-dark-gray">
-                  이중국적인 경우 하나만 선택해주세요.
+                  {t("personalInfo.nationalityDescription")}
                 </Text>
               </View>
               <TouchableOpacity
@@ -155,7 +149,7 @@ export default function PersonalInfo() {
                 <Text
                   className={`text-b3 font-md ${nationality ? "text-gray-black" : "text-[#E4E4E4]"}`}
                 >
-                  {nationality || "선택해주세요."}
+                  {nationality || t("personalInfo.nationalityPlaceholder")}
                 </Text>
                 <Svg width="10" height="6" viewBox="0 0 10 6" fill="none">
                   <Polyline
@@ -175,7 +169,7 @@ export default function PersonalInfo() {
       {/* 계속하기 버튼 */}
       <View className="py-4 pb-10">
         <Button
-          label="계속하기"
+          label={t("personalInfo.continue")}
           size="long"
           state={isValid ? "active" : "inactive"}
           onPress={() => setShowNameConfirm(true)}
@@ -184,11 +178,11 @@ export default function PersonalInfo() {
 
       <ConfirmModal
         visible={showNameConfirm}
-        title={`성함이 '${name}'이 맞나요?`}
-        warning="이름은 변경할 수 없습니다."
-        description={`설정한 이름이 실명과 다를 시\n서비스 이용에 제한이 있을 수 있습니다.`}
-        confirmLabel="네, 맞아요"
-        cancelLabel="아니에요"
+        title={t("personalInfo.confirmTitle", { name })}
+        warning={t("personalInfo.confirmWarning")}
+        description={t("personalInfo.confirmDescription")}
+        confirmLabel={t("personalInfo.confirmYes")}
+        cancelLabel={t("personalInfo.confirmNo")}
         onConfirm={() => {
           setPersonalInfo({
             name,

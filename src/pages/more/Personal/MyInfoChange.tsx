@@ -15,6 +15,7 @@ import {
   View,
 } from "react-native";
 import Svg, { Polyline } from "react-native-svg";
+import { useTranslation } from "react-i18next";
 
 const GET_ME = gql`
   query GetMe {
@@ -38,16 +39,6 @@ const UPDATE_MY_PROFILE = gql`
   }
 `;
 
-const NATIONALITIES = [
-  "대한민국",
-  "가나",
-  "나이지리아",
-  "덴마크",
-  "러시아",
-  "미국",
-  "베트남",
-  "세르비아",
-];
 
 const formatBirthday = (digits: string) => {
   if (digits.length <= 4) return digits;
@@ -56,6 +47,17 @@ const formatBirthday = (digits: string) => {
 };
 
 export default function MyInfoChange() {
+  const { t } = useTranslation();
+  const NATIONALITIES = [
+    t("nationality.southKorea"),
+    t("nationality.ghana"),
+    t("nationality.nigeria"),
+    t("nationality.denmark"),
+    t("nationality.russia"),
+    t("nationality.usa"),
+    t("nationality.vietnam"),
+    t("nationality.serbia"),
+  ];
   const { data } = useQuery<{
     me: {
       name: string;
@@ -148,7 +150,7 @@ export default function MyInfoChange() {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <View className="flex-1">
-        <Layout title="내 정보 변경" showBack showCamera={false}>
+        <Layout title={t("personalChange.myInfoChangeAppBar")} showBack showCamera={false}>
           <ScrollView
             showsVerticalScrollIndicator={false}
             keyboardShouldPersistTaps="handled"
@@ -157,16 +159,16 @@ export default function MyInfoChange() {
             <View className="flex mt-6 gap-6">
               {/* 이름 */}
               <Input
-                label="이름"
-                description="실명을 입력해주세요."
-                placeholder="이름을 입력해주세요."
+                label={t("personalInfo.nameLabel")}
+                description={t("personalInfo.nameDescription")}
+                placeholder={t("personalInfo.namePlaceholder")}
                 value={name}
                 onChangeText={setName}
               />
 
               {/* 성별 */}
               <View className="w-full gap-2">
-                <Text className="text-b3 font-sb text-dark-gray">성별</Text>
+                <Text className="text-b3 font-sb text-dark-gray">{t("personalInfo.genderLabel")}</Text>
                 <View className="flex-row gap-3">
                   <TouchableOpacity
                     className={`flex-1 h-[42px] rounded-lg items-center justify-center border ${gender === "male" ? "bg-[#FFA38C] border-[#FFA38C]" : "bg-extra-white border-[#E4E4E4]"}`}
@@ -175,7 +177,7 @@ export default function MyInfoChange() {
                     <Text
                       className={`text-b3 font-sb ${gender === "male" ? "text-extra-white" : "text-gray-black"}`}
                     >
-                      남성
+                      {t("personalInfo.male")}
                     </Text>
                   </TouchableOpacity>
                   <TouchableOpacity
@@ -185,7 +187,7 @@ export default function MyInfoChange() {
                     <Text
                       className={`text-b3 font-sb ${gender === "female" ? "text-extra-white" : "text-gray-black"}`}
                     >
-                      여성
+                      {t("personalInfo.female")}
                     </Text>
                   </TouchableOpacity>
                 </View>
@@ -193,8 +195,8 @@ export default function MyInfoChange() {
 
               {/* 생일 */}
               <Input
-                label="생일"
-                placeholder="8자리 숫자로 입력해주세요."
+                label={t("personalInfo.birthdayLabel")}
+                placeholder={t("personalInfo.birthdayPlaceholder")}
                 value={formatBirthday(birthdayRaw)}
                 onChangeText={handleBirthday}
                 keyboardType="number-pad"
@@ -204,9 +206,9 @@ export default function MyInfoChange() {
               {/* 국적 */}
               <View className="w-full gap-[6px]">
                 <View className="flex-row justify-between items-center">
-                  <Text className="text-b3 font-sb text-dark-gray">국적</Text>
+                  <Text className="text-b3 font-sb text-dark-gray">{t("personalInfo.nationalityLabel")}</Text>
                   <Text className="text-b4 font-rg text-dark-gray">
-                    이중국적인 경우 하나만 선택해주세요.
+                    {t("personalInfo.nationalityDescription")}
                   </Text>
                 </View>
                 <TouchableOpacity
@@ -216,7 +218,7 @@ export default function MyInfoChange() {
                   <Text
                     className={`text-b3 font-md ${nationality ? "text-gray-black" : "text-[#E4E4E4]"}`}
                   >
-                    {nationality || "선택해주세요."}
+                    {nationality || t("personalInfo.nationalityPlaceholder")}
                   </Text>
                   <Svg width="6" height="10" viewBox="0 0 6 10" fill="none">
                     <Polyline
@@ -234,7 +236,7 @@ export default function MyInfoChange() {
 
           <View className="items-center mb-10">
             <Button
-              label="변경 완료"
+              label={t("personalChange.changeComplete")}
               size="long"
               state={isChanged ? "active" : "inactive"}
               onPress={handleSubmit}
@@ -256,8 +258,8 @@ export default function MyInfoChange() {
               type="login"
               message={
                 toast === "success"
-                  ? "성공적으로 변경되었습니다."
-                  : "오류가 발생했습니다. 다시 시도해주세요."
+                  ? t("personalChange.changeSuccess")
+                  : t("personalChange.changeError")
               }
             />
           </View>
