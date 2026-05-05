@@ -2,8 +2,8 @@ import Layout from "@/components/Layout";
 import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
-
 import Svg, { Circle } from "react-native-svg";
+import { useTranslation } from "react-i18next";
 
 const WITHDRAW_REASONS = [
   "어플 사용이 불편해요",
@@ -30,19 +30,20 @@ function RadioIcon({ active }: { active: boolean }) {
 }
 
 export default function ServiceWithdrawal() {
+  const { t } = useTranslation();
   const navigation = useNavigation();
   const [selected, setSelected] = useState<WithdrawReason | null>(null);
 
   return (
-    <Layout title="회원 탈퇴" showBack showCamera={false}>
+    <Layout title={t("personalChange.withdrawAppBar")} showBack showCamera={false}>
       <View className="flex-1">
         {/* 안내 문구 */}
         <View className="py-4 px-[12px] gap-4">
           <Text className="text-h1 font-eb text-gray-black">
-            탈퇴하는 이유를 알려주세요.
+            {t("personalChange.withdrawTitle")}
           </Text>
           <Text className="text-b3 font-sb text-[#656565]">
-            귀담아 듣고 서비스 개선에 힘쓰겠습니다.
+            {t("personalChange.withdrawSubtitle")}
           </Text>
         </View>
 
@@ -75,7 +76,7 @@ export default function ServiceWithdrawal() {
             activeOpacity={0.8}
             className="flex-1 h-14 items-center justify-center rounded-2xl border border-[#BFBFBF]"
           >
-            <Text className="text-t3 font-eb text-gray-black">계속 사용하기</Text>
+            <Text className="text-t3 font-eb text-gray-black">{t("personalChange.keepUsing")}</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -84,7 +85,7 @@ export default function ServiceWithdrawal() {
             activeOpacity={0.8}
             className={`flex-1 h-14 items-center justify-center rounded-2xl ${selected ? "bg-[#FFA38C]" : "bg-[#BFBFBF]"}`}
           >
-            <Text className={`text-t3 font-eb ${selected ? "text-gray-black" : "text-white"}`}>다음 단계로</Text>
+            <Text className={`text-t3 font-eb ${selected ? "text-gray-black" : "text-white"}`}>{t("personalChange.withdrawNextStep")}</Text>
           </TouchableOpacity>
         </View>
       </View>

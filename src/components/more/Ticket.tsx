@@ -1,5 +1,6 @@
 import { LinearGradient } from "expo-linear-gradient";
 import { Text, View } from "react-native";
+import { useTranslation } from "react-i18next";
 
 type TicketStatus = "available" | "upcoming" | "used" | "expired";
 
@@ -65,6 +66,13 @@ const CIRCLES = [
 ];
 
 export default function Ticket(props: TicketProps) {
+  const { t } = useTranslation();
+  const STATUS_LABELS: Record<TicketStatus, string> = {
+    available: t("more.entryAvailable"),
+    upcoming: t("more.scheduled"),
+    used: t("more.used"),
+    expired: t("more.expired"),
+  };
   if (props.noticket) {
     return (
       <View className="w-full rounded-2xl" style={SHADOW}>
@@ -102,10 +110,10 @@ export default function Ticket(props: TicketProps) {
           ))}
           <View className="px-5 py-4 gap-2">
             <Text className="text-t1 font-eb text-extra-white">
-              티켓을 활성화하세요.
+              {t("more.activateTicket")}
             </Text>
             <Text className="text-b4 font-sb text-extra-white">
-              PERSONAL에서 입장 팔찌 인식 시 자동으로 연동됩니다.
+              {t("more.ticketAutoLink")}
             </Text>
           </View>
         </View>
@@ -115,7 +123,8 @@ export default function Ticket(props: TicketProps) {
 
   const { day, status, date, time, location } = props;
   const gradient = GRADIENT_COLORS[day];
-  const { label, bgClass, textClass } = STATUS_CONFIG[status];
+  const { bgClass, textClass } = STATUS_CONFIG[status];
+  const label = STATUS_LABELS[status];
 
   return (
     <View className="w-full rounded-2xl" style={SHADOW}>

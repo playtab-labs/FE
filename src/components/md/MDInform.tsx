@@ -1,13 +1,16 @@
 import { View, Text } from 'react-native';
 import { typo } from '@/styles/typography';
-
-const ITEMS = [
-  '- 사전수령 안내사항',
-  '- 현장구매 안내사항',
-  '- 기타 안내사항'
-];
+import { useTranslation } from 'react-i18next';
 
 export default function ProductInfo() {
+  const { t } = useTranslation();
+
+  const ITEMS = [
+    t("md.prePickupInfo"),
+    t("md.onsiteInfo"),
+    t("md.otherInfo"),
+  ];
+
   return (
     <View style={{ width: '100%' }}>
       <View

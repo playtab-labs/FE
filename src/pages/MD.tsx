@@ -5,6 +5,7 @@ import { gql } from '@apollo/client';
 import { useQuery } from '@apollo/client/react';
 import { useNavigation } from '@react-navigation/native';
 import { TouchableOpacity, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 const GET_MD_ITEMS = gql`
   query MdItems {
@@ -35,6 +36,7 @@ interface MdItemsResponse {
 }
 
 export default function MD() {
+  const { t } = useTranslation();
   const navigation = useNavigation<any>();
   const { data } = useQuery<MdItemsResponse>(GET_MD_ITEMS);
 
@@ -55,7 +57,7 @@ export default function MD() {
             <MDProductCard
               imageSource={{ uri: item.thumbnailImageUrl }}
               title={item.name}
-              price={`${item.price.toLocaleString()}원`}
+              price={t("md.priceFormat", { price: item.price.toLocaleString() })}
               soldOut={item.isSoldOut}
             />
           </TouchableOpacity>

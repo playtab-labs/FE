@@ -1,78 +1,108 @@
+import { authApi } from "@/api/auth";
 import Layout from "@/components/Layout";
 import Button from "@/components/common/Button";
 import Input from "@/components/common/Input";
 import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Keyboard, Text, TouchableWithoutFeedback, View } from "react-native";
 
-const MOCK_CODE = "1234";
-
 export default function FindPassword() {
+  const { t } = useTranslation();
   const navigation = useNavigation<any>();
 
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState(false);
   const [codeSent, setCodeSent] = useState(false);
+  const [sending, setSending] = useState(false);
+
   const [code, setCode] = useState("");
   const [codeVerified, setCodeVerified] = useState(false);
   const [codeError, setCodeError] = useState(false);
+  const [verifying, setVerifying] = useState(false);
 
-  const handleSendCode = () => {
+  const handleSendCode = async () => {
     if (!email.includes("@")) {
       setEmailError(true);
       return;
     }
-    setEmailError(false);
-    setCodeSent(true);
-    setCode("");
-    setCodeVerified(false);
-    setCodeError(false);
+    setSending(true);
+    try {
+      const res = await authApi.sendPasswordResetCode(email);
+      if (res.data.success) {
+        setEmailError(false);
+        setCodeSent(true);
+        setCode("");
+        setCodeVerified(false);
+        setCodeError(false);
+      } else {
+        setEmailError(true);
+      }
+    } catch {
+      setEmailError(true);
+    } finally {
+      setSending(false);
+    }
   };
 
-  const handleVerifyCode = () => {
-    if (code === MOCK_CODE) {
-      setCodeVerified(true);
-      setCodeError(false);
-    } else {
+  const handleVerifyCode = async () => {
+    setVerifying(true);
+    try {
+      const res = await authApi.verifyPasswordResetCode(email, code);
+      if (res.data.success) {
+        setCodeVerified(true);
+        setCodeError(false);
+      } else {
+        setCodeError(true);
+      }
+    } catch {
       setCodeError(true);
+    } finally {
+      setVerifying(false);
     }
   };
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <View className="flex-1">
-        <Layout title="비밀번호 찾기" showBack showCamera={false}>
-          <View className="mt-6 gap-6 items-center">
+        <Layout title={t("login.findPassword")} showBack showCamera={false}>
+          <View className="mt-6 gap-6">
             {/* 이메일 + 번호발송 */}
-            <View className="w-[342px] gap-[6px]">
+            <View className="gap-2">
               <View className="flex-row justify-between items-center">
-                <Text className="text-b3 font-sb text-dark-gray">이메일</Text>
+                <Text className="text-b3 font-sb text-dark-gray">
+                  {t("emailVerify.emailLabel")}
+                </Text>
                 {emailError ? (
                   <Text className="text-b4 font-rg text-secondary-bubblegum-pink">
-                    해당하는 사용자가 없습니다.
+                    {t("login.userNotFound")}
                   </Text>
                 ) : codeSent ? (
                   <Text className="text-b4 font-rg text-[#656565]">
-                    발송되었습니다.
+                    {t("personalChange.findPasswordCodeSent")}
                   </Text>
                 ) : null}
               </View>
               <View className="flex-row gap-2 items-center">
                 <Input
                   size="with-button"
-                  placeholder="이메일을 입력해주세요."
+                  placeholder={t("login.emailPlaceholder")}
                   value={email}
                   onChangeText={setEmail}
                   keyboardType="email-address"
                   autoCapitalize="none"
-                  editable={!codeVerified}
+                  editable={!codeVerified && !sending}
                   error={emailError}
                 />
                 <Button
-                  label={codeSent ? "번호 재발송" : "번호발송"}
+                  label={
+                    codeSent
+                      ? t("personalChange.findPasswordResendCode")
+                      : t("personalChange.findPasswordSendCode")
+                  }
                   size="short"
                   state={
-                    email.length === 0
+                    email.length === 0 || sending
                       ? "inactive"
                       : codeSent
                         ? "reactivated"
@@ -84,40 +114,44 @@ export default function FindPassword() {
             </View>
 
             {/* 이메일 인증번호 + 인증하기 */}
-            <View className="w-[342px] gap-[6px]">
+            <View className="gap-2">
               <View className="flex-row justify-between items-center">
                 <Text className="text-b3 font-sb text-dark-gray">
-                  이메일 인증번호
+                  {t("emailVerify.verificationCodeLabel")}
                 </Text>
                 {codeError ? (
                   <Text className="text-b4 font-rg text-secondary-bubblegum-pink">
-                    인증번호가 일치하지 않습니다.
+                    {t("emailVerify.codeMismatch")}
                   </Text>
                 ) : codeSent ? (
                   <Text className="text-b4 font-rg text-[#656565]">
                     {codeVerified
-                      ? "인증되었습니다."
-                      : "인증번호는 3분간 유효합니다."}
+                      ? t("emailVerify.verified")
+                      : t("personalChange.findPasswordCodeExpiry")}
                   </Text>
                 ) : null}
               </View>
               <View className="flex-row gap-2 items-center">
                 <Input
                   size="with-button"
-                  placeholder="인증번호를 입력해주세요."
+                  placeholder={t("emailVerify.verificationCodePlaceholder")}
                   value={code}
-                  onChangeText={(t) => {
-                    setCode(t);
+                  onChangeText={(v) => {
+                    setCode(v);
                     setCodeError(false);
                   }}
                   keyboardType="number-pad"
-                  editable={codeSent && !codeVerified}
+                  editable={codeSent && !codeVerified && !verifying}
                 />
                 <Button
-                  label={codeVerified ? "인증완료" : "인증하기"}
+                  label={
+                    codeVerified
+                      ? t("personalChange.verifyCompleteButton")
+                      : t("emailVerify.verify")
+                  }
                   size="short"
                   state={
-                    codeVerified
+                    codeVerified || verifying
                       ? "inactive"
                       : code.length > 0
                         ? "active"
@@ -129,12 +163,12 @@ export default function FindPassword() {
             </View>
           </View>
 
-          <View className="items-center py-4 mt-auto">
+          <View className="items-center py-4 mt-auto mb-10">
             <Button
-              label="비밀번호 변경하기"
+              label={t("personalChange.findPasswordToReset")}
               size="long"
               state={codeVerified ? "active" : "inactive"}
-              onPress={() => navigation.navigate("ResetPassword")}
+              onPress={() => navigation.navigate("ResetPassword", { email })}
             />
           </View>
         </Layout>

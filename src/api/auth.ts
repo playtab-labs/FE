@@ -58,4 +58,25 @@ export const authApi = {
   // 로그아웃
   logout: (refreshToken: string) =>
     client.post<{ success: boolean }>("/api/v1/auth/logout", { refreshToken }),
+
+  // 비밀번호 재설정 코드 발송
+  sendPasswordResetCode: (email: string) =>
+    client.post<{ success: boolean; ttlSeconds: number }>(
+      "/api/v1/auth/password-resets/send",
+      { email },
+    ),
+
+  // 비밀번호 재설정 코드 검증
+  verifyPasswordResetCode: (email: string, code: string) =>
+    client.post<{ success: boolean }>(
+      "/api/v1/auth/password-resets/verify",
+      { email, code },
+    ),
+
+  // 비밀번호 재설정
+  resetPassword: (email: string, newPassword: string) =>
+    client.post<{ success: boolean }>(
+      "/api/v1/auth/password-resets/reset",
+      { email, newPassword },
+    ),
 };

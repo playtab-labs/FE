@@ -1,5 +1,6 @@
 import { Text, View } from 'react-native';
 import { typo } from '@/styles/typography';
+import { useTranslation } from 'react-i18next';
 
 type SaleType = 'preorder' | 'onsite';
 
@@ -7,21 +8,20 @@ interface MDSaleTypeBadgeProps {
   type: SaleType;
 }
 
-const CONFIG: Record<SaleType, { label: string; backgroundColor: string; color: string }> = {
+const STYLE_CONFIG: Record<SaleType, { backgroundColor: string; color: string }> = {
   preorder: {
-    label: '사전주문',
     backgroundColor: '#E4E4E4',
     color: '#656565',
   },
   onsite: {
-    label: '현장판매',
     backgroundColor: '#FFA38C',
     color: '#1A1A1A',
   },
 };
 
 export default function MDSaleTypeBadge({ type }: MDSaleTypeBadgeProps) {
-  const { label, backgroundColor, color } = CONFIG[type];
+  const { t } = useTranslation();
+  const { backgroundColor, color } = STYLE_CONFIG[type];
 
   return (
     <View
@@ -40,7 +40,7 @@ export default function MDSaleTypeBadge({ type }: MDSaleTypeBadgeProps) {
         className={typo.B5_Eb}
         style={{ color, letterSpacing: -0.1 }}
       >
-        {label}
+        {t(`md.${type}`)}
       </Text>
     </View>
   );

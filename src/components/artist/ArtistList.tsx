@@ -7,6 +7,7 @@ import NoFavIcon from "@/assets/artist_nofav.svg";
 import { typo } from "@/styles/typography";
 import { useEffect, useState } from "react";
 import { ActivityIndicator, ScrollView, Text, View } from "react-native";
+import { useTranslation } from "react-i18next";
 import ArtistCard from "./ArtistCard";
 
 type ArtistCategory = string;
@@ -30,6 +31,7 @@ const ArtistList = ({
   favorites = new Set(),
   onFavoriteToggle,
 }: ArtistListProps) => {
+  const { t } = useTranslation();
   // stage > artists 중첩 구조를 ArtistSchedule[] flat 리스트로 변환
   const flattenArtists = (stageSchedules: StageSchedule[]): ArtistSchedule[] =>
     stageSchedules.flatMap((s) => s.artists);
@@ -106,7 +108,7 @@ const ArtistList = ({
       <View className="flex-1 items-center justify-center gap-6">
         <NoFavIcon width={100} height={110} />
         <Text className={`${typo.B3_Rg} text-dark-gray`}>
-          즐겨찾기한 아티스트가 없습니다.
+          {t("artist.noFavorites")}
         </Text>
       </View>
     );
@@ -124,8 +126,8 @@ const ArtistList = ({
             <View className="py-8 items-center">
               <Text className={`${typo.B3_Rg} text-dark-gray`}>
                 {favOnly
-                  ? "해당 날짜에 즐겨찾기한 아티스트가 없습니다."
-                  : `📢    DAY ${dayNumber}은 아티스트 무대가 없습니다.   📢`}
+                  ? t("artist.noFavoritesOnDate")
+                  : t("artist.noPerformance", { day: dayNumber })}
               </Text>
             </View>
           ) : (

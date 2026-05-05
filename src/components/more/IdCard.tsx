@@ -3,6 +3,7 @@ import IdStranger from "@/assets/svgs/idStranger.svg";
 import SogangHalf from "@/assets/svgs/sogangHalf.svg";
 import { LinearGradient } from "expo-linear-gradient";
 import { Text, View } from "react-native";
+import { useTranslation } from "react-i18next";
 
 interface IdCardProps {
   name: string;
@@ -14,6 +15,7 @@ const BADGE_SIZE = 80;
 const BADGE_OVERFLOW = 30;
 
 export default function IdCard({ name, email, isSogang = true }: IdCardProps) {
+  const { t } = useTranslation();
   return (
     <View style={{ width: "100%", paddingTop: BADGE_OVERFLOW }}>
       {/* 그림자 wrapper */}
@@ -77,19 +79,11 @@ export default function IdCard({ name, email, isSogang = true }: IdCardProps) {
             >
               <Text className="text-h1 font-eb text-gray-black">{name}</Text>
               <Text className="text-b4 font-rg text-dark-gray">{email}</Text>
-              {isSogang ? (
-                <View className="mt-1 px-3 py-[3px] rounded-full bg-secondary-salmon">
-                  <Text className="text-b5 font-sb text-gray-black">
-                    서강대생 인증완료
-                  </Text>
-                </View>
-              ) : (
-                <View className="mt-1 px-3 py-[3px] rounded-full bg-secondary-salmon">
-                  <Text className="text-b5 font-sb text-gray-black">
-                    외부인
-                  </Text>
-                </View>
-              )}
+              <View className="mt-1 px-3 py-[3px] rounded-full bg-secondary-salmon">
+                <Text className="text-b5 font-sb text-gray-black">
+                  {isSogang ? t("more.sogangVerified") : t("more.guest")}
+                </Text>
+              </View>
             </View>
           </LinearGradient>
         </View>

@@ -1,6 +1,7 @@
 import AlosIcon from "@/assets/svgs/ALOS.svg";
 import Layout from "@/components/Layout";
 import Button from "@/components/common/Button";
+import ColoredText from "@/components/common/ColoredText";
 import TermsModal from "@/components/common/TermsModal";
 import TERMS_DATA from "@/mockdatas/TermsDetail.json";
 import { useSignupStore } from "@/stores/signupStore";
@@ -8,16 +9,22 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import { useState } from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import Svg, { Polyline } from "react-native-svg";
-
-export const TERMS_LIST = TERMS_DATA.map((t) => ({
-  id: t.id,
-  label: t.label,
-  type: t.type as "PRIVACY" | "SERVICE" | "MARKETING",
-  required: t.required,
-  content: t.content,
-}));
+import { useTranslation } from "react-i18next";
 
 export default function Terms() {
+  const { t } = useTranslation();
+
+  const TERMS_LIST = TERMS_DATA.map((term) => ({
+    id: term.id,
+    label:
+      term.id === 1 ? t("terms.agreeTermsOfUse")
+      : term.id === 2 ? t("terms.agreePrivacy")
+      : term.id === 3 ? t("terms.agreeLocation")
+      : t("terms.agreeMarketing"),
+    type: term.type as "PRIVACY" | "SERVICE" | "MARKETING",
+    required: term.required,
+    content: term.content,
+  }));
   const navigation = useNavigation<any>();
   const route = useRoute<any>();
   const userType = route.params?.userType ?? "external";
@@ -29,9 +36,9 @@ export default function Terms() {
   );
   const [showAllModal, setShowAllModal] = useState(false);
 
-  const allAgreed = TERMS_LIST.every((t) => agreed[t.id]);
-  const requiredAgreed = TERMS_LIST.filter((t) => t.required).every(
-    (t) => agreed[t.id],
+  const allAgreed = TERMS_LIST.every((term) => agreed[term.id]);
+  const requiredAgreed = TERMS_LIST.filter((term) => term.required).every(
+    (term) => agreed[term.id],
   );
 
   const toggleAll = () => {
@@ -40,19 +47,14 @@ export default function Terms() {
   };
 
   return (
-    <Layout title="약관동의" showBack>
+    <Layout title={t("terms.appBar")} showBack>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View>
           {/* 약관 안내 문구 */}
           <View className="mt-[19px] gap-4">
-            <View className="flex-row items-center">
-              <Text className="text-h1 font-eb text-text-salmon">
-                약관에 동의
-              </Text>
-              <Text className="text-h1 font-eb text-gray-black">해주세요.</Text>
-            </View>
+            <ColoredText text={t("terms.title")} className="text-h1 font-eb text-gray-black" />
             <Text className="text-b3 font-sb text-dark-gray">
-              PLAYTAP의 서비스를 이용하기 위해 필요해요.
+              {t("terms.subtitle")}
             </Text>
           </View>
 
@@ -78,13 +80,13 @@ export default function Terms() {
                 className="text-b4 font-sb text-extra-white"
                 style={{ lineHeight: 17 }}
               >
-                전체
+                {t("terms.all")}
               </Text>
               <Text
                 className="text-t3 font-eb text-gray-black"
                 style={{ lineHeight: 17 }}
               >
-                약관 전체동의
+                {t("terms.agreeAll")}
               </Text>
               <Svg width="6" height="10" viewBox="0 0 6 10" fill="none">
                 <Polyline
@@ -147,9 +149,9 @@ export default function Terms() {
                         letterSpacing: -0.12,
                       }}
                     >
-                      {term.required ? "필수" : "선택"}
+                      {term.required ? t("terms.required") : t("terms.optional")}
                     </Text>
-                    <Text style={{ fontSize: 14, color: "#1A1A1A" }}>
+                    <Text style={{ fontSize: 14, color: "#1A1A1A", flexShrink: 1 }}>
                       {term.label}
                     </Text>
                     <Svg width="6" height="10" viewBox="0 0 6 10" fill="none">
@@ -185,15 +187,15 @@ export default function Terms() {
       <View className="py-4 pb-10">
         <View style={{ position: "relative" }} className="w-full">
           <Button
-            label="계속하기"
+            label={t("terms.continue")}
             size="long"
             state={requiredAgreed ? "active" : "inactive"}
             onPress={() => {
               setConsents(
-                TERMS_LIST.map((t) => ({
+                TERMS_LIST.map((term) => ({
                   termsVersion: "1.0",
-                  type: t.type as "PRIVACY" | "SERVICE" | "MARKETING",
-                  agreed: agreed[t.id] ?? false,
+                  type: term.type as "PRIVACY" | "SERVICE" | "MARKETING",
+                  agreed: agreed[term.id] ?? false,
                 })),
               );
               setUserType(userType);
@@ -227,14 +229,14 @@ export default function Terms() {
       {/* 전체동의 모달 */}
       <TermsModal
         visible={showAllModal}
-        title="약관 전체 동의"
-        items={TERMS_LIST.map((t) => ({
-          title: t.label,
-          required: t.required,
-          content: t.content,
+        title={t("terms.agreeAll")}
+        items={TERMS_LIST.map((term) => ({
+          title: term.label,
+          required: term.required,
+          content: term.content,
         }))}
         onAgree={() =>
-          setAgreed(Object.fromEntries(TERMS_LIST.map((t) => [t.id, true])))
+          setAgreed(Object.fromEntries(TERMS_LIST.map((term) => [term.id, true])))
         }
         onClose={() => setShowAllModal(false)}
       />

@@ -1,6 +1,7 @@
 import { TouchableOpacity, Text, StyleSheet, View } from 'react-native';
 import MainStampIcon from '@/assets/svgs/main-stamp.svg';
 import { typo } from '@/styles/typography';
+import { useTranslation } from 'react-i18next';
 
 interface StampTourBannerProps {
   onPress?: () => void;
@@ -9,23 +10,24 @@ interface StampTourBannerProps {
 }
 
 export default function StampTourBanner({ onPress, progress = 0, disabled = false }: StampTourBannerProps) {
+  const { t } = useTranslation();
   return (
     <TouchableOpacity style={styles.container} onPress={disabled ? undefined : onPress} activeOpacity={disabled ? 1 : 0.8}>
       <View style={styles.left}>
         <MainStampIcon width={24} height={24} />
         <Text className={typo.T3_Eb} style={[styles.label, disabled && styles.disabledText]}>
-          스탬프 투어
+          {t("home.stampTour")}
         </Text>
       </View>
       <View style={styles.right}>
         {disabled ? (
           <Text className={typo.B4_Sb} style={styles.disabledText}>
-            서강대 학생만 참여 가능합니다.
+            {t("home.stampTourDisabled")}
           </Text>
         ) : (
           <>
             <Text className={typo.B4_Sb} style={styles.progressLabel}>
-              현재 진척도
+              {t("home.currentProgress")}
             </Text>
             <Text className={typo.B4_Eb} style={styles.progressValue}>
               {progress}%

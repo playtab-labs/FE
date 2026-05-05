@@ -7,10 +7,12 @@ import { useNavigation } from "@react-navigation/native";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useRef, useState } from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { useTranslation } from "react-i18next";
 
 const STAFF_CODE = "0000";
 
 export default function PersonalBand() {
+  const { t } = useTranslation();
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
@@ -40,7 +42,7 @@ export default function PersonalBand() {
       setAuthError(undefined);
       showToast();
     } else {
-      setAuthError("인증번호가 일치하지 않습니다.");
+      setAuthError(t("personal.staffMismatch"));
     }
   };
 
@@ -87,7 +89,7 @@ export default function PersonalBand() {
             className="bg-secondary-salmon p-3 rounded-md shadow-sm"
           >
             <Text className="text-b3 font-sb text-gray-black">
-              + 새 팔찌 추가하기
+              {t("personal.addBand")}
             </Text>
           </TouchableOpacity>
         </View>
@@ -98,20 +100,17 @@ export default function PersonalBand() {
         {/* 안내사항 */}
         <View className="bg-extra-white px-4 py-6 rounded-[8px] mx-[17px]">
           <Text className="text-b2 font-bd text-gray-black text-center">
-            안내사항
+            {t("personal.importantNotes")}
           </Text>
           <View style={{ gap: 6 }}>
             <Text className="text-b3 font-rg text-dark-gray">
-              • 아티스트 무대는 팔찌 소지 관람객만 이용 가능합니다.
+              • {t("personal.notice1")}
             </Text>
             <Text className="text-b3 font-rg text-dark-gray">
-              • 팔찌는 발급 받은 당일만 사용가능하며,{"\n\t"}
-              <Text className="font-bd">다음날에는 새로 발급</Text> 받아야
-              합니다.
+              • {t("personal.notice2")}
             </Text>
             <Text className="text-b3 font-rg text-dark-gray">
-              • 팔찌가 훼손된 경우, 관리 부스로 가져오시면 안내 하에 재발급
-              해드립니다.
+              • {t("personal.notice3")}
             </Text>
           </View>
         </View>
@@ -127,7 +126,7 @@ export default function PersonalBand() {
       {/* 삭제 완료 토스트 */}
       {toastVisible && (
         <View className="absolute bottom-[16px] left-0 right-0 items-center">
-          <ToastError type="email" message="팔찌가 삭제되었습니다." />
+          <ToastError type="email" message={t("personal.bandDeleted")} />
         </View>
       )}
     </Layout>

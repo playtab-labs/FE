@@ -1,18 +1,13 @@
 import { Text, TouchableOpacity, View } from "react-native";
+import { useTranslation } from "react-i18next";
 
 const TAB_CONFIG = {
-  artist: [
-    { key: "lineup", label: "라인업" },
-    { key: "timetable", label: "타임테이블" },
-  ],
-  map: [
-    { key: "booth", label: "부스 배치도" },
-    { key: "list", label: "리스트" },
-  ],
+  artist: ["lineup", "timetable"],
+  map: ["booth", "list"],
 } as const;
 
 type TabType = keyof typeof TAB_CONFIG;
-type TabKey<T extends TabType> = (typeof TAB_CONFIG)[T][number]["key"];
+type TabKey<T extends TabType> = (typeof TAB_CONFIG)[T][number];
 
 interface TabBarProps<T extends TabType> {
   type: T;
@@ -25,11 +20,12 @@ const TabBar = <T extends TabType>({
   activeTab,
   onTabChange,
 }: TabBarProps<T>) => {
-  const tabs = TAB_CONFIG[type];
+  const { t } = useTranslation();
+  const keys = TAB_CONFIG[type];
 
   return (
     <View className="flex-row">
-      {tabs.map(({ key, label }) => {
+      {keys.map((key) => {
         const isActive = activeTab === key;
         return (
           <TouchableOpacity
@@ -47,7 +43,7 @@ const TabBar = <T extends TabType>({
                 isActive ? "text-black" : "text-dark-gray"
               }`}
             >
-              {label}
+              {t(`${type}.${key}`)}
             </Text>
           </TouchableOpacity>
         );
