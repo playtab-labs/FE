@@ -78,7 +78,7 @@ export default function SetPassword() {
                   )}
                 </View>
                 <Input
-                  placeholder={t("setPassword.title")}
+                  placeholder={t("setPassword.placeholder")}
                   value={password}
                   onChangeText={setPasswordInput}
                   onFocus={() => setPasswordTouched(false)}

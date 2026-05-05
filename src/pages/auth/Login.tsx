@@ -111,20 +111,20 @@ export default function Login() {
               } else {
                 await clearEmail();
               }
-              try {
-                await setTokens(
-                  res.data.accessToken,
-                  res.data.refreshToken,
-                  keepLogin,
-                );
-              } catch {}
+              await setTokens(
+                res.data.accessToken,
+                res.data.refreshToken,
+                keepLogin,
+              );
               navigation.reset({
                 index: 0,
                 routes: [{ name: "LoadingScreen" }],
               });
             } catch (e: any) {
               const status = e?.response?.status;
-              if (status === 404) {
+              if (!status) {
+                showToast(t("login.loginFailed"));
+              } else if (status === 404) {
                 showToast(t("login.userNotFound"));
               } else if (status >= 500) {
                 showToast(t("login.loginFailed"));
