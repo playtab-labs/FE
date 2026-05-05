@@ -18,6 +18,7 @@ import Notice from "@/pages/more/Notice";
 import NoticeDetail from "@/pages/more/NoticeDetail";
 import QrScan from "@/pages/QrScan";
 import StampTour from "@/pages/StampTour";
+import client from "@/api/client";
 import { useAuthStore } from "@/stores/authStore";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useEffect, useState } from "react";
@@ -33,8 +34,20 @@ export default function RootNavigator() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    loadTokens().finally(() => setLoading(false));
-  }, [loadTokens]);
+    const init = async () => {
+      await loadTokens();
+      const { accessToken, clearTokens } = useAuthStore.getState();
+      if (accessToken) {
+        try {
+          const res = await client.post("/graphql", { query: `query { me { name } }` });
+          if (!res.data?.data?.me) await clearTokens();
+        } catch {
+          await clearTokens();
+        }
+      }
+    };
+    init().finally(() => setLoading(false));
+  }, []);
 
   if (loading) return <View style={{ flex: 1 }} />;
 
