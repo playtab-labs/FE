@@ -158,24 +158,24 @@ export const MOCK_MARKERS: MarkerData[] = [
   },
   {
     // J관 위
-    id: "m14",
+    id: "m15",
     label: "📷",
     type: "facility",
     fx: 0.79,
     fy: 0.58,
     image: require("@/assets/map_sub_photo.png"),
   },
-    {
+  {
     // 청년광장
-    id: "m15",
+    id: "m14",
     label: "🎈",
     desc: "KB 국민은행",
     type: "facility",
     fx: 0.3,
     fy: 0.48,
-    image: require("@/assets/map_sub_photo.png"),
+    image: require("@/assets/map_sub_popup.png"),
   },
-      {
+  {
     // 청년광장
     id: "m16",
     label: "🎈",
@@ -183,6 +183,6 @@ export const MOCK_MARKERS: MarkerData[] = [
     type: "facility",
     fx: 0.25,
     fy: 0.5,
-    image: require("@/assets/map_sub_photo.png"),
+    image: require("@/assets/map_sub_popup.png"),
   },
 ];
