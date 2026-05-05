@@ -70,6 +70,7 @@
     "subtitle": "请使用英文和数字组合，至少8个字符。",
     "passwordLabel": "密码",
     "confirmPasswordLabel": "确认密码",
+    "placeholder": "请输入密码。",
     "confirmPlaceholder": "请再次输入密码。",
     "formatError": "请按照规则进行设置。",
     "mismatch": "密码不一致。",

@@ -70,6 +70,7 @@
     "subtitle": "英字と数字を組み合わせて\n8文字以上で設定してください。",
     "passwordLabel": "パスワード",
     "confirmPasswordLabel": "パスワード確認",
+    "placeholder": "パスワードを入力してください。",
     "confirmPlaceholder": "パスワードをもう一度入力してください。",
     "formatError": "ルールに従って設定してください。",
     "mismatch": "パスワードが一致しません。",

@@ -70,6 +70,7 @@
     "subtitle": "Use at least 8 characters, including letters and numbers.",
     "passwordLabel": "Password",
     "confirmPasswordLabel": "Confirm Password",
+    "placeholder": "Please enter your password.",
     "confirmPlaceholder": "Please enter your password again.",
     "formatError": "Please follow the password rules.",
     "mismatch": "Passwords do not match.",

@@ -83,7 +83,7 @@ export default function More() {
   });
 
   const navigation = useNavigation<any>();
-  const { accessToken } = useAuthStore();
+  const { accessToken /*, clearTokens, refreshToken */ } = useAuthStore();
   const { data: wristbandData, refetch: refetchWristbands } = useQuery<{
     myWristbands: { rfid: string; activeDate: string; linkedAt: string }[];
   }>(MY_WRISTBANDS);
@@ -199,6 +199,18 @@ export default function More() {
             </Animated.View>
           </View>
         )}
+
+        {/* 로그아웃 버튼 — 필요 시 주석 해제
+        <TouchableOpacity
+          onPress={async () => {
+            if (refreshToken) await authApi.logout(refreshToken).catch(() => {});
+            await clearTokens();
+            navigation.reset({ index: 0, routes: [{ name: "Login" }] });
+          }}
+        >
+          <Text>로그아웃</Text>
+        </TouchableOpacity>
+        */}
 
         {/* 탭 리스트 */}
         <View className="w-full">
