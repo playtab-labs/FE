@@ -8,8 +8,8 @@ import Layout from "@/components/Layout";
 import { useAuthStore } from "@/stores/authStore";
 import { useNavigation } from "@react-navigation/native";
 import { useEffect, useRef, useState } from "react";
-import { Image, Text, TouchableOpacity, View } from "react-native";
 import { useTranslation } from "react-i18next";
+import { Image, Text, TouchableOpacity, View } from "react-native";
 
 export default function Login() {
   const { t } = useTranslation();
@@ -50,7 +50,7 @@ export default function Login() {
       </View>
 
       {/* 입력 폼 */}
-      <View className="mt-[51px] gap-4">
+      <View className="mt-16 gap-4">
         <Input
           placeholder={t("login.emailPlaceholder")}
           value={email}
@@ -76,7 +76,9 @@ export default function Login() {
             onPress={() => setKeepLogin(!keepLogin)}
           >
             <RadioIcon active={keepLogin} />
-            <Text className="text-[13px] text-gray-600">{t("login.keepLogin")}</Text>
+            <Text className="text-[13px] text-gray-600">
+              {t("login.keepLogin")}
+            </Text>
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -84,13 +86,15 @@ export default function Login() {
             onPress={() => setRememberID(!rememberID)}
           >
             <RadioIcon active={rememberID} />
-            <Text className="text-[13px] text-gray-600">{t("login.rememberEmail")}</Text>
+            <Text className="text-[13px] text-gray-600">
+              {t("login.rememberEmail")}
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
 
       {/* 로그인 버튼 */}
-      <View className="mt-[85px]">
+      <View className="mt-20">
         <Button
           label={t("login.login")}
           size="long"
@@ -146,14 +150,6 @@ export default function Login() {
           </Text>
         </TouchableOpacity>
       </View>
-
-      {/* 임시 버튼 */}
-      <TouchableOpacity
-        className="mt-3 h-11 border border-gray-300 rounded-lg items-center justify-center"
-        onPress={() => navigation.navigate("Tabs")}
-      >
-        <Text className="text-sm text-gray-400">임시 - 홈으로 이동</Text>
-      </TouchableOpacity>
 
       {/* 에러 토스트 */}
       {toastMessage ? (

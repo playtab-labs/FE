@@ -1,4 +1,3 @@
-import { authApi } from "@/api/auth";
 import client from "@/api/client";
 import FaqIcon from "@/assets/svgs/faq.svg";
 import HostIcon from "@/assets/svgs/host.svg";
@@ -84,7 +83,7 @@ export default function More() {
   });
 
   const navigation = useNavigation<any>();
-  const { clearTokens, refreshToken, accessToken } = useAuthStore();
+  const { accessToken } = useAuthStore();
   const { data: wristbandData, refetch: refetchWristbands } = useQuery<{
     myWristbands: { rfid: string; activeDate: string; linkedAt: string }[];
   }>(MY_WRISTBANDS);
@@ -220,19 +219,7 @@ export default function More() {
           ))}
         </View>
 
-        {/* 임시 로그아웃 버튼 */}
-        <TouchableOpacity
-          onPress={async () => {
-            try {
-              if (refreshToken) await authApi.logout(refreshToken);
-            } catch {}
-            await clearTokens();
-            navigation.reset({ index: 0, routes: [{ name: "Login" }] });
-          }}
-          className="w-full h-11 border border-gray-300 rounded-lg items-center justify-center"
-        >
-          <Text className="text-sm text-gray-400">임시 - 로그아웃</Text>
-        </TouchableOpacity>
+
       </ScrollView>
     </Layout>
   );

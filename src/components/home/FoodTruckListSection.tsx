@@ -7,7 +7,7 @@ import FoodTruckItem from "./FoodTruckItem";
 interface FoodTruckData {
   id: string | number;
   name: string;
-  description?: string;
+  menu?: string;
 }
 
 interface FoodTruckListSectionProps {
@@ -40,7 +40,7 @@ export default function FoodTruckListSection({
           <FoodTruckItem
             key={item.id}
             name={item.name}
-            description={item.description}
+            menu={item.menu}
             onPress={() => onItemPress?.(item.id)}
           />
         ))}

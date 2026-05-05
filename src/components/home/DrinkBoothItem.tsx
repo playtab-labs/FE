@@ -1,19 +1,27 @@
 import { typo } from "@/styles/typography";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 interface DrinkBoothItemProps {
   name: string;
+  thumbnailImageUrl?: string;
   onPress?: () => void;
 }
 
-export default function DrinkBoothItem({ name, onPress }: DrinkBoothItemProps) {
+export default function DrinkBoothItem({ name, thumbnailImageUrl, onPress }: DrinkBoothItemProps) {
   return (
     <TouchableOpacity
       style={styles.container}
       onPress={onPress}
       activeOpacity={0.8}
     >
-      <View style={styles.iconCircle} />
+      <View style={styles.iconCircle}>
+        {thumbnailImageUrl && (
+          <Image
+            source={{ uri: thumbnailImageUrl }}
+            style={styles.thumbnail}
+          />
+        )}
+      </View>
       <Text className={typo.B4_Rg} style={styles.name} numberOfLines={2}>
         {name}
       </Text>
@@ -41,6 +49,12 @@ const styles = StyleSheet.create({
     paddingLeft: 6,
     borderRadius: 100,
     backgroundColor: "#F5F5F5",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  thumbnail: {
+    width: 20,
+    height: 20,
   },
   name: {
     color: "#1A1A1A",

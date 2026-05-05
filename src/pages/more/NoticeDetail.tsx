@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
   },
   navContainer: {
     marginTop: 40,
-    marginBottom: 20,
+    marginBottom: 40,
   },
   navDivider: {
     height: 1,
