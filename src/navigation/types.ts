@@ -31,9 +31,9 @@ export type RootStackParamList = {
   SetPassword: undefined;
   SignUpComplete: undefined;
   FindPassword: undefined;
-  ResetPassword: undefined;
+  ResetPassword: { email: string };
   LoadingScreen: undefined;
-  StampTour: { newStampTitle?: string } | undefined;
+  StampTour: { newSpotId?: number } | undefined;
   QrScan: undefined;
   Tag: undefined;
   SerialInput: undefined;
@@ -42,6 +42,8 @@ export type RootStackParamList = {
   Tabs: NavigatorScreenParams<TabParamList>;
   MD: undefined;
   MDDetail: { title: string };
+  Notice: undefined;
+  NoticeDetail: { noticeId: string; notices: { id: string; title: string; contentPreview: string; postedAt: string; isPinned: boolean }[] };
   [key: string]: undefined | object;
 };
 // export type TabParamList = Record<string, undefined>;

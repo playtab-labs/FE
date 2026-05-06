@@ -1,4 +1,4 @@
-import { SPOT_NAMES, visitStamp } from "@/api/stamp";
+import { visitStamp } from "@/api/stamp";
 import Layout from "@/components/Layout";
 import QRCamera from "@/components/stamptour/QRCamera";
 import QRInformCard from "@/components/stamptour/QRInformCard";
@@ -7,8 +7,10 @@ import { useNavigation } from "@react-navigation/native";
 import * as Location from "expo-location";
 import { useEffect, useRef, useState } from "react";
 import { Alert, View } from "react-native";
+import { useTranslation } from "react-i18next";
 
 export default function QrScan() {
+  const { t } = useTranslation();
   const navigation = useNavigation<any>();
   const [showToast, setShowToast] = useState(false);
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -17,8 +19,8 @@ export default function QrScan() {
 const raw = data.startsWith('https://') ? data.slice('https://'.length) : data;
     const spotId = parseInt(raw, 10);
     if (isNaN(spotId) || spotId < 1 || spotId > 9) {
-      Alert.alert('인식 실패', '올바르지 않은 QR코드입니다.', [
-        { text: '확인', onPress: () => navigation.navigate('StampTour') },
+      Alert.alert(t('stampTour.scanFailed'), t('stampTour.invalidQr'), [
+        { text: t('stampTour.confirm'), onPress: () => navigation.navigate('StampTour') },
       ]);
       return;
     }
@@ -29,8 +31,8 @@ const raw = data.startsWith('https://') ? data.slice('https://'.length) : data;
       const { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
         setShowToast(false);
-        Alert.alert('위치 권한 필요', '스탬프 인증을 위해 위치 권한이 필요합니다.', [
-          { text: '확인', onPress: () => navigation.navigate('StampTour') },
+        Alert.alert(t('stampTour.locationRequired'), t('stampTour.locationRequiredMsg'), [
+          { text: t('stampTour.confirm'), onPress: () => navigation.navigate('StampTour') },
         ]);
         return;
       }
@@ -43,18 +45,18 @@ const raw = data.startsWith('https://') ? data.slice('https://'.length) : data;
         if (toastTimer.current) clearTimeout(toastTimer.current);
         toastTimer.current = setTimeout(() => {
           setShowToast(false);
-          navigation.navigate('StampTour', { newStampTitle: SPOT_NAMES[spotId - 1] });
+          navigation.navigate('StampTour', { newSpotId: spotId });
         }, 2000);
       } else {
         setShowToast(false);
-        Alert.alert('인증 실패', '해당 스팟 근처에서만 인증할 수 있습니다.', [
-          { text: '확인', onPress: () => navigation.navigate('StampTour') },
+        Alert.alert(t('stampTour.authFailed'), t('stampTour.authFailedNearby'), [
+          { text: t('stampTour.confirm'), onPress: () => navigation.navigate('StampTour') },
         ]);
       }
     } catch {
       setShowToast(false);
-      Alert.alert('인증 실패', '스탬프 인증에 실패했습니다.\n다시 시도해주세요.', [
-        { text: '확인', onPress: () => navigation.navigate('StampTour') },
+      Alert.alert(t('stampTour.authFailed'), t('stampTour.authFailedRetry'), [
+        { text: t('stampTour.confirm'), onPress: () => navigation.navigate('StampTour') },
       ]);
     }
   };
@@ -67,7 +69,7 @@ const raw = data.startsWith('https://') ? data.slice('https://'.length) : data;
 
   return (
     <Layout
-      title="QR코드 인식"
+      title={t('stampTour.qrAppBar')}
       showBack
       headerBg="#FFA38C"
       statusBarBg="#FFA38C"
@@ -84,7 +86,7 @@ const raw = data.startsWith('https://') ? data.slice('https://'.length) : data;
           }}
         >
           <QRInformCard>
-            {'- 화면의 가운데에 큐알코드가 오도록 촬영해주세요.\n- 이상이 있을 경우 스태프를 불러주세요.\n- 기타 안내사항 적기'}
+            {t('stampTour.qrInstruction')}
           </QRInformCard>
         </View>
         {showToast && (

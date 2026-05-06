@@ -1,34 +1,75 @@
+import BoseIcon from "@/assets/svgs/BOSE.svg";
+import HwainIcon from "@/assets/svgs/HWAIN.svg";
+import InterojoIcon from "@/assets/svgs/INTEROJO.svg";
 import KbBankIcon from "@/assets/svgs/KbBank.svg";
+import MigorengIcon from "@/assets/svgs/MIGORENG.svg";
+import NiveaOioi from "@/assets/svgs/NIVEAXOIOI.svg";
+import SheinIcon from "@/assets/svgs/SHEIN.svg";
+import SsgtaroIcon from "@/assets/svgs/SSGTARO.svg";
+import VardakIcon from "@/assets/svgs/VARDAK.svg";
 import Layout from "@/components/Layout";
 import HostLinker from "@/components/more/host/HostLinker";
+import { useTranslation } from "react-i18next";
 import { ScrollView, Text, View } from "react-native";
 
-const SPONSOR_ITEMS = [
-  {
-    name: "PLAYTAP",
-    logo: require("@/assets/pngs/logo.png"),
-    url: "https://www.sogang.ac.kr",
-  },
-  {
-    name: "KB국민은행",
-    logo: KbBankIcon,
-    url: "https://www.kbstar.com",
-  },
-  {
-    name: "협찬사 2",
-    logo: require("@/assets/pngs/sponsor.png"),
-    url: "https://www.sogang.ac.kr",
-  },
-  {
-    name: "협찬사 2",
-    logo: require("@/assets/pngs/sponsor.png"),
-    url: "https://www.sogang.ac.kr",
-  },
-];
-
 export default function Sponsor() {
+  const { t } = useTranslation();
+
+  const SPONSOR_ITEMS = [
+    {
+      name: t("sponsor.kbBank"),
+      logo: KbBankIcon,
+      url: "https://www.kbstar.com",
+    },
+    {
+      name: "PLAYTAP",
+      logo: require("@/assets/pngs/logo.png"),
+      url: "https://www.sogang.ac.kr",
+    },
+    {
+      name: "SHEIN",
+      logo: SheinIcon,
+      url: "https://kr.shein.com/",
+    },
+    {
+      name: "바르닭",
+      logo: VardakIcon,
+      url: "https://barudak.co.kr/",
+    },
+    {
+      name: "화인",
+      logo: HwainIcon,
+      url: "https://fineent.co.kr/",
+    },
+    {
+      name: "니베아 X OIOI",
+      logo: NiveaOioi,
+      url: "https://www.nivea.co.kr/",
+    },
+    {
+      name: "신세계타로",
+      logo: SsgtaroIcon,
+      url: "http://0317513923.tshome.co.kr/index.php",
+    },
+    {
+      name: "미고랭",
+      logo: MigorengIcon,
+      url: "https://www.indomie.com/homepage",
+    },
+    {
+      name: "인터로조",
+      logo: InterojoIcon,
+      url: "https://www.interojo.com/",
+    },
+    {
+      name: "BOSE",
+      logo: BoseIcon,
+      url: "https://www.bose.co.kr/",
+    },
+  ];
+
   return (
-    <Layout title="후원 및 협찬" showBack showCamera={false}>
+    <Layout title={t("sponsor.title")} showBack showCamera={false}>
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
@@ -39,11 +80,10 @@ export default function Sponsor() {
       >
         <View className="gap-2 mb-10">
           <Text className="text-h1 font-eb text-gray-black">
-            후원 및 협찬사
+            {t("sponsor.title")}
           </Text>
           <Text className="text-b3 font-sb text-dark-gray">
-            대동제와 함께하는 파트너사입니다.{"\n"}클릭 시 웹사이트로
-            연결됩니다.
+            {t("sponsor.subtitle")}
           </Text>
         </View>
 

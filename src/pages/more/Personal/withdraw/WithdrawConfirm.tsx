@@ -1,9 +1,11 @@
 import { authApi } from "@/api/auth";
 import Layout from "@/components/Layout";
+import ColoredText from "@/components/common/ColoredText";
 import { useAuthStore } from "@/stores/authStore";
 import { gql } from "@apollo/client";
 import { useMutation, useQuery } from "@apollo/client/react";
 import { useNavigation } from "@react-navigation/native";
+import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import {
   ActivityIndicator,
@@ -33,11 +35,6 @@ const WITHDRAW_MY_ACCOUNT = gql`
   }
 `;
 
-const NOTICES = [
-  "예매한 티켓을 사용할 수 없어요.",
-  "예매 및 사용 내역을 확인할 수 없어요.",
-  "'2026 서강대학교 대동제 ODDYSEY'에서 동일한 학생증으로 재가입할 수 없어요.",
-];
 
 function EyeIcon({ visible }: { visible: boolean }) {
   return (
@@ -66,8 +63,14 @@ function EyeIcon({ visible }: { visible: boolean }) {
 }
 
 export default function WithdrawConfirm() {
+  const { t } = useTranslation();
   const navigation = useNavigation();
   const { refreshToken, clearTokens } = useAuthStore();
+  const NOTICES = [
+    t("personalChange.withdrawNotice1"),
+    t("personalChange.withdrawNotice2"),
+    t("personalChange.withdrawNotice3"),
+  ];
   const { data: meData } = useQuery<{ me: { email: string } }>(GET_MY_EMAIL);
   const [withdrawMyAccount, { loading: withdrawLoading }] = useMutation<{
     withdrawMyAccount: { success: boolean };
@@ -119,23 +122,20 @@ export default function WithdrawConfirm() {
       style={{ flex: 1 }}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
-      <Layout title="회원 탈퇴" showBack showCamera={false}>
+      <Layout title={t("personalChange.withdrawAppBar")} showBack showCamera={false}>
         <View className="flex-1">
           {/* 안내 문구 */}
           <View className="py-4 gap-4">
-            <Text className="text-h1 font-eb text-gray-black">
-              탈퇴 전 다시 한 번{" "}
-              <Text className="text-[#FF7654]">확인해주세요!</Text>
-            </Text>
+            <ColoredText text={t("personalChange.withdrawConfirmTitle")} className="text-h1 font-eb text-gray-black" />
             <Text className="text-b3 font-sb text-[#656565]">
-              탈퇴 이후에는 복구할 수 없어요.
+              {t("personalChange.withdrawConfirmSubtitle")}
             </Text>
           </View>
 
           {/* 유의사항 카드 */}
           <View className="mt-20 mb-4 rounded-2xl bg-white p-4 gap-3">
             <Text className="text-t3 font-eb text-dark-gray">
-              탈퇴 시 유의사항
+              {t("personalChange.withdrawNoticeTitle")}
             </Text>
             <View className="gap-1 px-1">
               {NOTICES.map((notice, i) => (
@@ -152,18 +152,18 @@ export default function WithdrawConfirm() {
           {/* 비밀번호 인증 */}
           <View className="mt-auto gap-2 pb-4">
             <View className="flex-row justify-between items-center">
-              <Text className="text-b3 font-sb text-gray-black">비밀번호</Text>
+              <Text className="text-b3 font-sb text-gray-black">{t("setPassword.passwordLabel")}</Text>
               {verified ? (
                 <Text className="text-b4 font-rg text-dark-gray">
-                  인증되었습니다.
+                  {t("emailVerify.verified")}
                 </Text>
               ) : verifyError ? (
                 <Text className="text-b4 font-rg text-secondary-bubblegum-pink">
-                  비밀번호가 일치하지 않습니다.
+                  {t("setPassword.mismatch")}
                 </Text>
               ) : (
                 <Text className="text-b4 font-rg text-dark-gray">
-                  마지막으로 본인 인증이 필요해요.
+                  {t("personalChange.passwordVerifyDescription")}
                 </Text>
               )}
             </View>
@@ -172,11 +172,11 @@ export default function WithdrawConfirm() {
               <View className="flex-1 h-14 bg-extra-white border border-[#E4E4E4] rounded-xl flex-row items-center px-4">
                 <TextInput
                   value={password}
-                  onChangeText={(t) => {
-                    setPassword(t);
+                  onChangeText={(text) => {
+                    setPassword(text);
                     setVerifyError(false);
                   }}
-                  placeholder="비밀번호를 입력해주세요."
+                  placeholder={t("login.passwordPlaceholder")}
                   placeholderTextColor="#BFBFBF"
                   secureTextEntry={!showPassword}
                   editable={!verified}
@@ -212,7 +212,7 @@ export default function WithdrawConfirm() {
                   <Text
                     className={`text-b3 font-sb ${verified ? "text-[#BFBFBF]" : "text-white"}`}
                   >
-                    {verified ? "인증완료" : "인증하기"}
+                    {verified ? t("personalChange.verifyCompleteButton") : t("emailVerify.verify")}
                   </Text>
                 )}
               </TouchableOpacity>
@@ -226,7 +226,7 @@ export default function WithdrawConfirm() {
                 className="flex-1 h-14 items-center justify-center rounded-2xl bg-extra-white border border-[#E4E4E4]"
               >
                 <Text className="text-t3 font-eb text-gray-black">
-                  계속 사용하기
+                  {t("personalChange.keepUsing")}
                 </Text>
               </TouchableOpacity>
 
@@ -242,7 +242,7 @@ export default function WithdrawConfirm() {
                   <Text
                     className={`text-t3 font-eb ${verified ? "text-gray-black" : "text-white"}`}
                   >
-                    회원탈퇴
+                    {t("personalChange.withdrawButton")}
                   </Text>
                 )}
               </TouchableOpacity>
@@ -255,7 +255,7 @@ export default function WithdrawConfirm() {
         <View className="flex-1 items-center justify-center bg-black/40">
           <View className="bg-white rounded-2xl items-center w-[320px] px-6 py-9 gap-6">
             <Text className="text-b3 font-rg text-gray-black">
-              탈퇴되었습니다.
+              {t("personalChange.withdrawSuccess")}
             </Text>
             <TouchableOpacity
               activeOpacity={0.8}
@@ -269,7 +269,7 @@ export default function WithdrawConfirm() {
               className="bg-[#FFA38C] rounded-xl px-3 py-3"
             >
               <Text className="text-b3 font-sb text-gray-black">
-                메인화면으로 돌아가기
+                {t("personalChange.returnToHome")}
               </Text>
             </TouchableOpacity>
           </View>

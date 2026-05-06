@@ -83,7 +83,7 @@ export const MOCK_MARKERS: MarkerData[] = [
     image: require("@/assets/map_sub_mat.png"),
   },
   {
-    // 위치 아직 안나옴
+    // 청년광장
     id: "m6",
     label: "📷",
     type: "facility",
@@ -133,19 +133,20 @@ export const MOCK_MARKERS: MarkerData[] = [
     label: "🎈",
     desc: "하이트 진로",
     type: "facility",
-    fx: 0.495,
-    fy: 0.575,
+    fx: 0.49,
+    fy: 0.56,
     image: require("@/assets/map_sub_popup.png"),
   },
-  // {
-  //   // 레드불
-  //   id: "m12",
-  //   label: "🎈",
-  //   type: "facility",
-  //   fx: 0.54,
-  //   fy: 0.565,
-  //   image: require("@/assets/map_sub_popup.png"),
-  // },
+  {
+    // 인도미 미고랭
+    id: "m12",
+    label: "🎈",
+    desc: "인도미 미고랭",
+    type: "facility",
+    fx: 0.468,
+    fy: 0.608,
+    image: require("@/assets/map_sub_popup.png"),
+  },
   {
     // k관 위
     id: "m13",
@@ -157,11 +158,31 @@ export const MOCK_MARKERS: MarkerData[] = [
   },
   {
     // J관 위
-    id: "m14",
+    id: "m15",
     label: "📷",
     type: "facility",
     fx: 0.79,
     fy: 0.58,
     image: require("@/assets/map_sub_photo.png"),
+  },
+  {
+    // 청년광장
+    id: "m14",
+    label: "🎈",
+    desc: "KB 국민은행",
+    type: "facility",
+    fx: 0.3,
+    fy: 0.48,
+    image: require("@/assets/map_sub_popup.png"),
+  },
+  {
+    // 청년광장
+    id: "m16",
+    label: "🎈",
+    desc: "화인 엔터테인먼트",
+    type: "facility",
+    fx: 0.25,
+    fy: 0.5,
+    image: require("@/assets/map_sub_popup.png"),
   },
 ];

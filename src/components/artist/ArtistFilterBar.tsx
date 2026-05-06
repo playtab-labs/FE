@@ -5,11 +5,11 @@ import FavoriteButton from "./FavoriteButton";
 type Category =
   // | "아티스트"
   // | "버스킹"
-  // // | "DJ"
+
   // | "동아리"
   "Day 1" | "Day 2" | "Day 3";
 
-// const LINEUP_CATEGORIES: Category[] = ["아티스트", "버스킹", "DJ", "동아리"];
+// const LINEUP_CATEGORIES: Category[] = ["아티스트", "버스킹",  "동아리"];
 const TIMETABLE_CATEGORIES: Category[] = ["Day 1", "Day 2", "Day 3"];
 
 interface ArtistFilterBarProps {

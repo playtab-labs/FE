@@ -3,16 +3,19 @@ import { typo } from '@/styles/typography';
 import Prize1 from '@/assets/svgs/stamptour/prize1.svg';
 import Prize2 from '@/assets/svgs/stamptour/prize2.svg';
 import Prize3 from '@/assets/svgs/stamptour/prize3.svg';
+import { useTranslation } from 'react-i18next';
 
 const PRIZE_IMAGES = [Prize1, Prize2, Prize3];
 
-const ITEMS = [
-  '9개 미션 중 6개 이상 달성 시 전원 알로스 키링 증정!',
-  '9개 미션 중 6개 이상 달성 시 BOSE 제품 추첨 자동 응모',
-  '제품: QC 울트라 헤드폰 2개, 오픈 이어버드 3개, 사운드링크 마이크로 2세대 스피커 5개'
-];
-
 export default function ProductInfo() {
+  const { t } = useTranslation();
+
+  const items = [
+    t('stampTour.prizeItem1'),
+    t('stampTour.prizeItem2'),
+    t('stampTour.prizeItem3'),
+  ];
+
   return (
     <View style={{ marginTop: 16, width: '100%' }}>
       <View
@@ -25,11 +28,11 @@ export default function ProductInfo() {
         }}
       >
         <Text className={`${typo.T3_Eb} text-gray-black`}>
-          경품 안내
+          {t('stampTour.prizeTitle')}
         </Text>
 
         <View>
-          {ITEMS.map((item, index) => (
+          {items.map((item, index) => (
             <Text
               key={index}
               className={typo.B4_Rg}

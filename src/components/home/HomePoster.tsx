@@ -3,11 +3,13 @@ import { Animated, StyleSheet, Text, TouchableWithoutFeedback, useWindowDimensio
 import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
 import SparkleParticles from '@/components/common/SparkleParticles';
+import { useTranslation } from 'react-i18next';
 
 const POSTER_HEIGHT_EXPANDED = 500;
 const POSTER_HEIGHT_COLLAPSED = 230;
 
 export default function HomePoster() {
+  const { t } = useTranslation();
   const { width } = useWindowDimensions();
   const [collapsed, setCollapsed] = useState(false);
   const animatedHeight = useRef(new Animated.Value(POSTER_HEIGHT_EXPANDED)).current;
@@ -40,7 +42,7 @@ export default function HomePoster() {
           <SparkleParticles width={width} height={POSTER_HEIGHT_EXPANDED} />
         </View>
         <View style={styles.textContainer}>
-          <Text style={styles.title}>{"서강대학교 대동제 'Odyssey'"}</Text>
+          <Text style={styles.title}>{t("home.festivalTitle")}</Text>
           <Text style={styles.date}>2026.05.13 ~ 2026.05.15</Text>
         </View>
       </Animated.View>

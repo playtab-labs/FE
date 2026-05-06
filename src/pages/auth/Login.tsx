@@ -8,9 +8,11 @@ import Layout from "@/components/Layout";
 import { useAuthStore } from "@/stores/authStore";
 import { useNavigation } from "@react-navigation/native";
 import { useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 
 export default function Login() {
+  const { t } = useTranslation();
   const navigation = useNavigation<any>();
   const { setTokens, saveEmail, loadEmail, clearEmail } = useAuthStore();
   const [email, setEmail] = useState("");
@@ -37,7 +39,7 @@ export default function Login() {
   }, []);
 
   return (
-    <Layout title="로그인" showBack={false} showCamera={false}>
+    <Layout title={t("login.login")} showBack={false} showCamera={false}>
       {/* 로고 */}
       <View className="items-center mt-[36px]">
         <Image
@@ -48,9 +50,9 @@ export default function Login() {
       </View>
 
       {/* 입력 폼 */}
-      <View className="mt-[51px] gap-4">
+      <View className="mt-16 gap-4">
         <Input
-          placeholder="이메일을 입력해주세요."
+          placeholder={t("login.emailPlaceholder")}
           value={email}
           onChangeText={setEmail}
           keyboardType="email-address"
@@ -58,7 +60,7 @@ export default function Login() {
         />
 
         <Input
-          placeholder="비밀번호를 입력해주세요."
+          placeholder={t("login.passwordPlaceholder")}
           value={password}
           onChangeText={setPassword}
           secureTextEntry={!showPassword}
@@ -74,7 +76,9 @@ export default function Login() {
             onPress={() => setKeepLogin(!keepLogin)}
           >
             <RadioIcon active={keepLogin} />
-            <Text className="text-[13px] text-gray-600">로그인 상태 유지</Text>
+            <Text className="text-[13px] text-gray-600">
+              {t("login.keepLogin")}
+            </Text>
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -82,20 +86,22 @@ export default function Login() {
             onPress={() => setRememberID(!rememberID)}
           >
             <RadioIcon active={rememberID} />
-            <Text className="text-[13px] text-gray-600">이메일 기억하기</Text>
+            <Text className="text-[13px] text-gray-600">
+              {t("login.rememberEmail")}
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
 
       {/* 로그인 버튼 */}
-      <View className="mt-[85px]">
+      <View className="mt-20">
         <Button
-          label="로그인"
+          label={t("login.login")}
           size="long"
           state="active"
           onPress={async () => {
             if (!email || !password) {
-              showToast("로그인 정보를 입력하여 주세요.");
+              showToast(t("login.loginInfoEmpty"));
               return;
             }
             try {
@@ -105,25 +111,25 @@ export default function Login() {
               } else {
                 await clearEmail();
               }
-              try {
-                await setTokens(
-                  res.data.accessToken,
-                  res.data.refreshToken,
-                  keepLogin,
-                );
-              } catch {}
+              await setTokens(
+                res.data.accessToken,
+                res.data.refreshToken,
+                keepLogin,
+              );
               navigation.reset({
                 index: 0,
                 routes: [{ name: "LoadingScreen" }],
               });
             } catch (e: any) {
               const status = e?.response?.status;
-              if (status === 404) {
-                showToast("해당하는 사용자가 없습니다.");
+              if (!status) {
+                showToast(t("login.loginFailed"));
+              } else if (status === 404) {
+                showToast(t("login.userNotFound"));
               } else if (status >= 500) {
-                showToast("로그인에 실패했습니다. 잠시 후 시도해주세요.");
+                showToast(t("login.loginFailed"));
               } else {
-                showToast("사용자 정보가 일치하지 않습니다.");
+                showToast(t("login.userMismatch"));
               }
             }
           }}
@@ -134,24 +140,16 @@ export default function Login() {
       <View className="flex-row justify-center items-center mt-4 gap-[13px]">
         <TouchableOpacity onPress={() => navigation.navigate("Register")}>
           <Text className="text-b4 font-sb text-dark-gray underline">
-            회원가입
+            {t("register.appBar")}
           </Text>
         </TouchableOpacity>
         <Text className="text-[13px] text-gray-400">|</Text>
         <TouchableOpacity onPress={() => navigation.navigate("FindPassword")}>
           <Text className="text-b4 font-sb text-dark-gray underline">
-            비밀번호 찾기
+            {t("login.findPassword")}
           </Text>
         </TouchableOpacity>
       </View>
-
-      {/* 임시 버튼 */}
-      <TouchableOpacity
-        className="mt-3 h-11 border border-gray-300 rounded-lg items-center justify-center"
-        onPress={() => navigation.navigate("Tabs")}
-      >
-        <Text className="text-sm text-gray-400">임시 - 홈으로 이동</Text>
-      </TouchableOpacity>
 
       {/* 에러 토스트 */}
       {toastMessage ? (
