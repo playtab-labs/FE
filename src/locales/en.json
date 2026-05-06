@@ -96,13 +96,10 @@
   },
   "nationality": {
     "southKorea": "South Korea",
-    "ghana": "Ghana",
-    "nigeria": "Nigeria",
-    "denmark": "Denmark",
-    "russia": "Russia",
-    "usa": "United States",
-    "vietnam": "Vietnam",
-    "serbia": "Serbia"
+    "america": "United States",
+    "japan": "Japan",
+    "china": "China",
+    "other": "Other"
   },
   "more": {
     "appBar": "MORE",

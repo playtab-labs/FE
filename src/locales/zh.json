@@ -96,13 +96,10 @@
   },
   "nationality": {
     "southKorea": "韩国",
-    "ghana": "加纳",
-    "nigeria": "尼日利亚",
-    "denmark": "丹麦",
-    "russia": "俄罗斯",
-    "usa": "美国",
-    "vietnam": "越南",
-    "serbia": "塞尔维亚"
+    "america": "美国",
+    "japan": "日本",
+    "china": "中国",
+    "other": "其他"
   },
   "more": {
     "appBar": "MORE",

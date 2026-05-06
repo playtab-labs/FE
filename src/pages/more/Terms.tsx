@@ -1,8 +1,20 @@
 import Layout from "@/components/Layout";
 import TERMS_DATA from "@/mockdatas/TermsDetail.json";
-import { ScrollView, Text, View } from "react-native";
+import {
+  Linking,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 export default function TermsPage() {
+  const handleLinkPress = (url: string) => {
+    Linking.openURL(url).catch((err) =>
+      console.error("Failed to open URL:", err),
+    );
+  };
+
   return (
     <Layout title="이용약관" showBack showCamera={false}>
       <ScrollView showsVerticalScrollIndicator={false} className="py-4">
@@ -14,6 +26,13 @@ export default function TermsPage() {
             <Text className="text-b4 font-rg text-dark-gray leading-6">
               {term.content}
             </Text>
+            {term.linkUrl && (
+              <TouchableOpacity onPress={() => handleLinkPress(term.linkUrl)}>
+                <Text className="text-b4 font-rg text-blue-500 underline mt-3">
+                  {term.linkText}
+                </Text>
+              </TouchableOpacity>
+            )}
           </View>
         ))}
       </ScrollView>

@@ -16,6 +16,7 @@ import { useQuery } from "@apollo/client/react";
 import { useNavigation } from "@react-navigation/native";
 import * as SecureStore from "expo-secure-store";
 import { useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
   Animated,
   ScrollView,
@@ -23,16 +24,39 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { useTranslation } from "react-i18next";
 
 const TAB_ITEMS = [
-  { key: "editPersonalInfo", screen: "PersonalChange", icon: <ProfileIcon width={24} height={24} /> },
-  { key: "notices", screen: "Notice", icon: <RingIcon width={24} height={24} /> },
-  { key: "language", screen: "Language", icon: <LanguageIcon width={24} height={24} /> },
+  {
+    key: "editPersonalInfo",
+    screen: "PersonalChange",
+    icon: <ProfileIcon width={24} height={24} />,
+  },
+  {
+    key: "notices",
+    screen: "Notice",
+    icon: <RingIcon width={24} height={24} />,
+  },
+  {
+    key: "language",
+    screen: "Language",
+    icon: <LanguageIcon width={24} height={24} />,
+  },
   { key: "faq", screen: "FAQ", icon: <FaqIcon width={24} height={24} /> },
-  { key: "hostOrganizerInfo", screen: "Host", icon: <HostIcon width={24} height={24} /> },
-  { key: "sponsors", screen: "Sponsor", icon: <SponsorIcon width={24} height={24} /> },
-  { key: "termsOfUse", screen: "Terms", icon: <TermIcon width={24} height={24} /> },
+  {
+    key: "hostOrganizerInfo",
+    screen: "Host",
+    icon: <HostIcon width={24} height={24} />,
+  },
+  {
+    key: "sponsors",
+    screen: "Sponsor",
+    icon: <SponsorIcon width={24} height={24} />,
+  },
+  {
+    key: "termsOfUse",
+    screen: "Terms",
+    icon: <TermIcon width={24} height={24} />,
+  },
 ];
 
 const LANG_NAMES: Record<string, string> = {
@@ -138,7 +162,12 @@ export default function More() {
   });
 
   return (
-    <Layout title={t("more.appBar")} showBack={false} showCamera={false} noPadding>
+    <Layout
+      title={t("more.appBar")}
+      showBack={false}
+      showCamera={false}
+      noPadding
+    >
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
@@ -200,15 +229,19 @@ export default function More() {
           </View>
         )}
 
-        {/* 로그아웃 버튼 — 필요 시 주석 해제
+        {/*
+        로그아웃 버튼 (디자인에서 빠짐)
         <TouchableOpacity
           onPress={async () => {
-            if (refreshToken) await authApi.logout(refreshToken).catch(() => {});
+            const { clearTokens } = useAuthStore.getState();
             await clearTokens();
             navigation.reset({ index: 0, routes: [{ name: "Login" }] });
           }}
+          className="py-3 px-4 bg-red-100 rounded-lg"
         >
-          <Text>로그아웃</Text>
+          <Text className="text-b4 font-sb text-red-600 text-center">
+            {t("more.logout")}
+          </Text>
         </TouchableOpacity>
         */}
 
@@ -230,8 +263,6 @@ export default function More() {
             />
           ))}
         </View>
-
-
       </ScrollView>
     </Layout>
   );
