@@ -62,7 +62,7 @@ const QRCamera = forwardRef<QRCameraHandle, QRCameraProps>(function QRCamera({ o
 
   return (
     <CameraView
-      style={StyleSheet.absoluteFill}
+      style={{ flex: 1 }}
       facing="back"
       barcodeScannerSettings={{ barcodeTypes: ["qr"] }}
       onBarcodeScanned={handleBarCodeScanned}

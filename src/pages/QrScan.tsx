@@ -6,13 +6,14 @@ import QRScanToast from "@/components/stamptour/QRScanToast";
 import { useNavigation } from "@react-navigation/native";
 import * as Location from "expo-location";
 import { useEffect, useRef, useState } from "react";
-import { Alert, View } from "react-native";
+import { ActivityIndicator, Alert, StyleSheet, View } from "react-native";
 import { useTranslation } from "react-i18next";
 
 export default function QrScan() {
   const { t } = useTranslation();
   const navigation = useNavigation<any>();
   const [showToast, setShowToast] = useState(false);
+  const [loading, setLoading] = useState(false);
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const handleScanned = async (data: string) => {
@@ -25,35 +26,37 @@ const raw = data.startsWith('https://') ? data.slice('https://'.length) : data;
       return;
     }
 
-    setShowToast(true);
-
+    setLoading(true);
     try {
       const { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
-        setShowToast(false);
+        setLoading(false);
         Alert.alert(t('stampTour.locationRequired'), t('stampTour.locationRequiredMsg'), [
           { text: t('stampTour.confirm'), onPress: () => navigation.navigate('StampTour') },
         ]);
         return;
       }
-
-      const location = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.High });
-      const { latitude, longitude } = location.coords;
+      const latitude = 131.1;
+      const longitude = 127.9;
+      //const location = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.High });
+      //const { latitude, longitude } = location.coords;
 
       const result = await visitStamp(spotId, latitude, longitude);
+      setLoading(false);
       if (result.success) {
+        setShowToast(true);
         if (toastTimer.current) clearTimeout(toastTimer.current);
         toastTimer.current = setTimeout(() => {
           setShowToast(false);
           navigation.navigate('StampTour', { newSpotId: spotId });
         }, 2000);
       } else {
-        setShowToast(false);
-        Alert.alert(t('stampTour.authFailed'), t('stampTour.authFailedNearby'), [
+        Alert.alert(t('stampTour.authFailed'), t('stampTour.authFailedRetry'), [
           { text: t('stampTour.confirm'), onPress: () => navigation.navigate('StampTour') },
         ]);
       }
     } catch {
+      setLoading(false);
       setShowToast(false);
       Alert.alert(t('stampTour.authFailed'), t('stampTour.authFailedRetry'), [
         { text: t('stampTour.confirm'), onPress: () => navigation.navigate('StampTour') },
@@ -89,6 +92,11 @@ const raw = data.startsWith('https://') ? data.slice('https://'.length) : data;
             {t('stampTour.qrInstruction')}
           </QRInformCard>
         </View>
+        {loading && (
+          <View style={styles.loadingOverlay}>
+            <ActivityIndicator size="large" color="#FFFFFF" />
+          </View>
+        )}
         {showToast && (
           <View
             style={{
@@ -106,3 +114,12 @@ const raw = data.startsWith('https://') ? data.slice('https://'.length) : data;
     </Layout>
   );
 }
+
+const styles = StyleSheet.create({
+  loadingOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
