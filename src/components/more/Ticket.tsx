@@ -1,6 +1,6 @@
 import { LinearGradient } from "expo-linear-gradient";
-import { Text, View } from "react-native";
 import { useTranslation } from "react-i18next";
+import { Text, View } from "react-native";
 
 type TicketStatus = "available" | "upcoming" | "used" | "expired";
 

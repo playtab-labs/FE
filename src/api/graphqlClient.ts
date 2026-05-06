@@ -8,7 +8,7 @@ import { setContext } from "@apollo/client/link/context";
 import * as SecureStore from "expo-secure-store";
 
 const httpLink = createHttpLink({
-  uri: "http://43.201.130.117:8080/graphql",
+  uri: `${process.env.EXPO_PUBLIC_API_BASE_URL}/graphql`,
 });
 
 const authLink = setContext(async (_, { headers }) => {

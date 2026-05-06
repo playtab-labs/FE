@@ -1,4 +1,9 @@
-import { ApolloClient, InMemoryCache, createHttpLink, from } from "@apollo/client";
+import {
+  ApolloClient,
+  InMemoryCache,
+  createHttpLink,
+  from,
+} from "@apollo/client";
 import { CombinedGraphQLErrors, ServerError } from "@apollo/client/errors";
 import { setContext } from "@apollo/client/link/context";
 import { ErrorLink } from "@apollo/client/link/error";
@@ -47,9 +52,14 @@ const errorLink = new ErrorLink(({ error, operation, forward }) => {
         const { data } = await authApi.refresh(refreshToken);
         await setTokens(data.accessToken, data.refreshToken, keepLogin);
 
-        operation.setContext(({ headers = {} }: { headers: Record<string, string> }) => ({
-          headers: { ...headers, Authorization: `Bearer ${data.accessToken}` },
-        }));
+        operation.setContext(
+          ({ headers = {} }: { headers: Record<string, string> }) => ({
+            headers: {
+              ...headers,
+              Authorization: `Bearer ${data.accessToken}`,
+            },
+          }),
+        );
 
         forward(operation).subscribe({
           next: observer.next.bind(observer),
