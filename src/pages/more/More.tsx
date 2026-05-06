@@ -16,6 +16,7 @@ import { useQuery } from "@apollo/client/react";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import * as SecureStore from "expo-secure-store";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
   Animated,
   ScrollView,
@@ -23,16 +24,39 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { useTranslation } from "react-i18next";
 
 const TAB_ITEMS = [
-  { key: "editPersonalInfo", screen: "PersonalChange", icon: <ProfileIcon width={24} height={24} /> },
-  { key: "notices", screen: "Notice", icon: <RingIcon width={24} height={24} /> },
-  { key: "language", screen: "Language", icon: <LanguageIcon width={24} height={24} /> },
+  {
+    key: "editPersonalInfo",
+    screen: "PersonalChange",
+    icon: <ProfileIcon width={24} height={24} />,
+  },
+  {
+    key: "notices",
+    screen: "Notice",
+    icon: <RingIcon width={24} height={24} />,
+  },
+  {
+    key: "language",
+    screen: "Language",
+    icon: <LanguageIcon width={24} height={24} />,
+  },
   { key: "faq", screen: "FAQ", icon: <FaqIcon width={24} height={24} /> },
-  { key: "hostOrganizerInfo", screen: "Host", icon: <HostIcon width={24} height={24} /> },
-  { key: "sponsors", screen: "Sponsor", icon: <SponsorIcon width={24} height={24} /> },
-  { key: "termsOfUse", screen: "Terms", icon: <TermIcon width={24} height={24} /> },
+  {
+    key: "hostOrganizerInfo",
+    screen: "Host",
+    icon: <HostIcon width={24} height={24} />,
+  },
+  {
+    key: "sponsors",
+    screen: "Sponsor",
+    icon: <SponsorIcon width={24} height={24} />,
+  },
+  {
+    key: "termsOfUse",
+    screen: "Terms",
+    icon: <TermIcon width={24} height={24} />,
+  },
 ];
 
 const LANG_NAMES: Record<string, string> = {
@@ -70,13 +94,28 @@ export default function More() {
     "2026-05-15": 3,
   };
 
-  const wristbandToTicket = (w: { rfid: string; activeDate: string; linkedAt: string }): React.ComponentProps<typeof Ticket> => {
+  const wristbandToTicket = (w: {
+    rfid: string;
+    activeDate: string;
+    linkedAt: string;
+  }): React.ComponentProps<typeof Ticket> => {
     const today = new Date().toISOString().slice(0, 10);
     const day = DAY_DATES[w.activeDate] ?? 2;
-    const status = w.activeDate < today ? "expired" : w.activeDate === today ? "available" : "upcoming";
+    const status =
+      w.activeDate < today
+        ? "expired"
+        : w.activeDate === today
+          ? "available"
+          : "upcoming";
     const [, mm, dd] = w.activeDate.split("-");
     const date = `26.${mm}.${dd}`;
-    return { day, status, date, time: "16:00~22:00", location: "대운동장" };
+    return {
+      day,
+      status,
+      date,
+      time: "16:00~22:00",
+      location: t("more.playground"),
+    };
   };
 
   const TICKETS = (wristbandData?.myWristbands ?? [])
@@ -107,11 +146,16 @@ export default function More() {
     refetchWristbands();
   }, [accessToken]);
 
-  useFocusEffect(useCallback(() => {
-    refetchWristbands().then((res) => {
-      console.log("[More] wristbands:", JSON.stringify(res.data?.myWristbands));
-    });
-  }, []));
+  useFocusEffect(
+    useCallback(() => {
+      refetchWristbands().then((res) => {
+        console.log(
+          "[More] wristbands:",
+          JSON.stringify(res.data?.myWristbands),
+        );
+      });
+    }, []),
+  );
 
   const isSogang = me?.email?.endsWith("@sogang.ac.kr") ?? false;
   const [expanded, setExpanded] = useState(false);
@@ -143,7 +187,12 @@ export default function More() {
   });
 
   return (
-    <Layout title={t("more.appBar")} showBack={false} showCamera={false} noPadding>
+    <Layout
+      title={t("more.appBar")}
+      showBack={false}
+      showCamera={false}
+      noPadding
+    >
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
@@ -205,15 +254,19 @@ export default function More() {
           </View>
         )}
 
-        {/* 로그아웃 버튼 — 필요 시 주석 해제
+        {/*
+        로그아웃 버튼 (디자인에서 빠짐)
         <TouchableOpacity
           onPress={async () => {
-            if (refreshToken) await authApi.logout(refreshToken).catch(() => {});
+            const { clearTokens } = useAuthStore.getState();
             await clearTokens();
             navigation.reset({ index: 0, routes: [{ name: "Login" }] });
           }}
+          className="py-3 px-4 bg-red-100 rounded-lg"
         >
-          <Text>로그아웃</Text>
+          <Text className="text-b4 font-sb text-red-600 text-center">
+            {t("more.logout")}
+          </Text>
         </TouchableOpacity>
         */}
 
@@ -235,8 +288,6 @@ export default function More() {
             />
           ))}
         </View>
-
-
       </ScrollView>
     </Layout>
   );

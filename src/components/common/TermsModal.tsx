@@ -13,6 +13,8 @@ interface TermsItem {
   title: string;
   required?: boolean;
   content: string;
+  linkText?: string;
+  linkUrl?: string;
 }
 
 interface TermsModalProps {
@@ -20,7 +22,10 @@ interface TermsModalProps {
   title: string;
   required?: boolean;
   content?: string;
-  items?: TermsItem[]; // 전체동의용: 여러 약관을 한 모달에
+  linkText?: string;
+  linkUrl?: string;
+  onLinkPress?: (url: string) => void;
+  items?: TermsItem[];
   onAgree: () => void;
   onClose: () => void;
 }
@@ -44,6 +49,9 @@ export default function TermsModal({
   title,
   required = true,
   content,
+  linkText,
+  linkUrl,
+  onLinkPress,
   items,
   onAgree,
   onClose,
@@ -135,17 +143,35 @@ export default function TermsModal({
 
               {/* 단일 약관 내용 */}
               {!isMulti && (
-                <Text
-                  style={{
-                    fontSize: 12,
-                    fontWeight: "400",
-                    color: "#656565",
-                    lineHeight: 18,
-                    letterSpacing: -0.12,
-                  }}
-                >
-                  {content}
-                </Text>
+                <>
+                  <Text
+                    style={{
+                      fontSize: 12,
+                      fontWeight: "400",
+                      color: "#656565",
+                      lineHeight: 18,
+                      letterSpacing: -0.12,
+                    }}
+                  >
+                    {content}
+                  </Text>
+                  {linkUrl && onLinkPress && (
+                    <TouchableOpacity
+                      onPress={() => onLinkPress(linkUrl)}
+                      style={{ marginTop: 8 }}
+                    >
+                      <Text
+                        style={{
+                          fontSize: 12,
+                          color: "#3B82F6",
+                          textDecorationLine: "underline",
+                        }}
+                      >
+                        {linkText || "자세한 내용 확인하기"}
+                      </Text>
+                    </TouchableOpacity>
+                  )}
+                </>
               )}
 
               {/* 다중 약관 내용 (전체동의용) */}
@@ -201,6 +227,22 @@ export default function TermsModal({
                     >
                       {item.content}
                     </Text>
+                    {item.linkUrl && onLinkPress && (
+                      <TouchableOpacity
+                        onPress={() => onLinkPress(item.linkUrl!)}
+                        style={{ marginTop: 8 }}
+                      >
+                        <Text
+                          style={{
+                            fontSize: 12,
+                            color: "#3B82F6",
+                            textDecorationLine: "underline",
+                          }}
+                        >
+                          {item.linkText || "자세한 내용 확인하기"}
+                        </Text>
+                      </TouchableOpacity>
+                    )}
                   </View>
                 ))}
 
@@ -226,7 +268,9 @@ export default function TermsModal({
                       letterSpacing: -0.14,
                     }}
                   >
-                    {isMulti ? "약관 전체 동의합니다." : "해당 약관에 동의합니다."}
+                    {isMulti
+                      ? "약관 전체 동의합니다."
+                      : "해당 약관에 동의합니다."}
                   </Text>
                   <CheckIcon agreed={agreed} />
                 </TouchableOpacity>
