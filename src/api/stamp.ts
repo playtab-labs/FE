@@ -23,8 +23,6 @@ export interface StampSpot {
   spotDescription: string;
   visited: boolean;
   visitedAt: string | null;
-  latitude: number;
-  longitude: number;
 }
 
 export interface MyStampsResult {
@@ -44,8 +42,6 @@ const MY_STAMPS_QUERY = gql`
         spotDescription
         visited
         visitedAt
-        latitude
-        longitude
       }
     }
   }
