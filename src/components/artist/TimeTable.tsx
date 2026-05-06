@@ -197,6 +197,7 @@ const TimeTable = () => {
                   HOUR_HEIGHT;
                 const name = artist.performer.name?.ko ?? "-";
                 const isFav = !!artist.performer.isFavorited;
+                const isShort = height < 20; // 12분 미만
 
                 const blockStyle = {
                   position: "absolute" as const,
@@ -221,7 +222,7 @@ const TimeTable = () => {
                       style={blockStyle}
                     >
                       <Text
-                        className={typo.T3_Eb}
+                        className={isShort ? typo.B5_Eb : typo.T3_Eb}
                         numberOfLines={1}
                         style={{ color: "#fff", flex: 1 }}
                       >
@@ -245,7 +246,7 @@ const TimeTable = () => {
                     }}
                   >
                     <Text
-                      className={typo.B3_Eb}
+                      className={isShort ? typo.B5_Eb : typo.B3_Eb}
                       numberOfLines={1}
                       style={{ color: isFav ? "#fff" : "#BFBFBF", flex: 1 }}
                     >
