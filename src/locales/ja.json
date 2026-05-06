@@ -133,9 +133,13 @@
   "artist": {
     "lineup": "ラインナップ",
     "timetable": "タイムテーブル",
+    "filterArtist": "アーティスト",
+    "filterClub": "サークル",
+    "filterDJ": "DJ",
     "noFavorites": "お気に入り登録したアーティストはいません。",
     "noFavoritesOnDate": "この日にお気に入り登録したアーティストはいません。",
-    "noPerformance": "📢 DAY {{day}}はアーティストステージがありません。 📢"
+    "noPerformance": "📢 DAY {{day}} のステージはありません 📢",
+    "noPerformanceCategory": "📢 {{category}} のステージはありません 📢"
   },
   "map": {
     "booth": "ブース配置図",

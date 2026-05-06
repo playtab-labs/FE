@@ -133,9 +133,13 @@
   "artist": {
     "lineup": "阵容",
     "timetable": "时间表",
+    "filterArtist": "艺术家",
+    "filterClub": "社团",
+    "filterDJ": "DJ",
     "noFavorites": "没有收藏的艺人。",
     "noFavoritesOnDate": "该日期没有收藏的艺人。",
-    "noPerformance": "📢 DAY {{day}} 没有艺人舞台演出。 📢"
+    "noPerformance": "📢 DAY {{day}} 暂无演出 📢",
+    "noPerformanceCategory": "📢 暂无{{category}}演出 📢"
   },
   "map": {
     "booth": "摊位布局图",

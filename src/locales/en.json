@@ -133,9 +133,13 @@
   "artist": {
     "lineup": "Lineup",
     "timetable": "Timetable",
+    "filterArtist": "Artist",
+    "filterClub": "Club",
+    "filterDJ": "DJ",
     "noFavorites": "You have no favorite artists.",
     "noFavoritesOnDate": "You have no favorite artists on this date.",
-    "noPerformance": "📢 There are no artist performances on DAY {{day}}. 📢"
+    "noPerformance": "📢 No performances on DAY {{day}} 📢",
+    "noPerformanceCategory": "📢 No {{category}} performances 📢"
   },
   "map": {
     "booth": "Booth Map",

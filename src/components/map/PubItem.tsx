@@ -23,7 +23,7 @@ export default function PubItem({
       activeOpacity={0.8}
     >
       {/* 썸네일 */}
-      <View className="w-12 h-12 rounded-lg bg-[#E4E4E4] overflow-hidden">
+      <View className="w-12 h-12 overflow-hidden">
         {thumbnailImageUrl ? (
           <Image
             source={{ uri: thumbnailImageUrl }}
