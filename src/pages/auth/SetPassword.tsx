@@ -4,6 +4,7 @@ import Button from "@/components/common/Button";
 import ColoredText from "@/components/common/ColoredText";
 import Input from "@/components/common/Input";
 import { useSignupStore } from "@/stores/signupStore";
+import { useAuthStore } from "@/stores/authStore";
 import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
 import { Keyboard, Text, TouchableWithoutFeedback, View } from "react-native";
@@ -138,8 +139,13 @@ export default function SetPassword() {
                     consents,
                   };
                   await authApi.signup(payload);
+                  const loginRes = await authApi.loginEmail(email, password);
+                  await useAuthStore.getState().setTokens(loginRes.data.accessToken, loginRes.data.refreshToken, true);
                   navigation.navigate("SignUpComplete");
-                } catch (e: any) {}
+                } catch (e: any) {
+                  console.error("[Signup] status:", e?.response?.status, "data:", JSON.stringify(e?.response?.data));
+                  console.error("[Signup] payload:", JSON.stringify(payload));
+                }
               }}
             />
           </View>

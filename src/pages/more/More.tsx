@@ -13,9 +13,10 @@ import Ticket from "@/components/more/Ticket";
 import { useAuthStore } from "@/stores/authStore";
 import { gql } from "@apollo/client";
 import { useQuery } from "@apollo/client/react";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import * as SecureStore from "expo-secure-store";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
   Animated,
   ScrollView,
@@ -23,16 +24,39 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { useTranslation } from "react-i18next";
 
 const TAB_ITEMS = [
-  { key: "editPersonalInfo", screen: "PersonalChange", icon: <ProfileIcon width={24} height={24} /> },
-  { key: "notices", screen: "Notice", icon: <RingIcon width={24} height={24} /> },
-  { key: "language", screen: "Language", icon: <LanguageIcon width={24} height={24} /> },
+  {
+    key: "editPersonalInfo",
+    screen: "PersonalChange",
+    icon: <ProfileIcon width={24} height={24} />,
+  },
+  {
+    key: "notices",
+    screen: "Notice",
+    icon: <RingIcon width={24} height={24} />,
+  },
+  {
+    key: "language",
+    screen: "Language",
+    icon: <LanguageIcon width={24} height={24} />,
+  },
   { key: "faq", screen: "FAQ", icon: <FaqIcon width={24} height={24} /> },
-  { key: "hostOrganizerInfo", screen: "Host", icon: <HostIcon width={24} height={24} /> },
-  { key: "sponsors", screen: "Sponsor", icon: <SponsorIcon width={24} height={24} /> },
-  { key: "termsOfUse", screen: "Terms", icon: <TermIcon width={24} height={24} /> },
+  {
+    key: "hostOrganizerInfo",
+    screen: "Host",
+    icon: <HostIcon width={24} height={24} />,
+  },
+  {
+    key: "sponsors",
+    screen: "Sponsor",
+    icon: <SponsorIcon width={24} height={24} />,
+  },
+  {
+    key: "termsOfUse",
+    screen: "Terms",
+    icon: <TermIcon width={24} height={24} />,
+  },
 ];
 
 const LANG_NAMES: Record<string, string> = {
@@ -59,34 +83,48 @@ const MY_WRISTBANDS = gql`
 export default function More() {
   const { t, i18n } = useTranslation();
 
-  const TICKETS: React.ComponentProps<typeof Ticket>[] = (
-    [
-      {
-        day: 3,
-        status: "available",
-        date: "26.05.14",
-        time: "18:00~22:00",
-        location: t("more.youthPlaza"),
-      },
-      {
-        day: 2,
-        status: "expired",
-        date: "26.05.14",
-        time: "18:00~22:00",
-        location: t("more.youthPlaza"),
-      },
-    ] as React.ComponentProps<typeof Ticket>[]
-  ).sort((a, b) => {
-    const dayA = "day" in a ? a.day : 0;
-    const dayB = "day" in b ? b.day : 0;
-    return dayB - dayA;
-  });
-
   const navigation = useNavigation<any>();
   const { accessToken /*, clearTokens, refreshToken */ } = useAuthStore();
   const { data: wristbandData, refetch: refetchWristbands } = useQuery<{
     myWristbands: { rfid: string; activeDate: string; linkedAt: string }[];
   }>(MY_WRISTBANDS);
+
+  const DAY_DATES: Record<string, 2 | 3> = {
+    "2026-05-14": 2,
+    "2026-05-15": 3,
+  };
+
+  const wristbandToTicket = (w: {
+    rfid: string;
+    activeDate: string;
+    linkedAt: string;
+  }): React.ComponentProps<typeof Ticket> => {
+    const today = new Date().toISOString().slice(0, 10);
+    const day = DAY_DATES[w.activeDate] ?? 2;
+    const status =
+      w.activeDate < today
+        ? "expired"
+        : w.activeDate === today
+          ? "available"
+          : "upcoming";
+    const [, mm, dd] = w.activeDate.split("-");
+    const date = `26.${mm}.${dd}`;
+    return {
+      day,
+      status,
+      date,
+      time: "16:00~22:00",
+      location: t("more.playground"),
+    };
+  };
+
+  const TICKETS = (wristbandData?.myWristbands ?? [])
+    .map(wristbandToTicket)
+    .sort((a, b) => {
+      const dayA = "day" in a ? a.day : 0;
+      const dayB = "day" in b ? b.day : 0;
+      return dayB - dayA;
+    });
   const [me, setMe] = useState<{ name: string; email: string } | null>(null);
 
   useEffect(() => {
@@ -107,6 +145,17 @@ export default function More() {
     fetchMe();
     refetchWristbands();
   }, [accessToken]);
+
+  useFocusEffect(
+    useCallback(() => {
+      refetchWristbands().then((res) => {
+        console.log(
+          "[More] wristbands:",
+          JSON.stringify(res.data?.myWristbands),
+        );
+      });
+    }, []),
+  );
 
   const isSogang = me?.email?.endsWith("@sogang.ac.kr") ?? false;
   const [expanded, setExpanded] = useState(false);
@@ -138,7 +187,12 @@ export default function More() {
   });
 
   return (
-    <Layout title={t("more.appBar")} showBack={false} showCamera={false} noPadding>
+    <Layout
+      title={t("more.appBar")}
+      showBack={false}
+      showCamera={false}
+      noPadding
+    >
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
@@ -155,7 +209,7 @@ export default function More() {
         />
 
         {/* 티켓 */}
-        {!wristbandData || wristbandData.myWristbands.length === 0 ? (
+        {TICKETS.length === 0 ? (
           <Ticket noticket />
         ) : !hasMultiple ? (
           <Ticket {...TICKETS[0]} />
@@ -200,15 +254,19 @@ export default function More() {
           </View>
         )}
 
-        {/* 로그아웃 버튼 — 필요 시 주석 해제
+        {/*
+        로그아웃 버튼 (디자인에서 빠짐)
         <TouchableOpacity
           onPress={async () => {
-            if (refreshToken) await authApi.logout(refreshToken).catch(() => {});
+            const { clearTokens } = useAuthStore.getState();
             await clearTokens();
             navigation.reset({ index: 0, routes: [{ name: "Login" }] });
           }}
+          className="py-3 px-4 bg-red-100 rounded-lg"
         >
-          <Text>로그아웃</Text>
+          <Text className="text-b4 font-sb text-red-600 text-center">
+            {t("more.logout")}
+          </Text>
         </TouchableOpacity>
         */}
 
@@ -230,8 +288,6 @@ export default function More() {
             />
           ))}
         </View>
-
-
       </ScrollView>
     </Layout>
   );

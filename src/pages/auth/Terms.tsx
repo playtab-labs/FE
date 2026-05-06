@@ -7,24 +7,36 @@ import TERMS_DATA from "@/mockdatas/TermsDetail.json";
 import { useSignupStore } from "@/stores/signupStore";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { useState } from "react";
-import { ScrollView, Text, TouchableOpacity, View } from "react-native";
-import Svg, { Polyline } from "react-native-svg";
 import { useTranslation } from "react-i18next";
+import {
+  Linking,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import Svg, { Polyline } from "react-native-svg";
 
 export default function Terms() {
   const { t } = useTranslation();
 
-  const TERMS_LIST = TERMS_DATA.map((term) => ({
+  const TERMS_LIST = (TERMS_DATA as any[]).map((term) => ({
     id: term.id,
     label:
-      term.id === 1 ? t("terms.agreeTermsOfUse")
-      : term.id === 2 ? t("terms.agreePrivacy")
-      : term.id === 3 ? t("terms.agreeLocation")
-      : t("terms.agreeMarketing"),
+      term.id === 1
+        ? t("terms.agreeTermsOfUse")
+        : term.id === 2
+          ? t("terms.agreePrivacy")
+          : term.id === 3
+            ? t("terms.agreeLocation")
+            : t("terms.agreeMarketing"),
     type: term.type as "PRIVACY" | "SERVICE" | "MARKETING",
     required: term.required,
-    content: term.content,
+    content: term.content || "",
+    linkText: term.linkText || "자세한 내용 확인하기",
+    linkUrl: term.linkUrl || "",
   }));
+
   const navigation = useNavigation<any>();
   const route = useRoute<any>();
   const userType = route.params?.userType ?? "external";
@@ -46,13 +58,22 @@ export default function Terms() {
     else setShowAllModal(true);
   };
 
+  const handleLinkPress = (url: string) => {
+    Linking.openURL(url).catch((err) =>
+      console.error("Failed to open URL:", err),
+    );
+  };
+
   return (
     <Layout title={t("terms.appBar")} showBack>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View>
           {/* 약관 안내 문구 */}
           <View className="mt-[19px] gap-4">
-            <ColoredText text={t("terms.title")} className="text-h1 font-eb text-gray-black" />
+            <ColoredText
+              text={t("terms.title")}
+              className="text-h1 font-eb text-gray-black"
+            />
             <Text className="text-b3 font-sb text-dark-gray">
               {t("terms.subtitle")}
             </Text>
@@ -149,9 +170,13 @@ export default function Terms() {
                         letterSpacing: -0.12,
                       }}
                     >
-                      {term.required ? t("terms.required") : t("terms.optional")}
+                      {term.required
+                        ? t("terms.required")
+                        : t("terms.optional")}
                     </Text>
-                    <Text style={{ fontSize: 14, color: "#1A1A1A", flexShrink: 1 }}>
+                    <Text
+                      style={{ fontSize: 14, color: "#1A1A1A", flexShrink: 1 }}
+                    >
                       {term.label}
                     </Text>
                     <Svg width="6" height="10" viewBox="0 0 6 10" fill="none">
@@ -219,6 +244,9 @@ export default function Terms() {
           title={activeTerm.label}
           required={activeTerm.required}
           content={activeTerm.content}
+          linkText={activeTerm.linkText}
+          linkUrl={activeTerm.linkUrl}
+          onLinkPress={handleLinkPress}
           onAgree={() =>
             setAgreed((prev) => ({ ...prev, [activeTerm.id]: true }))
           }
@@ -234,9 +262,14 @@ export default function Terms() {
           title: term.label,
           required: term.required,
           content: term.content,
+          linkText: term.linkText,
+          linkUrl: term.linkUrl,
         }))}
+        onLinkPress={handleLinkPress}
         onAgree={() =>
-          setAgreed(Object.fromEntries(TERMS_LIST.map((term) => [term.id, true])))
+          setAgreed(
+            Object.fromEntries(TERMS_LIST.map((term) => [term.id, true])),
+          )
         }
         onClose={() => setShowAllModal(false)}
       />

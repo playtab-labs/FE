@@ -96,13 +96,10 @@
   },
   "nationality": {
     "southKorea": "대한민국",
-    "ghana": "가나",
-    "nigeria": "나이지리아",
-    "denmark": "덴마크",
-    "russia": "러시아",
-    "usa": "미국",
-    "vietnam": "베트남",
-    "serbia": "세르비아"
+    "america": "미국",
+    "japan": "일본",
+    "china": "중국",
+    "other": "기타"
   },
   "more": {
     "appBar": "MORE",
@@ -121,7 +118,7 @@
     "scheduled": "입장 예정",
     "used": "사용 완료",
     "expired": "기간 만료",
-    "youthPlaza": "청년광장"
+    "playground": "대운동장"
   },
   "home": {
     "festivalTitle": "서강대학교 대동제 'Odyssey'",
@@ -185,7 +182,7 @@
   "stampTour": {
     "appBar": "스탬프 투어",
     "qrAppBar": "QR코드 인식",
-    "qrInstruction": "- 화면의 가운데에 큐알코드가 오도록 촬영해주세요.\n- 이상이 있을 경우 스태프를 불러주세요.\n- 기타 안내사항 적기",
+    "qrInstruction": "• 화면의 가운데에 큐알코드가 오도록 촬영해주세요.\n• 이상이 있을 경우 스태프를 불러주세요.",
     "qrScanComplete": "인식완료!",
     "missionCompleteAll": "미션을 [[전부 완료]]했어요!",
     "missionComplete": "[[{{count}}개의]] 미션을 완료했어요!",
@@ -221,14 +218,14 @@
     "spot1Desc": "5/13(수)-15(금) 중\n알바탑 앞",
     "spot2Title": "🖼포토부스\n이용하기",
     "spot2Desc": "5/13(수)-15(금) 중\n포토부스 내부",
-    "spot3Title": "🏦KB 국민은행\n부스 참여",
-    "spot3Desc": "5/13(수)-15(금)\n청년광장",
+    "spot3Title": "🛍총학생회\n부스 방문",
+    "spot3Desc": "5/14(목)\n청년광장",
     "spot4Title": "🎪재학생 부스\n체험하기 (1)",
     "spot4Desc": "5/13(수)\n각 재학생 부스",
     "spot5Title": "🎤버스킹\n즐기기",
     "spot5Desc": "5/13(수)\n청년광장 내\n총학생회 부스",
-    "spot6Title": "🛍총학생회 굿즈\n부스 방문",
-    "spot6Desc": "※ 구매 없이 참여 가능\n5/13(수)－15(금) 중\n대운동장 앞 굿즈 테이블",
+    "spot6Title": "🏦KB 국민은행\n부스 참여",
+    "spot6Desc": "5/13(수)-15(금)\n청년광장",
     "spot7Title": "🎪재학생 부스\n체험하기 (2)",
     "spot7Desc": "5/13(수)\n각 재학생 부스",
     "spot8Title": "🎁프로모션 부스\n체험하기",

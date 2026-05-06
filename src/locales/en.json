@@ -96,13 +96,10 @@
   },
   "nationality": {
     "southKorea": "South Korea",
-    "ghana": "Ghana",
-    "nigeria": "Nigeria",
-    "denmark": "Denmark",
-    "russia": "Russia",
-    "usa": "United States",
-    "vietnam": "Vietnam",
-    "serbia": "Serbia"
+    "america": "United States",
+    "japan": "Japan",
+    "china": "China",
+    "other": "Other"
   },
   "more": {
     "appBar": "MORE",
@@ -121,7 +118,7 @@
     "scheduled": "Scheduled for Entry",
     "used": "Used",
     "expired": "Expired",
-    "youthPlaza": "Youth Plaza"
+    "playground": "Grand Athletic Field"
   },
   "home": {
     "festivalTitle": "Sogang University Festival 'Odyssey'",
@@ -185,7 +182,7 @@
   "stampTour": {
     "appBar": "Stamp Tour",
     "qrAppBar": "QR Code Scan",
-    "qrInstruction": "- Please center the QR code on the screen.\n- If there is an issue, please call a staff member.\n- Other instructions here",
+    "qrInstruction": "• Please center the QR code on the screen.\n• If there is an issue, please call a staff member.",
     "qrScanComplete": "Scan Complete!",
     "missionCompleteAll": "You've completed [[all missions]]!",
     "missionComplete": "[[{{count}} missions]] completed!",
@@ -221,14 +218,14 @@
     "spot1Desc": "May 13(Wed)-15(Fri)\nIn front of Albatop",
     "spot2Title": "🖼Use the\nPhoto Booth",
     "spot2Desc": "May 13(Wed)-15(Fri)\nInside the photo booth",
-    "spot3Title": "🏦KB Kookmin Bank\nBooth Visit",
-    "spot3Desc": "May 13(Wed)-15(Fri)\nChungyeon Square",
+    "spot3Title": "🛍Student Council\nBooth Visit",
+    "spot3Desc": "5/14(Thu)\nYouth Plaza",
     "spot4Title": "🎪Student Booth\nExperience (1)",
     "spot4Desc": "May 13(Wed)\nEach student booth",
     "spot5Title": "🎤Enjoy\nBusking",
     "spot5Desc": "May 13(Wed)\nStudent Council booth\nin Chungyeon Square",
-    "spot6Title": "🛍Student Council\nGoods Booth",
-    "spot6Desc": "※ No purchase required\nMay 13(Wed)-15(Fri)\nGoods table in front of Main Field",
+    "spot6Title": "🏦KB Kookmin Bank\nBooth Visit",
+    "spot6Desc": "5/13(Wed)-15(Fri)\nYouth Plaza",
     "spot7Title": "🎪Student Booth\nExperience (2)",
     "spot7Desc": "May 13(Wed)\nEach student booth",
     "spot8Title": "🎁Promotion Booth\nExperience",

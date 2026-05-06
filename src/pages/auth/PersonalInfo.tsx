@@ -7,9 +7,9 @@ import NationalityModal from "@/components/common/NationalityModal";
 import { useSignupStore } from "@/stores/signupStore";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import Svg, { Polyline } from "react-native-svg";
-import { useTranslation } from "react-i18next";
 
 const formatBirthday = (digits: string) => {
   if (digits.length <= 4) return digits;
@@ -27,13 +27,10 @@ export default function PersonalInfo() {
 
   const NATIONALITIES = [
     t("nationality.southKorea"),
-    t("nationality.ghana"),
-    t("nationality.nigeria"),
-    t("nationality.denmark"),
-    t("nationality.russia"),
-    t("nationality.usa"),
-    t("nationality.vietnam"),
-    t("nationality.serbia"),
+    t("nationality.america"),
+    t("nationality.japan"),
+    t("nationality.china"),
+    t("nationality.other"),
   ];
   const navigation = useNavigation<any>();
   const route = useRoute<any>();
@@ -85,7 +82,10 @@ export default function PersonalInfo() {
         <View>
           {/* 안내 문구 */}
           <View className="mt-[19px] gap-4">
-            <ColoredText text={t("personalInfo.title")} className="text-h1 font-eb text-gray-black" />
+            <ColoredText
+              text={t("personalInfo.title")}
+              className="text-h1 font-eb text-gray-black"
+            />
             <Text className="text-b3 font-sb text-dark-gray">
               {t("personalInfo.subtitle")}
             </Text>
@@ -103,19 +103,25 @@ export default function PersonalInfo() {
 
             {/* 성별 */}
             <View className="w-full gap-2">
-              <Text className="text-b3 font-sb text-dark-gray">{t("personalInfo.genderLabel")}</Text>
+              <Text className="text-b3 font-sb text-dark-gray">
+                {t("personalInfo.genderLabel")}
+              </Text>
               <View className="flex-row gap-3">
                 <TouchableOpacity
                   className={`flex-1 h-[42px] rounded-lg items-center justify-center border ${gender === "male" ? "bg-[#FFA38C] border-[#FFA38C]" : "bg-extra-white border-[#E4E4E4]"}`}
                   onPress={() => setGender("male")}
                 >
-                  <Text className="text-b3 font-sb text-gray-black">{t("personalInfo.male")}</Text>
+                  <Text className="text-b3 font-sb text-gray-black">
+                    {t("personalInfo.male")}
+                  </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   className={`flex-1 h-[42px] rounded-lg items-center justify-center border ${gender === "female" ? "bg-[#FFA38C] border-[#FFA38C]" : "bg-extra-white border-[#E4E4E4]"}`}
                   onPress={() => setGender("female")}
                 >
-                  <Text className="text-b3 font-sb text-gray-black">{t("personalInfo.female")}</Text>
+                  <Text className="text-b3 font-sb text-gray-black">
+                    {t("personalInfo.female")}
+                  </Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -124,7 +130,9 @@ export default function PersonalInfo() {
             <Input
               label={t("personalInfo.birthdayLabel")}
               description={
-                isBirthdayInvalid ? t("personalInfo.birthdayInvalid") : undefined
+                isBirthdayInvalid
+                  ? t("personalInfo.birthdayInvalid")
+                  : undefined
               }
               error={isBirthdayInvalid}
               placeholder={t("personalInfo.birthdayPlaceholder")}
@@ -137,7 +145,9 @@ export default function PersonalInfo() {
             {/* 국적 */}
             <View className="w-full gap-[6px]">
               <View className="flex-row justify-between items-center">
-                <Text className="text-b3 font-sb text-dark-gray">{t("personalInfo.nationalityLabel")}</Text>
+                <Text className="text-b3 font-sb text-dark-gray">
+                  {t("personalInfo.nationalityLabel")}
+                </Text>
                 <Text className="text-b4 font-rg text-dark-gray">
                   {t("personalInfo.nationalityDescription")}
                 </Text>

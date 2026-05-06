@@ -96,13 +96,10 @@
   },
   "nationality": {
     "southKorea": "韓國",
-    "ghana": "迦納",
-    "nigeria": "奈及利亞",
-    "denmark": "丹麥",
-    "russia": "俄羅斯",
-    "usa": "美國",
-    "vietnam": "越南",
-    "serbia": "塞爾維亞"
+    "america": "美國",
+    "japan": "日本",
+    "china": "中國",
+    "other": "其他"
   },
   "more": {
     "appBar": "MORE",
@@ -121,7 +118,7 @@
     "scheduled": "待入場",
     "used": "已使用",
     "expired": "已過期",
-    "youthPlaza": "青年廣場"
+    "playground": "大運動場"
   },
   "home": {
     "festivalTitle": "西江大學校慶 'Odyssey'",
@@ -185,7 +182,7 @@
   "stampTour": {
     "appBar": "印章巡遊",
     "qrAppBar": "掃描QR碼",
-    "qrInstruction": "- 請將QR碼對準螢幕中央進行掃描。\n- 如有問題，請呼叫工作人員。\n- 其他注意事項",
+    "qrInstruction": "• 請將QR碼對準螢幕中央進行掃描。\n• 如有問題，請呼叫工作人員。",
     "qrScanComplete": "掃描完成！",
     "missionCompleteAll": "任務已[[全部完成]]！",
     "missionComplete": "已完成[[{{count}}個]]任務！",
@@ -221,14 +218,14 @@
     "spot1Desc": "5/13(三)-15(五)\nAlbatop前",
     "spot2Title": "🖼使用\n拍照亭",
     "spot2Desc": "5/13(三)-15(五)\n拍照亭內",
-    "spot3Title": "🏦KB國民銀行\n攤位參與",
-    "spot3Desc": "5/13(三)-15(五)\n青年廣場",
+    "spot3Title": "🛍總學生會\n攤位參觀",
+    "spot3Desc": "5/14(四)\n青年廣場",
     "spot4Title": "🎪在校生攤位\n體驗 (1)",
     "spot4Desc": "5/13(三)\n各在校生攤位",
     "spot5Title": "🎤欣賞\n街頭表演",
     "spot5Desc": "5/13(三)\n青年廣場內\n學生會攤位",
-    "spot6Title": "🛍學生會周邊\n攤位參觀",
-    "spot6Desc": "※無需購買即可參與\n5/13(三)-15(五)\n大運動場前周邊桌",
+    "spot6Title": "🏦KB國民銀行\n攤位參與",
+    "spot6Desc": "5/13(三)-15(五)\n青年廣場",
     "spot7Title": "🎪在校生攤位\n體驗 (2)",
     "spot7Desc": "5/13(三)\n各在校生攤位",
     "spot8Title": "🎁促銷攤位\n體驗",
