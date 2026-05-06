@@ -11,7 +11,7 @@ export default function Artist() {
   return (
     <Layout
       title="ARTIST"
-      showBack={true}
+      showBack={false}
       fullBleedHeader={
         <TabBar
           type="artist"
