@@ -12,11 +12,11 @@ import StampTourBanner from "@/components/home/StampTourBanner";
 import { useAuthStore } from "@/stores/authStore";
 import { useNavigation } from "@react-navigation/native";
 import { useEffect, useState } from "react";
-import { Linking, ScrollView, View } from "react-native";
+import { Linking, View } from "react-native";
 
 import adbanner1 from "@/assets/pngs/adbanner1.png";
 
-const AD_BANNERS = [1, 2];
+const AD_BANNERS = [1];
 
 const formatDate = (postedAt: string) => postedAt.split("T")[0].replace(/-/g, ".");
 
@@ -115,12 +115,7 @@ export default function Home() {
         />
         <MDBanner onPress={() => navigation.navigate("MD")} />
       </View>
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        style={{ marginTop: 24, marginHorizontal: -17 }}
-        contentContainerStyle={{ paddingHorizontal: 17, gap: 16 }}
-      >
+      <View style={{ marginTop: 24, alignItems: 'center' }}>
         {AD_BANNERS.map((id) => (
           <AdBanner
             key={id}
@@ -135,7 +130,7 @@ export default function Home() {
             }
           />
         ))}
-      </ScrollView>
+      </View>
       <View style={{ marginTop: 24 }}>
         <HomeNoticeSection
           items={homeNotices}
