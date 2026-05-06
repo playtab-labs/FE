@@ -17,6 +17,7 @@ export default function PersonalBand() {
 
   useEffect(() => {
     getMyWristbands().then((res) => {
+      console.log("[Wristbands]", JSON.stringify(res.data?.myWristbands));
       setBands(res.data?.myWristbands ?? []);
     }).catch(console.error);
   }, []);
