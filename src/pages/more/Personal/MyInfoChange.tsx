@@ -50,13 +50,10 @@ export default function MyInfoChange() {
   const { t } = useTranslation();
   const NATIONALITIES = [
     t("nationality.southKorea"),
-    t("nationality.ghana"),
-    t("nationality.nigeria"),
-    t("nationality.denmark"),
-    t("nationality.russia"),
-    t("nationality.usa"),
-    t("nationality.vietnam"),
-    t("nationality.serbia"),
+    t("nationality.america"),
+    t("nationality.japan"),
+    t("nationality.china"),
+    t("nationality.other"),
   ];
   const { data } = useQuery<{
     me: {
