@@ -31,8 +31,8 @@ export default function DrinkBoothItem({ name, thumbnailImageUrl, onPress }: Dri
 
 const styles = StyleSheet.create({
   container: {
-    width: 88,
-    height: 88,
+    width: 95,
+    height: 95,
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
@@ -53,8 +53,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   thumbnail: {
-    width: 20,
-    height: 20,
+    width: 42,
+    height: 42,
+    alignItems: "center",
   },
   name: {
     color: "#1A1A1A",

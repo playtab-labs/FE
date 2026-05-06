@@ -1,4 +1,4 @@
-import { TouchableOpacity, Text, StyleSheet, View, Image, ImageSourcePropType } from 'react-native';
+import { TouchableOpacity, Text, StyleSheet, View, Image, ImageSourcePropType, useWindowDimensions } from 'react-native';
 import { typo } from '@/styles/typography';
 import AdLabel from '@/components/home/AdLabel';
 
@@ -9,21 +9,21 @@ interface AdBannerProps {
   onPress?: () => void;
 }
 
-const BANNER_WIDTH = 296;
-
 export default function AdBanner({ title = '광고 배너', description = '광고 배너 삽입 서브 텍스트', image, onPress }: AdBannerProps) {
+  const { width: screenWidth } = useWindowDimensions();
+  const bannerWidth = screenWidth - 40; // Layout px-5 패딩 양쪽 20px
+  const bannerHeight = bannerWidth / 1.3; // 세로:가로 = 1:1.4
+
   if (image) {
-    const src = Image.resolveAssetSource(image as number);
-    const height = src ? (src.height / src.width) * BANNER_WIDTH : 240;
     return (
-      <TouchableOpacity onPress={onPress} activeOpacity={0.8} style={[styles.imageContainer, { width: BANNER_WIDTH, height }]}>
-        <Image source={image} style={{ width: BANNER_WIDTH, height }} />
+      <TouchableOpacity onPress={onPress} activeOpacity={0.8} style={[styles.imageContainer, { width: bannerWidth, height: bannerHeight }]}>
+        <Image source={image} style={{ width: bannerWidth, height: bannerHeight }} resizeMode="cover" />
       </TouchableOpacity>
     );
   }
 
   return (
-    <TouchableOpacity style={styles.container} onPress={onPress} activeOpacity={0.8}>
+    <TouchableOpacity style={[styles.container, { width: bannerWidth, height: bannerHeight }]} onPress={onPress} activeOpacity={0.8}>
       <View style={styles.textGroup}>
         <Text className={typo.T3_Eb} style={styles.title}>
           {title}
@@ -39,8 +39,6 @@ export default function AdBanner({ title = '광고 배너', description = '광�
 
 const styles = StyleSheet.create({
   container: {
-    width: 296,
-    height: 240,
     paddingTop: 20,
     paddingRight: 16,
     paddingBottom: 16,
@@ -48,7 +46,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'space-between',
     alignItems: 'flex-end',
-    flexShrink: 0,
     borderRadius: 8,
     backgroundColor: '#BFBFBF',
     overflow: 'hidden',
