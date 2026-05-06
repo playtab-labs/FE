@@ -82,6 +82,8 @@ export default function EmailVerify() {
         setEmailError(t("emailVerify.emailAlreadyRegistered"));
       } else {
         setError(t("emailVerify.sendFailed"));
+        console.error("[이메일 발송] status:", e?.response?.status, "data:", JSON.stringify(e?.response?.data));
+        console.error("[이메일 발송] message:", e?.message, "code:", e?.code, "url:", e?.config?.url, "baseURL:", e?.config?.baseURL);
       }
     }
   };

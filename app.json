@@ -6,10 +6,15 @@
     "orientation": "portrait",
     "scheme": "playtab",
     "userInterfaceStyle": "light",
-    "newArchEnabled": true,
+    "newArchEnabled": false,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.anonymous.Playtab"
+      "bundleIdentifier": "com.anonymous.Playtab",
+      "infoPlist": {
+        "NSAppTransportSecurity": {
+          "NSAllowsArbitraryLoads": true
+        }
+      }
     },
     "android": {
       "edgeToEdgeEnabled": true,
