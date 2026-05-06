@@ -1,6 +1,6 @@
+import { getMyWristbands, linkWristband } from "@/api/personal";
 import Layout from "@/components/Layout";
 import ColoredText from "@/components/common/ColoredText";
-import { getMyWristbands, linkWristband } from "@/api/personal";
 import type { RootStackParamList } from "@/navigation/types";
 import { useNavigation } from "@react-navigation/native";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
@@ -37,6 +37,7 @@ export default function Tag() {
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   const [isPlaying, setIsPlaying] = useState(false);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   // hand_with_band 페이드 인
   const bandOpacity = useSharedValue(0);
@@ -61,20 +62,25 @@ export default function Tag() {
         if (!tag?.id || cancelled) return;
 
         const detectedRfid = tag.id.toUpperCase();
+        console.log("[NFC] tag.id raw:", tag.id, "→ RFID:", detectedRfid);
 
         // 기존 팔찌 조회
         const res = await getMyWristbands();
+        console.log("[NFC] getMyWristbands res:", JSON.stringify(res));
         const existing: { rfid: string }[] = res.data?.myWristbands ?? [];
         const alreadyLinked = existing.some((w) => w.rfid === detectedRfid);
 
         // 다른 팔찌일 때만 등록
         if (!alreadyLinked) {
-          await linkWristband(detectedRfid);
+          const linkRes = await linkWristband(detectedRfid);
+          console.log("[NFC] linkWristband res:", JSON.stringify(linkRes));
+          if (linkRes.errors) throw new Error(JSON.stringify(linkRes.errors));
         }
 
         if (!cancelled) navigation.navigate("Success");
       } catch (e) {
-        // NFC 미지원 기기이거나 취소된 경우 무시
+        console.error("[NFC] error:", e);
+        if (!cancelled) setErrorMsg(e instanceof Error ? e.message : String(e));
       } finally {
         NfcManager?.cancelTechnologyRequest();
       }
@@ -135,6 +141,9 @@ export default function Tag() {
             text={t("personal.startSubtitle")}
             className="text-b3 font-sb text-dark-gray"
           />
+          {errorMsg && (
+            <Text className="text-b4 text-red-500">{errorMsg}</Text>
+          )}
         </View>
 
         {/* 이미지 영역 */}
