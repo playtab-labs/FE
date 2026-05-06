@@ -1,4 +1,3 @@
-import MoreButton from "@/components/common/MoreButton";
 import { typo } from "@/styles/typography";
 import { useTranslation } from "react-i18next";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
@@ -12,13 +11,11 @@ interface FoodTruckData {
 
 interface FoodTruckListSectionProps {
   items: FoodTruckData[];
-  onMorePress?: () => void;
   onItemPress?: (id: string | number) => void;
 }
 
 export default function FoodTruckListSection({
   items,
-  onMorePress,
   onItemPress,
 }: FoodTruckListSectionProps) {
   const { t } = useTranslation();
@@ -28,7 +25,6 @@ export default function FoodTruckListSection({
         <Text className={typo.T3_Eb} style={styles.sectionTitle}>
           {t("home.foodTruckList")}
         </Text>
-        <MoreButton onPress={onMorePress} />
       </View>
       <ScrollView
         horizontal
