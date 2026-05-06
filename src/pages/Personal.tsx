@@ -4,8 +4,8 @@ import ColoredText from "@/components/common/ColoredText";
 import type { RootStackParamList } from "@/navigation/types";
 import { useNavigation } from "@react-navigation/native";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { Image, View } from "react-native";
 import { useTranslation } from "react-i18next";
+import { Image, View } from "react-native";
 
 export default function Personal() {
   const { t } = useTranslation();
@@ -13,7 +13,7 @@ export default function Personal() {
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   return (
-    <Layout title="PERSONAL" showBack={true}>
+    <Layout title="PERSONAL" showBack={false}>
       <View className="flex-1 flex-col">
         {/* 문구 */}
         <View className="py-4 mt-2 gap-4">

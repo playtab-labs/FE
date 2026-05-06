@@ -1,13 +1,10 @@
-import * as SecureStore from "expo-secure-store";
 import client from "./client";
 
-export interface Performer {
+export interface PerformerInfo {
   id: string;
-  name: { ko: string };  // JSON 타입
+  name: { ko: string; en?: string; zh?: string };
   imageUrl: string;
-  isActive: boolean;
-  isFavorited: boolean;
-  stageNames: { ko: string }[];  // JSON 타입
+  isFavorited?: boolean;
 }
 
 export interface ArtistSchedule {
@@ -15,36 +12,44 @@ export interface ArtistSchedule {
   startAt: string;
   endAt: string;
   status: string;
-  performer: Performer;
+  performer: PerformerInfo;
 }
 
-export interface StageSchedule {
-  stage: {
-    id: string;
-    name: { ko: string };
-    locationDesc: { ko: string };
-    displayOrder: number;
-  };
+export interface Stage {
+  stageType: string; // "아티스트 무대" | "동아리 무대" | ...
   artists: ArtistSchedule[];
 }
 
-const getToken = async () => {
-  try {
-    return await SecureStore.getItemAsync("accessToken");
-  } catch {
-    return null;
-  }
-};
+export interface DaySchedule {
+  day: number;
+  date: string;
+  stages: Stage[];
+}
+
+export interface FestivalDay {
+  id: string;
+  dayNumber: number;
+  eventDate: string;
+}
+
+// stageType 포함한 flat artist 타입
+export type ArtistWithStage = ArtistSchedule & { stageType: string };
 
 const graphql = async (query: string, variables?: Record<string, unknown>) => {
-  const token = await getToken();
-  const res = await client.post(
-    "/graphql",
-    { query, variables },
-    { headers: token ? { Authorization: `Bearer ${token}` } : {} }
-  );
+  const res = await client.post("/graphql", { query, variables });
   return res.data;
 };
+
+export const getFestivalDays = () =>
+  graphql(
+    `query FestivalDays {
+      festivalDays {
+        id
+        dayNumber
+        eventDate
+      }
+    }`,
+  );
 
 export const getSchedulesByDay = (dayId: string) =>
   graphql(
@@ -65,12 +70,11 @@ export const getSchedulesByDay = (dayId: string) =>
             name
             imageUrl
             isFavorited
-            stageNames
           }
         }
       }
     }`,
-    { dayId }
+    { dayId },
   );
 
 export const addFavorite = (performerId: string) =>
@@ -78,7 +82,7 @@ export const addFavorite = (performerId: string) =>
     `mutation AddFavorite($performerId: ID!) {
       addFavorite(performerId: $performerId) { id }
     }`,
-    { performerId }
+    { performerId },
   );
 
 export const removeFavorite = (performerId: string) =>
@@ -86,5 +90,5 @@ export const removeFavorite = (performerId: string) =>
     `mutation RemoveFavorite($performerId: ID!) {
       removeFavorite(performerId: $performerId)
     }`,
-    { performerId }
+    { performerId },
   );

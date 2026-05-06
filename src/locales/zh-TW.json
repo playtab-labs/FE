@@ -136,9 +136,13 @@
   "artist": {
     "lineup": "陣容",
     "timetable": "時間表",
+    "filterArtist": "藝術家",
+    "filterClub": "社團",
+    "filterDJ": "DJ",
     "noFavorites": "沒有收藏的藝人。",
     "noFavoritesOnDate": "該日期沒有收藏的藝人。",
-    "noPerformance": "📢 DAY {{day}} 沒有藝人舞台演出。 📢"
+    "noPerformance": "📢 DAY {{day}} 暫無演出 📢",
+    "noPerformanceCategory": "📢 暫無{{category}}演出 📢"
   },
   "map": {
     "booth": "攤位配置圖",

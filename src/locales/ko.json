@@ -136,9 +136,13 @@
   "artist": {
     "lineup": "라인업",
     "timetable": "타임테이블",
+    "filterArtist": "아티스트",
+    "filterClub": "동아리",
+    "filterDJ": "DJ",
     "noFavorites": "즐겨찾기한 아티스트가 없습니다.",
     "noFavoritesOnDate": "해당 날짜에 즐겨찾기한 아티스트가 없습니다.",
-    "noPerformance": "📢 DAY {{day}}은 아티스트 무대가 없습니다. 📢"
+    "noPerformance": "📢 DAY {{day}} 공연이 없습니다 📢",
+    "noPerformanceCategory": "📢 {{category}} 무대가 없습니다 📢"
   },
   "map": {
     "booth": "부스 배치도",

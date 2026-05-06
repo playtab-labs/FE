@@ -10,7 +10,7 @@ import Animated, {
 
 // 2점 GPS 캘리브레이션
 // 기준점 A: 정문 (GPS → 이미지 내 픽셀 비율)
-const REF_A = { lat: 37.551617, lng: 126.937870, fx: 0.116, fy: 0.479 };
+const REF_A = { lat: 37.551617, lng: 126.93787, fx: 0.116, fy: 0.479 };
 // 기준점 B: 스타벅스 서강대프라자점 (곤자가플라자)
 const REF_B = { lat: 37.551056, lng: 126.943058, fx: 0.786, fy: 0.543 };
 
@@ -49,7 +49,7 @@ const UserLocationMarker = ({
 
     (async () => {
       const { status } = await Location.requestForegroundPermissionsAsync();
-      console.log("[GPS] 권한 상태:", status);
+      // console.log("[GPS] 권한 상태:", status);
       if (status !== "granted") return;
 
       sub = await Location.watchPositionAsync(
@@ -57,9 +57,9 @@ const UserLocationMarker = ({
         (loc) => {
           const { latitude, longitude } = loc.coords;
           const pos = gpsToFraction(latitude, longitude);
-          console.log(
-            `[GPS] lat=${latitude}, lng=${longitude} → fx=${pos.fx.toFixed(3)}, fy=${pos.fy.toFixed(3)}`,
-          );
+          // console.log(
+          //   `[GPS] lat=${latitude}, lng=${longitude} → fx=${pos.fx.toFixed(3)}, fy=${pos.fy.toFixed(3)}`,
+          // );
           fx.value = withSpring(pos.fx, { damping: 20, stiffness: 80 });
           fy.value = withSpring(pos.fy, { damping: 20, stiffness: 80 });
         },

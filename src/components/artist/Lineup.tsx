@@ -1,22 +1,32 @@
-import { ArtistCategory, MOCK_ARTISTS } from "@/data/mockArtists";
+import { addFavorite, removeFavorite } from "@/api/artist";
 import { useState } from "react";
 import { View } from "react-native";
 import ArtistFilterBar from "./ArtistFilterBar";
 import ArtistList from "./ArtistList";
 
 const Lineup = () => {
-  const [category, setCategory] = useState<ArtistCategory | null>(null);
+  const [category, setCategory] = useState<string | null>(null);
   const [favOnly, setFavOnly] = useState(false);
-  const [favorites, setFavorites] = useState<Set<string>>(
-    new Set(MOCK_ARTISTS.filter((a) => a.isFavorite).map((a) => a.id)),
-  );
+  const [favorites, setFavorites] = useState<Set<string>>(new Set());
 
-  const toggleFavorite = (id: string, fav: boolean) => {
+  const toggleFavorite = async (id: string, fav: boolean) => {
+    // 낙관적 업데이트
     setFavorites((prev) => {
       const next = new Set(prev);
       fav ? next.add(id) : next.delete(id);
       return next;
     });
+    try {
+      if (fav) await addFavorite(id);
+      else await removeFavorite(id);
+    } catch {
+      // 실패 시 롤백
+      setFavorites((prev) => {
+        const next = new Set(prev);
+        fav ? next.delete(id) : next.add(id);
+        return next;
+      });
+    }
   };
 
   return (
@@ -24,7 +34,7 @@ const Lineup = () => {
       <ArtistFilterBar
         type="Lineup"
         onFilterChange={(cat, fav) => {
-          setCategory(cat as ArtistCategory | null);
+          setCategory(cat);
           setFavOnly(fav);
         }}
       />
