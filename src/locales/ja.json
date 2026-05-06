@@ -182,7 +182,7 @@
   "stampTour": {
     "appBar": "スタンプツアー",
     "qrAppBar": "QRコード認識",
-    "qrInstruction": "- 画面の中央にQRコードが来るように撮影してください。\n- 問題がある場合はスタッフを呼んでください。\n- その他のご案内",
+    "qrInstruction": "• 画面の中央にQRコードが来るように撮影してください。\n• 問題がある場合はスタッフを呼んでください。",
     "qrScanComplete": "認識完了！",
     "missionCompleteAll": "ミッションを[[全て完了]]しました！",
     "missionComplete": "[[{{count}}個の]]ミッションを完了しました！",

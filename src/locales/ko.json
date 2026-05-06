@@ -182,7 +182,7 @@
   "stampTour": {
     "appBar": "스탬프 투어",
     "qrAppBar": "QR코드 인식",
-    "qrInstruction": "- 화면의 가운데에 큐알코드가 오도록 촬영해주세요.\n- 이상이 있을 경우 스태프를 불러주세요.\n- 기타 안내사항 적기",
+    "qrInstruction": "• 화면의 가운데에 큐알코드가 오도록 촬영해주세요.\n• 이상이 있을 경우 스태프를 불러주세요.",
     "qrScanComplete": "인식완료!",
     "missionCompleteAll": "미션을 [[전부 완료]]했어요!",
     "missionComplete": "[[{{count}}개의]] 미션을 완료했어요!",

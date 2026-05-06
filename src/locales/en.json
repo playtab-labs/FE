@@ -182,7 +182,7 @@
   "stampTour": {
     "appBar": "Stamp Tour",
     "qrAppBar": "QR Code Scan",
-    "qrInstruction": "- Please center the QR code on the screen.\n- If there is an issue, please call a staff member.\n- Other instructions here",
+    "qrInstruction": "• Please center the QR code on the screen.\n• If there is an issue, please call a staff member.",
     "qrScanComplete": "Scan Complete!",
     "missionCompleteAll": "You've completed [[all missions]]!",
     "missionComplete": "[[{{count}} missions]] completed!",

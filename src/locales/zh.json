@@ -182,7 +182,7 @@
   "stampTour": {
     "appBar": "印章巡游",
     "qrAppBar": "扫描二维码",
-    "qrInstruction": "- 请将二维码对准屏幕中央进行扫描。\n- 如有问题，请呼叫工作人员。\n- 其他注意事项",
+    "qrInstruction": "• 请将二维码对准屏幕中央进行扫描。\n• 如有问题，请呼叫工作人员。",
     "qrScanComplete": "扫描完成！",
     "missionCompleteAll": "任务已[[全部完成]]！",
     "missionComplete": "已完成[[{{count}}个]]任务！",
