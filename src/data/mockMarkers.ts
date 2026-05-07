@@ -11,6 +11,7 @@ export interface MarkerData {
   /** true이면 day1(5/13)에만 표시 */
   day1Only?: boolean;
   desc?: string;
+  photo?: string;
 }
 
 export interface BoothItem {
@@ -136,6 +137,7 @@ export const MOCK_MARKERS: MarkerData[] = [
     fx: 0.49,
     fy: 0.56,
     image: require("@/assets/map_sub_popup.png"),
+    photo: require("../assets/photos/jinro_image.png"),
   },
   {
     // 인도미 미고랭
@@ -146,6 +148,7 @@ export const MOCK_MARKERS: MarkerData[] = [
     fx: 0.468,
     fy: 0.608,
     image: require("@/assets/map_sub_popup.png"),
+    photo: require("../assets/photos/indomi_image.png"),
   },
   {
     // k관 위
@@ -174,6 +177,7 @@ export const MOCK_MARKERS: MarkerData[] = [
     fx: 0.3,
     fy: 0.48,
     image: require("@/assets/map_sub_popup.png"),
+    photo: require("../assets/photos/bank_image.png"),
   },
   {
     // 청년광장
@@ -184,5 +188,6 @@ export const MOCK_MARKERS: MarkerData[] = [
     fx: 0.25,
     fy: 0.5,
     image: require("@/assets/map_sub_popup.png"),
+    photo: require("../assets/photos/jinro_image.png"),
   },
 ];
