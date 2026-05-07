@@ -17,7 +17,7 @@ export default function Host() {
     {
       name: t("host.hanghae"),
       logo: HangHaeIcon,
-      url: "https://student.sogang.ac.kr/student/",
+      url: "https://student.sogang.ac.kr",
     },
   ];
 
