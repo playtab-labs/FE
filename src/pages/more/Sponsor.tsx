@@ -23,7 +23,7 @@ export default function Sponsor() {
     },
     {
       name: "PLAYTAP",
-      logo: require("@/assets/pngs/logo.png"),
+      logo: require("@/assets/pngs/playtaplogo.png"),
       url: "https://www.sogang.ac.kr",
     },
     {
