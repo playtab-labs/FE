@@ -24,7 +24,7 @@
         "android.permission.RECORD_AUDIO",
         "android.permission.NFC"
       ],
-      "package": "com.anonymous.Playtab"
+      "package": "com.playtap.app"
     },
     "experiments": {
       "reactCompiler": true
