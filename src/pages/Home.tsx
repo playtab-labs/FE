@@ -9,12 +9,20 @@ import HomeNoticeSection from "@/components/home/HomeNoticeSection";
 import HomePoster from "@/components/home/HomePoster";
 import MDBanner from "@/components/home/MDBanner";
 import StampTourBanner from "@/components/home/StampTourBanner";
-import { useAuthStore } from "@/stores/authStore";
+import { gql } from "@apollo/client";
+import { useQuery } from "@apollo/client/react";
 import { useNavigation } from "@react-navigation/native";
 import { useEffect, useState } from "react";
 import { Linking, View } from "react-native";
-
 import adbanner1 from "@/assets/pngs/adbanner1.png";
+
+const GET_MY_EMAIL = gql`
+  query Me {
+    me {
+      email
+    }
+  }
+`;
 
 const AD_BANNERS = [1];
 
@@ -29,8 +37,8 @@ const getNoticeBadge = (isPinned: boolean, postedAt: string): "필독" | "NEW" |
 
 export default function Home() {
   const navigation = useNavigation<any>();
-  const { loadEmail } = useAuthStore();
-  const [isSogang, setIsSogang] = useState(false);
+  const { data: meData } = useQuery<{ me: { email: string } }>(GET_MY_EMAIL);
+  const isSogang = meData?.me?.email?.endsWith("@sogang.ac.kr") ?? false;
   const [stampProgress, setStampProgress] = useState(0);
   const [drinkBooths, setDrinkBooths] = useState<
     { id: string; name: string; thumbnailImageUrl?: string }[]
@@ -40,12 +48,6 @@ export default function Home() {
   >([]);
   const [rawNotices, setRawNotices] = useState<NoticeSummary[]>([]);
   const [foodTrucks, setFoodTrucks] = useState<{ id: string; name: string; menu?: string }[]>([]);
-
-  useEffect(() => {
-    loadEmail().then((email) =>
-      setIsSogang(email?.endsWith("@sogang.ac.kr") ?? false),
-    );
-  }, [loadEmail]);
 
   useEffect(() => {
     getMyStamps()
