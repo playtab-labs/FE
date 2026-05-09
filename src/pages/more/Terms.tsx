@@ -18,23 +18,25 @@ export default function TermsPage() {
   return (
     <Layout title="이용약관" showBack showCamera={false}>
       <ScrollView showsVerticalScrollIndicator={false} className="py-4">
-        {TERMS_DATA.map((term, index) => (
-          <View key={term.id} className={index > 0 ? "mt-8" : ""}>
-            <Text className="text-b2 font-eb text-gray-black mb-3">
-              {term.label}
-            </Text>
-            <Text className="text-b4 font-rg text-dark-gray leading-6">
-              {term.content}
-            </Text>
-            {term.linkUrl && (
-              <TouchableOpacity onPress={() => handleLinkPress(term.linkUrl)}>
-                <Text className="text-b4 font-rg text-blue-500 underline mt-3">
-                  {term.linkText}
-                </Text>
-              </TouchableOpacity>
-            )}
-          </View>
-        ))}
+        {(TERMS_DATA as any[])
+          .filter((term) => ![5, 6, 7, 8].includes(term.id))
+          .map((term, index) => (
+            <View key={term.id} className={index > 0 ? "mt-8" : ""}>
+              <Text className="text-b2 font-eb text-gray-black mb-3">
+                {term.label}
+              </Text>
+              <Text className="text-b4 font-rg text-dark-gray leading-6">
+                {term.content}
+              </Text>
+              {term.linkUrl && (
+                <TouchableOpacity onPress={() => handleLinkPress(term.linkUrl)}>
+                  <Text className="text-b4 font-rg text-blue-500 underline mt-3">
+                    {term.linkText}
+                  </Text>
+                </TouchableOpacity>
+              )}
+            </View>
+          ))}
       </ScrollView>
     </Layout>
   );
