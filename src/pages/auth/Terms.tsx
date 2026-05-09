@@ -20,22 +20,36 @@ import Svg, { Polyline } from "react-native-svg";
 export default function Terms() {
   const { t } = useTranslation();
 
-  const TERMS_LIST = (TERMS_DATA as any[]).map((term) => ({
-    id: term.id,
-    label:
-      term.id === 1
-        ? t("terms.agreeTermsOfUse")
-        : term.id === 2
-          ? t("terms.agreePrivacy")
-          : term.id === 3
-            ? t("terms.agreeLocation")
-            : t("terms.agreeMarketing"),
-    type: term.type as "PRIVACY" | "SERVICE" | "MARKETING",
-    required: term.required,
-    content: term.content || "",
-    linkText: term.linkText || "자세한 내용 확인하기",
-    linkUrl: term.linkUrl || "",
-  }));
+  // 기존 버전의 매핑입니다. 실제 이용약관이 적힌 id 1,2,3,4 입니다.
+  // const TERMS_LIST = (TERMS_DATA as any[]).map((term) => ({
+  //   id: term.id,
+  //   label:
+  //     term.id === 1
+  //       ? t("terms.agreeTermsOfUse")
+  //       : term.id === 2
+  //         ? t("terms.agreePrivacy")
+  //         : term.id === 3
+  //           ? t("terms.agreeLocation")
+  //           : t("terms.agreeMarketing"),
+  //   type: term.type as "PRIVACY" | "SERVICE" | "MARKETING",
+  //   required: term.required,
+  //   content: term.content || "",
+  //   linkText: term.linkText || "자세한 내용 확인하기",
+  //   linkUrl: term.linkUrl || "",
+  // }));
+
+  // 모달 스크롤 버그 대응을 위한 매핑 버전입니다. 외부 url연결만 있는 id 5,6,7,8로 필터링하여 매핑합니다.
+  const TERMS_LIST = (TERMS_DATA as any[])
+    .filter((term) => [5, 6, 7, 8].includes(term.id))
+    .map((term) => ({
+      id: term.id,
+      label: term.label,
+      type: term.type as "PRIVACY" | "SERVICE" | "MARKETING",
+      required: term.required,
+      content: term.content || "",
+      linkText: term.linkText || "자세한 내용 확인하기",
+      linkUrl: term.linkUrl || "",
+    }));
 
   const navigation = useNavigation<any>();
   const route = useRoute<any>();

@@ -34,5 +34,41 @@
     "content": "회사는 이벤트, 혜택, 프로모션, 신규 서비스 안내 등 광고성 정보를 전송하기 위하여 아래와 같이 이용자의 동의를 받습니다.\n\n1) 전송자\n- 주식회사 판\n\n2) 수신 수단\n- 이메일\n- 앱 푸시\n\n3) 이용 목적\n- 이벤트 및 프로모션 안내\n- 신규 서비스 및 업데이트 안내\n- 맞춤형 마케팅 정보 제공\n\n4) 수신에 활용되는 정보\n- 이메일\n- 앱 푸시 수신 설정 정보\n\n5) 보유 및 이용 기간\n- 동의일로부터 회원 탈퇴 또는 광고성 정보 수신동의 철회 시까지\n\n6) 동의 거부 권리 및 철회 방법\n- 이용자는 광고성 정보 수신에 대한 동의를 거부할 권리가 있습니다.\n- 동의하지 않더라도 회원가입 및 기본 서비스 이용에는 제한이 없습니다.\n- 이용자는 언제든지 앱 내 설정, 수신거부 링크, 고객센터(help@playtap.co.kr)를 통하여 수신동의를 철회할 수 있습니다.",
     "linkText": "자세한 내용 확인하기",
     "linkUrl": "https://www.notion.so/_PLAYTAP-352330405ad18068be68e37746c8f787?source=copy_link&indexHtmlPath=index-web-ko-KR-8f55303c2be73e2e&cookie_sync_completed=true"
+  },
+  {
+    "id": 5,
+    "label": "이용약관 동의",
+    "type": "SERVICE",
+    "required": true,
+    "content": "관련 내용을 아래에서 반드시 확인하신 후 체크해주세요.",
+    "linkText": "자세한 내용 확인하기",
+    "linkUrl": "https://www.notion.so/_PLAYTAP-352330405ad18068be68e37746c8f787?source=copy_link&indexHtmlPath=index-web-ko-KR-8f55303c2be73e2e&cookie_sync_completed=true"
+  },
+  {
+    "id": 6,
+    "label": "개인정보 수집 및 이용 동의",
+    "type": "PRIVACY",
+    "required": true,
+    "content": "관련 내용을 아래에서 반드시 확인하신 후 체크해주세요.",
+    "linkText": "자세한 내용 확인하기",
+    "linkUrl": "https://www.notion.so/_PLAYTAP-352330405ad18068be68e37746c8f787?source=copy_link&indexHtmlPath=index-web-ko-KR-8f55303c2be73e2e&cookie_sync_completed=true"
+  },
+  {
+    "id": 7,
+    "label": "위치 정보 서비스 이용약관",
+    "type": "SERVICE",
+    "required": false,
+    "content": "관련 내용을 아래에서 반드시 확인하신 후 체크해주세요.",
+    "linkText": "자세한 내용 확인하기",
+    "linkUrl": "https://www.notion.so/_PLAYTAP-352330405ad18068be68e37746c8f787?source=copy_link&indexHtmlPath=index-web-ko-KR-8f55303c2be73e2e&cookie_sync_completed=true"
+  },
+  {
+    "id": 8,
+    "label": "광고성 정보 수신 동의 약관",
+    "type": "MARKETING",
+    "required": false,
+    "content": "관련 내용을 아래에서 반드시 확인하신 후 체크해주세요.",
+    "linkText": "자세한 내용 확인하기",
+    "linkUrl": "https://www.notion.so/_PLAYTAP-352330405ad18068be68e37746c8f787?source=copy_link&indexHtmlPath=index-web-ko-KR-8f55303c2be73e2e&cookie_sync_completed=true"
   }
 ]
