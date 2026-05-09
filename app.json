@@ -38,7 +38,10 @@
         }
       ],
       "react-native-nfc-manager",
-      "expo-localization"
+      "expo-localization",
+      ["expo-location", {
+        "locationWhenInUsePermission": "사용자의 현재 위치를 기반으로 축제 부스 위치 안내 및 스탬프 투어 기능을 제공하기 위해 위치 정보를 사용합니다."
+      }]
     ],
     "extra": {
       "eas": {
