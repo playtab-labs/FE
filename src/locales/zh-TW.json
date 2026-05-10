@@ -22,6 +22,7 @@
     "birthdayInvalid": "請重新確認日期。",
     "nationalityLabel": "國籍",
     "nationalityDescription": "如有雙重國籍，請選擇其中一個。",
+    "optional": "(可選)",
     "nationalityPlaceholder": "選擇",
     "confirmTitle": "你的姓名是「{{name}}」嗎？",
     "confirmWarning": "姓名無法變更。",

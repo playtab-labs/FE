@@ -68,10 +68,7 @@ export default function PersonalInfo() {
 
   const isValid =
     name.trim().length > 0 &&
-    gender !== null &&
-    birthdayRaw.length === 8 &&
-    !isBirthdayInvalid &&
-    nationality !== "";
+    (birthdayRaw.length === 0 || (birthdayRaw.length === 8 && !isBirthdayInvalid));
 
   return (
     <Layout title={t("personalInfo.appBar")} showBack>
@@ -103,9 +100,14 @@ export default function PersonalInfo() {
 
             {/* 성별 */}
             <View className="w-full gap-2">
-              <Text className="text-b3 font-sb text-dark-gray">
-                {t("personalInfo.genderLabel")}
-              </Text>
+              <View className="flex-row justify-between items-center">
+                <Text className="text-b3 font-sb text-dark-gray">
+                  {t("personalInfo.genderLabel")}
+                </Text>
+                <Text className="text-b4 font-rg text-dark-gray">
+                  {t("personalInfo.optional")}
+                </Text>
+              </View>
               <View className="flex-row gap-3">
                 <TouchableOpacity
                   className={`flex-1 h-[42px] rounded-lg items-center justify-center border ${gender === "male" ? "bg-[#FFA38C] border-[#FFA38C]" : "bg-extra-white border-[#E4E4E4]"}`}
@@ -132,7 +134,7 @@ export default function PersonalInfo() {
               description={
                 isBirthdayInvalid
                   ? t("personalInfo.birthdayInvalid")
-                  : undefined
+                  : t("personalInfo.optional")
               }
               error={isBirthdayInvalid}
               placeholder={t("personalInfo.birthdayPlaceholder")}
@@ -149,7 +151,7 @@ export default function PersonalInfo() {
                   {t("personalInfo.nationalityLabel")}
                 </Text>
                 <Text className="text-b4 font-rg text-dark-gray">
-                  {t("personalInfo.nationalityDescription")}
+                  {t("personalInfo.optional")}
                 </Text>
               </View>
               <TouchableOpacity
@@ -196,7 +198,7 @@ export default function PersonalInfo() {
         onConfirm={() => {
           setPersonalInfo({
             name,
-            gender: gender === "male" ? "MALE" : "FEMALE",
+            gender: gender === "male" ? "MALE" : gender === "female" ? "FEMALE" : null,
             phoneNumber: "",
             birthDate: formatBirthdayForApi(birthdayRaw),
             nationality,

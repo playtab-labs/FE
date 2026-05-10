@@ -22,6 +22,7 @@
     "birthdayInvalid": "Please check the date again.",
     "nationalityLabel": "Nationality",
     "nationalityDescription": "If you have dual nationality, please select one.",
+    "optional": "(Optional)",
     "nationalityPlaceholder": "Select",
     "confirmTitle": "Is your name \"{{name}}\"?",
     "confirmWarning": "Your name cannot be changed.",
