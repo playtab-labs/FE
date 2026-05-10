@@ -12,8 +12,8 @@ export default function Register() {
 
   return (
     <Layout title={t("register.appBar")} showBack={true}>
-      {/* 문구 */}
-      <View>
+      <View className="flex-1 flex-col">
+        {/* 문구 */}
         <View className="mt-[19px] gap-4">
           <ColoredText text={t("register.title")} className="text-h1 font-eb text-gray-black" />
           <Text className="text-b3 font-sb text-dark-gray">
@@ -22,7 +22,7 @@ export default function Register() {
         </View>
 
         {/* 로고 */}
-        <View className="items-center mt-[125px]">
+        <View className="flex-1 items-center justify-center">
           <Image
             source={require("@/assets/pngs/odysseyLogo_noempty.png")}
             style={{ width: 277, height: 173 }}
@@ -31,7 +31,7 @@ export default function Register() {
         </View>
 
         {/* 버튼 */}
-        <View className="gap-4 mt-[186px]">
+        <View className="gap-4 mb-6">
           <View style={{ position: "relative" }} className="w-full">
             <AlosIcon
               width={50}

@@ -28,7 +28,7 @@ export default function Personal() {
         </View>
 
         {/* 로고 */}
-        <View className="items-center mt-[103px] mb-40">
+        <View className="flex-1 items-center justify-center">
           <Image
             source={require("@/assets/pngs/odysseyLogo_noempty.png")}
             style={{ width: 277, height: 173 }}
@@ -37,7 +37,7 @@ export default function Personal() {
         </View>
 
         {/* 버튼 */}
-        <View className="mt-auto mb-6 items-center">
+        <View className="mb-6 items-center">
           <Button
             label={t("personal.startButton")}
             size="long"

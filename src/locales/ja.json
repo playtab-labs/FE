@@ -22,6 +22,7 @@
     "birthdayInvalid": "日付を再確認してください。",
     "nationalityLabel": "国籍",
     "nationalityDescription": "二重国籍の場合は1つだけ選択してください。",
+    "optional": "(任意)",
     "nationalityPlaceholder": "選択",
     "confirmTitle": "お名前は「{{name}}」でよろしいですか？",
     "confirmWarning": "名前は変更できません。",

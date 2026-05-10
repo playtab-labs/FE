@@ -17,49 +17,51 @@ export default function SignUpComplete() {
 
   return (
     <Layout title={t("signUpComplete.appBar")} showBack>
-      {/* 안내 문구 */}
-      <View className="mt-[19px] gap-4">
-        <ColoredText text={t("signUpComplete.title")} className="text-h1 font-eb text-gray-black" />
-        <Text className="text-b3 font-sb text-dark-gray">
-          {t("signUpComplete.subtitle")}
-        </Text>
-      </View>
+      <View className="flex-1 flex-col">
+        {/* 안내 문구 */}
+        <View className="mt-[19px] gap-4">
+          <ColoredText text={t("signUpComplete.title")} className="text-h1 font-eb text-gray-black" />
+          <Text className="text-b3 font-sb text-dark-gray">
+            {t("signUpComplete.subtitle")}
+          </Text>
+        </View>
 
-      {/* 로고 */}
-      <View className="items-center mt-[153px]">
-        <Image
-          source={require("@/assets/pngs/odysseyLogo_noempty.png")}
-          style={{ width: 277, height: 173 }}
-          resizeMode="contain"
-        />
-      </View>
-
-      {/* 버튼 */}
-      <View className="py-4 mt-auto pb-10">
-        <View style={{ position: "relative" }} className="w-full">
-          <Button
-            label={t("signUpComplete.continue")}
-            size="long"
-            state="active"
-            onPress={async () => {
-              try {
-                const loginRes = await authApi.loginEmail(email, password);
-                await setTokens(loginRes.data.accessToken, loginRes.data.refreshToken, true);
-                reset();
-                navigation.reset({ index: 0, routes: [{ name: "Tabs" }] });
-              } catch {
-                reset();
-                navigation.reset({ index: 0, routes: [{ name: "Login" }] });
-              }
-            }}
+        {/* 로고 */}
+        <View className="flex-1 items-center justify-center">
+          <Image
+            source={require("@/assets/pngs/odysseyLogo_noempty.png")}
+            style={{ width: 277, height: 173 }}
+            resizeMode="contain"
           />
-          {userType === "sogang" && (
-            <AlosIcon
-              width={98}
-              height={127}
-              style={{ position: "absolute", right: 6, top: -121 }}
+        </View>
+
+        {/* 버튼 */}
+        <View className="py-4 mb-6">
+          <View style={{ position: "relative" }} className="w-full">
+            <Button
+              label={t("signUpComplete.continue")}
+              size="long"
+              state="active"
+              onPress={async () => {
+                try {
+                  const loginRes = await authApi.loginEmail(email, password);
+                  await setTokens(loginRes.data.accessToken, loginRes.data.refreshToken, true);
+                  reset();
+                  navigation.reset({ index: 0, routes: [{ name: "Tabs" }] });
+                } catch {
+                  reset();
+                  navigation.reset({ index: 0, routes: [{ name: "Login" }] });
+                }
+              }}
             />
-          )}
+            {userType === "sogang" && (
+              <AlosIcon
+                width={98}
+                height={127}
+                style={{ position: "absolute", right: 6, top: -121 }}
+              />
+            )}
+          </View>
         </View>
       </View>
     </Layout>

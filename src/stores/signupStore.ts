@@ -34,7 +34,7 @@ interface SignupState {
   // actions
   setPersonalInfo: (data: {
     name: string;
-    gender: Gender;
+    gender: Gender | null;
     phoneNumber: string;
     birthDate: string;
     nationality: string;
