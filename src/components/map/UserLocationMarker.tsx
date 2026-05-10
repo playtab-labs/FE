@@ -1,6 +1,7 @@
 import * as Location from "expo-location";
 import { useEffect } from "react";
-import { Image } from "react-native";
+import { Alert, Image } from "react-native";
+import { openAppSettings } from "@/utils/openAppSettings";
 import type { SharedValue } from "react-native-reanimated";
 import Animated, {
   useAnimatedStyle,
@@ -48,9 +49,20 @@ const UserLocationMarker = ({
     let sub: Location.LocationSubscription | null = null;
 
     (async () => {
-      const { status } = await Location.requestForegroundPermissionsAsync();
-      // console.log("[GPS] 권한 상태:", status);
-      if (status !== "granted") return;
+      const { status, canAskAgain } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        if (canAskAgain === false) {
+          Alert.alert(
+            "위치 권한 필요",
+            "지도에서 현재 위치를 표시하려면 위치 권한이 필요합니다.",
+            [
+              { text: "취소", style: "cancel" },
+              { text: "설정에서 허용하기", onPress: openAppSettings },
+            ]
+          );
+        }
+        return;
+      }
 
       sub = await Location.watchPositionAsync(
         { accuracy: Location.Accuracy.High, distanceInterval: 2 },

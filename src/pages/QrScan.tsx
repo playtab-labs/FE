@@ -1,3 +1,4 @@
+
 import { visitStamp } from "@/api/stamp";
 import Layout from "@/components/Layout";
 import QRCamera from "@/components/stamptour/QRCamera";
@@ -6,8 +7,9 @@ import QRScanToast from "@/components/stamptour/QRScanToast";
 import { useNavigation } from "@react-navigation/native";
 import * as Location from "expo-location";
 import { useEffect, useRef, useState } from "react";
-import { ActivityIndicator, Alert, StyleSheet, View } from "react-native";
 import { useTranslation } from "react-i18next";
+import { ActivityIndicator, Alert, StyleSheet, View } from "react-native";
+import { openAppSettings } from "@/utils/openAppSettings";
 
 export default function QrScan() {
   const { t } = useTranslation();
@@ -28,18 +30,23 @@ const raw = data.startsWith('https://') ? data.slice('https://'.length) : data;
 
     setLoading(true);
     try {
-      const { status } = await Location.requestForegroundPermissionsAsync();
+      const { status, canAskAgain } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
         setLoading(false);
-        Alert.alert(t('stampTour.locationRequired'), t('stampTour.locationRequiredMsg'), [
-          { text: t('stampTour.confirm'), onPress: () => navigation.navigate('StampTour') },
-        ]);
+        if (canAskAgain === false) {
+          Alert.alert(t('stampTour.locationRequired'), t('stampTour.locationRequiredMsg'), [
+            { text: t('stampTour.confirm'), onPress: () => navigation.navigate('StampTour') },
+            { text: '설정에서 허용하기', onPress: openAppSettings },
+          ]);
+        } else {
+          Alert.alert(t('stampTour.locationRequired'), t('stampTour.locationRequiredMsg'), [
+            { text: t('stampTour.confirm'), onPress: () => navigation.navigate('StampTour') },
+          ]);
+        }
         return;
       }
-      const latitude = 131.1;
-      const longitude = 127.9;
-      //const location = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.High });
-      //const { latitude, longitude } = location.coords;
+      const location = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.High });
+      const { latitude, longitude } = location.coords;
 
       const result = await visitStamp(spotId, latitude, longitude);
       setLoading(false);

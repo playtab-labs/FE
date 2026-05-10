@@ -1,6 +1,7 @@
 import { CameraView, useCameraPermissions } from "expo-camera";
 import { forwardRef, useEffect, useImperativeHandle, useRef } from "react";
 import { Alert, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { openAppSettings } from "@/utils/openAppSettings";
 
 interface QRCameraProps {
   onScanned?: (data: string) => void;
@@ -50,11 +51,17 @@ const QRCamera = forwardRef<QRCameraHandle, QRCameraProps>(function QRCamera({ o
   }
 
   if (!permission.granted) {
+    const handlePermissionPress = permission.canAskAgain
+      ? requestPermission
+      : openAppSettings;
+
     return (
       <View style={styles.center}>
         <Text style={styles.message}>QR코드 스캔을 위해 카메라 권한이 필요합니다.</Text>
-        <TouchableOpacity style={styles.button} onPress={requestPermission}>
-          <Text style={styles.buttonText}>권한 허용</Text>
+        <TouchableOpacity style={styles.button} onPress={handlePermissionPress}>
+          <Text style={styles.buttonText}>
+            {permission.canAskAgain ? "권한 허용" : "설정에서 허용하기"}
+          </Text>
         </TouchableOpacity>
       </View>
     );
