@@ -169,48 +169,6 @@ Playtab/
 
 ---
 
-## 🚀 시작하기
-
-### 요구사항
-
-- Node.js 18.x 이상
-- Expo CLI
-- iOS: Xcode (Mac 필요) / Android: Android Studio
-
-### 설치
-
-```bash
-git clone https://github.com/playtab-labs/Playtab.git
-cd Playtab
-npm install
-```
-
-### 환경 변수
-
-프로젝트 루트에 `.env` 파일을 생성합니다.
-
-```env
-EXPO_PUBLIC_API_URL=https://api.playtap.co.kr
-```
-
-### 실행
-
-```bash
-# Expo 개발 서버 시작
-npm start
-
-# Android 실행
-npm run android
-
-# iOS 실행
-npm run ios
-
-# 린트 검사
-npm run lint
-```
-
----
-
 ## 🏗 아키텍처 특이사항
 
 - **토큰 갱신 큐잉**: 동시에 다수의 401 응답이 발생해도 리프레시 토큰 요청은 단 1회만 실행, 나머지 요청은 대기 후 재시도
